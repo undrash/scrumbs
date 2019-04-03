@@ -1,0 +1,30 @@
+# macOS
+.DS_Store
+
+# Windows
+desktop.ini
+
+# Node.js
+node_modules
+client/node_modules
+
+# Package manager cruft
+npm-debug.log
+pnpm-debug.log
+yarn-error.log
+
+# IDEs
+.env
+.idea/
+.settings/
+.project
+.vscode
+
+# Project generated
+/build
+public/css
+public/js
+
+
+# Sourcemaps
+client/src/**/*.js
