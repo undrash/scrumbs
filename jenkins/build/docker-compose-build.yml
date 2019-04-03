@@ -1,0 +1,17 @@
+version: "3.1"
+
+services:
+        app:
+                image: "scrumbs-app:latest"
+                build:
+                        context: ../../scrumbs-app/
+
+        proxy:
+                image: "scrumbs-proxy:latest"
+                build:
+                        context: ../../scrumbs-proxy/
+
+        website:
+                image: "scrumbs-website:latest"
+                build:
+                        context: ../../scrumbs-website
