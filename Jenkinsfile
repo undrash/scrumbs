@@ -28,7 +28,7 @@ pipeline {
             steps {
                 sh 'cd ./scrumbs-client && npm run build'
                 sh 'cd ./scrumbs-app && npm run build'
-                sh 'cd ./scrumbs-website && npm run build'
+                sh 'cd ./scrumbs-website && npm run buildall'
             }
 
         }
