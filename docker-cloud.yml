@@ -1,0 +1,37 @@
+version: "3.1"
+
+services:
+
+  proxy:
+    image: gasparandr/scrumbs-proxy
+    depends_on:
+      - app
+      - website
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /docker-volumes/dh-param/dhparam-2048.pem:/etc/ssl/certs/dhparam-2048.pem
+      - /docker-volumes/etc/letsencrypt/live/scrumbs.app/fullchain.pem:/etc/letsencrypt/live/scrumbs.app/fullchain.pem
+      - /docker-volumes/etc/letsencrypt/live/scrumbs.app/privkey.pem:/etc/letsencrypt/live/scrumbs.app/privkey.pem
+      #for certbot challenges
+      - /docker-volumes/data/letsencrypt:/data/letsencrypt
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+  app:
+    image: gasparandr/scrumbs-app
+    depends_on:
+      - mongo
+    restart: always
+
+  website:
+    image: gasparandr/scrumbs-website
+    depends_on:
+      - mongo
+    restart: always
+
+  mongo:
+    image: mongo
+    volumes:
+      - /docker-volumes/data/mongo:/data/db
