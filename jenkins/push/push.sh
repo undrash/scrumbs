@@ -1,12 +1,15 @@
 #!/bin/bash
 
+DOCKER_PASS=$1
+
+
 echo "***********************************************"
 echo "*********** Pushing Docker Images *************"
 echo "***********************************************"
 
 echo "*************** Logging In ********************"
 
-docker login -u gasparandr -p $PASS
+docker login -u gasparandr -p $DOCKER_PASS
 
 echo "************* Tagging Images ******************"
 
