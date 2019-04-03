@@ -1,0 +1,9 @@
+node_modules
+Dockerfile
+Dockerfile-template
+.env
+src
+.gulpfile
+tsconfig.json
+resources
+

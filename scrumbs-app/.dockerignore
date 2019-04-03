@@ -1,0 +1,7 @@
+node_modules
+Dockerfile
+Dockerfile-template
+.env
+src
+tsconfig.json
+
