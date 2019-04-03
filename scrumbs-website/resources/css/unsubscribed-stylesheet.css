@@ -1,0 +1,159 @@
+body {
+    background: linear-gradient(0deg, #F6F6F9 0%, #FFFFFF 100%);
+    height: 100vh;
+}
+
+
+#unsubscribed-container {
+    max-width: 700px;
+    height: auto;
+    margin-top: 110px;
+    padding: 50px 50px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.card-bg {
+    height: auto;
+    background-color: #ffffff;
+    margin: auto;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 9px 15px 0px rgba(186,192,207,0.30);
+    -moz-box-shadow: 0px 9px 15px 0px rgba(186,192,207,0.30);
+    box-shadow: 0px 9px 15px 0px rgba(186,192,207,0.30);
+    transform: translateY(25px);
+    /*padding: 70px 0 70px 0;*/
+    box-sizing: border-box;
+    padding: 70px 30px 70px 30px;
+}
+
+.subscribe-navbar-logo {
+    margin: 0 auto 40px auto;
+    text-align: center;
+    display: block;
+    width: 160px;
+}
+
+.secondary-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #242246;
+    margin-bottom: 15px;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    line-height: 35px;
+}
+
+.secondary-text {
+    font-size: 14px;
+    line-height: 28px;
+    text-align: center;
+    font-weight: 300;
+}
+
+.button-container {
+    text-align: center;
+    float: none;
+    margin-top: 40px;
+}
+
+
+.primary-button {
+    padding: 20px 80px;
+    background: -webkit-linear-gradient(90deg, #6CB7FF 0%, #7985FF 100%);
+    background: -moz-linear-gradient(90deg, #6CB7FF 0%, #7985FF 100%);
+    background: -o-linear-gradient(90deg, #6CB7FF 0%, #7985FF 100%);
+    background: linear-gradient(90deg, #6CB7FF 0%, #7985FF 100%);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    box-shadow: 0 15px 9px -10px rgba(121,133,255,0.5);
+    -webkit-transition: transform .2s ease-in-out;
+    -moz-transition: transform .2s ease-in-out;
+    -o-transition: transform .2s ease-in-out;
+    transition: transform .2s ease-in-out;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.primary-button:hover {
+    -webkit-transform: scale(1.05);
+    -moz-transform:    scale(1.05);
+    -ms-transform:     scale(1.05);
+    -o-transform:      scale(1.05);
+    transform:         scale(1.05);
+    background: -webkit-linear-gradient(90deg, #6E7BFF 0%, #6E7BFF 100%);
+    background: -moz-linear-gradient(90deg, #6E7BFF 0%, #6E7BFF 100%);
+    background: -o-linear-gradient(90deg, #6E7BFF 0%, #6E7BFF 100%);
+    background: linear-gradient(90deg, #6E7BFF 0%, #6E7BFF 100%);
+    box-shadow: 0 15px 15px -10px rgba(121,133,255,0.5);
+}
+
+.unsubscribe-footer {
+    position: relative;
+    line-height: normal;
+    padding: 40px 20px 0 20px;
+    text-align: center;
+}
+
+.source-company {
+    position: initial;
+    display: block;
+    margin-bottom: 50px;
+    color: #9B9AA9;
+    font-size: 14px;
+}
+
+.source-label {
+    display: inline-block;
+    margin-right: 5px;
+    opacity: 0.7;
+}
+
+.planeeet-logo {
+    margin-bottom: -10px;
+}
+
+.footer-navigation {
+    float: none;
+    color: #9B9AA9;
+    font-size: 14px;
+}
+
+.footer-menu-item {
+    display: inline-block;
+    margin: 0 25px 25px 25px;
+    opacity: 0.7;
+    transition: all .2s ease-in-out;
+}
+
+.footer-menu-item:hover {
+    opacity: 1;
+}
+
+@media only screen and (max-width: 750px) {
+    #unsubscribed-container {
+        margin: 50px 20px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+
+    #unsubscribed-container {
+        padding: 25px;
+    }
+
+    .primary-button {
+        padding: 20px 30px;
+    }
+
+    .source-label {
+        display: block;
+        margin-bottom: 15px;
+    }
+}

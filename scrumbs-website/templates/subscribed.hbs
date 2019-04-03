@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Added Promotion</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <style>
+
+        body {
+            margin: 5px 5px 50px 5px;
+        }
+
+        html {
+            background-color: #F6F6F9;
+            font-weight: normal;
+        }
+
+        * {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        a {
+            margin:0;
+            padding:0;
+            font-size:100%;
+            vertical-align:baseline;
+            background:transparent;
+            color:inherit;
+            text-decoration: none; /* no underline */
+        }
+
+        table {
+            border: none;
+            border-collapse: collapse;
+        }
+
+        td {
+            border: none;
+        }
+
+        .user-name {
+            font-weight: bold;
+        }
+
+        .newsletter {
+            margin: 0 auto 0 auto;
+            max-width: 600px;
+        }
+
+        .table-content {
+            background-color: #ffffff;
+            width: 100%;
+        }
+
+        .logo {
+            padding-top: 50px;
+        }
+
+        .message {
+            font-size: 14px;
+            font-weight: normal;
+            text-align: center;
+            color: #424242;
+            max-width: 410px;
+            line-height: 28px;
+            padding: 50px 30px;
+        }
+
+        .signature {
+            margin-top: 30px;
+            display: block;
+        }
+
+        .source-company {
+            height: 50px;
+            text-align: center;
+        }
+
+        .source-label {
+            display: block;
+            color: #9B9AA9;
+        }
+
+        .planeeet-logo {
+            position: initial;
+            margin: 10px auto 0 auto;
+            display: block;
+        }
+
+        #footer-navigation {
+            display: inline-block;
+            text-decoration: none;
+            text-align: center;
+            width: 100%;
+            color: #9B9AA9 !important;
+            font-size: 12px;
+            padding: 50px 0;
+        }
+
+        .footer-menu-item {
+            display: inline-block;
+            margin-right: 25px;
+            margin-left: 25px;
+            opacity: 0.7;
+            transition: all .2s ease-in-out;
+            text-decoration: none;
+            font-weight: initial;
+        }
+
+        .footer-menu-item:hover {
+            color: #242246;
+        }
+
+        @media only screen and (max-width: 390px) {
+
+            #footer-navigation {
+                margin: 0;
+                padding: 25px 0 0 0;
+            }
+
+            .footer-menu-item {
+                display: block;
+                margin-bottom: 40px;
+            }
+
+        }
+
+    </style>
+
+
+</head>
+<body>
+
+
+<table class="newsletter" align="center" width="100%" cellspacing="0">
+    <tr>
+        <td class="content">
+
+            <table class="table-content">
+                <tr class="logo">
+                    <td class="logo" align="center">
+
+                        <img  width="160px" src="https://www.scrumbs.app/public/images/scrumbs-logo-colored.png">
+
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="message">Hello <span class="user-name">{{ name }}</span>,<br><br>Thank you for subscribing to the Scrumbs alpha release. You will be among the first to get notified of our soft launch!
+
+                        <span class="signature">
+                                    Thank you for your support!<br>Andrei
+                            </span>
+
+                    </td>
+                </tr>
+
+
+                <tr class="source-company">
+                    <td class="source-label">
+
+                        Powered by <a href="http://planeeet.com" target="_blank"><img class="planeeet-logo" width="97px" src="https://www.scrumbs.app/public/images/planeeet-logo.png"></a>
+
+                    </td>
+                </tr>
+
+
+                <tr id="footer-navigation">
+
+                    <td class="footer-menu-item">
+
+                        <a href="https://www.planeeet.com/contact/" target="_blank">Contact</a>
+
+                    </td>
+
+                    <td class="footer-menu-item">
+
+                        <a href="https://scrumbs.app" target="_blank">Scrumbs</a>
+
+                    </td>
+
+                    <td class="footer-menu-item">
+
+                        <a href={{ unSubscribe }} target="_blank">Unsubscribe</a>
+
+                    </td>
+
+                </tr>
+
+
+            </table>
+        </td>
+    </tr>
+</table>
+
+
+
+
+
+</body>
+</html>

@@ -5,6 +5,7 @@
   "repository": "https://github.com/gasparandr/scrumbs-server.git",
   "scripts": {
     "start": "tsc && node ./build/Index.js",
+    "build": "tsc",
     "ts": "tsc -w",
     "server": "nodemon ./build/Index.js"
   },

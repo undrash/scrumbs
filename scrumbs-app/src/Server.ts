@@ -19,6 +19,7 @@ import NoteController from "./controllers/NoteController";
 import PageController from "./controllers/PageController";
 import TeamController from "./controllers/TeamController";
 import UserController from "./controllers/UserController";
+import Database from "./configs/DatabaseConfig";
 import DataHelper from "./helpers/DataHelper";
 
 dotenv.config();
@@ -41,10 +42,9 @@ class Server {
 
     public config() {
 
-        const MONGO_URI = "mongodb://localhost/scrumbs-ts";
 
         mongoose.set( "useCreateIndex", true );
-        mongoose.connect( MONGO_URI || process.env.MONGODB_URI, { useNewUrlParser: true } );
+        mongoose.connect( Database.URI || process.env.DATABASE_URI as string, { useNewUrlParser: true } );
 
 
         this.app.engine( "hbs", hbs( { extname: "hbs", defaultLayout: "layout", layoutsDir: __dirname + "/../views/layouts" } ) );
