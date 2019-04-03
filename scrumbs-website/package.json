@@ -5,8 +5,10 @@
   "repository": "https://github.com/gasparandr/scrumbs.git",
   "license": "Planeeet.com",
   "scripts": {
-    "start": "tsc && gulp && node ./build/Index.js",
+    "start": "npm run buildall && npm start-server",
+    "start-server": "node ./build/Index.js",
     "build": "tsc",
+    "buildall": "tsc && gulp",
     "ts": "tsc -w",
     "server": "nodemon ./build/Index.js"
   },
