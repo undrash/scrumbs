@@ -1,0 +1,41 @@
+
+
+#authentication-log-in-container {
+
+    // display: none;
+
+    width: 370px;
+    margin: 0 auto;
+    padding-top: 57px;
+
+    #authentication-login-forgot-password {
+        float: right;
+        font-size: 12px;
+        line-height: 23px;
+    }
+
+
+    @media screen and ( max-width: 560px ) {
+
+        padding-top: 45px;
+    
+    }
+
+
+    @media screen and ( max-width: 480px ) {
+
+        width: 100%;
+        padding-left: 40px;
+        padding-right: 40px;
+
+    }
+
+
+    @media screen and ( max-width: 400px ) {
+
+        padding-left: 20px;
+        padding-right: 20px;
+
+    }
+
+}

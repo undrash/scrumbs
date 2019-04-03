@@ -1,0 +1,363 @@
+
+@import "mixins";
+@import "color-variables";
+
+
+#scrum-notes {
+
+	height: 100%;
+	position: relative;
+
+	#scrum-notes-header {
+		height: 80px;
+		border-bottom: 1px solid $quinary-color;
+		position: relative;
+		z-index: 1;
+
+		#scrum-notes-member-name {
+			@include center( "vertical" );
+			left: 20px;
+			font-size: 20px;
+			cursor: text;
+		}
+
+		#scrum-notes-member-name-input {
+			display: none;
+			@include center( "vertical" );
+			width: 200px;
+			height: 50px;
+			border: none;
+			outline: none;
+			left: 20px;
+			font-size: 20px;
+		}
+
+		#scrum-notes-member-options-button {
+			@include center( "vertical" );
+			right: 20px;
+			width: 40px;
+			height: 25px;
+			border-radius: 3px;
+			background: url("../img/icons/icon-options.svg") no-repeat center center / 20px 4px;
+
+			#scrum-notes-member-options-list {
+				position: absolute;
+				top: 30px;
+				right: 0;
+				border-radius: 3px;
+				background-color: $tertiary-color;
+				box-shadow: 0 5px 20px 0 $quinary-color;
+				font-size: 16px;
+				color: $text-secondary-color;
+				white-space: nowrap;
+				display: none;
+
+				li {
+					line-height: 45px;
+					padding: 0 20px 0 50px;
+					background-repeat: no-repeat;
+
+					&:hover { background-color: $nonary-color; }
+				}
+
+				#scrum-notes-member-option-export-notes {
+					background-image: url("../img/icons/icon-notes.svg");
+					background-size: 13px 15px;
+					background-position: 21px center;
+				}
+
+				#scrum-notes-member-option-export-impediments {
+					background-image: url("../img/icons/icon-impediment-grey.svg");
+					background-size: 16px 8px;
+					background-position: 20px center;
+				}
+				
+				#scrum-notes-member-option-clear-notes {
+					background-image: url("../img/icons/icon-clear.svg");
+					background-size: 15px 12px;
+					background-position: 20px center;
+				}
+
+				#scrum-notes-member-option-remove-member {
+					background-image: url("../img/icons/icon-delete.svg");
+					background-size: 12px 15px;
+					background-position: 22px center;
+				}
+
+			}
+
+			&.active {
+				background-color: $denary-color;
+
+				#scrum-notes-member-options-list { display: block; }
+			}
+		}
+	}
+
+	#scrum-notes-note-container {
+		height: calc( 100% - 170px );
+		padding: 0 20px 10px;
+		overflow-x: hidden;
+		overflow-y: auto;
+		 display: none;
+
+		.scrum-note-date {
+			margin: 15px 0;
+			text-align: center;
+			position: relative;
+
+			&::before {
+				content: "";
+				position: relative;
+				top: 12px;
+				display: block;
+				width: 100%;
+				height: 1px;
+				background-color: $denary-color;
+			}
+			
+
+			span {
+				display: inline-block;
+				padding: 0 12px;
+				line-height: 21px;
+				font-size: 12px;
+				color: $text-tertiary-color;
+				background-color: $tertiary-color;
+				border-radius: 20px;
+				border: 1px solid $denary-color;
+				position: relative;
+			}
+		}
+
+		.scrum-note {
+			margin: 5px 0;
+			border-radius: 3px;
+			position: relative;
+			
+			.scrum-note-text {
+				display: inline-block;
+				max-width: calc( 100% - 100px );
+				font-size: 16px;
+				line-height: 22px;
+				padding: 20px 25px;
+				background-color: $nonary-color;
+				border-radius: 3px;
+				position: relative;
+			}
+
+			.scrum-note-options-button {
+				position: absolute;
+				top: 17px;
+				right: 15px;
+				width: 40px;
+				height: 25px;
+				border-radius: 3px;
+				background: url("../img/icons/icon-options.svg") no-repeat center center / 20px 4px;
+				z-index: 1;
+				display: none;
+
+				.scrum-note-options-list {
+					position: absolute;
+					top: 30px;
+					right: 0;
+					border-radius: 3px;
+					background-color: $tertiary-color;
+					box-shadow: 0 5px 20px 0 $quinary-color;
+					font-size: 16px;
+					color: $text-secondary-color;
+					white-space: nowrap;
+					display: none;
+
+					li {
+						line-height: 45px;
+						padding: 0 20px 0 50px;
+						background-repeat: no-repeat;
+	
+						&:hover { background-color: $nonary-color; }
+					}
+
+					.scrum-note-option-convert-to-note {
+						background-image: url("../img/icons/icon-notes.svg");
+						background-size: 13px 15px;
+						background-position: 21px center;
+					}
+
+					.scrum-note-option-convert-to-impediment {
+						background-image: url("../img/icons/icon-impediment-grey.svg");
+						background-size: 16px 8px;
+						background-position: 20px center;
+					}
+
+					.scrum-note-option-edit-note {
+						background-image: url("../img/icons/icon-edit.svg");
+						background-size: 15px;
+						background-position: 20px center;
+					}
+
+					.scrum-note-option-delete-note {
+						background-image: url("../img/icons/icon-delete.svg");
+						background-size: 12px 15px;
+						background-position: 21px center;
+					}
+
+					.scrum-note-option-convert-to-note { display: none; }
+
+				}
+
+				&.active {
+					background-color: darken( $denary-color, 10% );
+
+					.scrum-note-options-list { display: block; }
+				}
+			}
+
+			.scrum-note-checkmark {
+				position: absolute;
+				top: 17px;
+				right: 20px;
+				width: 24px;
+				height: 24px;
+				border-radius: 50%;
+				box-shadow: inset 0 0 0 2px $quinary-color;
+				display: none;
+				
+				&::after {
+					content: "";
+					display: none;
+					width: 100%;
+					height: 100%;
+					background: url("../img/icons/icon-checked.svg") no-repeat center / contain;
+				}
+
+			}
+
+			&.impediment {
+
+				.scrum-note-text {
+					background-color: transparent;
+					padding-left: 40px;
+
+					&::before {
+						content: "";
+						position: absolute;
+						display: block;
+						width: 21px;
+						height: 10px;
+						top: 26px;
+						left: 9px;
+						background: url("../img/icons/icon-impediment.svg") no-repeat center / contain;
+					}
+
+				}
+
+				.scrum-note-options-button {
+					right: 60px;
+
+					.scrum-note-option-convert-to-impediment { display: none; }
+
+					.scrum-note-option-convert-to-note { display: block; }
+				
+				}
+
+				.scrum-note-checkmark { display: block; }
+
+				&.solved {
+
+					.scrum-note-text {
+						color: $text-secondary-color;
+						text-decoration: line-through;
+					}
+
+					.scrum-note-checkmark {
+						display: block;
+
+						&::after { display: block; }
+					}
+
+				}
+
+			}
+			
+			&:hover {
+
+				background-color: $denary-color;
+				
+				.scrum-note-text { background-color: transparent; }
+
+				.scrum-note-options-button { display: block; }
+
+				&:not( .solved ) .scrum-note-checkmark { box-shadow: inset 0 0 0 2px darken( $quinary-color, 10% ); }
+
+			}
+
+		}
+
+  	}
+
+	#scrum-notes-footer {
+		
+		@include center( "horizontal" );
+		bottom: 20px;
+		width: calc( 100% - 40px );
+		box-shadow: 0 -12px 0 3px $tertiary-color;
+		
+
+		#scrum-note-input {
+			display: block;
+			width: 100%;
+			padding: 0 150px 0 25px;
+			line-height: 70px;
+			font-size: 16px;
+			border-radius: 3px;
+			box-shadow: inset 0 0 0 2px $quinary-color;
+			transition: box-shadow 0.2s linear;
+
+			&:focus { box-shadow: inset 0 0 0 2px $accent-color; }
+
+		}
+
+		#scrum-notes-impediment-checkbox-container {
+			@include center( "vertical" );
+			right: 30px;
+
+			label {
+				padding-left: 24px;
+				font-size: inherit;
+
+				&::before { top: 2px; }
+				&::after { top: 6px; }
+			}
+
+		}
+
+	}
+
+
+	#scrum-note-empty-state-container {
+
+		width: 370px;
+		margin: 55px auto 0;
+		display: none;
+
+		img {
+			display: block;
+			width: 226px;
+			height: 226px;
+			margin: 0 auto 30px;
+		}
+
+		h2, p { text-align: center; }
+
+		h2 {
+			margin-bottom: 20px;
+			font-size: 20px;
+		}
+
+		p { line-height: 22px; }
+
+
+
+	}
+
+}

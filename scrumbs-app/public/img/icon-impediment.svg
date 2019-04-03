@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="11px" viewBox="0 0 22 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>blocker-icon</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Scrum" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-429.000000, -540.000000)" id="Group">
+            <g transform="translate(0.000000, -44.000000)">
+                <g id="scrum-page" transform="translate(150.000000, 139.000000)">
+                    <g id="Group-10" transform="translate(15.000000, 0.000000)">
+                        <g id="Notes" transform="translate(255.000000, 24.000000)">
+                            <g id="Group-2" transform="translate(0.000000, 65.000000)">
+                                <g id="Blocker---done" transform="translate(0.000000, 331.000000)">
+                                    <g id="blocker-icon" transform="translate(9.000000, 25.000000)">
+                                        <g id="Path">
+                                            <path d="M3,0 L19,0 C20.6568542,-3.04359188e-16 22,1.34314575 22,3 L22,8 C22,9.65685425 20.6568542,11 19,11 L3,11 C1.34314575,11 2.02906125e-16,9.65685425 0,8 L0,3 C-2.02906125e-16,1.34314575 1.34314575,3.04359188e-16 3,0 Z" fill="#FF5357"></path>
+                                            <polygon fill="#F5F5F8" points="11 0 6.86392832 11 2 11 6.1357432 0"></polygon>
+                                            <polygon fill="#F5F5F8" points="20 0 15.8642568 11 11 11 15.1360717 0"></polygon>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

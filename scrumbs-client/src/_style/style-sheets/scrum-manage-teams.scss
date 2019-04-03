@@ -1,0 +1,217 @@
+
+@import "mixins";
+@import "color-variables";
+
+
+/** ============================= MANAGE TEAMS COMPONENT ============================= */
+
+#manage-teams-container {
+
+    background-color: $tertiary-color;
+    height: 100%;
+
+    .manage-teams-header {
+
+        height: 100px;
+        border-bottom: 1px solid $denary-color;
+        position: relative;
+
+        #manage-teams-exit-button {
+            @include center( "vertical" );
+            right: 36px;
+        }
+
+        h1 {
+            @include center( "vertical" );
+            left: 30px;
+            font-size: 24px;
+        }
+
+        .button-group {
+            @include center( "vertical" );
+            right: 145px;
+        }
+
+        #manage-teams-save-button { width: 150px; }
+
+        #manage-teams-cancel-button {
+            width: 150px;
+            height: 49px;
+            margin-right: 12px;
+            background-color: transparent;
+            color: $text-tertiary-color;
+            border-radius: 3px;
+            transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+
+            &:hover {
+                color: $text-primary-color;
+                background-color: $denary-color;
+            }
+        }
+
+    }
+
+    .manage-teams-body {
+        width: 80%;
+        height: calc( 100% - 100px );
+        margin: 0 auto;
+
+        .manage-teams-list-container, .manage-teams-settings-container  {
+            float: left;
+            height: 100%;
+            padding: 25px;
+        }
+
+        .manage-teams-list-container {
+            width: 300px;
+            border-right: 1px solid $denary-color;
+
+            .add-button { width: 100%; }
+
+            .manage-teams-team-list {
+                margin-top: 10px;
+                color: $text-quaternary-color;
+                height: calc( 100% - 55px );
+                overflow-y: auto;
+
+                .manage-teams-team {
+                    line-height: 42px;
+                    padding-left: 25px;
+                    padding-right: 15px;
+                    border-radius: 3px;
+
+                    &.active {
+                        background-color: $denary-color;
+                        cursor: default;
+                    }
+ 
+                }
+
+            }
+
+
+
+        }
+
+        .manage-teams-settings-container {
+            width: calc( 100% - 300px );
+
+            #manage-teams-input-edit-team-name {
+
+                display: inline-block;
+                width: calc( 100% - 135px );
+                border-radius: 3px;
+                border: 2px solid $denary-color;
+                font-size: 24px;
+                padding: 0 16px;
+                line-height: 70px;
+                transition: border 0.2s linear;
+
+                &:focus { border: 2px solid $accent-color; }
+        
+            }
+
+            #manage-teams-delete-team-button {
+                margin-left: 35px;
+                color: $senary-color;
+                background-color: transparent;
+            }
+
+            .manage-teams-settings-body { height: calc( 100% - 105px ); }
+
+            .manage-teams-settings-member-list-header {
+
+                margin: 30px 0 25px;
+                position: relative;
+
+                h2 {
+                    font-size: 24px;
+                    margin-bottom: 12px;
+                }
+
+                & > p { color: $text-tertiary-color; }
+
+                #manage-teams-add-member-button {
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                }
+            
+            }
+
+            .manage-teams-settings-member-list-body {
+
+                height: calc( 100% - 75px );
+
+                ul {
+                    height: 100%;
+                    overflow-y: auto;
+                }
+
+                li {
+
+                    line-height: 50px;
+                    padding-left: 20px;
+                    border-radius: 3px;
+                    box-shadow: inset 0 0 0 1px $quinary-color;
+                    color: $text-tertiary-color;
+                    font-size: 24px;
+                    cursor: pointer;
+                    position: relative;
+
+                    &:not( :last-child ) { margin-bottom: 5px; }
+
+                    span {
+                        display: block;
+                        position: absolute;
+                        width: 24px;
+                        height: 24px;
+                        border-radius: 50%;
+                        box-shadow: inset 0 0 0 2px $quinary-color;
+                        @include center( "vertical" );
+                        right: 15px;
+
+                        &::after {
+                            content: "";
+                            display: none;
+                            width: 100%;
+                            height: 100%;
+                            background: url("../img/icons/icon-checked.svg") no-repeat center / contain;
+                        }
+
+                    }
+
+                    &.active {
+
+                        color: $text-primary-color;
+
+                        span::after { display: block; }
+
+                    }
+
+                }
+
+                input {
+                    line-height: 50px;
+                    padding-left: 20px;
+                    border-radius: 3px;
+                    box-shadow: inset 0 0 0 1px $quinary-color;
+                    color: $text-tertiary-color;
+                    font-size: 24px;
+                    margin-bottom: 5px;
+                    width: 100%;
+
+                    &:focus { box-shadow: inset 0 0 0 1px $accent-color; }
+                }
+
+            }
+
+        }
+
+    }
+
+    
+
+
+
+}

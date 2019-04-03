@@ -1,0 +1,135 @@
+
+@import "mixins";
+@import "color-variables";
+
+
+/** ============================= CREATE TEAM COMPONENT ============================= */
+
+#create-team-container {
+
+  background-color: $tertiary-color;
+  height: 100%;
+  padding-top: 40px;
+  position: relative;
+
+  #create-team-exit-button { right: 36px; }
+
+  .create-team-inner-container {
+    width: 565px;
+    height: 100%;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 24px;
+    float: left;
+    line-height: 50px;
+  }
+
+  #create-team-save-button {
+    width: 152px;
+    float: right;
+  }
+
+  .create-team-body {
+    height: 100%;
+    margin-top: 40px;
+  }
+
+  #create-team-name-input {
+
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 3px;
+    box-shadow: inset 0 0 0 2px $quinary-color;
+    font-size: 24px;
+    padding: 0 16px;
+    line-height: 70px;
+    transition: all 0.2s linear;
+
+    &:focus { box-shadow: inset 0 0 0 2px $accent-color; }
+
+  }
+
+  .create-team-member-list-header {
+
+    margin: 30px 0 25px;
+    position: relative;
+
+    h2 {
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    & > p { color: $text-tertiary-color; }
+
+    #create-team-add-member-button {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+
+  }
+
+
+  .create-team-member-list-body {
+
+    height: 100%;
+
+    ul {
+      height: calc( 100% - 325px );
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      .simplebar-track {
+        right: 0;
+      }
+    }
+
+    li {
+
+      line-height: 50px;
+      padding-left: 20px;
+      border-radius: 3px;
+      box-shadow: inset 0 0 0 1px $quinary-color;
+      color: $text-tertiary-color;
+      font-size: 16px;
+      cursor: pointer;
+      position: relative;
+
+      &:not( :last-child ) { margin-bottom: 5px; }
+
+      span {
+        display: block;
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        box-shadow: inset 0 0 0 2px $quinary-color;
+        @include center( "vertical" );
+        right: 15px;
+
+        &::after {
+          content: "";
+          display: none;
+          width: 100%;
+          height: 100%;
+          background: url("../img/icons/icon-checked.svg") no-repeat center / contain;
+        }
+
+      }
+
+      &.active {
+
+        color: $text-primary-color;
+
+        span::after { display: block; }
+
+      }
+
+    }
+
+  }
+
+}

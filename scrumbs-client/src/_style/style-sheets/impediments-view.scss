@@ -1,0 +1,310 @@
+
+/** TODO: Separate into 4 component files */
+
+@import "mixins";
+@import "color-variables";
+
+
+
+/** Impediments Common */
+
+.impediments-unsolved-member-container, .impediments-solved-member-container {
+
+    h3 {
+        padding-left: 15px;
+        position: relative;
+
+        &::before {
+            content: "";
+            position: absolute;
+            display: block;
+            width: 11px;
+            height: 11px;
+            left: 0;
+            top: 4px;
+            background: url("../img/icons/icon-member.svg") no-repeat center / contain;
+        }
+
+    }
+
+    .impediments-unsolved-member-impediment, .impediments-solved-member-impediment {
+        margin-top: 5px;
+        font-size: 16px;
+        border-radius: 3px;
+        padding: 18px 60px 18px 20px;
+        transition: opacity 0.6s ease-in;
+        position: relative;
+
+        .impediments-unsolved-member-impediment-checkbox, .impediments-solved-member-impediment-checkbox {
+            content: "";
+            display: block;
+            width: 24px;
+            height: 24px;
+            @include center( "vertical" );
+            right: 18px;
+            border-radius: 50%;
+            background-color: $tertiary-color;
+            box-shadow: inset 0 0 0 2px $denary-color;
+
+            &::after {
+                content: "";
+                display: none;
+                width: 100%;
+                height: 100%;
+                background: url("../img/icons/icon-checked.svg") no-repeat center / contain;
+            }
+        }
+
+        &.active {
+            text-decoration: line-through;
+            color: $text-secondary-color;
+
+            .impediments-unsolved-member-impediment-checkbox::after,
+            .impediments-solved-member-impediment-checkbox::after {
+                display: block;
+            }
+
+        } 
+
+    }
+
+}
+
+
+
+/** Impediments Header */
+
+#impediments-header-container {
+
+    position: relative;
+    height: 80px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid $denary-color;
+    z-index: 1;
+
+
+    h1 {
+        @include center( "vertical" );
+        left: 20px;
+        padding-left: 32px;
+        font-size: 20px;
+
+        &::before {
+            content: "";
+            width: 22px;
+            height: 11px;
+            left: 0;
+            @include center( "vertical" );
+            background: url("../img/icons/icon-impediment.svg") no-repeat center / contain;
+        }
+    }
+
+
+    .impediments-filter-container {
+        @include center( "vertical" );
+        right: 70px;
+        white-space: nowrap;
+
+        button {
+            display: block;
+            height: 27px;
+            line-height: 25px;
+            padding-left: 10px;
+            padding-right: 26px;
+            border-radius: 3px;
+            background-color: transparent;
+            position: relative;
+
+            &::after {
+                content: "";
+                display: block;
+                position: absolute;
+                width: 10px;
+                height: 6px;
+                top: 12px;
+                right: 10px;
+                background: url("../img/icons/icon-dropdown-accent.svg") no-repeat center / contain;
+            }
+
+        }
+
+        #impediments-filter-dropdown {
+            width: 275px;
+            max-height: 355px;
+            @include center( "horizontal" );
+            top: 40px;
+            padding: 15px 20px 0;
+            background-color: $tertiary-color;
+            border-radius: 3px;
+            box-shadow: 0 5px 25px 0 $quinary-color;
+            display: none;
+
+            &::before {
+                content: "";
+                position: absolute;
+                display: block;
+                width: 20px;
+                height: 20px;
+                top: -7px;
+                left: calc( 50% - 10px );
+                transform: rotate( 45deg );
+                background-color: $tertiary-color;
+            }
+
+            .impediments-filter-dropdown-header {
+                border-bottom: 1px solid $denary-color;
+                padding: 10px 15px 10px 45px;
+                position: relative;
+
+                &::before {
+                    content: "";
+                    width: 19px;
+                    height: 20px;
+                    @include center( "vertical" );
+                    left: 15px;
+                    background: url("../img/icons/icon-user.svg") no-repeat center / contain;
+                }
+
+                input {
+                    display: block;
+                    max-width: 100%;
+                    font-size: 16px;
+                }
+
+            }
+
+            ul {
+                margin: 10px 0;
+                max-height: 250px;
+                overflow-y: auto;
+
+                li {
+                    line-height: 42px;
+                    border-radius: 3px;
+                    padding: 0 20px;
+
+                    &:hover { background-color: $nonary-color; }
+                }
+            }
+
+        }
+
+        &.active {
+
+            button {
+                background-color: $denary-color;
+
+                &::after {
+                    top: 11px;
+                    transform: rotate( 180deg );
+                }
+            }
+
+            #impediments-filter-dropdown { display: block; }
+
+        }
+
+    }
+
+
+    #impediments-header-options-button {
+        width: 40px;
+        height: 27px;
+        @include center( "vertical" );
+        right: 20px;
+        border-radius: 3px;
+        background: url("../img/icons/icon-options.svg") no-repeat center / 20px 5px;
+
+        &.active { background-color: $denary-color; }
+
+    }
+
+}
+
+
+
+
+
+/** Impediments Unsolved */
+
+#impediments-unsolved-container {
+
+    width: 850px;
+    margin: 0 auto;
+
+    .impediments-unsolved-member-container {
+        margin-top: 15px;
+
+        .impediments-unsolved-member-impediment {
+            opacity: 1;
+            border: 1px solid $denary-color;
+
+            &.active { opacity: 0; } 
+
+        }
+
+    }
+
+}
+
+
+
+
+/** Impediments Solved */
+
+#impediments-solved-container {
+    
+    width: 850px;
+    margin: 15px auto 0;
+
+    .impediments-solved-header {
+
+        height: 51px;
+        position: relative;
+
+        &::before {
+            content: "";
+            display: block;
+            position: relative;
+            width: 100%;
+            height: 1px;
+            top: 25px;
+            background-color: $denary-color;
+        }
+
+        button {
+            height: 21px;
+            @include center();
+            padding: 0 20px;
+            border-radius: 11px;
+            color: $tertiary-color;
+            font-size: 12px;
+            background: $primary-color;
+            background: -moz-linear-gradient( left,    $primary-color 0%, $secondary-color 100% );
+            background: -webkit-linear-gradient( left, $primary-color 0%, $secondary-color 100% );
+            background: linear-gradient( to right,     $primary-color 0%, $secondary-color 100% );
+        }
+
+    }
+
+    #impediments-solved-body {
+
+        .impediments-solved-member-container {
+            margin-top: 15px;
+    
+            .impediments-solved-member-impediment {
+                opacity: 0;
+                background-color: $nonary-color;
+    
+                &.active { opacity: 1; } 
+    
+            }
+    
+        }
+
+    }
+
+}
+
+
+

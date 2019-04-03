@@ -1,0 +1,387 @@
+
+@import "mixins";
+@import "style-resets";
+@import "color-variables";
+@import "style-fonts";
+
+
+/** ==================================== Miscellaneous ==================================== */
+
+.logo {
+    background: url( "../img/icons/scrumbs-logo-colored.svg" ) no-repeat;
+    background-size: contain;
+}
+
+.accent { color: $accent-color; }
+
+.pointer { cursor: pointer; }
+
+.bold { font-weight: bold; }
+
+.semibold { font-weight: 600; }
+
+.light { font-weight: 300; }
+
+.underline, a.underline { text-decoration: underline; }
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+
+
+
+
+
+/** ==================================== Body ==================================== */
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+    font-size: 14px;
+}
+
+body {
+    font-family: Muli, Arial, Helvetica, sans-serif;
+    color: $text-primary-color;
+    background: $tertiary-color;
+    background: -moz-linear-gradient( top,    $quaternary-color 0%, $tertiary-color 100% );
+    background: -webkit-linear-gradient( top, $quaternary-color 0%, $tertiary-color 100% );
+    background: linear-gradient( to bottom,   $quaternary-color 0%, $tertiary-color 100% );
+}
+
+
+
+
+
+/** ==================================== Scroll bar ==================================== */
+
+
+.simplebar-track {
+    right: 18px;
+
+    .simplebar-scrollbar {
+        width: 8px;
+    
+        &::before { background: $text-secondary-color; }
+    
+        &.simplebar-visible::before { opacity: 0.2; }
+    
+    }
+
+}
+
+
+
+/** ==================================== Main Container ==================================== */
+
+#content-wrapper {
+    width: 80%;
+    max-width: 1440px;
+    height: calc( 100% - 95px );
+    @include center( "horizontal" );
+    bottom: 0;
+    transition: width 0.5s ease-in-out,
+                height 0.5s ease-in-out,
+                top 0.5s ease-in-out,
+                bottom 0.5s ease-in-out;
+}
+
+#content-container {
+
+    height: 100%;
+    background-color: $tertiary-color;
+    border-radius: 5px;
+    box-shadow: 0 2px 20px 0 $quinary-color;
+    position: relative;
+    top: 5px;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: -5%;
+        width: 110%;
+        height: 105%;
+        background: url( "../img/bg-shape.svg" ) no-repeat;
+        background-size: 100% 100%;
+        z-index: -1;
+    }
+
+}
+
+
+
+
+/** ==================================== Inputs ==================================== */
+
+input, textarea {
+    color: $text-secondary-color;
+    background-color: $tertiary-color;
+}
+
+::placeholder {
+    color: $text-tertiary-color;
+    opacity: 1;
+}
+
+:-ms-input-placeholder {
+    color: $text-tertiary-color;
+}
+
+::-ms-input-placeholder {
+    color: $text-tertiary-color;
+}
+
+.input-group {
+
+    position: relative;
+
+    &:not( :last-child ) { margin-bottom: 20px; }
+
+    .input-label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .input-container {
+        height: 50px;
+        background-color: $tertiary-color;
+        box-shadow: inset 0 0 0 1px $quinary-color;
+        border-radius: 5px;
+        margin-bottom: 4px;
+        position: relative;
+    }
+
+    .input {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: none;
+        border-radius: 5px;
+        padding: 0 20px 0 40px;
+        background-color: transparent;
+        color: $text-secondary-color;
+
+        &:focus { box-shadow: inset 0 0 0 1px $accent-color; }
+    }
+
+    .input-password { padding-right: 50px; }
+
+    .input-icon {
+        position: absolute;
+        left: 15px;
+        @include center( "vertical" );
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+
+    .input-error {
+        font-size: 12px;
+        color: $senary-color;
+        display: none;
+    }
+
+    .input-container.error ~ .input-error {
+        display: unset;
+    }
+
+    .password-toggle-button {
+        width: 20px;
+        height: 13px;
+        right: 20px;
+        @include center( "vertical" );
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        background-image: url( "../img/icons/icon-eye.svg" );
+    }
+
+    .input-password[type=text] ~ .password-toggle-button {
+        height: 17px;
+        background-image: url( "../img/icons/icon-eye-crossed.svg" );
+    }
+
+    .input-password[type=password]:not(:placeholder-shown) { letter-spacing: 5px; }
+
+}
+
+
+
+
+/** ==================================== Checkbox ==================================== */
+
+.checkbox-group {
+
+    display: inline-block;
+    position: relative;
+
+    .checkbox {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 20px;
+        height: 20px;
+        border: 1px solid $quinary-color;
+        border-radius: 3px;
+    }
+
+    label {
+        color: $text-tertiary-color;
+        font-size: 12px;
+        line-height: 22px;
+        padding-left: 28px;
+        transition: all 0.2s linear;
+
+        &::before {
+            content: "";
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border: 1px solid $quinary-color;
+            border-radius: 3px;
+            transition: all 0.2s linear;
+        }
+
+        &::after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 4px;
+            left: 7px;
+            width: 6px;
+            height: 10px;
+            border-style: solid;
+            border-width: 0 2px 2px 0;
+            border-color: $text-primary-color;
+            transform: rotate( 45deg );
+            opacity: 0;
+            transition: all 0.2s linear;
+        }
+
+    }
+
+    input:checked + label {
+        
+        color: $text-primary-color;
+
+        &::before { border: 1px solid $text-primary-color; }
+
+        &::after { opacity: 1; }
+
+
+    }
+
+}
+
+
+
+
+/** ==================================== Buttons ==================================== */
+
+.primary-button {
+
+    display: inline-block;
+    border-radius: 5px;
+    border: none;
+    color: $tertiary-color;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 13px;
+    height: 49px;
+    line-height: 49px;
+    box-shadow: 0 12px 8px -9px lighten( $secondary-color, 17% );
+    background: $primary-color;
+    background: -moz-linear-gradient( left,    $primary-color 0%, $secondary-color 100% );
+    background: -webkit-linear-gradient( left, $primary-color 0%, $secondary-color 100% );
+    background: linear-gradient( to right,     $primary-color 0%, $secondary-color 100% );
+    transition: all 0.2s ease-in-out;
+
+
+    &:hover {
+        transform: scale( 1.03 );
+        box-shadow: 0 12px 8px -9px lighten( $secondary-color, 17% );
+        background: $accent-color;
+        background: -moz-linear-gradient( left,    $accent-color 0%, $accent-color 100% );
+        background: -webkit-linear-gradient( left, $accent-color 0%, $accent-color 100% );
+        background: linear-gradient( to right,     $accent-color 0%, $accent-color 100% );
+    }
+
+}
+
+
+.add-button {
+
+    position: relative;
+    width: 150px;
+    height: 45px;
+    border: 1px solid $denary-color;
+    border-radius: 3px;
+    transition: border 0.2s linear;
+
+    &:hover { border: 1px solid $quinary-color; }
+
+    p {
+      @include center();
+      padding-left: 25px;
+      white-space: nowrap;
+
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0;
+        width: 12px;
+        height: 12px;
+        background: url( "../img/icons/icon-add-accent.svg" ) no-repeat center / contain;
+        @include center( "vertical" );
+      }
+    }
+
+  }
+
+
+.exit-overlay-button {
+    display: block;
+    position: absolute;
+    width: 35px;
+    height: 45px;
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      @include center();
+      width: 22px;
+      height: 35px;
+      background: url( "../img/icons/icon-close.svg" ) no-repeat center / contain;
+    }
+
+}
+
+
+
+
+@media screen and ( max-width: 560px ) {
+
+    #content-wrapper {
+        width: 95%;
+        height: calc( 100% - 85px );
+    }
+
+}
+
+
+
+
+
+

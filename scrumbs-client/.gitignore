@@ -1,0 +1,13 @@
+# Add any directories, files, or patterns you don't want to be tracked by version control
+
+.idea/
+node_modules/
+_desktop/lib
+_desktop/js
+_mobile/www/lib
+_mobile/www/js
+_web/lib
+_web/js
+src/**/*.js
+common/output.js
+common/output.js.map

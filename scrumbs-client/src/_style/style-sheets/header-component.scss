@@ -1,0 +1,113 @@
+
+@import "mixins";
+@import "color-variables";
+
+
+
+    #header-component-container {
+
+
+        /** ======================= Desktop ======================= */
+
+        height: 100%;
+        position: relative;
+
+        #logo {
+            display: inline-block;
+            width: 120px;
+            height: 30px;
+            margin-top: 16px;
+            position: relative;
+        }
+    
+        #header-navigation {
+    
+            position: absolute;
+            @include center();
+            font-weight: 900;
+            color: $text-tertiary-color;
+            font-size: 16px;
+            display: none;
+    
+            li {
+                display: inline-block;
+                padding: 10px;
+    
+                &:not( :last-child ) { margin-right: 15px; }
+    
+                &.active {
+                    color: $text-primary-color;
+                    cursor: default;
+                }
+            }
+    
+        }
+    
+        .button-group, #header-profile-wrapper {
+            position: absolute;
+            right: 0;
+            @include center( "vertical" );
+            
+        }
+    
+        .button-group { height: 50px; }
+    
+        #header-profile-wrapper {
+            height: 45px;
+            display: none;
+        }
+    
+        #profile-avatar {
+            display: block;
+            width: 45px;
+            height: 100%;
+            margin-right: 30px;
+            border: 1px solid $text-tertiary-color;
+            border-radius: 50%;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 50%;
+            background-image: url( "../img/icons/icon-user.svg" );
+        }
+    
+        #profile-dropdown-button {
+            width: 13px;
+            height: 8px;
+            @include center( "vertical" );
+            right: 0;
+            background: url( "../img/icons/icon-dropdown-accent.svg" ) no-repeat center / contain;
+    
+            // &::after {
+            //     content: "";
+            //     display: block;
+            //     position: absolute;
+            //     @include center();
+            //     width: 13px;
+            //     height: 8px;
+            //     background: url( "../../../img/icons/icon-dropdown-accent.svg" ) no-repeat center / contain;
+            // }
+    
+        }
+    
+        #header-auth-button {
+            width: 152px;
+            margin-left: 30px;
+        }
+    
+
+
+        /** ======================= 560px ======================= */
+
+        @media screen and ( max-width: 560px ) {
+    
+            #header-auth-message { display: none; }
+    
+        }
+
+
+    }
+
+
+    
+    
+

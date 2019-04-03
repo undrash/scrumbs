@@ -1,0 +1,131 @@
+
+@import "mixins";
+@import "color-variables";
+@import "style-fonts";
+
+
+
+
+/** ==================================== Authentication ==================================== */
+
+#authentication-view-container {
+
+    h1, h2 {
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    h1 {
+        font-size: 26px;
+        font-weight: bold;
+        margin-bottom: 12px;
+    }
+
+    h2 {
+        max-width: 315px;
+        line-height: 22px;
+        color: $text-secondary-color;
+    }
+
+    .input-wrapper {
+        margin-top: 25px;
+    }
+
+    @each $type in "email" "password" "user" {
+
+        .input-#{$type} ~ .input-icon {
+
+            background-image: url( "../img/icons/icon-#{$type}.svg" );
+
+            @if $type == "email" {
+                width: 16px;
+                height: 12px;
+
+            } @else if $type == "password" {
+                width: 12px;
+                height: 16px;
+
+            } @else if $type == "user" {
+                width: 14px;
+                height: 15px;
+            }
+
+        }
+    }
+
+    .checkbox-wrapper {
+        margin: 35px 0;
+    }
+
+    .primary-button {
+        display: block;
+        width: 95%;
+        margin: 0 auto;
+    }
+
+    .social-media-auth-wrapper {
+
+        p {
+            text-align: center;
+            color: $text-tertiary-color;
+            font-size: 12px;
+            margin: 35px 0;
+        }
+
+        .social-media-auth-container {
+
+            height: 50px;
+            margin: 0 auto;
+            position: relative;
+
+            a {
+                position: absolute;
+                display: block;
+                width: 28%;
+                height: 100%;
+                border-radius: 5px;
+                transition: all 0.2s linear;
+
+                &:hover { box-shadow: 0 0 0 1px $quinary-color; }
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    width: 22px;
+                    height: 22px;
+                    @include center();
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-size: contain;
+                }
+
+                &:nth-child( 1 ) {
+                    left: 0;
+                    &::after { background-image: url("../img/icons/google-icon.svg"); }
+                }
+
+                &:nth-child( 2 ) {
+                    @include center( "horizontal" );
+                    &::after { background-image: url("../img/icons/twitter-icon.svg"); }
+                }
+
+                &:nth-child( 3 ) {
+                    right: 0;
+                    &::after { background-image: url("../img/icons/linked-in-icon.svg"); }
+                }
+
+            }
+
+        }
+
+    }
+
+
+
+    @media screen and ( max-width: 480px ) {
+
+        .primary-button { width: 100%; }
+
+    }
+
+}

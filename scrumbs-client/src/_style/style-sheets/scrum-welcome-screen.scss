@@ -1,0 +1,44 @@
+
+
+#scrum-welcome-screen {
+  height: 100%;
+  width: 100%;
+
+  #scrum-welcome-screen-profile {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    background-color: #5f78b8;
+    font-size: 50px;
+    line-height: 200px;
+    text-align: center;
+    font-weight: bold;
+    margin: 150px auto auto;
+  }
+
+  h2 {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    margin: 25px auto;
+  }
+
+  #scrum-welcome-screen-info-container {
+    width: 50%;
+    margin: auto;
+
+    p {
+      text-align: center;
+      font-size: 15px;
+    }
+
+    button {
+      display: block;
+      width: 200px;
+      height: 70px;
+      background-color: #3f8eff;
+      color: white;
+      margin: 25px auto;
+    }
+  }
+}

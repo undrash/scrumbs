@@ -1,0 +1,20 @@
+@import "mixins";
+@import "color-variables";
+
+
+
+#header-view-container {
+
+    background: $tertiary-color;
+    height: 70px;
+    padding: 0 25px;
+    z-index: 1000;
+
+
+    @media screen and ( max-width: 560px ) {
+
+        padding: 0 15px;
+
+    }
+
+}

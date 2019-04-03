@@ -1,0 +1,49 @@
+
+
+#scrum-view-container {
+	width: 100%;
+	height: 100%;
+	border-radius: 5px;
+	position: relative;
+	overflow: hidden;
+
+	#scrum-teams-container {
+		width: 250px;
+		height: 100%;
+		float: left;
+	}
+
+	#scrum-welcome-screen-container {
+		width: calc( 100% - 250px );
+		height: 100%;
+		float: right;
+		//display: none;
+	}
+
+	#scrum-notes-container {
+		//display: none;
+		width: calc( 100% - 250px );
+		height: 100%;
+		float: right;
+	}
+
+	#scrum-create-team-container, #scrum-manage-teams-container {
+		display: none;
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
+		z-index: 5;
+	}
+
+	#scrum-manage-teams-container {
+		// display: none;
+	}
+
+	#scrum-create-team-container {
+		display: none;
+	}
+
+
+}

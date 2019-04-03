@@ -1,0 +1,159 @@
+
+@import "mixins";
+@import "color-variables";
+
+
+#scrum-teams {
+
+    /** ======================= Desktop ======================= */
+
+    width: 100%;
+    height: 100%;
+    background: $primary-color;
+    background: -moz-linear-gradient( left,    $septenary-color 0%, $octonary-color 100% );
+    background: -webkit-linear-gradient( left, $septenary-color 0%, $octonary-color 100% );
+	background: linear-gradient( to right,     $septenary-color 0%, $octonary-color 100% );
+    position: relative;
+
+
+	input {
+		height: 42px;
+		width: 100%;
+		padding-left: 20px;
+	}
+
+	.scrum-teams-header {
+
+		height: 80px;
+		border-bottom: 1px solid $accent-color;
+		position: relative;
+
+		h1 {
+			@include center( "vertical" );
+			left: 25px;
+			font-size: 20px;
+			line-height: 21px;
+			padding-left: 28px;
+			color: $tertiary-color;
+			background: url("../img/icons/icon-team.svg") no-repeat left / contain;
+		}
+
+		.scrum-create-team-btn {
+			width: 28px;
+			height: 28px;
+			@include center( "vertical" );
+			right: 18px;
+			border-radius: 3px;
+			background: $tertiary-color url("../img/icons/icon-add-accent.svg") no-repeat center / 12px;
+		}
+
+	}
+
+	.scrum-team-container {
+
+		height: calc( 100% - 140px );
+		overflow-y: auto;
+		overflow-x: hidden;
+		color: $tertiary-color;
+
+		.simplebar-track {
+			right: 3px;
+		}
+
+		.scrum-team {
+
+			&:not( :last-child ) { border-bottom: 1px solid $accent-color; }
+
+			.scrum-team-header {
+				position: relative;
+	
+				.scrum-team-name {
+					height: 100%;
+					margin-left: 17px;
+					line-height: 45px;
+					padding-left: 15px;
+					position: relative;
+
+					&::before {
+						content: "";
+						position: absolute;
+						display: block;
+						left: 0;
+						top: 20px;
+						width: 10px;
+						height: 6px;
+						background: url("../img/icons/icon-dropdown.svg") no-repeat center / contain;
+						transform: rotate( -90deg );
+						transition: transform 0.2s ease-in-out;
+					}
+				}
+
+				.scrum-create-member-btn {
+					display: block;
+					position: absolute;
+					width: 28px;
+					height: 28px;
+					@include center( "vertical" );
+					right: 18px;
+					border-radius: 3px;
+					background: $accent-color url("../img/icons/icon-add.svg") no-repeat center / 12px;
+				}
+	
+			}
+
+			.scrum-team-members {
+				display: none;
+
+				.scrum-team-member {
+					line-height: 42px;
+					padding-left: 20px;
+
+					&:not( .active ):hover { background-color: $highlight-color; }
+
+					&.active {
+						background-color: $tertiary-color;
+						color: $text-primary-color;
+						cursor: default;
+					}
+				}
+
+
+
+			}
+
+			&.active {
+
+				.scrum-team-name::before { transform: none; }
+
+				.scrum-team-members { display: block; }
+
+			}
+
+		}
+
+		
+		
+	}
+
+	.scrum-teams-footer {
+
+		position: absolute;
+		left: 0;
+		bottom: 5px;
+		width: 100%;
+		height: 60px;
+		
+		border-top: 1px solid $accent-color;
+
+		.scrum-team-settings-btn {
+			display: block;
+			height: 100%;
+			margin-left: 25px;
+			padding-left: 30px;
+			color: $tertiary-color;
+			background: url("../img/icons/icon-settings.svg") no-repeat left / 20px;
+		}
+
+	}
+
+}

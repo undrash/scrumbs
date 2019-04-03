@@ -1,0 +1,49 @@
+
+
+
+@mixin center( $position: 'both' ) {
+  position: absolute;
+
+  @if $position == 'horizontal' {
+
+    left: 50%;
+    -webkit-transform: translateX( -50% );
+    -moz-transform: translateX( -50% );
+    -ms-transform: translateX( -50% );
+    -o-transform: translateX( -50% );
+    transform: translateX( -50% );
+
+  } @else if $position == 'vertical' {
+
+    top: 50%;
+    -webkit-transform: translateY( -50% );
+    -moz-transform: translateY( -50% );
+    -ms-transform: translateY( -50% );
+    -o-transform: translateY( -50% );
+    transform: translateY( -50% );
+
+  } @else {
+
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate( -50%, -50% );
+    -moz-transform: translate( -50%, -50% );
+    -ms-transform: translate( -50%, -50% );
+    -o-transform: translate( -50%, -50% );
+    transform: translate( -50%, -50% );
+
+  }
+
+}
+
+
+
+@mixin gradient( $color, $support-color ) {
+
+  background: $color; /* Old browsers */
+  background: -moz-linear-gradient( left, $support-color 0%, $color 100% ); /* FF3.6-15 */
+  background: -webkit-linear-gradient( left, $support-color 0%, $color 100% ); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient( to right, $support-color 0%, $color 100% ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$support-color, endColorstr=$color, GradientType=1 ); /* IE6-9 */
+
+}
