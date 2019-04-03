@@ -5,7 +5,11 @@ const webpack   = require( "webpack" );
 
 
 module.exports = {
-    entry: "./src/EntryPoint",
+    context: path.join( __dirname, "src/pages" ),
+    entry: {
+        app: "./app/AppEntryPoint.ts",
+        resetPassword: "./reset-password/ResetPasswordEntryPoint.ts"
+    },
     mode: "production",
     module: {
         rules: [
@@ -28,7 +32,7 @@ module.exports = {
         }
     },
     output: {
-        filename: "app.js",
+        filename: "[name].js",
         path: path.resolve(__dirname, "../scrumbs-app/public/js")
     },
     externals: [
