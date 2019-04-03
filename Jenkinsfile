@@ -50,7 +50,7 @@ pipeline {
 
         stage('Push Docker Images') {
             steps {
-                sh './jenkins/push/push.sh'
+                sh './jenkins/push/push.sh $DOCKER_PASS'
             }
         }
 
