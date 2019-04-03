@@ -3,7 +3,12 @@ pipeline {
     agent any
 
     environment {
-        PASS = credentials('andrei_dockerhub_pw')
+        DOCKER_PASS = credentials('andrei_dockerhub_pw')
+        JWT_SECRET = credentials('scrumbs_jwt_secret')
+        SUPPORT_EMAIL_ADDRESS = credentials('scrumbs_support_email')
+        SUPPORT_EMAIL_PW = credentials('scrumbs_support_pw')
+        ADMIN_SECRET = credentials('scrumbs_admin_secret')
+        ADMIN_EMAIL_ADDRESS = credentials('scrumbs_admin_email')
 		HOST_NAME = 'scrumbs'
 		HOST_ADDRESS = '165.227.168.111'
     }
@@ -24,6 +29,14 @@ pipeline {
                 sh 'cd ./scrumbs-client && npm run build'
                 sh 'cd ./scrumbs-app && npm run build'
                 sh 'cd ./scrumbs-website && npm run build'
+            }
+
+        }
+
+        stage('Configure Environment Variables') {
+            steps {
+                sh 'cd ./scrumbs-app && ../jenkins/configure/configure-app.sh $JWT_SECRET $SUPPORT_EMAIL_ADDRESS $SUPPORT_EMAIL_PW'
+                sh 'cd ./scrumbs-website && ../jenkins/configure/configure-app.sh $ADMIN_SECRET $ADMIN_EMAIL_ADDRESS $SUPPORT_EMAIL_ADDRESS $SUPPORT_EMAIL_PW'
             }
 
         }
