@@ -36,6 +36,7 @@ pipeline {
         stage('Configure Environment Variables') {
             steps {
                 sh './jenkins/configure/configure.sh $JWT_SECRET $ADMIN_SECRET $ADMIN_EMAIL_ADDRESS $SUPPORT_EMAIL_ADDRESS $SUPPORT_EMAIL_PW'
+                sh 'cat docker-cloud.yml'
             }
 
         }
