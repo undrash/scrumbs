@@ -24,12 +24,21 @@ services:
     depends_on:
       - mongo
     restart: always
+    environment:
+      - JWT_SECRET='<JWT_SECRET>'
+      - SUPPORT_EMAIL_ADDRESS='<SUPPORT_EMAIL_ADDRESS>'
+      - SUPPORT_EMAIL_PW='<SUPPORT_EMAIL_PW>'
 
   website:
     image: gasparandr/scrumbs-website
     depends_on:
       - mongo
     restart: always
+    environment:
+      - ADMIN_SECRET='<ADMIN_SECRET>'
+      - ADMIN_EMAIL_ADDRESS='<ADMIN_EMAIL_ADDRESS>'
+      - SUPPORT_EMAIL_ADDRESS='<SUPPORT_EMAIL_ADDRESS>'
+      - SUPPORT_EMAIL_PW='<SUPPORT_EMAIL_PW>'
 
   mongo:
     image: mongo

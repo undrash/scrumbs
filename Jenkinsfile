@@ -35,8 +35,7 @@ pipeline {
 
         stage('Configure Environment Variables') {
             steps {
-                sh 'cd ./scrumbs-app && ../jenkins/configure/configure-app.sh $JWT_SECRET $SUPPORT_EMAIL_ADDRESS $SUPPORT_EMAIL_PW'
-                sh 'cd ./scrumbs-website && ../jenkins/configure/configure-app.sh $ADMIN_SECRET $ADMIN_EMAIL_ADDRESS $SUPPORT_EMAIL_ADDRESS $SUPPORT_EMAIL_PW'
+                sh './jenkins/configure/configure-app.sh $JWT_SECRET $ADMIN_EMAIL_ADDRESS $SUPPORT_EMAIL_ADDRESS $SUPPORT_EMAIL_PW'
             }
 
         }
