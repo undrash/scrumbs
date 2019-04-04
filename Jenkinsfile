@@ -5,10 +5,10 @@ pipeline {
     environment {
         DOCKER_PASS = credentials('andrei_dockerhub_pw')
         JWT_SECRET = credentials('scrumbs_jwt_secret')
-        SUPPORT_EMAIL_ADDRESS = credentials('scrumbs_support_email')
-        SUPPORT_EMAIL_PW = credentials('scrumbs_support_pw')
         ADMIN_SECRET = credentials('scrumbs_admin_secret')
         ADMIN_EMAIL_ADDRESS = credentials('scrumbs_admin_email')
+        SUPPORT_EMAIL_ADDRESS = credentials('scrumbs_support_email')
+        SUPPORT_EMAIL_PW = credentials('scrumbs_support_pw')
 		HOST_NAME = 'scrumbs'
 		HOST_ADDRESS = '165.227.168.111'
     }
@@ -35,7 +35,7 @@ pipeline {
 
         stage('Configure Environment Variables') {
             steps {
-                sh './jenkins/configure/configure-app.sh $JWT_SECRET $ADMIN_EMAIL_ADDRESS $SUPPORT_EMAIL_ADDRESS $SUPPORT_EMAIL_PW'
+                sh './jenkins/configure/configure-app.sh $JWT_SECRET $ADMIN_SECRET $ADMIN_EMAIL_ADDRESS $SUPPORT_EMAIL_ADDRESS $SUPPORT_EMAIL_PW'
             }
 
         }
@@ -78,7 +78,7 @@ def method_remote_deploy() {
 		
 		
 		stage('Deploy to cluster') {
-            sshCommand remote: remote, command: "echo \"${PASS}\" | docker login -u gasparandr --password-stdin"
+            sshCommand remote: remote, command: "echo \"${DOCKER_PASS}\" | docker login -u gasparandr --password-stdin"
 		    sshPut remote: remote, from: 'docker-cloud.yml', into: '.'
 		    sshScript remote: remote, script: "jenkins/deploy/deploy.sh"
 		}
