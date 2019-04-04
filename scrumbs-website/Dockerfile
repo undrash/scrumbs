@@ -2,7 +2,7 @@
 FROM node:10
 
 # Work directory
-WORKDIR /usr/gateway
+WORKDIR /usr/scrumbs
 
 # Install dependencies
 COPY ./package*.json ./
