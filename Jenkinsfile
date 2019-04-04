@@ -66,7 +66,7 @@ pipeline {
 
 def method_remote_deploy() {
 	withCredentials([
-		sshUserPrivateKey(credentialsId: 'scrumbs_andrei', usernameVariable: 'USER', keyFileVariable: 'KEYFILE')
+		sshUserPrivateKey(credentialsId: '6a21dfc5-0b96-4139-b7a6-0d6111966291', usernameVariable: 'USER', keyFileVariable: 'KEYFILE')
 	]) {
 	
 		def remote = [:]
