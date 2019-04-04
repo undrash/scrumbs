@@ -7,8 +7,6 @@ services:
     depends_on:
       - app
       - website
-    restart_policy:
-      condition: on-failure
     ports:
       - "80:80"
       - "443:443"
@@ -24,8 +22,6 @@ services:
     image: gasparandr/scrumbs-app
     depends_on:
       - mongo
-    restart_policy:
-      condition: on-failure
     environment:
       - JWT_SECRET='<JWT_SECRET>'
       - SUPPORT_EMAIL_ADDRESS='<SUPPORT_EMAIL_ADDRESS>'
@@ -35,8 +31,6 @@ services:
     image: gasparandr/scrumbs-website
     depends_on:
       - mongo
-    restart_policy:
-      condition: on-failure
     environment:
       - ADMIN_SECRET='<ADMIN_SECRET>'
       - ADMIN_EMAIL_ADDRESS='<ADMIN_EMAIL_ADDRESS>'
