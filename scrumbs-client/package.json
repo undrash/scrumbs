@@ -11,9 +11,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/es6-promise": "^3.3.0",
     "@types/gsap": "^1.20.2",
-    "@types/node": "^11.13.0",
+    "@types/node": "11.13.0",
     "@types/three": "^0.92.25",
     "brfs": "^1.6.1",
     "css-loader": "^2.1.1",
@@ -29,13 +28,12 @@
     "three": "^0.92.0",
     "transform-loader": "^0.2.4",
     "ts-loader": "^4.5.0",
-    "tslint": "^5.15.0",
-    "typescript": "^2.9.2",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0"
   },
   "dependencies": {
     "natives": "^1.1.6",
     "pixi.js": "^4.8.7"
-  }
+  },
+  "metapackage": "typescript-project"
 }

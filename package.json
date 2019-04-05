@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "name": "scrumbs-dev",
+  "version": "0.0.0",
+  "description": "Scrumbs development monorepo",
+  "license": "UNLICENSED",
+  "scripts": {
+    "format": "prettier --write **/*.js **/*.ts"
+  },
+  "metapackage": "multipackage"
+}
