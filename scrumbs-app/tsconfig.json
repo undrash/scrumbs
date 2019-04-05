@@ -15,42 +15,10 @@
 		"sourceMap": true,
 		"strict": true,
 		"lib": [
-			"esnext"
+			"esnext", "dom"
 		],
 		"module": "commonjs",
 		"target": "es2015",
-		"typeRoots": [
-			"./node_modules/@types"
-		],
-		"types": [
-			"async",
-			"bcrypt",
-			"body-parser",
-			"bson",
-			"compression",
-			"connect",
-			"cors",
-			"debug",
-			"dotenv",
-			"events",
-			"express-handlebars",
-			"express",
-			"express-serve-static-core",
-			"helmet",
-			"jsonwebtoken",
-			"jwt-simple",
-			"mime",
-			"mongodb",
-			"mongoose",
-			"morgan",
-			"node",
-			"nodemailer",
-			"passport",
-			"passport-jwt",
-			"passport-strategy",
-			"range-parser",
-			"serve-static"
-		],
 		"outDir": "./build"
 	},
 	"exclude": [
