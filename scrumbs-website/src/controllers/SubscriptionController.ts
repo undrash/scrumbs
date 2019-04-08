@@ -93,7 +93,6 @@ class SubscriptionController {
                 }
             );
 
-            console.log( "status: ", response.data.status );
 
             if ( response.data.status === "subscribed" ) {
                 return res.send( { success: false, message: "The email you provided is already subscribed" } );
@@ -105,7 +104,9 @@ class SubscriptionController {
 
         /** If the user exists but is unsubscribed. */
 
-        if ( response.data.status === "unsubscribed" ) {
+
+
+        if ( response && response.data.status === "unsubscribed" ) {
 
             try {
                 await axios.patch(
