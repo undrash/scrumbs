@@ -8,7 +8,7 @@ if [ $# -eq 6 ]
         echo "Number of arguments is valid."
     else
             echo "Invalid number of arguments provided!"
-	    echo "Expected: 4 (JWT_SECRET, ADMIN_SECRET, ADMIN_EMAIL_ADDRESS, SUPPORT_EMAIL_ADDRESS, SUPPORT_EMAIL_PW, MAILCHIMP_KEY)"
+	    echo "Expected: 6 (JWT_SECRET, ADMIN_SECRET, ADMIN_EMAIL_ADDRESS, SUPPORT_EMAIL_ADDRESS, SUPPORT_EMAIL_PW, MAILCHIMP_KEY)"
             echo "Provided: $#"
             exit 1
 fi
