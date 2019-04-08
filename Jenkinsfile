@@ -9,6 +9,7 @@ pipeline {
         ADMIN_EMAIL_ADDRESS = credentials('scrumbs_admin_email')
         SUPPORT_EMAIL_ADDRESS = credentials('scrumbs_support_email')
         SUPPORT_EMAIL_PW = credentials('scrumbs_support_pw')
+        MAILCHIMP_KEY = credentials('mailchimp_key')
 		HOST_NAME = 'scrumbs'
 		HOST_ADDRESS = '165.227.168.111'
     }
@@ -35,7 +36,7 @@ pipeline {
 
         stage('Configure Environment Variables') {
             steps {
-                sh './jenkins/configure/configure.sh $JWT_SECRET $ADMIN_SECRET $ADMIN_EMAIL_ADDRESS $SUPPORT_EMAIL_ADDRESS $SUPPORT_EMAIL_PW'
+                sh './jenkins/configure/configure.sh $JWT_SECRET $ADMIN_SECRET $ADMIN_EMAIL_ADDRESS $SUPPORT_EMAIL_ADDRESS $SUPPORT_EMAIL_PW $MAILCHIMP_KEY'
             }
 
         }

@@ -8,9 +8,9 @@ import Subscriber from "../models/Subscriber";
 
 import * as hbs from "nodemailer-express-handlebars";
 import * as nodemailer from "nodemailer";
-import * as uuidv4 from "uuid/v4";
+import * as crypto from "crypto";
 import * as path from "path";
-
+import axios from "axios";
 
 
 
@@ -70,8 +70,7 @@ class SubscriptionController {
 
 
 
-
-    public subscribe = async (req: Request, res: Response) => {
+    public subscribe = async (req: Request, res: Response, next: NextFunction) => {
         const { name, email } = req.body;
 
         if ( name.length < 2 || ! ValidationHelper.validateEmail( email ) ) {
@@ -80,23 +79,81 @@ class SubscriptionController {
         }
 
 
-        const exists  = await Subscriber.findOne( { email } );
+        let md5email = crypto.createHash( "md5" ).update( email ).digest( "hex" );
 
-        if ( exists ) {
-            res.send( { success: false, message: "This email address is aleady subscribed!" } );
-            return;
+        let response;
+
+        try {
+            response = await axios.get(
+                `https://us20.api.mailchimp.com/3.0/lists/79a95bcc09/members/${ md5email }`,
+                {
+                    headers: {
+                        Authorization: process.env.MAILCHIMP_KEY
+                    }
+                }
+            );
+
+            console.log( "status: ", response.data.status );
+
+            if ( response.data.status === "subscribed" ) {
+                return res.send( { success: false, message: "The email you provided is already subscribed" } );
+            }
+
+        } catch (e) {
+            /** 404 means email is not subscribed yet. => WE PROCEED. */
         }
 
+        /** If the user exists but is unsubscribed. */
 
-        const id = uuidv4();
+        if ( response.data.status === "unsubscribed" ) {
 
-        const subscriber = new Subscriber({
-            id,
-            name,
-            email
-        });
+            try {
+                await axios.patch(
+                    `https://us20.api.mailchimp.com/3.0/lists/79a95bcc09/members/${ md5email }`,
+                    {
+                        status: "subscribed"
+                    },
+                    {
+                        headers: {
+                            Authorization: process.env.MAILCHIMP_KEY
+                        }
+                    }
+                );
 
-        await subscriber.save();
+            } catch (e) {
+                return res.send( { success: false, message: "Internal server error. Please contact your system administrator." } );
+            }
+
+        } else {
+
+            /** If the user doesn't exist */
+
+            try {
+                await axios.post(
+                    "https://us20.api.mailchimp.com/3.0/lists/79a95bcc09",
+                    {
+                        members: [
+                            {
+                                email_address: email,
+                                status: "subscribed",
+                                merge_fields: {
+                                    NAME: name
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        headers: {
+                            Authorization: process.env.MAILCHIMP_KEY
+                        }
+                    }
+                );
+            } catch (e) {
+                return res.send( { success: false, message: "Internal server error. Please contact your system administrator." } );
+            }
+
+        }
+
 
         const smtpTransport = nodemailer.createTransport({
             service: "Gmail",
@@ -119,7 +176,7 @@ class SubscriptionController {
             template: "subscribed",
             context: {
                 name,
-                unSubscribe: `http://${ req.headers.host }/subscriptions/unsubscribe/${ subscriber.id }`
+                unSubscribe: `http://${ req.headers.host }/subscriptions/unsubscribe/${ md5email }`
             }
         };
 
@@ -143,9 +200,7 @@ class SubscriptionController {
 
 
         await smtpTransport.sendMail( adminMailOptions, (err: any) => {
-
             if ( err ) throw err;
-
         });
 
         res.send( { success: true, message: "You successfully subscribed for Scrumbs alpha access!" } );
@@ -154,15 +209,24 @@ class SubscriptionController {
 
 
 
-    public unsubscribe(req: Request, res: Response, next: NextFunction) {
+    public unsubscribe = async (req: Request, res: Response, next: NextFunction) => {
         const id: string = req.params.id;
 
-        Subscriber.findOneAndRemove( { id } )
-            .then( () => {
-                res.render( "unsubscribed", { title: "Scrumbs | Successfully Unsubscribed" } );
-            })
+
+        axios.patch(
+            `https://us20.api.mailchimp.com/3.0/lists/79a95bcc09/members/${ id }`,
+            {
+                status: "unsubscribed"
+            },
+            {
+                headers: {
+                    Authorization: process.env.MAILCHIMP_KEY
+                }
+            }
+        )
+            .then( () => res.render( "unsubscribed", { title: "Scrumbs | Successfully Unsubscribed" } ) )
             .catch( next );
-    }
+    };
 
 
 
