@@ -32,7 +32,7 @@ export class ScrumWelcomeScreen extends ViewComponent {
 
 
     constructor(view: View, container: HTMLElement) {
-        super( view, container );
+        super( view, container, "ScrumWelcomeScreen" );
 
         this.container.innerHTML = template;
 

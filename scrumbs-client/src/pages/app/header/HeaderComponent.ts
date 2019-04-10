@@ -42,7 +42,7 @@ export class HeaderComponent extends ViewComponent {
 
 
     constructor(view: View, container: HTMLElement) {
-        super( view, container );
+        super( view, container, "HeaderComponent" );
 
         this.container.innerHTML = template;
 

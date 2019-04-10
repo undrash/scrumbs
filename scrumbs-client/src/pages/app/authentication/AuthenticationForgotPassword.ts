@@ -37,7 +37,7 @@ export class AuthenticationForgotPassword extends ViewComponent {
 
 
     constructor(view: View, container: HTMLElement) {
-        super( view, container );
+        super( view, container, "AuthenticationForgotPassword" );
 
         console.info( "Login view component initialized." );
 

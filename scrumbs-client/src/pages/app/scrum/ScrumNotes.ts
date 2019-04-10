@@ -55,7 +55,7 @@ export class ScrumNotes extends ViewComponent {
 
 
     constructor(view: View, container: HTMLElement) {
-        super( view, container );
+        super( view, container, "ScrumNotes" );
 
         this.noteBatchIndex = 0;
         this.datesDisplayed = [];

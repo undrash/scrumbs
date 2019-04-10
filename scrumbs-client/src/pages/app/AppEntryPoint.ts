@@ -6,18 +6,11 @@ import {HeaderNotifications} from "./header/HeaderNotifications";
 import {ImpedimentsView} from "./impediments/ImpedimentsView";
 import {ViewExitTypes} from "../../core/ViewExitTypes";
 import {INotification} from "../../core/INotification";
+import {ViewManager} from "../../core/ViewManager";
 import {CoreEntity} from "../../core/CoreEntity";
 import {HeaderView} from "./header/HeaderView";
 import {ScrumView} from "./scrum/ScrumView";
 import {View} from "../../core/View";
-
-
-// CSS
-import "../../style/style-sheets/main.scss";
-import {ViewManager} from "../../core/ViewManager";
-
-
-
 
 
 

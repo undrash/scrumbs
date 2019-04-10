@@ -31,7 +31,7 @@ export class ImpedimentsHeader extends ViewComponent {
 
 
     constructor(view: View, container: HTMLElement) {
-        super( view, container );
+        super( view, container, "ImpedimentsHeader" );
 
         this.container.innerHTML = template;
 

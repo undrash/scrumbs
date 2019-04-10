@@ -49,7 +49,7 @@ export class AuthenticationSignUp extends ViewComponent {
 
 
     constructor(view: View, container: HTMLElement) {
-        super( view, container );
+        super( view, container, "AuthenticationSignUp" );
 
         this.container.innerHTML = template;
 

@@ -40,7 +40,7 @@ export class ScrumCreateTeam extends ViewComponent {
 
 
     constructor(view: View, container: HTMLElement) {
-        super( view, container );
+        super( view, container, "ScrumCreateTeam" );
 
         this.container.innerHTML = template;
 

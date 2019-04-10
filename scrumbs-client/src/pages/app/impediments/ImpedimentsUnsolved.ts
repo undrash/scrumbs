@@ -31,7 +31,7 @@ export class ImpedimentsUnsolved extends ViewComponent {
 
 
     constructor(view: View, container: HTMLElement) {
-        super( view, container );
+        super( view, container, "ImpedimentsUnsolved" );
 
         this.container.innerHTML = template;
 

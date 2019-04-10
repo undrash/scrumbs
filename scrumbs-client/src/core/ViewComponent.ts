@@ -14,10 +14,10 @@ export class ViewComponent implements IViewComponent {
     public name: string;
     protected connection: ConnectionProxy;
 
-    constructor(view: View, container: HTMLElement) {
+    constructor(view: View, container: HTMLElement, name: string) {
         this.view = view;
         this.container = container;
-        this.name = ( <any>this ).constructor.name;
+        this.name = name;
         this.connection = new ConnectionProxy( this.name + "Proxy" );
         this.view.viewComponentExitCount[ this.name ] = null;
     }

@@ -1,0 +1,582 @@
+{
+  "data":[
+    {
+      "user":{
+        "name":"Andrei Gaspar",
+        "email":"andrei@planeeet.com",
+        "password":"asd123"
+      },
+      "teams":[
+        {
+          "name":"Scrum Team",
+          "isDefault":true
+        },
+        {
+          "name":"Avengers",
+          "isDefault":false
+        }
+      ],
+      "members":[
+        {
+          "teams":[
+            "Scrum Team"
+          ],
+          "name":"Stephen Hodges",
+          "notes":[
+            {
+              "content":"First note... this is where it all starts.",
+              "date":"10/20/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Tidied up the build configuration files, prepared them for green build.",
+              "date":"10/21/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Created a proof of concept for the forgot password feature. Email is sent from the support address.",
+              "date":"10/22/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Fixed the iOS main search bug. User now is able to type into the search bar on iOS devices.",
+              "date":"10/23/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Implemented support for sending and receiving invitations.",
+              "date":"10/24/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Support for accepting invitations. Completed task 1545.",
+              "date":"10/25/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Integrated main menu, header and notifications in the header. Finished story 2561.",
+              "date":"10/26/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Implemented view manger and handled view change on user login.",
+              "date":"10/27/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Reconfigured data helper populate route to accept JSON input. Working on tasks 1453, 1523, 1563.",
+              "date":"10/28/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Implemented add and remove member from team feature. Finished story 2341.",
+              "date":"10/28/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Added defalt team at user creation.",
+              "date":"10/29/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Implemented create team route and get member route. Reconfigured type roots and types in the tsconfig.",
+              "date":"10/30/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Datahelper added for testing, made some updates for platform compatibility.",
+              "date":"10/30/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Waiting for VPS credentials from support.",
+              "date":"11/01/2018",
+              "team":"Scrum Team",
+              "isImpediment":true,
+              "isSolved":true
+            },
+            {
+              "content":"Integrated EJS templating, configured public route for static file requests.",
+              "date":"11/01/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Populated unsolved impediments from server, fixed member icon.",
+              "date":"11/02/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Merged into the rebranding branch, added impediments header component template and styles. Finished task 1455.",
+              "date":"11/03/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Integrated save handler in manage teams component and team updating. Updated the team model, the interface and the API.",
+              "date":"11/03/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Fixed broken image links in the README file. Added password field toggle icon.",
+              "date":"11/03/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Added 404 page, prettified NGINX config and removed the website and subscription modules.",
+              "date":"11/04/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Implemented box shadow dransition on website feature cards. Made remember me checkbox interactive.",
+              "date":"11/05/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Integrated enter full screen on mobile menu click. Tested iOS with CSS @supports query.",
+              "date":"11/05/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Disabled website's content security header until fixes are performed. Waiting for fixes.",
+              "date":"11/06/2018",
+              "team":"Scrum Team",
+              "isImpediment":true,
+              "isSolved":true
+            },
+            {
+              "content":"Subscription email template refactored to be using inline styles. Released to the test branch.",
+              "date":"11/07/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Opening terms within the same page integrated.",
+              "date":"11/08/2018",
+              "isImpediment":false,
+              "team":"Scrum Team",
+              "isSolved":false
+            },
+            {
+              "content":"Mobile menu links added to downloads page.",
+              "date":"11/08/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Downloads page and style updates finished. Made a pull request for story 2359.",
+              "date":"11/09/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Fixed the subscribe page min-height bug, updated the readme file, and added the terms page.",
+              "date":"11/10/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Tested sending responses to the subscribe HTTP endpoint, everything works as expected.",
+              "date":"11/11/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Need assistance with the build system from the front end guys.",
+              "date":"11/11/2018",
+              "team":"Scrum Team",
+              "isImpediment":true,
+              "isSolved":true
+            },
+            {
+              "content":"Subscribe integrated with apollo fetch, webpack build are compiling js to ES5.",
+              "date":"11/12/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Configured development build pipeline, installed node dependencies script and Docker restart scropt.",
+              "date":"11/13/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Production and Test webpack builds from the client and website. Finished story 1450.",
+              "date":"11/13/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Implemented Docker internal networks instead of exposing ports and other dev config updates.",
+              "date":"11/14/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"VPS compose changes and chmod +x for shell scripts. Configured NGINX routing in production. Refactored dev and prod.",
+              "date":"11/14/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Changed Docker Compose prod with dev. Added volumes to the production compose file.",
+              "date":"11/15/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Containerized the code base. Prod testing NGINX with certbol container for SSL.",
+              "date":"11/15/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Prepared production environment. Implemented distributed data feeds to work in parallel with the 360 feed implementation.",
+              "date":"11/16/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Had a meeting with James and Alice from front-end to confirm the data transfer protocol.",
+              "date":"11/17/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Implemented request processor on the business systems manager database server and changed the request processing function. Finished story 945.",
+              "date":"11/17/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Created databases on the history server, set up test jobs on the database server to produce regular backups.",
+              "date":"11/18/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Verified connectivity to SQL manager, set up server jobs. Batched the schedule download process and backed up the data.",
+              "date":"11/19/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Designed a relatively simple business system, created the automated systems configuration file and XML definitions for the business system.",
+              "date":"11/20/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Tested the automated business system file and definitions to verify resource inclusion and placement.",
+              "date":"11/20/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Extended the data model, configured instance placement and rules for send events. Associated tasks and URLs with object types.",
+              "date":"11/21/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Fixed bugs 1405, 1406. Merged into production.",
+              "date":"11/22/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Fixed bugs 1405, 1406. Merged into production.",
+              "date":"11/22/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Cannot reproduce bugs 1403, 1300, 1235 on the test server. Need detailed instructions from QA.",
+              "date":"11/22/2018",
+              "team":"Scrum Team",
+              "isImpediment":true,
+              "isSolved":true
+            },
+            {
+              "content":"Implemented event enablement on the enterprise console server. Finished task 1104",
+              "date":"11/23/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Scheduled changes as required. Created user IDs and groups and implemented the requested security changes.",
+              "date":"11/23/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Installed business systems manager and appropriate maintenance on the test servers. Created configuration level objects.",
+              "date":"11/24/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Installed test and QA servers, verified connectivity from test and QA servers to LPAR and console machines.",
+              "date":"11/24/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Ordered console machines, prerequisite software.",
+              "date":"11/24/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Discussed with the implementation team, ordered the server hardware for production as well as test/quality assurance.",
+              "date":"11/25/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Identified tasks and URLs by resource type and defined server configuration.",
+              "date":"11/25/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Documentation or examples required for resource and system relationships.",
+              "date":"11/26/2018",
+              "team":"Scrum Team",
+              "isImpediment":true,
+              "isSolved":true
+            },
+            {
+              "content":"Identified event sources by resource type. Defined the relationship between resources and business systems.",
+              "date":"11/27/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Defined users and worflows for the test environment",
+              "date":"11/27/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Identified resources to be monitored",
+              "date":"11/28/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Two factor authentication implemented",
+              "date":"11/28/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Added Passport as an authentication middleware, configured strategies for Google, Twitter and LinkeIn. Working on task listing component, made a release to the test environment",
+              "date":"11/28/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Need the .json translation files for the localization, it works with mock data",
+              "date":"11/29/2018",
+              "team":"Scrum Team",
+              "isImpediment":true,
+              "isSolved":false
+            },
+            {
+              "content":"Working on adding social media authentication",
+              "date":"11/29/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Sales team has an urgent feature request, but specs are not clear",
+              "date":"11/29/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Released version 2.0.8 to the production environment, ad a meeting with QA about prioritizing bug fixes; Fixed bugs 1405, 1406, 1420 and sent them to QA, continuing with 1411 and 1413",
+              "date":"11/29/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            },
+            {
+              "content":"Implemented remember me feature on a separate branch, testing it today and merging it back to master",
+              "date":"11/29/2018",
+              "team":"Scrum Team",
+              "isImpediment":true,
+              "isSolved":true
+            },
+            {
+              "content":"Authentication JavaScript implemented",
+              "date":"11/30/2018",
+              "team":"Scrum Team",
+              "isImpediment":false,
+              "isSolved":false
+            }
+          ]
+        },
+        {
+          "teams":[
+            "Scrum Team"
+          ],
+          "name":"Lee Simon",
+          "notes":[
+
+          ]
+        },
+        {
+          "teams":[
+            "Scrum Team"
+          ],
+          "name":"Victoria Terry",
+          "notes":[
+
+          ]
+        },
+        {
+          "teams":[
+            "Scrum Team"
+          ],
+          "name":"Estelle Cruz",
+          "notes":[
+
+          ]
+        },
+        {
+          "teams":[
+            "Scrum Team"
+          ],
+          "name":"Steve Cannon",
+          "notes":[
+
+          ]
+        },
+        {
+          "teams":[
+            "Scrum Team"
+          ],
+          "name":"Gordon Hunt",
+          "notes":[
+
+          ]
+        },
+        {
+          "teams":[
+            "Scrum Team"
+          ],
+          "name":"Charles Hughes",
+          "notes":[
+
+          ]
+        },
+        {
+          "teams":[
+            "Scrum Team"
+          ],
+          "name":"Isabel Estrada",
+          "notes":[
+
+          ]
+        },
+        {
+          "teams":[
+            "Avengers",
+            "Scrum Team"
+          ],
+          "name":"Chiki Chan",
+          "notes":[
+
+          ]
+        },
+        {
+          "teams":[
+            "Avengers"
+          ],
+          "name":"Jocka Mester",
+          "notes":[
+
+          ]
+        }
+      ]
+    }
+  ]
+}

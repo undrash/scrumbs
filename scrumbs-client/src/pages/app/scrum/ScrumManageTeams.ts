@@ -44,7 +44,7 @@ export class ScrumManageTeams extends ViewComponent {
     private loadedTeamId: string;
 
     constructor(view: View, container: HTMLElement) {
-        super( view, container );
+        super( view, container, "ScrumManageTeams" );
 
         this.localPrefix = "manage-teams-";
 

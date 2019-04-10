@@ -22,6 +22,8 @@ import UserController from "./controllers/UserController";
 import Database from "./configs/DatabaseConfig";
 import DataHelper from "./helpers/DataHelper";
 
+import initTestUser from "./services/initTestUser";
+
 dotenv.config();
 
 const publicPath = __dirname.substr( 0, __dirname.indexOf( "build" ) ) + "public";
@@ -93,6 +95,8 @@ class Server {
             })(req, res, next);
         });
 
+
+        initTestUser();
     }
 
 

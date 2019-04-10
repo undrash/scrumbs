@@ -5,11 +5,9 @@ import { ViewExitTypes } from "./ViewExitTypes";
 import { CoreEntity } from "./CoreEntity";
 import { View } from "./View";
 
+
 // CSS
-import "../style/style-sheets/style-resets.scss";
 import "../style/style-sheets/main.scss";
-
-
 
 
 export class ViewManager extends CoreEntity {
