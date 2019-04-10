@@ -12,8 +12,6 @@ export default async function () {
     User.findOne( { email: "andrei@planeeet.com" } )
         .then( res => {
 
-            console.log( "user find result: ", res );
-
             if ( res ) return;
 
             const { data } = scrumbsData;
@@ -82,7 +80,6 @@ export default async function () {
                 .catch( err => {
                     throw new Error( err );
                 });
-
 
         })
         .catch( err => {

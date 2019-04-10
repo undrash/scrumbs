@@ -138,6 +138,9 @@
             border-radius: 3px;
             box-shadow: 0 5px 25px 0 $quinary-color;
             display: none;
+            // Blurry text bug fix
+            transform: translateX(calc(-50% - .5px));
+
 
             &::before {
                 content: "";
@@ -150,6 +153,11 @@
                 transform: rotate( 45deg );
                 background-color: $tertiary-color;
             }
+
+            .simplebar-track {
+                right: 0;
+            }
+
 
             .impediments-filter-dropdown-header {
                 border-bottom: 1px solid $denary-color;
@@ -177,6 +185,8 @@
                 margin: 10px 0;
                 max-height: 250px;
                 overflow-y: auto;
+                overflow-x: hidden;
+                max-width: 235px;
 
                 li {
                     line-height: 42px;
