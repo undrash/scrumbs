@@ -38,10 +38,6 @@ fi
 
 MESSAGE=${MESSAGE//$TRIGGER/}
 
-echo $MESSAGE
-
-exit 0
-
 HASHTAGS="#scrumbs #scrum #development #agile #management #tools #typescript"
 
 # Truncate commit messages that are longer than 150 characters
