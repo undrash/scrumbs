@@ -25,15 +25,15 @@ ACCESS_SECRET=$4
 
 MESSAGE=`git log --pretty=format:%s -n1`
 HASHTAGS="#scrumbs #scrum #development #agile #management #tools #typescript"
-TWEET="Dev Update $MESSAGE | Website: scrumbs.app  $HASHTAGS"
 
 # truncate tweets that are longer than 140 characters
-if [ ${#TWEET} -gt 140 ]
+if [ ${#MESSAGE} -gt 150 ]
     then
-        tweet_trunc=$(echo $TWEET | cut -c1-137)
-        TWEET=${tweet_trunc}...
+        messsage_trunc=$(echo $TWEET | cut -c1-147)
+        MESSAGE=${message_trunc}...
 fi
 
+TWEET="Dev Update 🚀  $MESSAGE  scrumbs.app  $HASHTAGS"
 
 url="https://api.twitter.com/1.1/statuses/update.json"
 
