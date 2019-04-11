@@ -15,6 +15,7 @@ declare const SimpleBar: any;
 
 // CSS
 import "../../../style/style-sheets/impediments-header.scss";
+import Timeout = NodeJS.Timeout;
 
 
 // HTML
@@ -34,6 +35,11 @@ export class ImpedimentsHeader extends ViewComponent {
     private filterDropdown: HTMLElement;
 
     private filterMemberListMainContainer: HTMLElement;
+    private filterMemberListContainer: HTMLElement;
+
+    private filterSearchTimer: Timeout;
+
+
 
 
     constructor(view: View, container: HTMLElement) {
@@ -50,8 +56,13 @@ export class ImpedimentsHeader extends ViewComponent {
 
         new SimpleBar( this.filterMemberListMainContainer );
 
+
+        this.filterMemberListContainer = this.filterMemberListMainContainer.getElementsByClassName( "simplebar-content" )[0] as HTMLElement;
+
         this.filterBtnListener      = this.filterBtnListener.bind( this );
         this.documentClickListener  = this.documentClickListener.bind( this );
+        this.filterSearchListener   = this.filterSearchListener.bind( this );
+        this.filteredMemberSearch   = this.filteredMemberSearch.bind( this )
 
 
         this.enterScene();
@@ -61,6 +72,7 @@ export class ImpedimentsHeader extends ViewComponent {
 
     private registerEventListeners(): void {
         this.filterBtn.addEventListener( "click", this.filterBtnListener );
+        this.filterSearch.addEventListener( "keyup", this.filterSearchListener );
 
         document.addEventListener( "click", this.documentClickListener );
     }
@@ -69,15 +81,9 @@ export class ImpedimentsHeader extends ViewComponent {
 
     private unregisterEventListeners(): void {
         this.filterBtn.removeEventListener( "click", this.filterBtnListener );
+        this.filterSearch.removeEventListener( "keyup", this.filterSearchListener );
 
         document.removeEventListener( "click", this.documentClickListener );
-    }
-
-
-
-    public enterScene(enterType?: string): void {
-        console.info( "Enter being called in impediments header view component" );
-        this.registerEventListeners();
     }
 
 
@@ -88,15 +94,121 @@ export class ImpedimentsHeader extends ViewComponent {
 
 
 
+    private filterSearchListener(e: any): void {
+        const key = e.which || e.keyCode;
+
+        if ( this.filterSearchTimer ) clearTimeout( this.filterSearchTimer );
+
+
+        if ( key === 13 ) {
+
+            if ( ! this.filterSearch.value ) {
+
+                return this.populate();
+
+            }
+
+            this.filteredMemberSearch( { value: this.filterSearch.value } )
+
+        } else {
+
+            if ( this.filterSearch.value.length < 2 ) return;
+
+            this.filterSearchTimer = setTimeout(
+                this.filteredMemberSearch,
+                250,
+                {
+                    value: this.filterSearch.value
+                }
+            );
+        }
+    }
+
+
+
+    private filteredMemberSearch(data: any): void {
+        const { value } = data;
+
+        console.log( value );
+
+        this.connection.searchMembers(
+            value,
+            (response: any) => {
+
+                const { members } = response;
+
+                this.populateFilterDropdownMembers( members );
+            },
+            (err: string) => console.error( err )
+        );
+    }
+
+
+
     private documentClickListener(e: any): void {
 
         if ( e.target.id !== this.filterBtn.id &&
-             e.target.id !== this.filterSearch.id &&
-             e.target.id !== this.filterDropdownHeader.id
+            e.target.id !== this.filterSearch.id &&
+            e.target.id !== this.filterDropdownHeader.id
         ) {
             this.filterDropdown.style.display = "none";
         }
 
+    }
+
+
+
+    private populateFilterDropdownMembers(members: any[]): void {
+        this.filterMemberListContainer.innerHTML = null;
+
+        for ( let member of members ) {
+            this.addMemberToFilterDropdown( member );
+        }
+    }
+
+
+
+    private addMemberToFilterDropdown(member: any): void {
+
+        let memberElement           = document.createElement( "li" );
+        memberElement.innerText     = member.name;
+        memberElement.id            = member._id;
+
+        memberElement.className     = "pointer noselect";
+
+        this.filterMemberListContainer.appendChild( memberElement );
+
+        memberElement.addEventListener( "click", this.filterMemberClickListener.bind( this ) );
+
+    }
+
+
+
+    private filterMemberClickListener(e: any): void {
+        this.filterBtn.innerText = e.target.innerText;
+    }
+
+
+
+    private populate(): void {
+
+        this.connection.getMembers(
+            (response: any) => {
+                const { members } = response;
+
+                this.populateFilterDropdownMembers( members );
+
+            },
+            (err: string) => console.error( err )
+        );
+    }
+
+
+
+    public enterScene(enterType?: string): void {
+        console.info( "Enter being called in impediments header view component" );
+        this.registerEventListeners();
+        this.populate();
     }
 
 

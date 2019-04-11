@@ -21,6 +21,7 @@ class MemberController {
 
     public routes() {
         this.router.get( '/', this.getMembers );
+        this.router.get( "/search/:string", this.searchMembers );
         this.router.post( '/', this.createMember );
         this.router.get( "/:team", this.getMembersOfTeam );
         this.router.put( "/add", this.addMemberToTeam );
@@ -36,6 +37,17 @@ class MemberController {
 
         Member.find( { owner: userId } )
             .populate( "teams", "name isDefault _id" )
+            .then( members => res.status( 200 ).json( { success: true, members } ) )
+            .catch( next );
+    }
+
+
+
+    public searchMembers(req: Request, res: Response, next: NextFunction) {
+        const userId = req.app.get( "user" )._id;
+        const string = req.params.string || "";
+
+        Member.find( { owner: userId, name: { $regex: string, $options: 'i' } } )
             .then( members => res.status( 200 ).json( { success: true, members } ) )
             .catch( next );
     }
