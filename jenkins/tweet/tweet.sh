@@ -24,9 +24,24 @@ ACCESS_SECRET=$4
 
 
 MESSAGE=`git log --pretty=format:%s -n1`
+TRIGGER="#tweet"
+
+echo "***** Checking for trigger in commit message *****"
+
+if [[ $MESSAGE != *$TRIGGER* ]];
+then
+        echo "***** Commit message doesn't contain trigger *****"
+        exit 0
+else
+        echo "***** Commit message contains trigger, sending tweet... *****"
+fi
+
+MESSAGE=${MESSAGE//$TRIGGER/}
+
+
 HASHTAGS="#scrumbs #scrum #development #agile #management #tools #typescript"
 
-# truncate tweets that are longer than 140 characters
+# Truncate commit messages that are longer than 150 characters
 if [ ${#MESSAGE} -gt 150 ]
     then
         messsage_trunc=$(echo $TWEET | cut -c1-147)
