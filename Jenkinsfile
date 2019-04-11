@@ -4,12 +4,19 @@ pipeline {
 
     environment {
         DOCKER_PASS = credentials('andrei_dockerhub_pw')
+
         JWT_SECRET = credentials('scrumbs_jwt_secret')
         ADMIN_SECRET = credentials('scrumbs_admin_secret')
         ADMIN_EMAIL_ADDRESS = credentials('scrumbs_admin_email')
         SUPPORT_EMAIL_ADDRESS = credentials('scrumbs_support_email')
         SUPPORT_EMAIL_PW = credentials('scrumbs_support_pw')
         MAILCHIMP_KEY = credentials('mailchimp_key')
+
+		CONSUMER_KEY = credentials('scrumbs_git_twitter_consumer_key')
+		CONSUMER_SECRET = credentials('scrumbs_git_twitter_consumer_secret')
+		ACCESS_TOKEN = credentials('scrumbs_git_twitter_access_token')
+		ACCESS_SECRET = credentials('scrumbs_git_twitter_access_secret')
+
 		HOST_NAME = 'scrumbs'
 		HOST_ADDRESS = '165.227.168.111'
     }
@@ -59,6 +66,12 @@ pipeline {
                 script {
                     method_remote_deploy()
                 }
+            }
+        }
+
+        stage('Tweet Update') {
+            steps {
+                sh './jenkins/tweet/tweet.sh $CONSUMER_KEY $CONSUMER_SECRET $ACCESS_TOKEN $ACCESS_SECRET'
             }
         }
     }
