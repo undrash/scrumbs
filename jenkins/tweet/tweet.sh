@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 
 echo "***** Validating arguments *****"
@@ -38,6 +38,9 @@ fi
 
 MESSAGE=${MESSAGE//$TRIGGER/}
 
+echo $MESSAGE
+
+exit 0
 
 HASHTAGS="#scrumbs #scrum #development #agile #management #tools #typescript"
 
