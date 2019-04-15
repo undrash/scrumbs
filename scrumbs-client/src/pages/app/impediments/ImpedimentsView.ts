@@ -121,6 +121,13 @@ export class ImpedimentsView extends View {
 
                 break;
 
+            case ImpedimentSignals.FILTER_IMPEDIMENTS :
+
+                ( this.impedimentsSolved as ImpedimentsSolved ).populateFiltered( signal.data );
+                ( this.impedimentsUnsolved as ImpedimentsUnsolved ).populateFiltered( signal.data );
+
+                break;
+
             default:
                 break;
         }

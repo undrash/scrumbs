@@ -21,7 +21,9 @@ class NoteController {
     public routes() {
         this.router.get( "/member/:id&:team&:batch&:limit", this.getMemberNotes );
         this.router.get( "/solved", this.getSolved );
+        this.router.get( "/solved/:id", this.getSolvedOfMember );
         this.router.get( "/unsolved", this.getUnsolved );
+        this.router.get( "/unsolved/:id", this.getUnsolvedOfMember );
         this.router.post( '/', this.createNote );
         this.router.put( "/solve/:id", this.solve );
         this.router.put( "/unsolve/:id", this.unsolve );
@@ -61,10 +63,35 @@ class NoteController {
 
 
 
+    public getSolvedOfMember(req: Request, res: Response, next: NextFunction) {
+        const userId = req.app.get( "user" )._id;
+
+        const memberId = req.params.id;
+
+        Note.find( { owner: userId, member: memberId, isImpediment: true, isSolved: true } )
+            .populate( "member", "name _id" )
+            .then( impediments => res.status( 200 ).json( { success: true, impediments } ) )
+            .catch( next );
+    }
+
+
     public getUnsolved(req: Request, res: Response, next: NextFunction) {
         const userId = req.app.get( "user" )._id;
 
         Note.find( { owner: userId, isImpediment: true, isSolved: false } )
+            .populate( "member", "name _id" )
+            .then( impediments => res.status( 200 ).json( { success: true, impediments } ) )
+            .catch( next );
+    }
+
+
+
+    public getUnsolvedOfMember(req: Request, res: Response, next: NextFunction) {
+        const userId = req.app.get( "user" )._id;
+
+        const memberId = req.params.id;
+
+        Note.find( { owner: userId, member: memberId, isImpediment: true, isSolved: false } )
             .populate( "member", "name _id" )
             .then( impediments => res.status( 200 ).json( { success: true, impediments } ) )
             .catch( next );

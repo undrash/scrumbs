@@ -247,8 +247,6 @@ export class ConnectionProxy extends Proxy {
 
     public createNote(data: ICreateNoteModel, success: Function, failure: Function): void {
 
-        console.log( data );
-
         this.httpRequest(
             HTTPMethods.POST,
             "/api/v1/notes/",
@@ -273,11 +271,37 @@ export class ConnectionProxy extends Proxy {
 
 
 
+    public getSolvedImpedimentsOfMember(memberId: string, success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.GET,
+            `/api/v1/notes/solved/${ memberId }`,
+            null,
+            success,
+            failure
+        );
+    }
+
+
+
     public getUnsolvedImpediments(success: Function, failure: Function): void {
 
         this.httpRequest(
             HTTPMethods.GET,
             "/api/v1/notes/unsolved",
+            null,
+            success,
+            failure
+        );
+    }
+
+
+
+    public getUnsolvedImpedimentsOfMember(memberId: string, success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.GET,
+            `/api/v1/notes/unsolved/${ memberId }`,
             null,
             success,
             failure

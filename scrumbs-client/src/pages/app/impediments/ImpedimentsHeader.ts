@@ -3,8 +3,8 @@
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
+import {ImpedimentSignals} from "./ImpedimentSignals";
 import {View} from "../../../core/View";
-
 
 import TweenLite = gsap.TweenLite;
 import Power0 = gsap.Power0;
@@ -100,7 +100,7 @@ export class ImpedimentsHeader extends ViewComponent {
         if ( this.filterSearchTimer ) clearTimeout( this.filterSearchTimer );
 
 
-        if ( key === 13 ) {
+        if ( key === 13 ) { // ENTER
 
             if ( ! this.filterSearch.value ) {
 
@@ -186,6 +186,7 @@ export class ImpedimentsHeader extends ViewComponent {
 
     private filterMemberClickListener(e: any): void {
         this.filterBtn.innerText = e.target.innerText;
+        this.sendSignal( ImpedimentSignals.FILTER_IMPEDIMENTS, e.target.id );
     }
 
 

@@ -54,6 +54,27 @@ export class ImpedimentsUnsolved extends ViewComponent {
 
 
 
+    public populateFiltered(memberId: string): void {
+
+        this.container.innerHTML = null;
+
+
+        this.connection.getUnsolvedImpedimentsOfMember(
+            memberId,
+            (response: any) => {
+                const { impediments } = response;
+
+                for ( let impediment of impediments ) {
+                    this.addImpediment( impediment );
+                }
+            },
+            (err: string) => console.error( err )
+        );
+
+    }
+
+
+
     private populate(): void {
 
         this.connection.getUnsolvedImpediments(

@@ -67,6 +67,29 @@ export class ImpedimentsSolved extends ViewComponent {
 
 
 
+    public populateFiltered(memberId: string): void {
+
+        this.solvedImpedimentsContainer.innerHTML = null;
+
+
+        this.connection.getSolvedImpedimentsOfMember(
+            memberId,
+            (response: any) => {
+                const { impediments } = response;
+
+                console.log( impediments );
+
+                for ( let impediment of impediments ) {
+                    this.addImpediment( impediment );
+                }
+            },
+            (err: string) => console.error( err )
+        );
+
+    }
+
+
+
     private populate(): void {
 
         this.connection.getSolvedImpediments(
@@ -85,7 +108,7 @@ export class ImpedimentsSolved extends ViewComponent {
 
     public addImpediment(impedimentData: any): void {
         /** Check if member is already rendered, if so - we append */
-        let memberContainer = document.getElementById( `solved-${impedimentData.member._id}` );
+        let memberContainer = document.getElementById( `solved-${ impedimentData.member._id }` );
 
         if ( memberContainer ) {
             let impediment          = document.createElement( "li" );
