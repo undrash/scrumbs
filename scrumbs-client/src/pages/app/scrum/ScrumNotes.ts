@@ -243,7 +243,6 @@ export class ScrumNotes extends ViewComponent {
             this.noteBatchIndex,
             15,
             (response: any) => {
-                console.log( response );
                 this.populate( response.notes, true );
             },
             (err: any) => console.error( err )

@@ -214,7 +214,11 @@ export class ScrumTeams extends ViewComponent {
                         team: teamId,
                         name: member.innerText
                     }
-            )
+            );
+
+
+
+            this.updateMemory( { selectedMember: member.id } );
         });
 
         const membersContainer = document.getElementById( teamId );

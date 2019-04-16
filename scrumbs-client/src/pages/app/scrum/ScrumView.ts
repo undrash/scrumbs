@@ -144,6 +144,8 @@ export class ScrumView extends View {
 
                 ( this.notes as ScrumNotes ).loadMemberNotes( signal.data );
 
+                ( this.welcomeScreen as ScrumWelcomeScreen ).exitScene( ViewExitTypes.SWITCH_COMPONENT );
+
                 break;
 
             case ScrumSignals.TEAM_UPDATED :
