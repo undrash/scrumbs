@@ -26,8 +26,6 @@ const template = require( "../templates/scrum/component/scrum-welcome-screen.htm
 
 
 export class ScrumWelcomeScreen extends ViewComponent {
-    private tempClick: HTMLElement;
-
 
 
 
@@ -36,8 +34,6 @@ export class ScrumWelcomeScreen extends ViewComponent {
 
         this.container.innerHTML = template;
 
-        this.tempClick = document.getElementById( "scrum-welcome-screen-profile" );
-
 
         this.enterScene();
     }
@@ -45,7 +41,7 @@ export class ScrumWelcomeScreen extends ViewComponent {
 
 
     private registerEventListeners(): void {
-        this.tempClick.addEventListener( "click", () => this.exitScene( ViewExitTypes.SWITCH_COMPONENT, ScrumSignals.SWITCH_WELCOME_SCREEN_TO_NOTES ) );
+
     }
 
 
