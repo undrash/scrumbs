@@ -117,14 +117,16 @@ export class ConfirmationModal {
 
 
 
-    public onSubmit(callback: Function): void {
+    public onSubmit(callback: Function): ConfirmationModal {
         this.submitCallback = callback;
+        return this;
     }
 
 
 
-    public onDismiss(callback: Function): void {
+    public onDismiss(callback: Function): ConfirmationModal {
         this.dismissCallback = callback;
+        return this;
     }
 
 }
