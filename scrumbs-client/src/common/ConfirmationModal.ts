@@ -8,6 +8,7 @@ const template = require( "../templates/confirmation-modal.html" );
 
 export class ConfirmationModal {
 
+    private container: HTMLElement;
     private modalBackground: HTMLElement;
     private modal: HTMLElement;
     private icon: HTMLElement;
@@ -22,13 +23,13 @@ export class ConfirmationModal {
 
 
 
-    constructor(type: string, submitText: string, dismissText: string, title: string, textContent: string[], submitCallback: Function, dismissCallback?: Function) {
+    constructor(type: string, submitText: string, dismissText: string, title: string, textContent: string[], submitCallback?: Function, dismissCallback?: Function) {
 
-        let container               = document.createElement( "div" );
-        container.id                = "confirmation-modal-container";
+        this.container              = document.createElement( "div" );
+        this.container.id           = "confirmation-modal-container";
 
-        container.innerHTML         = template;
-        document.body.appendChild( container );
+        this.container.innerHTML    = template;
+        document.body.appendChild( this.container );
 
         this.modalBackground        = document.getElementById( "confirmation-modal-background" );
         this.modal                  = document.getElementById( "confirmation-modal" );
@@ -46,13 +47,14 @@ export class ConfirmationModal {
 
         this.injectTextContent( textContent );
 
-        this.submitCallback         = submitCallback;
+        if ( submitCallback ) this.submitCallback = submitCallback;
 
         if ( dismissCallback ) this.dismissCallback = dismissCallback;
 
         this.submitListener         = this.submitListener.bind( this );
         this.dismissListener        = this.dismissListener.bind( this );
-
+        this.escapeListener         = this.escapeListener.bind( this );
+        this.modalClickListener     = this.modalClickListener.bind( this );
 
         this.enterScene();
 
@@ -63,6 +65,10 @@ export class ConfirmationModal {
     private registerEventListeners(): void {
         this.submitBtn.addEventListener( "click", this.submitListener );
         this.dismissBtn.addEventListener( "click", this.dismissListener );
+        this.closeBtn.addEventListener( "click", this.dismissListener );
+        this.modalBackground.addEventListener( "click", this.dismissListener );
+        this.modal.addEventListener( "click", this.modalClickListener );
+        document.addEventListener( "keydown", this.escapeListener );
     }
 
 
@@ -70,6 +76,10 @@ export class ConfirmationModal {
     private unregisterEventListeners(): void {
         this.submitBtn.removeEventListener( "click", this.submitListener );
         this.dismissBtn.removeEventListener( "click", this.dismissListener );
+        this.closeBtn.removeEventListener( "click", this.dismissListener );
+        this.modalBackground.removeEventListener( "click", this.dismissListener );
+        this.modal.removeEventListener( "click", this.modalClickListener );
+        document.removeEventListener( "keydown", this.escapeListener );
     }
 
 
@@ -88,6 +98,22 @@ export class ConfirmationModal {
         this.exitScene();
     }
     
+
+
+    private escapeListener(e: any): void {
+        const key = e.which || e.keyCode;
+
+        if ( key !== 27 ) return; // NOT ESCAPE
+
+        this.dismissListener();
+    }
+
+
+
+    private modalClickListener(e: any): void {
+        e.stopPropagation();
+    }
+
 
 
     private injectTextContent(textContent: string[]): void {
@@ -112,7 +138,7 @@ export class ConfirmationModal {
 
     private exitScene(): void {
         this.unregisterEventListeners();
-        this.modalBackground.parentNode.removeChild( this.modalBackground );
+        this.container.parentNode.removeChild( this.container );
     }
 
 

@@ -204,19 +204,21 @@ export class ScrumNotes extends ViewComponent {
             [
                 `Are you sure you want to delete <strong>${ this.memberName.innerText }</strong>?`,
                 "All the notes and impediments will be deleted, and the operation cannot be undone."
-            ],
-            () => console.log( "modal submit callback" ),
-            () => console.log( "modal dismiss callback" )
-        );
+            ]
+        )
+            .onSubmit( () => {
+
+                this.connection.deleteMember(
+                    this.memberId,
+                    () => {
+                        this.sendSignal( ScrumSignals.MEMBER_DELETED, this.memberId );
+                    },
+                    (err: string) => console.error( err )
+                );
+            })
+            .onDismiss( () => console.log( "Modal dismissed." ) );
 
 
-        // this.connection.deleteMember(
-        //     this.memberId,
-        //     () => {
-        //         this.sendSignal( ScrumSignals.MEMBER_DELETED, this.memberId );
-        //     },
-        //     (err: string) => console.error( err )
-        // );
     }
 
 
