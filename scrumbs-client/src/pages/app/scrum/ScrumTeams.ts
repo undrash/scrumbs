@@ -114,22 +114,48 @@ export class ScrumTeams extends ViewComponent {
 
                 this.populateTeams( teams );
 
-                let defaultTeamId: string;
 
-                for ( let team of teams ) {
-                    if ( team.isDefault === true ) {
-                        defaultTeamId = team._id;
-                        break;
+                /** Check memory */
+
+                const { selectedMember } = this.getMemory();
+
+                console.log( "Selected member: ", selectedMember );
+
+                /** If we have recollection of a selected member, we load it */
+                if ( selectedMember ) {
+
+                    this.connection.getMembersOfTeam(
+                        selectedMember.team,
+                        (response: any) => {
+                            this.populateMembers( selectedMember.team, response.members );
+                            this.sendSignal( ScrumSignals.LOAD_MEMBER_NOTES, selectedMember );
+                            this.applySelectionToMember( `${ selectedMember.team }@${ selectedMember.id }` );
+
+                        },
+                        (err: any) => console.error( err )
+                    );
+
+                } else {
+                /** If we don't have memory data, we load the default team */
+
+                    let defaultTeamId: string;
+
+                    for ( let team of teams ) {
+                        if ( team.isDefault === true ) {
+                            defaultTeamId = team._id;
+                            break;
+                        }
                     }
+
+                    if ( ! defaultTeamId ) return;
+
+                    this.connection.getMembersOfTeam(
+                        defaultTeamId,
+                        (response: any) => this.populateMembers( defaultTeamId, response.members ),
+                        (err: any) => console.error( err )
+                    );
+
                 }
-
-                if ( ! defaultTeamId ) return;
-
-                this.connection.getMembersOfTeam(
-                    defaultTeamId,
-                    (response: any) => this.populateMembers( defaultTeamId, response.members ),
-                    (err: any) => console.error( err )
-                );
 
             },
             (err: string) => console.error( err )
@@ -216,9 +242,11 @@ export class ScrumTeams extends ViewComponent {
                     }
             );
 
-
-
-            this.updateMemory( { selectedMember: member.id } );
+            this.updateMemory( { selectedMember: {
+                id: memberData._id,
+                team: teamId,
+                name: member.innerText
+            }});
         });
 
         const membersContainer = document.getElementById( teamId );

@@ -1,12 +1,12 @@
 
 
 import {AuthenticationNotifications} from "../authentication/AuthenticationNotifications";
-import {HeaderNotifications} from "./HeaderNotifications";
 import {SystemConstants} from "../../../core/SystemConstants";
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {INotification} from "../../../core/INotification";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
+import {ViewNotifications} from "../ViewNotifications";
 import {HeaderComponent} from "./HeaderComponent";
 import {HeaderConstants} from "./HeaderConstants";
 import {HeaderSignals} from "./HeaderSignals";
@@ -16,6 +16,7 @@ import {View} from "../../../core/View";
 
 // CSS
 import "../../../style/style-sheets/header-view.scss";
+import {HeaderNotifications} from "./HeaderNotifications";
 
 
 
@@ -79,6 +80,9 @@ export class HeaderView extends View {
         notifications.push( AuthenticationNotifications.EXIT_HEADER );
         notifications.push( AuthenticationNotifications.ENTER_HEADER );
 
+        notifications.push( ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW );
+        notifications.push( ViewNotifications.SWITCH_TO_SCRUM_VIEW );
+
         return notifications;
     }
 
@@ -104,6 +108,14 @@ export class HeaderView extends View {
             case AuthenticationNotifications.ENTER_HEADER :
 
                 this.header.enterScene( ViewEnterTypes.REVEAL_COMPONENT );
+
+                break;
+
+
+            case ViewNotifications.SWITCH_TO_SCRUM_VIEW :
+            case ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW :
+
+                ( this.header as HeaderComponent ).setActiveMenuItem( notification.name );
 
                 break;
 
@@ -134,13 +146,13 @@ export class HeaderView extends View {
 
             case HeaderSignals.SWITCH_TO_SCRUM_VIEW :
 
-                this.sendNotification( HeaderNotifications.SWITCH_TO_SCRUM_VIEW );
+                this.sendNotification( ViewNotifications.SWITCH_TO_SCRUM_VIEW );
 
                 break;
 
             case HeaderSignals.SWITCH_TO_IMPEDIMENTS_VIEW :
 
-                this.sendNotification( HeaderNotifications.SWITCH_TO_IMPEDIMENTS_VIEW );
+                this.sendNotification( ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW );
 
                 break;
 

@@ -1,22 +1,23 @@
 
 
-import {ScrumWelcomeScreen} from "./ScrumWelcomeScreen";
 import {SystemConstants} from "../../../core/SystemConstants";
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
 import {INotification} from "../../../core/INotification";
-import {ScrumManageTeams} from "./ScrumManageTeams";
 import {ViewComponent} from "../../../core/ViewComponent";
+import {ScrumWelcomeScreen} from "./ScrumWelcomeScreen";
+import {ViewNotifications} from "../ViewNotifications";
+import {ScrumManageTeams} from "./ScrumManageTeams";
 import {ScrumCreateTeam} from "./ScrumCreateTeam";
+import {ISignal} from "../../../core/ISignal";
+import {ScrumSignals} from "./ScrumSignals";
 import {ScrumTeams} from "./ScrumTeams";
 import {ScrumNotes} from "./ScrumNotes";
-import {ISignal} from "../../../core/ISignal";
 import {View} from "../../../core/View";
 
 
 // CSS
 import "../../../style/style-sheets/scrum-view.scss";
-import {ScrumSignals} from "./ScrumSignals";
 
 
 
@@ -174,6 +175,12 @@ export class ScrumView extends View {
                 const { memberId, name } = signal.data;
 
                 ( this.teams as ScrumTeams ).updateMember( memberId, name );
+
+                break;
+
+            case ScrumSignals.SWITCH_TO_IMPEDIMENTS_VIEW :
+
+                this.sendNotification( ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW );
 
                 break;
 

@@ -11,4 +11,5 @@ export class ScrumSignals {
     public static readonly MEMBER_ADDED: string                     = "MEMBER_ADDED";
     public static readonly MEMBER_UPDATED: string                   = "MEMBER_UPDATED";
     public static readonly MEMBER_DELETED: string                   = "MEMBER_DELETED";
+    public static readonly SWITCH_TO_IMPEDIMENTS_VIEW: string       = "SWITCH_TO_IMPEDIMENTS_VIEW";
 }

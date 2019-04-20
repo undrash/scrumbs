@@ -56,7 +56,7 @@ export class MemoryStore implements IMemoryStore {
 
 
     public get(componentName: string): any {
-        return this.data[ componentName ];
+        return this.data[ componentName ] || {};
     }
 
 }

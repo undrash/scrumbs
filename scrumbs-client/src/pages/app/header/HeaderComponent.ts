@@ -3,6 +3,8 @@
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
+import {ViewNotifications} from "../ViewNotifications";
+import {HeaderConstants} from "./HeaderConstants";
 import {HeaderSignals} from "./HeaderSignals";
 import {View} from "../../../core/View";
 
@@ -14,7 +16,6 @@ import Back = gsap.Back;
 
 // CSS
 import "../../../style/style-sheets/header-component.scss";
-import {HeaderConstants} from "./HeaderConstants";
 
 
 
@@ -107,16 +108,41 @@ export class HeaderComponent extends ViewComponent {
 
 
     private scrumBtnListener(e: any): void {
-        this.scrumBtn.classList.add( "active" );
-        this.impedimentsBtn.classList.remove( "active" );
         this.sendSignal( HeaderSignals.SWITCH_TO_SCRUM_VIEW );
     }
 
 
     private impedimentsBtnListener(e: any): void {
-        this.impedimentsBtn.classList.add( "active" );
-        this.scrumBtn.classList.remove( "active" );
         this.sendSignal( HeaderSignals.SWITCH_TO_IMPEDIMENTS_VIEW );
+    }
+
+
+
+    public setActiveMenuItem(notification: string): void {
+
+        for ( let i = 0; i < this.navigation.children.length; i++ ) {
+            this.navigation.children[i].classList.remove( "active" );
+        }
+
+        switch ( notification ) {
+
+            case ViewNotifications.SWITCH_TO_SCRUM_VIEW :
+
+                this.scrumBtn.classList.add( "active" );
+
+                break;
+
+            case ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW :
+
+                this.impedimentsBtn.classList.add( "active" );
+
+                break;
+
+            default :
+                break;
+        }
+
+
     }
 
 
