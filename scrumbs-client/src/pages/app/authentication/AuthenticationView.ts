@@ -21,7 +21,7 @@ import "../../../style/style-sheets/authentication-common.scss";
 
 
 // HTML
-const authenticationViewTemplate = require( "../templates/authentication/view/authentication-view.html" );
+const authenticationViewTemplate = require( "../../../templates/authentication-view.html" );
 
 
 

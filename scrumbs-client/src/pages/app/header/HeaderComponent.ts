@@ -20,7 +20,7 @@ import "../../../style/style-sheets/header-component.scss";
 
 
 // HTML
-const template = require( "../templates/header/component/header-component.html" );
+const template = require( "../../../templates/header-component.html" );
 
 
 

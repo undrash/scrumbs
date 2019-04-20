@@ -19,7 +19,7 @@ import Timeout = NodeJS.Timeout;
 
 
 // HTML
-const template = require( "../templates/impediments/component/impediments-header.html" );
+const template = require( "../../../templates/impediments-header.html" );
 
 
 

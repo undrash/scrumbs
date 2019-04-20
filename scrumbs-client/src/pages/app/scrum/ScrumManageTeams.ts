@@ -18,7 +18,7 @@ import "../../../style/style-sheets/scrum-manage-teams.scss";
 
 
 // HTML
-const template = require( "../templates/scrum/component/scrum-manage-teams.html" );
+const template = require( "../../../templates/scrum-manage-teams.html" );
 
 
 

@@ -14,7 +14,7 @@ import "../../../style/style-sheets/authentication-forgot-password.scss";
 
 
 // HTML
-const template = require( "../templates/authentication/component/authentication-forgot-password.html" );
+const template = require( "../../../templates/authentication-forgot-password.html" );
 
 
 

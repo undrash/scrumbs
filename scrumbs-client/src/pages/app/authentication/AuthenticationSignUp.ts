@@ -19,7 +19,7 @@ import {AuthenticationSignals} from "./AuthenticationSignals";
 
 
 // HTML
-const template = require( "../templates/authentication/component/authentication-sign-up.html" );
+const template = require( "../../../templates/authentication-sign-up.html" );
 
 
 

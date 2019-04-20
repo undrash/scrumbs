@@ -18,7 +18,7 @@ import {ScrumSignals} from "./ScrumSignals";
 
 
 // HTML
-const template = require( "../templates/scrum/component/scrum-welcome-screen.html" );
+const template = require( "../../../templates/scrum-welcome-screen.html" );
 
 
 

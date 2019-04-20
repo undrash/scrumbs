@@ -20,7 +20,7 @@ import {CreateMemberModel} from "../../../connection/models/CreateMemberModel";
 
 
 // HTML
-const template = require( "../templates/scrum/component/scrum-create-team.html" );
+const template = require( "../../../templates/scrum-create-team.html" );
 
 
 

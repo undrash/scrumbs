@@ -17,7 +17,7 @@ import "../../../style/style-sheets/impediments-unsolved.scss";
 
 
 // HTML
-const template = require( "../templates/impediments/component/impediments-unsolved.html" );
+const template = require( "../../../templates/impediments-unsolved.html" );
 
 
 

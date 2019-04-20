@@ -22,7 +22,7 @@ import "../../../style/style-sheets/scrum-view.scss";
 
 
 // HTML
-const authenticationViewTemplate = require( "../templates/scrum/view/scrum-view.html" );
+const authenticationViewTemplate = require( "../../../templates/scrum-view.html" );
 
 
 

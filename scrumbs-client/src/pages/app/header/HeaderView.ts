@@ -21,7 +21,7 @@ import {HeaderNotifications} from "./HeaderNotifications";
 
 
 // HTML
-const headerViewTemplate = require( "../templates/header/view/header-view.html" );
+const headerViewTemplate = require( "../../../templates/header-view.html" );
 
 
 

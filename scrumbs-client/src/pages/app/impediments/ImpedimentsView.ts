@@ -18,7 +18,7 @@ import "../../../style/style-sheets/impediments-view.scss";
 
 
 // HTML
-const impedimentsViewTemplate = require( "../templates/impediments/view/impediments-view.html" );
+const impedimentsViewTemplate = require( "../../../templates/impediments-view.html" );
 
 
 

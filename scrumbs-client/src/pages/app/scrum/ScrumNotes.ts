@@ -19,7 +19,7 @@ import "../../../style/style-sheets/scrum-notes.scss";
 
 
 // HTML
-const template = require( "../templates/scrum/component/scrum-notes.html" );
+const template = require( "../../../templates/scrum-notes.html" );
 
 
 

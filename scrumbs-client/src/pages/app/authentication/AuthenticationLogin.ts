@@ -17,7 +17,7 @@ import "../../../style/style-sheets/authentication-log-in.scss";
 
 
 // HTML
-const template = require( "../templates/authentication/component/authentication-log-in.html" );
+const template = require( "../../../templates/authentication-log-in.html" );
 
 
 
