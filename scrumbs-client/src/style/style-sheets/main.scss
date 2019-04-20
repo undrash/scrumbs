@@ -319,6 +319,20 @@ input, textarea {
 }
 
 
+.secondary-button {
+    display: inline-block;
+    border-radius: 5px;
+    border: 1px solid $denary-color;
+    color: $text-tertiary-color;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 13px;
+    height: 49px;
+    line-height: 49px;
+    background: transparent;
+}
+
+
 .add-button {
 
     position: relative;
@@ -355,6 +369,7 @@ input, textarea {
     position: absolute;
     width: 35px;
     height: 45px;
+    cursor: pointer;
 
     &::after {
       content: "";
