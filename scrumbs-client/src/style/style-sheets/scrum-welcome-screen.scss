@@ -7,7 +7,7 @@
   height: 100%;
 
   .scrum-welcome-screen-content {
-    width: 485px;
+    width: 365px;
     @include center();
   }
 
@@ -17,9 +17,9 @@
   .scrum-welcome-impediment-contaier { text-align: center; }
 
   .scrum-welcome-screen-profile-image {
-    width: 132px;
-    height: 132px;
-    line-height: 122px;
+    width: 150px;
+    height: 150px;
+    line-height: 140px;
     margin: 0 auto 30px;
     border-radius: 50%;
     border: 6px solid rgba(36, 46, 76, .1);
@@ -27,6 +27,10 @@
     color: $text-tertiary-color;
     text-transform: uppercase;
     font-weight: bold;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    overflow: hidden;
   }
 
   .scrum-welcome-screen-title {
@@ -42,10 +46,35 @@
   }
 
   .scrum-welcome-impediment-contaier {
-    margin-top: 35px;
-    padding: 25px;
-    background-color: $nonary-color;
-    border-radius: 3px;
+    margin-top: 40px;
+
+    .scrum-welcome-impediment-divider {
+      position: relative;
+      margin-bottom: 20px;
+
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        @include center( "vertical" );
+        background-color: $denary-color;
+      }
+
+      .scrum-welcome-impediment-icon {
+        display: block;
+        width: 55px;
+        height: 55px;
+        margin: 0 auto;
+        border-radius: 50%;
+        border: 3px solid $denary-color;
+        background: $tertiary-color url( "../img/icons/icon-impediment.svg" ) center / 28px 14px no-repeat;
+        position: relative;
+        z-index: 1;
+      }
+
+    }
 
     p {
       font-size: 16px;
@@ -54,7 +83,7 @@
 
     button {
       width: 215px;
-      margin-top: 15px;
+      margin-top: 25px;
       font-weight: bold;
       font-size: 14px;
     }
