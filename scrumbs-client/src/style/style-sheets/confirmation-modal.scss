@@ -1,0 +1,42 @@
+
+
+#confirmation-modal-background {
+  opacity: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: white;
+
+
+  #confirmation-modal {
+    width: 500px;
+    height: 500px;
+    background-color: red;
+  }
+
+
+  #confirmation-modal-icon {
+
+  }
+
+  #confirmation-modal-title {
+
+  }
+
+  #confirmation-modal-text-container {
+
+  }
+
+  #confirmation-modal-buttons-container {
+
+    #confirmation-modal-submit-btn {
+
+    }
+
+    #confirmation-modal-cancel-btn {
+
+    }
+  }
+
+}

@@ -6,6 +6,7 @@ import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {INotification} from "../../../core/INotification";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
+import {HeaderNotifications} from "./HeaderNotifications";
 import {ViewNotifications} from "../ViewNotifications";
 import {HeaderComponent} from "./HeaderComponent";
 import {HeaderConstants} from "./HeaderConstants";
@@ -13,10 +14,8 @@ import {HeaderSignals} from "./HeaderSignals";
 import {ISignal} from "../../../core/ISignal";
 import {View} from "../../../core/View";
 
-
 // CSS
 import "../../../style/style-sheets/header-view.scss";
-import {HeaderNotifications} from "./HeaderNotifications";
 
 
 

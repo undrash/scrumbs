@@ -1,9 +1,11 @@
 
 import {CreateNoteModel} from "../../../connection/models/CreateNoteModel";
 import {EditMemberModel} from "../../../connection/models/EditMemberModel";
+import {ConfirmationModal} from "../../../common/ConfirmationModal";
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
+import {ModalTypes} from "../../../common/ModalTypes";
 import {ScrumSignals} from "./ScrumSignals";
 import {View} from "../../../core/View";
 
@@ -16,7 +18,6 @@ declare const SimpleBar: any;
 
 // CSS
 import "../../../style/style-sheets/scrum-notes.scss";
-
 
 // HTML
 const template = require( "../../../templates/scrum-notes.html" );
@@ -195,13 +196,27 @@ export class ScrumNotes extends ViewComponent {
 
     private removeMemberListener(): void {
 
-        this.connection.deleteMember(
-            this.memberId,
-            () => {
-                this.sendSignal( ScrumSignals.MEMBER_DELETED, this.memberId );
-            },
-            (err: string) => console.error( err )
+        new ConfirmationModal(
+            ModalTypes.DELETE,
+            "Yes, Delete Member",
+            "Cancel, Keep Member",
+            "Delete member",
+            [
+                `Are you sure you want to delete <strong>${ this.memberName.innerText }</strong>?`,
+                "All the notes and impediments will be deleted, and the operation cannot be undone."
+            ],
+            () => console.log( "modal submit callback" ),
+            () => console.log( "modal dismiss callback" )
         );
+
+
+        // this.connection.deleteMember(
+        //     this.memberId,
+        //     () => {
+        //         this.sendSignal( ScrumSignals.MEMBER_DELETED, this.memberId );
+        //     },
+        //     (err: string) => console.error( err )
+        // );
     }
 
 
