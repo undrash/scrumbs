@@ -42,12 +42,14 @@ export class ConfirmationModal {
 
         this.submitBtn.innerText    = submitText;
         this.dismissBtn.innerText   = dismissText;
+
         this.icon.classList.add( type );
+
         this.title.innerText        = title;
 
         this.injectTextContent( textContent );
 
-        if ( submitCallback ) this.submitCallback = submitCallback;
+        if ( submitCallback ) this.submitCallback   = submitCallback;
 
         if ( dismissCallback ) this.dismissCallback = dismissCallback;
 
@@ -89,7 +91,7 @@ export class ConfirmationModal {
 
         this.exitScene();
     }
-    
+
 
 
     private dismissListener(): void {
@@ -97,7 +99,7 @@ export class ConfirmationModal {
 
         this.exitScene();
     }
-    
+
 
 
     private escapeListener(e: any): void {

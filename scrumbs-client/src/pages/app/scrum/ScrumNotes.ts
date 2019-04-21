@@ -5,6 +5,7 @@ import {ConfirmationModal} from "../../../common/ConfirmationModal";
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
+import {SnackBarType} from "../../../common/SnackBarType";
 import {ModalTypes} from "../../../common/ModalTypes";
 import {ScrumSignals} from "./ScrumSignals";
 import {View} from "../../../core/View";
@@ -310,6 +311,9 @@ export class ScrumNotes extends ViewComponent {
 
 
     private noteInputListener(e: any) {
+
+        if ( ! this.noteInput.value ) return; // Abort if input EMPTY
+
         const key = e.which || e.keyCode;
 
         this.checkForImpedimentFlag();
@@ -352,6 +356,9 @@ export class ScrumNotes extends ViewComponent {
 
                 /** Add the note */
                 this.addNote( note );
+
+
+                this.snackbar.show( SnackBarType.SUCCESS, "Note added..." );
 
             },
             (err: string) => console.error( err )

@@ -2,6 +2,7 @@
 
 import {ConnectionProxy} from "../connection/ConnectionProxy";
 import {IViewComponent} from "./IViewComponent";
+import {SnackBar} from "../common/SnackBar";
 import {MemoryStore} from "./MemoryStore";
 import {View} from "./View";
 
@@ -13,8 +14,9 @@ export class ViewComponent implements IViewComponent {
     public container: HTMLElement;
     public view: View;
     public name: string;
-    protected connection: ConnectionProxy;
     protected memory: MemoryStore;
+    protected snackbar: SnackBar;
+    protected connection: ConnectionProxy;
 
 
 
@@ -25,6 +27,7 @@ export class ViewComponent implements IViewComponent {
         this.container          = container;
         this.name               = name;
         this.memory             = MemoryStore._instance;
+        this.snackbar           = SnackBar._instance;
         this.connection         = new ConnectionProxy( this.name + "Proxy" );
 
         this.view.viewComponentExitCount[ this.name ] = null;

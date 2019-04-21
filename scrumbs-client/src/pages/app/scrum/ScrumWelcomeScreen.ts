@@ -3,8 +3,8 @@
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
+import {ScrumSignals} from "./ScrumSignals";
 import {View} from "../../../core/View";
-
 
 import TweenLite = gsap.TweenLite;
 import Power0 = gsap.Power0;
@@ -14,7 +14,6 @@ import Back = gsap.Back;
 
 // CSS
 import "../../../style/style-sheets/scrum-welcome-screen.scss";
-import {ScrumSignals} from "./ScrumSignals";
 
 
 // HTML
