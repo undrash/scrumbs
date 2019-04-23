@@ -178,6 +178,12 @@ export class ScrumView extends View {
 
                 break;
 
+            case ScrumSignals.MEMBER_DELETED :
+
+                ( this.teams as ScrumTeams ).deleteMember();
+
+                break;
+
             case ScrumSignals.SWITCH_TO_IMPEDIMENTS_VIEW :
 
                 this.sendNotification( ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW );

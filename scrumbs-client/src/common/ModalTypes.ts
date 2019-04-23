@@ -1,6 +1,6 @@
 
 
 
-export class ModalTypes {
-    public static readonly DELETE: string = "delete";
+export enum ModalTypes {
+    DELETE = "delete"
 }

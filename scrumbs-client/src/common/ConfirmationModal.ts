@@ -1,4 +1,8 @@
 
+import TweenLite = gsap.TweenLite;
+import Power0 = gsap.Power0;
+import Back = gsap.Back;
+
 
 import "../style/style-sheets/confirmation-modal.scss";
 
@@ -55,7 +59,7 @@ export class ConfirmationModal {
 
         this.submitListener         = this.submitListener.bind( this );
         this.dismissListener        = this.dismissListener.bind( this );
-        this.escapeListener         = this.escapeListener.bind( this );
+        this.documentKeyListener         = this.documentKeyListener.bind( this );
         this.modalClickListener     = this.modalClickListener.bind( this );
 
         this.enterScene();
@@ -70,7 +74,7 @@ export class ConfirmationModal {
         this.closeBtn.addEventListener( "click", this.dismissListener );
         this.modalBackground.addEventListener( "click", this.dismissListener );
         this.modal.addEventListener( "click", this.modalClickListener );
-        document.addEventListener( "keydown", this.escapeListener );
+        document.addEventListener( "keydown", this.documentKeyListener );
     }
 
 
@@ -81,7 +85,7 @@ export class ConfirmationModal {
         this.closeBtn.removeEventListener( "click", this.dismissListener );
         this.modalBackground.removeEventListener( "click", this.dismissListener );
         this.modal.removeEventListener( "click", this.modalClickListener );
-        document.removeEventListener( "keydown", this.escapeListener );
+        document.removeEventListener( "keydown", this.documentKeyListener );
     }
 
 
@@ -102,12 +106,12 @@ export class ConfirmationModal {
 
 
 
-    private escapeListener(e: any): void {
+    private documentKeyListener(e: any): void {
         const key = e.which || e.keyCode;
 
-        if ( key !== 27 ) return; // NOT ESCAPE
+        if ( key === 27 ) this.dismissListener(); // ESCAPE
 
-        this.dismissListener();
+        if ( key === 13 ) this.submitListener(); // ENTER
     }
 
 
@@ -133,14 +137,43 @@ export class ConfirmationModal {
 
     private enterScene(): void {
         this.registerEventListeners();
-        this.modalBackground.style.opacity = "1";
+
+        TweenLite.to( this.modalBackground, 0.15, { opacity: 1 } );
+
+        TweenLite.to( this.modal,
+            0.3,
+            {
+                opacity: 1
+            });
+
+        TweenLite.to( this.modal,
+            0.2,
+            {
+                marginTop: 150,
+                opacity: 1
+            });
     }
 
 
 
     private exitScene(): void {
         this.unregisterEventListeners();
-        this.container.parentNode.removeChild( this.container );
+
+        TweenLite.to( this.modalBackground, 0.3, { opacity: 0 } );
+
+        TweenLite.to( this.modal, 0.3, { opacity: 0 } );
+
+        TweenLite.to( this.modal,
+            0.2,
+            {
+                marginTop: 200,
+                opacity: 0
+            });
+
+        setTimeout( () => {
+            this.container.parentNode.removeChild( this.container );
+        }, 300 );
+
     }
 
 

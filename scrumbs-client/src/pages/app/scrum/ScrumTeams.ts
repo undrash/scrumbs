@@ -278,6 +278,53 @@ export class ScrumTeams extends ViewComponent {
 
 
 
+    public deleteMember() {
+        const members = document.getElementsByClassName( "scrum-team-member" );
+
+        for ( let i = 0; i < members.length; i++ ) {
+
+            if ( members[i].classList.contains( "active" ) ) {
+
+                let sibling: Element;
+
+                if ( members[i].previousElementSibling ) {
+
+                    sibling = members[i].previousElementSibling;
+
+                } else if ( members[i].nextElementSibling ) {
+
+                    sibling = members[i].nextElementSibling;
+                }
+
+
+                members[i].parentNode.removeChild( members[i] );
+
+
+                if ( ! sibling ) return;
+
+
+                sibling.classList.add( "active" );
+
+
+                const id    = sibling.id.split( '@' )[1];
+                const team  = sibling.id.split( '@' )[0];
+                const name  = sibling.innerHTML;
+
+
+                this.sendSignal( ScrumSignals.LOAD_MEMBER_NOTES, {
+                    id,
+                    team,
+                    name
+                });
+
+                break;
+
+            }
+        }
+    }
+
+
+
     private applySelectionToMember(memberId: string): void {
         const members = document.getElementsByClassName( "scrum-team-member" );
 

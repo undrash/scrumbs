@@ -213,6 +213,7 @@ export class ScrumNotes extends ViewComponent {
                     this.memberId,
                     () => {
                         this.sendSignal( ScrumSignals.MEMBER_DELETED, this.memberId );
+                        this.snackbar.show( SnackBarType.SUCCESS, `Deleted member ${ this.memberName.innerText }` );
                     },
                     (err: string) => console.error( err )
                 );
