@@ -176,7 +176,7 @@ class AuthenticationController {
                 const mailOptions = {
                     to: user.email,
                     subject: "Scrumbs - password reset",
-                    text: `Hi ${ user.firstName },\n\nWe received a request to reset your password for your Scrumbs account: ${ user.email }.\n\nPlease use the link below to reset your password \n\n${ req.headers.host }${ process.env.API_BASE }authentication/reset/${ token }\n\nThanks for using Scrumbs.`
+                    text: `Hi ${ user.firstName },\n\nWe received a request to reset your password for your Scrumbs account: ${ user.email }.\n\nPlease use the link below to reset your password \n\n ${ req.protocol }://${ req.headers.host }${ req.headers.host }${ process.env.API_BASE }authentication/reset/${ token }\n\nThanks for using Scrumbs.`
                 };
 
 
