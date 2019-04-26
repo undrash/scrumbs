@@ -21,10 +21,7 @@
   
   <br>
   
-  <img width="420px"
-      src="https://www.scrumbs.app/public/images/right-ui.svg">
-      
-  <br>
+  [[https://github.com/gasparandr/scrumbs-containerized/blob/master/website/public/images/right-ui.svg|alt=scrumbsui]]
   
   <h1>License</h1>
   
