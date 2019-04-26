@@ -180,17 +180,38 @@ export class ScrumNotes extends ViewComponent {
 
     private clearNotesListener(): void {
 
-        this.connection.deleteNotesOfMember(
-            this.memberId,
-            this.memberTeamId,
-            (response: any) => {
+        const memberName        = this.memberName.innerText;
+        const memberTeamName    = document.getElementById( `${ this.memberTeamId }@name` ).innerText;
 
-                this.notesMainContainer.style.display   = "none";
-                this.emptyState.style.display           = "block";
-                this.notesContainer.innerHTML           = "";
-            },
-            (err: string) => console.error( err )
-        );
+
+
+        new ConfirmationModal(
+            ModalTypes.DELETE,
+            "Yes, Clear Notes",
+            "Cancel, Keep Notes",
+            "Clear member notes",
+            [
+                `Are you sure you want to clear all notes of <strong>${ memberName }</strong>?`,
+                `All their notes and impediments associated with the team <strong>${ memberTeamName }</strong> will be deleted, and the operation cannot be undone.`
+            ]
+        )
+            .onSubmit( () => {
+                this.connection.deleteNotesOfMember(
+                    this.memberId,
+                    this.memberTeamId,
+                    () => {
+
+                        this.notesMainContainer.style.display   = "none";
+                        this.emptyState.style.display           = "block";
+                        this.notesContainer.innerHTML           = null;
+
+                        this.snackbar.show( SnackBarType.SUCCESS, `Cleared notes of ${ memberName }` );
+                    },
+                    (err: string) => console.error( err )
+                );
+
+            })
+            .onDismiss( () => console.info( "Modal dismissed" ) );
     }
 
 
@@ -221,7 +242,7 @@ export class ScrumNotes extends ViewComponent {
                     (err: string) => console.error( err )
                 );
             })
-            .onDismiss( () => console.log( "Modal dismissed." ) );
+            .onDismiss( () => console.info( "Modal dismissed." ) );
     }
 
 

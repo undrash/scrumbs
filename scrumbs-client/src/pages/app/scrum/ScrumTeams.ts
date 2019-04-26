@@ -184,6 +184,7 @@ export class ScrumTeams extends ViewComponent {
         header.className            = "scrum-team-header pointer";
 
         let title                   = document.createElement( "h2" );
+        title.id                    = `${ teamData._id }@name`;
         title.className             = "scrum-team-name bold noselect";
         title.innerHTML             = teamData.name;
 
