@@ -11,41 +11,32 @@ import {View} from "../../../core/View";
 
 
 // CSS
-import "../../../style/style-sheets/name.scss"; // INSERT NAME
+import "../../../style/style-sheets/reports-view.scss";
 
 
 // HTML
-const templateViewTemplate = require( "../../../templates/name.html" ); // INSERT NAME
+const reportsViewTemplate = require( "../../../templates/reports-view.html" );
 
 
 
 
 
 
-export class TemplateView extends View {
-    private viewComponent: ViewComponent;
-
-    private viewComponentContainer: HTMLElement;
+export class ReportsView extends View {
 
 
 
 
 
     constructor() {
-        super( "AuthenticationView" );
+        super( "ReportsView" );
 
-        this.container = document.createElement( "div" );
-        this.container.id = "template-view-container"; // ADD CUSTOM NAME
+        this.container      = document.createElement( "div" );
+        this.container.id   = "reports-view-container";
 
         document.getElementById( SystemConstants.MAIN_CONTAINER ).appendChild( this.container );
 
-        this.container.innerHTML                = authenticationViewTemplate;
-
-        this.viewComponentContainer             = document.getElementById( "container" ); // SPECIFY CONTAINER ID
-
-        // this.viewComponent                      = new ViewComponentName( this, this.viewComponentContainer );
-
-
+        this.container.innerHTML = reportsViewTemplate;
 
         this.enterScene();
     }
@@ -63,7 +54,12 @@ export class TemplateView extends View {
 
         this.exitCallback = callback;
 
-        this.viewComponent.exitScene( exitType ); // EXIT THE COMPONENT
+        // TODO Andrei: exit components
+
+        this.container.parentNode.removeChild( this.container );
+        this.unregister();
+
+        if ( this.exitCallback ) this.exitCallback();
     }
 
 

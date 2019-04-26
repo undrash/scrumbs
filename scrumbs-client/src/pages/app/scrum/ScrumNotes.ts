@@ -197,13 +197,16 @@ export class ScrumNotes extends ViewComponent {
 
     private removeMemberListener(): void {
 
+        const memberName    = this.memberName.innerText;
+        const memberId      = this.memberId;
+
         new ConfirmationModal(
             ModalTypes.DELETE,
             "Yes, Delete Member",
             "Cancel, Keep Member",
             "Delete member",
             [
-                `Are you sure you want to delete <strong>${ this.memberName.innerText }</strong>?`,
+                `Are you sure you want to delete <strong>${ memberName }</strong>?`,
                 "All the notes and impediments will be deleted, and the operation cannot be undone."
             ]
         )
@@ -212,15 +215,13 @@ export class ScrumNotes extends ViewComponent {
                 this.connection.deleteMember(
                     this.memberId,
                     () => {
-                        this.sendSignal( ScrumSignals.MEMBER_DELETED, this.memberId );
-                        this.snackbar.show( SnackBarType.SUCCESS, `Deleted member ${ this.memberName.innerText }` );
+                        this.sendSignal( ScrumSignals.MEMBER_DELETED, memberId );
+                        this.snackbar.show( SnackBarType.SUCCESS, `Deleted member ${ memberName }` );
                     },
                     (err: string) => console.error( err )
                 );
             })
             .onDismiss( () => console.log( "Modal dismissed." ) );
-
-
     }
 
 

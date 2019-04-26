@@ -37,6 +37,7 @@ export class HeaderComponent extends ViewComponent {
     private navigation: HTMLDivElement;
     private scrumBtn: HTMLLIElement;
     private impedimentsBtn: HTMLLIElement;
+    private reportsBtn: HTMLLIElement;
 
     private profile: HTMLUListElement;
     private authenticationFragment: HTMLElement;
@@ -55,6 +56,7 @@ export class HeaderComponent extends ViewComponent {
         this.navigation                 = document.getElementById( "header-navigation" ) as HTMLDivElement;
         this.scrumBtn                   = document.getElementById( "scrum-page-button" ) as HTMLLIElement;
         this.impedimentsBtn             = document.getElementById( "impediments-page-button" ) as HTMLLIElement;
+        this.reportsBtn                 = document.getElementById( "reports-page-button" ) as HTMLLIElement;
 
 
         this.profile                    = document.getElementById( "header-profile-wrapper" ) as HTMLUListElement;
@@ -64,6 +66,7 @@ export class HeaderComponent extends ViewComponent {
         this.actionBtnClickListener     = this.actionBtnClickListener.bind( this );
         this.scrumBtnListener           = this.scrumBtnListener.bind( this );
         this.impedimentsBtnListener     = this.impedimentsBtnListener.bind( this );
+        this.reportsBtnListener         = this.reportsBtnListener.bind( this );
 
 
         this.enterScene();
@@ -75,6 +78,7 @@ export class HeaderComponent extends ViewComponent {
         this.actionBtn.addEventListener( "click", this.actionBtnClickListener );
         this.scrumBtn.addEventListener( "click", this.scrumBtnListener );
         this.impedimentsBtn.addEventListener( "click", this.impedimentsBtnListener );
+        this.reportsBtn.addEventListener( "click", this.reportsBtnListener );
     }
 
 
@@ -83,6 +87,7 @@ export class HeaderComponent extends ViewComponent {
         this.actionBtn.removeEventListener( "click", this.actionBtnClickListener );
         this.scrumBtn.removeEventListener( "click", this.scrumBtnListener );
         this.impedimentsBtn.removeEventListener( "click", this.impedimentsBtnListener );
+        this.reportsBtn.removeEventListener( "click", this.reportsBtnListener );
     }
 
 
@@ -107,13 +112,20 @@ export class HeaderComponent extends ViewComponent {
 
 
 
-    private scrumBtnListener(e: any): void {
+    private scrumBtnListener(): void {
         this.sendSignal( HeaderSignals.SWITCH_TO_SCRUM_VIEW );
     }
 
 
-    private impedimentsBtnListener(e: any): void {
+
+    private impedimentsBtnListener(): void {
         this.sendSignal( HeaderSignals.SWITCH_TO_IMPEDIMENTS_VIEW );
+    }
+
+
+
+    private reportsBtnListener(): void {
+        this.sendSignal( HeaderSignals.SWITCH_TO_REPORTS_VIEW );
     }
 
 
@@ -135,6 +147,12 @@ export class HeaderComponent extends ViewComponent {
             case ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW :
 
                 this.impedimentsBtn.classList.add( "active" );
+
+                break;
+
+            case ViewNotifications.SWITCH_TO_REPORTS_VIEW :
+
+                this.reportsBtn.classList.add( "active" );
 
                 break;
 

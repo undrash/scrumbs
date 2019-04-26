@@ -81,6 +81,7 @@ export class HeaderView extends View {
 
         notifications.push( ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW );
         notifications.push( ViewNotifications.SWITCH_TO_SCRUM_VIEW );
+        notifications.push( ViewNotifications.SWITCH_TO_REPORTS_VIEW );
 
         return notifications;
     }
@@ -113,6 +114,7 @@ export class HeaderView extends View {
 
             case ViewNotifications.SWITCH_TO_SCRUM_VIEW :
             case ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW :
+            case ViewNotifications.SWITCH_TO_REPORTS_VIEW :
 
                 ( this.header as HeaderComponent ).setActiveMenuItem( notification.name );
 
@@ -152,6 +154,12 @@ export class HeaderView extends View {
             case HeaderSignals.SWITCH_TO_IMPEDIMENTS_VIEW :
 
                 this.sendNotification( ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW );
+
+                break;
+
+            case HeaderSignals.SWITCH_TO_REPORTS_VIEW :
+
+                this.sendNotification( ViewNotifications.SWITCH_TO_REPORTS_VIEW );
 
                 break;
 

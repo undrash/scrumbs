@@ -80,6 +80,12 @@ export class SnackBar implements ISnackBar {
         }
 
 
+        snackbar.querySelector( ".snackbar-close" ).addEventListener( "click", () => {
+            TweenLite.killTweensOf( snackbar );
+            snackbar.parentNode.removeChild( snackbar );
+        });
+
+
         this.container.appendChild( snackbar );
 
 
@@ -89,20 +95,19 @@ export class SnackBar implements ISnackBar {
             onComplete: () => {
 
                 TweenLite.to( snackbar, 0.5, { delay: 2, opacity: 0 } );
-                TweenLite.to( snackbar, 0.75, { delay: 2.3, height: 0, onComplete: () => {
+                TweenLite.to( snackbar, 0.75, { delay: 2.3, marginTop: -10, onComplete: () => {
                     snackbar.parentNode.removeChild( snackbar );
                 }})
 
             }
         });
 
-        // setTimeout( () => snackbar.parentNode.removeChild( snackbar ), 3000 );
     }
 
 
 
     public clear(): void {
-
+        this.container.innerHTML = null;
     }
 
 }
