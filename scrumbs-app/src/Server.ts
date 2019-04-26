@@ -14,6 +14,7 @@ import { Application, NextFunction, Request, Response } from "express";
 
 import InvitationController from "./controllers/InvitationController";
 import Authentication from "./controllers/AuthenticationController";
+import InquiryController from "./controllers/InquiryController";
 import MemberController from "./controllers/MemberController";
 import NoteController from "./controllers/NoteController";
 import PageController from "./controllers/PageController";
@@ -114,6 +115,7 @@ class Server {
         this.app.use( process.env.API_BASE + "users", UserController );
         this.app.use( process.env.API_BASE + "teams", TeamController );
 
+        this.app.use( process.env.API_BASE + "inquiries", InquiryController );
 
         this.app.use( process.env.API_BASE + "data", DataHelper );
     }

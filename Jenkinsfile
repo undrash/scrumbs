@@ -17,6 +17,12 @@ pipeline {
 		ACCESS_TOKEN = credentials('scrumbs_git_twitter_access_token')
 		ACCESS_SECRET = credentials('scrumbs_git_twitter_access_secret')
 
+        TRELLO_API_KEY = credentials('trello_api_key')
+        TRELLO_SECRET = credentials('trello_secret')
+        TRELLO_TOKEN = credentials('trello_token')
+        TRELLO_BUGS_LIST_ID = credentials('trello_bugs_list_id')
+        TRELLO_FEATURES_LIST_ID = credentials('trello_features_list_id')
+
 		HOST_NAME = 'scrumbs'
 		HOST_ADDRESS = '165.227.168.111'
     }
@@ -43,13 +49,17 @@ pipeline {
 
         stage('Configure Environment Variables') {
             steps {
-                sh './jenkins/configure/configure.sh $JWT_SECRET $ADMIN_SECRET $ADMIN_EMAIL_ADDRESS $SUPPORT_EMAIL_ADDRESS $SUPPORT_EMAIL_PW \"$MAILCHIMP_KEY\"'
+                sh 'sed -i -e \'s/\\r\$//\' jenkins/configure/configure.sh'
+                sh 'chmod +x jenkins/configure/configure.sh'
+                sh './jenkins/configure/configure.sh $JWT_SECRET $ADMIN_SECRET $ADMIN_EMAIL_ADDRESS $SUPPORT_EMAIL_ADDRESS $SUPPORT_EMAIL_PW \"$MAILCHIMP_KEY\" $TRELLO_API_KEY $TRELLO_SECRET $TRELLO_TOKEN $TRELLO_BUGS_LIST_ID $TRELLO_FEATURES_LIST_ID'
             }
 
         }
 
         stage('Build Docker Images') {
             steps {
+                sh 'sed -i -e \'s/\\r\$//\' jenkins/build/build.sh'
+                sh 'chmod +x jenkins/build/build.sh'
                 sh './jenkins/build/build.sh'
             }
 
@@ -57,6 +67,8 @@ pipeline {
 
         stage('Push Docker Images') {
             steps {
+                sh 'sed -i -e \'s/\\r\$//\' jenkins/push/push.sh'
+                sh 'chmod +x jenkins/push/push.sh'
                 sh './jenkins/push/push.sh $DOCKER_PASS'
             }
         }
@@ -71,6 +83,8 @@ pipeline {
 
         stage('Tweet Update') {
             steps {
+                sh 'sed -i -e \'s/\\r\$//\' jenkins/tweet/tweet.sh'
+                sh 'chmod +x jenkins/tweet/tweet.sh'
                 sh './jenkins/tweet/tweet.sh $CONSUMER_KEY $CONSUMER_SECRET $ACCESS_TOKEN $ACCESS_SECRET'
             }
         }

@@ -17,6 +17,7 @@ import Team from "../models/Team";
 
 
 
+
 class AuthenticationController {
 
     router: Router;
