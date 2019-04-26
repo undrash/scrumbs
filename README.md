@@ -21,7 +21,8 @@
   
   <br>
   
-  [[https://github.com/gasparandr/scrumbs-containerized/blob/master/website/public/images/right-ui.svg|alt=scrumbsui]]
+  
+  ![Screen](scrumbs-website/public/images/right-ui.svg)
   
   <h1>License</h1>
   
