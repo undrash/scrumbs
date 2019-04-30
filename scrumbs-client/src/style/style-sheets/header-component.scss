@@ -11,7 +11,7 @@
 
         height: 100%;
         position: relative;
-        z-index: 10;
+        z-index: 1;
 
         #logo {
             display: inline-block;
@@ -78,12 +78,32 @@
                 border-radius: 50%;
             }
 
+            .profile-report-bug-circle {
+                position: absolute;
+                height: 12px;
+                width: 12px;
+                border: 2px solid #FF5357;
+                top: -3px;
+                right: -3px;
+                border-radius: 50%;
+                opacity: 0;
+                -webkit-animation: pulsate 1.5s ease-out;
+                -webkit-animation-iteration-count: infinite;
+            }
+
+            @-webkit-keyframes pulsate {
+                0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
+                50% {opacity: 0.7;}
+                100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+            }
+
             .bug-report-tooltip-container {
                 margin-left: -58px;
                 margin-top: 30px;
                 width: 140px;
                 display: none;
                 opacity: 0;
+                pointer-events: none;
 
                 .tooltip-corner {
                     width: 0;
