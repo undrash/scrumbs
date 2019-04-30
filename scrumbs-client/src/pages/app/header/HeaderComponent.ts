@@ -43,9 +43,9 @@ export class HeaderComponent extends ViewComponent {
     private authenticationFragment: HTMLElement;
 
     private notifications: HTMLElement;
-    private bugReport: HTMLElement;
-    private bugReportNotification: HTMLElement;
-    private bugReportToolTip: HTMLElement;
+    private inquiry: HTMLElement;
+    private inquiryNotification: HTMLElement;
+    private inquiryToolTip: HTMLElement;
 
     constructor(view: View, container: HTMLElement) {
         super( view, container, "HeaderComponent" );
@@ -68,18 +68,18 @@ export class HeaderComponent extends ViewComponent {
 
 
         this.notifications              = document.getElementById( "profile-notifications" );
-        this.bugReport                  = document.getElementById( "profile-report-bug" );
+        this.inquiry                    = document.getElementById( "profile-inquiry" );
 
-        this.bugReportNotification      = document.getElementById( "profile-report-bug-notification" );
-        this.bugReportToolTip           = document.getElementById( "bug-report-tooltip-container" );
+        this.inquiryNotification        = document.getElementById( "profile-inquiry-notification" );
+        this.inquiryToolTip             = document.getElementById( "inquiry-tooltip-container" );
 
         this.actionBtnClickListener     = this.actionBtnClickListener.bind( this );
         this.scrumBtnListener           = this.scrumBtnListener.bind( this );
         this.impedimentsBtnListener     = this.impedimentsBtnListener.bind( this );
         this.reportsBtnListener         = this.reportsBtnListener.bind( this );
-        this.showBugReportToolTip       = this.showBugReportToolTip.bind( this );
-        this.hideBugReportToolTip       = this.hideBugReportToolTip.bind( this );
-
+        this.showInquiryToolTip         = this.showInquiryToolTip.bind( this );
+        this.hideInquiryToolTip         = this.hideInquiryToolTip.bind( this );
+        this.inquiryBtnClickListener    = this.inquiryBtnClickListener.bind( this );
 
         this.enterScene();
     }
@@ -91,8 +91,9 @@ export class HeaderComponent extends ViewComponent {
         this.scrumBtn.addEventListener( "click", this.scrumBtnListener );
         this.impedimentsBtn.addEventListener( "click", this.impedimentsBtnListener );
         this.reportsBtn.addEventListener( "click", this.reportsBtnListener );
-        this.bugReport.addEventListener( "mouseenter", this.showBugReportToolTip );
-        this.bugReport.addEventListener( "mouseleave", this.hideBugReportToolTip );
+        this.inquiry.addEventListener( "mouseenter", this.showInquiryToolTip );
+        this.inquiry.addEventListener( "mouseleave", this.hideInquiryToolTip );
+        this.inquiry.addEventListener( "click", this.inquiryBtnClickListener );
     }
 
 
@@ -102,8 +103,10 @@ export class HeaderComponent extends ViewComponent {
         this.scrumBtn.removeEventListener( "click", this.scrumBtnListener );
         this.impedimentsBtn.removeEventListener( "click", this.impedimentsBtnListener );
         this.reportsBtn.removeEventListener( "click", this.reportsBtnListener );
-        this.bugReport.removeEventListener( "mouseenter", this.showBugReportToolTip );
-        this.bugReport.removeEventListener( "mouseleave", this.hideBugReportToolTip );
+        this.inquiry.removeEventListener( "mouseenter", this.showInquiryToolTip );
+        this.inquiry.removeEventListener( "mouseleave", this.hideInquiryToolTip );
+        this.inquiry.removeEventListener( "click", this.inquiryBtnClickListener );
+
     }
 
 
@@ -146,23 +149,29 @@ export class HeaderComponent extends ViewComponent {
 
 
 
-    private showBugReportToolTip(): void {
-
-        TweenLite.to( this.bugReportNotification, 0.15, { opacity: 0, onComplete: () => {
-            this.bugReportNotification.style.display = "none";
-        }});
-
-        this.bugReportToolTip.style.display = "block";
-
-        TweenLite.to( this.bugReportToolTip, 0.2, { opacity: 1 } );
+    private inquiryBtnClickListener(): void {
+        this.sendSignal( HeaderSignals.DISPLAY_INQUIRY );
     }
 
 
 
-    private hideBugReportToolTip(): void {
+    private showInquiryToolTip(): void {
 
-        TweenLite.to( this.bugReportToolTip, 0.1, { opacity: 0, onComplete: () => {
-            this.bugReportToolTip.style.display = "none";
+        TweenLite.to( this.inquiryNotification, 0.15, { opacity: 0, onComplete: () => {
+            this.inquiryNotification.style.display = "none";
+        }});
+
+        this.inquiryToolTip.style.display = "block";
+
+        TweenLite.to( this.inquiryToolTip, 0.2, { opacity: 1 } );
+    }
+
+
+
+    private hideInquiryToolTip(): void {
+
+        TweenLite.to( this.inquiryToolTip, 0.1, { opacity: 0, onComplete: () => {
+            this.inquiryToolTip.style.display = "none";
         }});
     }
 

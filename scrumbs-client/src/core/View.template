@@ -32,14 +32,14 @@ export class TemplateView extends View {
 
 
     constructor() {
-        super( "AuthenticationView" );
+        super( "TemplateView" );
 
         this.container = document.createElement( "div" );
         this.container.id = "template-view-container"; // ADD CUSTOM NAME
 
         document.getElementById( SystemConstants.MAIN_CONTAINER ).appendChild( this.container );
 
-        this.container.innerHTML                = authenticationViewTemplate;
+        this.container.innerHTML                = templateViewTemplate;
 
         this.viewComponentContainer             = document.getElementById( "container" ); // SPECIFY CONTAINER ID
 

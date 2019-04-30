@@ -13,31 +13,27 @@ import Back = gsap.Back;
 
 
 // CSS
-import "../../../style/style-sheets/name.scss"; // INSERT NAME
-
+import "../../../style/style-sheets/header-inquiry.scss";
 
 // HTML
-const template = require( "../../../templates/name.html" ); // INSERT NAME
+const template = require( "../../../templates/header-inquiry.html" );
 
 
 
 
 
 
-export class TemplateViewComponent extends ViewComponent {
-
+export class Inquiry extends ViewComponent {
 
 
 
 
     constructor(view: View, container: HTMLElement) {
-        super( view, container );
+        super( view, container, "Inquiry" );
 
         this.container.innerHTML = template;
 
 
-
-        this.enterScene();
     }
 
 
@@ -57,6 +53,7 @@ export class TemplateViewComponent extends ViewComponent {
     public enterScene(enterType?: string): void {
         console.info( "Enter being called in view component" );
         this.registerEventListeners();
+        this.container.style.display = "block";
     }
 
 

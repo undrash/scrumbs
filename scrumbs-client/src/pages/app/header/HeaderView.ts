@@ -13,10 +13,11 @@ import {HeaderConstants} from "./HeaderConstants";
 import {HeaderSignals} from "./HeaderSignals";
 import {ISignal} from "../../../core/ISignal";
 import {View} from "../../../core/View";
+import {Inquiry} from "./Inquiry";
+
 
 // CSS
 import "../../../style/style-sheets/header-view.scss";
-
 
 
 // HTML
@@ -29,9 +30,10 @@ const headerViewTemplate = require( "../../../templates/header-view.html" );
 
 export class HeaderView extends View {
     private header: ViewComponent;
+    private inquiry: Inquiry;
 
     private headerContainer: HTMLElement;
-
+    private inquiryContainer: HTMLElement;
 
 
 
@@ -46,9 +48,11 @@ export class HeaderView extends View {
 
         this.container.innerHTML = headerViewTemplate;
 
-        this.headerContainer = document.getElementById( "header-component-container" );
+        this.headerContainer    = document.getElementById( "header-component-container" );
+        this.inquiryContainer   = document.getElementById( "header-inquiry-container" );
 
-        this.header = new HeaderComponent( this, this.headerContainer );
+        this.header             = new HeaderComponent( this, this.headerContainer );
+        this.inquiry            = new Inquiry( this, this.inquiryContainer );
 
         this.enterScene();
     }
@@ -67,6 +71,7 @@ export class HeaderView extends View {
         this.exitCallback = callback;
 
         this.header.exitScene( exitType );
+        this.inquiry.exitScene( exitType );
     }
 
 
@@ -160,6 +165,12 @@ export class HeaderView extends View {
             case HeaderSignals.SWITCH_TO_REPORTS_VIEW :
 
                 this.sendNotification( ViewNotifications.SWITCH_TO_REPORTS_VIEW );
+
+                break;
+
+            case HeaderSignals.DISPLAY_INQUIRY :
+
+                this.inquiry.enterScene();
 
                 break;
 

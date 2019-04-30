@@ -59,7 +59,7 @@
         }
 
 
-        #profile-report-bug {
+        #profile-inquiry {
             width: 25px;
             height: 25px;
             display: block;
@@ -68,7 +68,7 @@
             position: absolute;
             background: url("../img/icons/bug-icon.svg") no-repeat center/18px;
 
-            .profile-report-bug-dot {
+            .profile-inquiry-dot {
                 position: absolute;
                 height: 6px;
                 width: 6px;
@@ -78,7 +78,7 @@
                 border-radius: 50%;
             }
 
-            .profile-report-bug-circle {
+            .profile-inquiry-circle {
                 position: absolute;
                 height: 12px;
                 width: 12px;
@@ -97,7 +97,7 @@
                 100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
             }
 
-            .bug-report-tooltip-container {
+            .inquiry-tooltip-container {
                 margin-left: -58px;
                 margin-top: 30px;
                 width: 140px;
