@@ -62,7 +62,7 @@ export class ImpedimentsHeader extends ViewComponent {
         this.filterBtnListener      = this.filterBtnListener.bind( this );
         this.documentClickListener  = this.documentClickListener.bind( this );
         this.filterSearchListener   = this.filterSearchListener.bind( this );
-        this.filteredMemberSearch   = this.filteredMemberSearch.bind( this )
+        this.filteredMemberSearch   = this.filteredMemberSearch.bind( this );
 
 
         this.enterScene();

@@ -11,6 +11,7 @@
 
         height: 100%;
         position: relative;
+        z-index: 10;
 
         #logo {
             display: inline-block;
@@ -56,18 +57,90 @@
             height: 45px;
             display: none;
         }
-    
+
+
+        #profile-report-bug {
+            width: 25px;
+            height: 25px;
+            display: block;
+            right: 170px;
+            top: 10px;
+            position: absolute;
+            background: url("../img/icons/bug-icon.svg") no-repeat center/18px;
+
+            .profile-report-bug-dot {
+                position: absolute;
+                height: 6px;
+                width: 6px;
+                background-color: #FF5357;
+                top: 0;
+                right: 0;
+                border-radius: 50%;
+            }
+
+            .bug-report-tooltip-container {
+                margin-left: -58px;
+                margin-top: 30px;
+                width: 140px;
+                display: none;
+                opacity: 0;
+
+                .tooltip-corner {
+                    width: 0;
+                    height: 0;
+                    border-style: solid;
+                    border-width: 0 10px 10px 10px;
+                    border-color: transparent transparent #242E4C transparent;
+                    display: block;
+                    margin: auto auto -2px;
+                }
+
+                .tooltip-body {
+                    border-radius: 5px;
+                    width: 100%;
+                    background-color: #242E4C;
+                    font-size: 12px;
+                    line-height: 15px;
+                    text-align: center;
+                    color: white;
+                    padding: 15px;
+                    font-weight: 400;
+
+                    .small {
+                        font-size: 10px;
+                        line-height: 13px;
+                        margin: 5px auto;
+                    }
+                }
+            }
+        }
+
+
+        #profile-notifications {
+            width: 25px;
+            height: 25px;
+            display: block;
+            right: 110px;
+            top: 10px;
+            position: absolute;
+            background: url("../img/icons/notification.svg") no-repeat center/contain;
+        }
+
+
         #profile-avatar {
             display: block;
             width: 45px;
             height: 100%;
             margin-right: 30px;
-            border: 1px solid $text-tertiary-color;
+            border: 2px solid rgba(36, 46, 76, .1);
             border-radius: 50%;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 50%;
-            background-image: url( "../img/icons/icon-user.svg" );
+            line-height: 40px;
+            text-align: center;
+            color: #9B9AA9;
+            text-transform: uppercase;
+            font-weight: bold;
+            overflow: hidden;
+            font-size: 16px;
         }
     
         #profile-dropdown-button {
@@ -76,16 +149,6 @@
             @include center( "vertical" );
             right: 0;
             background: url( "../img/icons/icon-dropdown-accent.svg" ) no-repeat center / contain;
-    
-            // &::after {
-            //     content: "";
-            //     display: block;
-            //     position: absolute;
-            //     @include center();
-            //     width: 13px;
-            //     height: 8px;
-            //     background: url( "../../../img/icons/icon-dropdown-accent.svg" ) no-repeat center / contain;
-            // }
     
         }
     
