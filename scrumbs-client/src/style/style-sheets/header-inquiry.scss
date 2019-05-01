@@ -29,6 +29,7 @@
     }
 
 
+
     #inquiry-submit-container {
 
 
@@ -58,7 +59,6 @@
           padding-top: 20px;
         }
       }
-
 
       #inquiry-submit-btn {
         margin-top: 30px;
@@ -102,6 +102,7 @@
         }
 
         .inquiry-select-dropdown-body {
+          display: none;
           cursor: pointer;
           position: absolute;
           top: 55px;
@@ -132,9 +133,11 @@
     }
 
 
+
     #inquiry-failed-container {
 
     }
+
 
 
     #inquiry-success-container {
