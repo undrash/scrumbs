@@ -1,5 +1,6 @@
 
-
+@import "mixins";
+@import "color-variables";
 
 
 #inquiry-overlay {
@@ -10,4 +11,134 @@
   left: 0;
   background-color: rgba( 255, 255, 255, 0.75 );
   //opacity: 0;
+
+  #inquiry-modal {
+    display: inline-block;
+    margin-top: 200px;
+    @include center( "horizontal" );
+    background-color: $tertiary-color;
+    border-radius: 5px;
+    box-shadow: 0 10px 50px 0 rgba( 11, 40, 127, 0.15 );
+    text-align: center;
+    position: relative;
+    padding: 40px 160px;
+
+    #inquiry-modal-close-btn {
+      top: 18px;
+      right: 20px;
+    }
+
+
+    #inquiry-submit-container {
+
+
+      .inquiry-modal-title {
+        margin-bottom: 50px;
+        font-size: 20px;
+        text-align: center;
+      }
+
+      .input-label {
+        text-align: left;
+      }
+
+      .input {
+        padding-left: 20px;
+      }
+
+      .textarea-container {
+        height: 100px;
+        background-color: #FFFFFF;
+        box-shadow: inset 0 0 0 1px #E1E0E9;
+        border-radius: 5px;
+        margin-bottom: 4px;
+        position: relative;
+
+        textarea {
+          padding-top: 20px;
+        }
+      }
+
+
+      #inquiry-submit-btn {
+        margin-top: 30px;
+        min-width: 140px;
+        font-size: 14px;
+      }
+
+      .inquiry-select-group {
+        margin-bottom: 20px;
+        height: 50px;
+        line-height: 50px;
+        position: relative;
+
+        .inquiry-select-label {
+          text-align: left;
+          display: inline-block;
+          float: left;
+        }
+
+        .inquiry-select-dropdown-head {
+          cursor: pointer;
+          height: 100%;
+          width: 200px;
+          background-color: #FFFFFF;
+          box-shadow: inset 0 0 0 1px #E1E0E9;
+          border-radius: 5px;
+          margin-bottom: 4px;
+          position: relative;
+          float: right;
+          text-align: left;
+          padding-left: 20px;
+
+          #inquiry-dropdown-btn {
+            width: 13px;
+            height: 8px;
+            @include center( "vertical" );
+            right: 15px;
+            background: url( "../img/icons/icon-dropdown-accent.svg" ) no-repeat center / contain;
+          }
+
+        }
+
+        .inquiry-select-dropdown-body {
+          cursor: pointer;
+          position: absolute;
+          top: 55px;
+          right: 0;
+          border-radius: 3px;
+          background-color: #FFFFFF;
+          box-shadow: 0 5px 20px 0 #E1E0E9;
+          font-size: 16px;
+          color: #242E4C;
+          white-space: nowrap;
+          width: 200px;
+          z-index: 1;
+          text-align: left;
+
+          li {
+            line-height: 50px;
+            padding: 0 20px;
+
+            &:hover {
+              background-color: #f5f5f8;
+            }
+          }
+        }
+      }
+
+
+
+    }
+
+
+    #inquiry-failed-container {
+
+    }
+
+
+    #inquiry-success-container {
+
+    }
+  }
 }

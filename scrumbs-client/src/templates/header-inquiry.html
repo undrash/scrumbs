@@ -2,7 +2,67 @@
 
 <div id="inquiry-overlay">
 
+    <div id="inquiry-modal">
 
+        <div id="inquiry-modal-close-btn" class="exit-overlay-button"></div>
+
+
+        <div id="inquiry-submit-container">
+
+            <h2 class="inquiry-modal-title bold">Report a bug or request a feature</h2>
+
+            <div class="input-wrapper">
+
+                <div class="inquiry-select-group">
+
+                    <p class="inquiry-select-label">I would like to</p>
+
+                    <div class="inquiry-select-dropdown-head" id="inquiry-select-dropdown-head">
+                        <span id="inquiry-selected">Select an option</span>
+                        <div id="inquiry-dropdown-btn" class="noselect"></div>
+                    </div>
+
+                    <ul class="inquiry-select-dropdown-body" id="inquiry-select-dropdown-body">
+                        <li id="inquiry-option-bug">Report a bug</li>
+                        <li id="inquiry-option-feature">Request a feature</li>
+                    </ul>
+
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="inquiry-modal-title-input" class="input-label">Title</label>
+
+                    <div class="input-container input-type-text">
+                        <input type="text" class="input" id="inquiry-modal-title-input" placeholder="Enter a title">
+                    </div>
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="inquiry-modal-description-input" class="input-label">Description</label>
+
+                    <div class="textarea-container input-type-text">
+                        <textarea type="text" class="input" id="inquiry-modal-description-input" placeholder="Enter a title"></textarea>
+                    </div>
+
+                </div>
+            </div>
+
+            <button class="primary-button bold" id="inquiry-submit-btn">Submit</button>
+        </div>
+
+
+
+        <div id="inquiry-failed-container"></div>
+
+
+        <div id="inquiry-success-container"></div>
+
+    </div>
 
 
 
