@@ -47,6 +47,8 @@ export class HeaderComponent extends ViewComponent {
     private inquiryNotification: HTMLElement;
     private inquiryToolTip: HTMLElement;
 
+    private avatar: HTMLElement;
+
     constructor(view: View, container: HTMLElement) {
         super( view, container, "HeaderComponent" );
 
@@ -72,6 +74,8 @@ export class HeaderComponent extends ViewComponent {
 
         this.inquiryNotification        = document.getElementById( "profile-inquiry-notification" );
         this.inquiryToolTip             = document.getElementById( "inquiry-tooltip-container" );
+
+        this.avatar                     = document.getElementById( "profile-avatar" );
 
         this.actionBtnClickListener     = this.actionBtnClickListener.bind( this );
         this.scrumBtnListener           = this.scrumBtnListener.bind( this );
@@ -212,6 +216,24 @@ export class HeaderComponent extends ViewComponent {
 
 
 
+    public populate(): void {
+        const userData = this.connection.getVO();
+
+        this.avatar.innerText = `Welcome ${ userData.name }`;
+
+        const names = userData.name.split( " " );
+
+        let monogram = "";
+
+        for ( let name of names ) {
+            monogram += name[0];
+        }
+
+        this.avatar.innerText = monogram;
+    }
+
+
+
     public enterScene(enterType?: string): void {
         console.info( "Enter being called in authentication header view component" );
 
@@ -222,7 +244,6 @@ export class HeaderComponent extends ViewComponent {
         } else {
             this.registerEventListeners();
         }
-
 
     }
 
@@ -257,6 +278,8 @@ export class HeaderComponent extends ViewComponent {
                 this.authenticationFragment.style.display   = "none";
                 this.navigation.style.display               = "block";
                 this.profile.style.display                  = "block";
+
+                this.populate();
 
                 break;
 

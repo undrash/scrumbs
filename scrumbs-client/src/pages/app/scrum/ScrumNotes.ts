@@ -284,7 +284,11 @@ export class ScrumNotes extends ViewComponent {
             this.noteBatchIndex,
             15,
             (response: any) => {
-                this.populate( response.notes, true );
+
+                const { notes } = response;
+
+                if ( notes.length ) this.populate( response.notes, true );
+
             },
             (err: any) => console.error( err )
         );
@@ -320,7 +324,9 @@ export class ScrumNotes extends ViewComponent {
                 this.populate( response.notes );
             },
             (err: any) => console.error( err )
-        )
+        );
+
+        this.noteInput.focus();
     }
 
 
@@ -380,8 +386,6 @@ export class ScrumNotes extends ViewComponent {
                 /** Add the note */
                 this.addNote( note );
 
-
-                this.snackbar.show( SnackBarType.SUCCESS, "Note added..." );
 
             },
             (err: string) => console.error( err )
