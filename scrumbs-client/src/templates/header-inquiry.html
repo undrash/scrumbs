@@ -27,6 +27,7 @@
                         <li id="inquiry-option-feature">Request a feature</li>
                     </ul>
 
+                    <span id="inquiry-select-error" class="input-error">Please select an inquiry type.</span>
 
                 </div>
 
@@ -38,6 +39,7 @@
                         <input type="text" class="input" id="inquiry-modal-title-input" placeholder="Enter a title">
                     </div>
 
+                    <span id="inquiry-title-error" class="input-error">Please provide a title.</span>
                 </div>
 
 
@@ -49,6 +51,8 @@
                         <textarea type="text" class="input" id="inquiry-modal-description-input" placeholder="Enter a title"></textarea>
                     </div>
 
+                    <span id="inquiry-description-error" class="input-error">Please provide a description of at least 100 characters.</span>
+
                 </div>
             </div>
 
@@ -56,11 +60,41 @@
         </div>
 
 
+        <div id="inquiry-success-container">
 
-        <div id="inquiry-failed-container"></div>
+            <img src="../style/img/icons/success.svg" alt="success">
+
+            <h2 class="inquiry-modal-title bold">Success!</h2>
+
+            <p>Your <span id="inquiry-success-type" class="bold">bug report</span> request has been submitted successfully!</p>
+
+            <div class="success-message-container">
+                <p>You can <a class="bold" href="https://trello.com/b/psHzmcrs/scrumbs-feature-requests-bug-reports" target="_blank">click here</a> to track the status of your request.</p>
+            </div>
+
+        </div>
 
 
-        <div id="inquiry-success-container"></div>
+        <div id="inquiry-failed-container">
+
+
+            <img src="../style/img/icons/failed.svg" alt="success">
+
+            <h2 class="inquiry-modal-title bold">Failed!</h2>
+
+            <p>Sorry, it seems your request failed.</p>
+
+            <div class="failure-message-container">
+                <p id="inquiry-modal-error-message">Error 500 | Internal server error</p>
+            </div>
+
+            <button id="inquiry-modal-try-again-btn" class="primary-button bold">Try Again</button>
+
+
+        </div>
+
+
+
 
     </div>
 

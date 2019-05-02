@@ -42,10 +42,10 @@ class InquiryController {
 
                 console.log( inquiries );
 
-                /** Only 3 inquiries are allowed per user per day */
+                /** Only 5 inquiries are allowed per user per day */
 
-                if ( inquiries.length >= 3 ) return res.status( 400 ).json({
-                    error: "You have have reached your limit of 3 inquiries for today. Please try again tomorrow."
+                if ( inquiries.length >= 5 ) return res.status( 400 ).json({
+                    error: "You have have reached your limit of 5 inquiries for today. Please try again tomorrow."
                 });
 
                 if ( type !== InquiryTypes.BUG_REPORT && type !== InquiryTypes.FEATURE_REQUEST ) return res.status( 400 ).json({

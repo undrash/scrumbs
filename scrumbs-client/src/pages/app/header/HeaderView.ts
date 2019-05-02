@@ -170,7 +170,7 @@ export class HeaderView extends View {
 
             case HeaderSignals.DISPLAY_INQUIRY :
 
-                this.inquiry.enterScene();
+                this.inquiry.enterScene( ViewEnterTypes.REVEAL_COMPONENT );
 
                 break;
 

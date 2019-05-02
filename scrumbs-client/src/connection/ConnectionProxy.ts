@@ -9,6 +9,7 @@ import {ILoginModel} from "./models/interfaces/ILoginModel";
 import {Proxy} from "../core/Proxy";
 import {UserVO} from "./UserVO";
 import {HTTPMethods} from "../core/HTTPMethods";
+import {ICreateInquiryModel} from "./models/interfaces/ICreateInquiryModel";
 
 
 declare const SERVICE_URL: string;
@@ -329,6 +330,20 @@ export class ConnectionProxy extends Proxy {
             HTTPMethods.PUT,
             `/api/v1/notes/unsolve/${ impedimentId }`,
             null,
+            success,
+            failure
+        );
+    }
+
+
+
+    public createInquiry(data: ICreateInquiryModel, success: Function, failure: Function): void {
+
+
+        this.httpRequest(
+            HTTPMethods.POST,
+            "/api/v1/inquiries",
+            data,
             success,
             failure
         );

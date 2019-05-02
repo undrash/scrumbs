@@ -64,13 +64,13 @@ export class Proxy extends CoreEntity implements IProxy {
 
             let response = JSON.parse( xhr.responseText );
 
-            if ( response.success ) {
+            if ( xhr.status == 200 || response.success ) {
 
                 if ( success ) success( response );
 
             } else {
 
-                if ( failure ) failure( response.message );
+                if ( failure ) failure( response );
             }
         };
 
