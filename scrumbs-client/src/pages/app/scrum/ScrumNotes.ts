@@ -93,6 +93,8 @@ export class ScrumNotes extends ViewComponent {
         this.documentClickListener          = this.documentClickListener.bind( this );
         this.clearNotesListener             = this.clearNotesListener.bind( this );
         this.removeMemberListener           = this.removeMemberListener.bind( this );
+        this.exportNotesListener            = this.exportNotesListener.bind( this );
+        this.exportImpedimentsListener      = this.exportImpedimentsListener.bind( this );
 
         this.enterScene();
 
@@ -109,6 +111,8 @@ export class ScrumNotes extends ViewComponent {
         this.options.addEventListener( "click", this.optionsBtnListener );
         this.optionClearNotes.addEventListener( "click", this.clearNotesListener );
         this.optionRemoveMember.addEventListener( "click", this.removeMemberListener );
+        this.optionExportNotes.addEventListener( "click", this.exportNotesListener );
+        this.optionExportImpediments.addEventListener( "click", this.exportImpedimentsListener );
         document.addEventListener( "click", this.documentClickListener );
     }
 
@@ -123,6 +127,8 @@ export class ScrumNotes extends ViewComponent {
         this.options.removeEventListener( "click", this.optionsBtnListener );
         this.optionClearNotes.removeEventListener( "click", this.clearNotesListener );
         this.optionRemoveMember.removeEventListener( "click", this.removeMemberListener );
+        this.optionExportNotes.removeEventListener( "click", this.exportNotesListener );
+        this.optionExportImpediments.removeEventListener( "click", this.exportImpedimentsListener );
         document.removeEventListener( "click", this.documentClickListener );
     }
 
@@ -249,6 +255,18 @@ export class ScrumNotes extends ViewComponent {
 
     private documentClickListener(e: any): void {
         if ( e.target.id !== this.options.id ) this.optionsDropDown.style.display = "none";
+    }
+
+
+
+    private exportNotesListener(): void {
+        this.snackbar.show( SnackBarType.WARNING, "Export feature coming soon" );
+    }
+
+
+
+    private exportImpedimentsListener(): void {
+        this.snackbar.show( SnackBarType.WARNING, "Export feature coming soon" );
     }
 
 
