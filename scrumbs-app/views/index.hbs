@@ -10,4 +10,11 @@
 
 </div>
 
+
+{{#if auth}}
+    <script id="data-source">var DATA_SOURCE = {{{ auth }}};</script>
+{{/if}}
+
+
+
 <script src="../public/js/app.js"></script>

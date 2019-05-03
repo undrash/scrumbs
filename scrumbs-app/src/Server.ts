@@ -1,10 +1,13 @@
 
 import * as dotenv from "dotenv"
 
+import * as cookieParser from "cookie-parser";
+import * as session from "express-session";
 import * as compression from "compression";
 import * as bodyParser from "body-parser";
 import * as hbs from "express-handlebars";
 import * as mongoose from "mongoose";
+import * as passport from "passport";
 import * as express from "express";
 import * as helmet from "helmet";
 import * as logger from "morgan";
@@ -22,6 +25,9 @@ import TeamController from "./controllers/TeamController";
 import UserController from "./controllers/UserController";
 import Database from "./configs/DatabaseConfig";
 import DataHelper from "./helpers/DataHelper";
+
+import * as connectMongo from "connect-mongo";
+const MongoStore = connectMongo( session );
 
 import initTestUser from "./services/initTestUser";
 
@@ -63,8 +69,21 @@ class Server {
         this.app.use( helmet() );
         this.app.use( cors() );
 
-        this.app.use( Authentication.initialize() );
+        this.app.use( cookieParser() );
 
+        this.app.use( session({
+            name: "user_sid",
+            secret: process.env.JWT_SECRET || "scrumbs",
+            resave: false,
+            saveUninitialized: false,
+            store: new MongoStore({
+                mongooseConnection: mongoose.connection
+            })
+        }));
+
+
+        this.app.use( Authentication.initialize() );
+        this.app.use( passport.session() );
 
         this.app.all( process.env.API_BASE + "*", (req: Request, res: Response, next: NextFunction) => {
 

@@ -1,30 +1,58 @@
 
+import {AuthenticationNotifications} from "../pages/app/authentication/AuthenticationNotifications";
 import {IAddRemoveMemberModel} from "./models/interfaces/IAddRemoveMemberModel";
+import {ICreateInquiryModel} from "./models/interfaces/ICreateInquiryModel";
 import {ICreateMemberModel} from "./models/interfaces/ICreateMemberModel";
 import {ICreateNoteModel} from "./models/interfaces/ICreateNoteModel";
 import {ICreateTeamModel} from "./models/interfaces/ICreateTeamModel";
 import {IUpdateTeamModel} from "./models/interfaces/IUpdateTeamModel";
 import {IEditMemberModel} from "./models/interfaces/IEditMemberModel";
 import {ILoginModel} from "./models/interfaces/ILoginModel";
+import {HTTPMethods} from "../core/HTTPMethods";
 import {Proxy} from "../core/Proxy";
 import {UserVO} from "./UserVO";
-import {HTTPMethods} from "../core/HTTPMethods";
-import {ICreateInquiryModel} from "./models/interfaces/ICreateInquiryModel";
 
 
-declare const SERVICE_URL: string;
 
+declare const DATA_SOURCE: any;
 
 
 
 
 
 export class ConnectionProxy extends Proxy {
+    public static EXTERNAL_AUTH: boolean = false;
 
     constructor(proxyName: string) {
-        super( proxyName, SERVICE_URL );
+        let address = `${ location.protocol }//${ location.hostname }${ location.port ? ':' + location.port: '' }`;
+        super( proxyName, address );
+        this.initialize();
     }
 
+
+
+    private initialize(): void {
+
+        if ( ConnectionProxy.token || typeof DATA_SOURCE === "undefined" ) return;
+
+        const data      = DATA_SOURCE;
+        const dataSrc   = document.getElementById( "data-source" );
+
+        dataSrc.parentNode.removeChild( dataSrc );
+
+        this.setToken( data.tokenData );
+
+        const {  name, email } = data.userData;
+
+        ConnectionProxy.setVO( new UserVO(
+            name,
+            email
+        ));
+
+        console.log( "EXTERNAL ACCESS: ", data );
+
+        ConnectionProxy.EXTERNAL_AUTH = true;
+    }
 
 
     public login(data: ILoginModel, success: Function, failure: Function): void {

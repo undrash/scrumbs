@@ -3,6 +3,7 @@
 import {AuthenticationNotifications} from "./authentication/AuthenticationNotifications";
 import {AuthenticationView} from "./authentication/AuthenticationView";
 import {HeaderNotifications} from "./header/HeaderNotifications";
+import {ConnectionProxy} from "../../connection/ConnectionProxy";
 import {ImpedimentsView} from "./impediments/ImpedimentsView";
 import {ViewExitTypes} from "../../core/ViewExitTypes";
 import {INotification} from "../../core/INotification";
@@ -28,7 +29,13 @@ export class AppViewManager extends ViewManager {
     constructor() {
         super();
         this.headerView = new HeaderView();
-        this.initView( AuthenticationView );
+
+        if ( ConnectionProxy.EXTERNAL_AUTH ) {
+            this.initView( ScrumView );
+            this.sendNotification( ViewNotifications.SWITCH_HEADER_STATE );
+        } else {
+            this.initView( AuthenticationView );
+        }
     }
 
 
@@ -40,6 +47,7 @@ export class AppViewManager extends ViewManager {
 
         notifications.push( AuthenticationNotifications.LOGIN );
         notifications.push( AuthenticationNotifications.SIGN_UP );
+
         notifications.push( ViewNotifications.SWITCH_TO_SCRUM_VIEW );
         notifications.push( ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW );
         notifications.push( ViewNotifications.SWITCH_TO_REPORTS_VIEW );

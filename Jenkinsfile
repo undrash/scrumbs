@@ -23,6 +23,12 @@ pipeline {
         TRELLO_BUGS_LIST_ID = credentials('trello_bugs_list_id')
         TRELLO_FEATURES_LIST_ID = credentials('trello_features_list_id')
 
+        GOOGLE_SECRET = credentials('scrumbs_google_secret')
+        GOOGLE_CLIENT_ID = credentials('scrumbs_google_client_id')
+
+        TWITTER_SECRET = credentials('scrumbs_twitter_secret')
+        TWITTER_KEY = credentials('scrumbs_twitter_key')
+
 		HOST_NAME = 'scrumbs'
 		HOST_ADDRESS = '165.227.168.111'
     }
@@ -51,7 +57,21 @@ pipeline {
             steps {
                 sh 'sed -i -e \'s/\\r\$//\' jenkins/configure/configure.sh'
                 sh 'chmod +x jenkins/configure/configure.sh'
-                sh './jenkins/configure/configure.sh $JWT_SECRET $ADMIN_SECRET $ADMIN_EMAIL_ADDRESS $SUPPORT_EMAIL_ADDRESS $SUPPORT_EMAIL_PW \"$MAILCHIMP_KEY\" $TRELLO_API_KEY $TRELLO_SECRET $TRELLO_TOKEN $TRELLO_BUGS_LIST_ID $TRELLO_FEATURES_LIST_ID'
+                sh './jenkins/configure/configure.sh $JWT_SECRET \
+                                                     $ADMIN_SECRET \
+                                                     $ADMIN_EMAIL_ADDRESS \
+                                                     $SUPPORT_EMAIL_ADDRESS \
+                                                     $SUPPORT_EMAIL_PW \
+                                                     \"$MAILCHIMP_KEY\" \
+                                                     $TRELLO_API_KEY \
+                                                     $TRELLO_SECRET \
+                                                     $TRELLO_TOKEN \
+                                                     $TRELLO_BUGS_LIST_ID \
+                                                     $TRELLO_FEATURES_LIST_ID \
+                                                     $GOOGLE_SECRET \
+                                                     $GOOGLE_CLIENT_ID \
+                                                     $TWITTER_SECRET \
+                                                     $TWITTER_KEY'
             }
 
         }

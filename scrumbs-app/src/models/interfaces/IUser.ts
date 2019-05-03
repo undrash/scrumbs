@@ -9,5 +9,7 @@ export interface IUser extends Document {
     resetPasswordToken: string,
     resetPasswordExpires: Date,
     confirmed: boolean,
+    googleId: string,
+    twitterId: string,
     comparePassword(password: string): Promise<boolean>
 }

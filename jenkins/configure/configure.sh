@@ -3,7 +3,7 @@
 
 echo "***** Validating arguments *****"
 
-if [ $# -eq 11 ]
+if [ $# -eq 15 ]
     then
         echo "Number of arguments is valid."
     else
@@ -20,6 +20,10 @@ if [ $# -eq 11 ]
 	        echo "TRELLO_TOKEN"
 	        echo "TRELLO_BUGS_LIST_ID"
 	        echo "TRELLO_FEATURES_LIST_ID"
+	        echo "GOOGLE_SECRET"
+	        echo "GOOGLE_CLIENT_ID"
+	        echo "TWITTER_SECRET"
+	        echo "TWITTER_KEY"
             echo "Provided: $#"
             exit 1
 fi
@@ -36,6 +40,10 @@ TRELLO_SECRET=$8
 TRELLO_TOKEN=$9
 TRELLO_BUGS_LIST_ID=${10}
 TRELLO_FEATURES_LIST_ID=${11}
+GOOGLE_SECRET=${12}
+GOOGLE_CLIENT_ID=${13}
+TWITTER_SECRET=${14}
+TWITTER_KEY=${15}
 
 
 echo "*****************************************"
@@ -54,6 +62,10 @@ sed -i "s,<TRELLO_SECRET>,${TRELLO_SECRET},g" docker-cloud.yml
 sed -i "s,<TRELLO_TOKEN>,${TRELLO_TOKEN},g" docker-cloud.yml
 sed -i "s,<TRELLO_BUGS_LIST_ID>,${TRELLO_BUGS_LIST_ID},g" docker-cloud.yml
 sed -i "s,<TRELLO_FEATURES_LIST_ID>,${TRELLO_FEATURES_LIST_ID},g" docker-cloud.yml
+sed -i "s,<GOOGLE_SECRET>,${GOOGLE_SECRET},g" docker-cloud.yml
+sed -i "s,<GOOGLE_CLIENT_ID>,${GOOGLE_CLIENT_ID},g" docker-cloud.yml
+sed -i "s,<TWITTER_SECRET>,${TWITTER_SECRET},g" docker-cloud.yml
+sed -i "s,<TWITTER_KEY>,${TWITTER_KEY},g" docker-cloud.yml
 
 echo "*****************************************"
 echo "******* Configuration successful ********"

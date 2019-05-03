@@ -81,12 +81,15 @@ export class HeaderView extends View {
 
         notifications.push( AuthenticationNotifications.LOGIN );
         notifications.push( AuthenticationNotifications.SIGN_UP );
+
         notifications.push( AuthenticationNotifications.EXIT_HEADER );
         notifications.push( AuthenticationNotifications.ENTER_HEADER );
 
         notifications.push( ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW );
         notifications.push( ViewNotifications.SWITCH_TO_SCRUM_VIEW );
         notifications.push( ViewNotifications.SWITCH_TO_REPORTS_VIEW );
+
+        notifications.push( ViewNotifications.SWITCH_HEADER_STATE );
 
         return notifications;
     }
@@ -99,6 +102,7 @@ export class HeaderView extends View {
 
             case AuthenticationNotifications.LOGIN :
             case AuthenticationNotifications.SIGN_UP :
+            case ViewNotifications.SWITCH_HEADER_STATE :
 
                 ( this.header as HeaderComponent ).switchState( HeaderConstants.HEADER_APP_STATE );
 

@@ -39,7 +39,6 @@ const UserSchema = new Schema({
 
     password: {
         type: String,
-        required: true,
         validate: {
             validator: (password: string) => password.length > 4 && password.length < 75,
             message: "Password must contain 4 or more characters."
@@ -59,7 +58,11 @@ const UserSchema = new Schema({
         type: [ Schema.Types.ObjectId ],
         ref: "Invitation",
         default: []
-    }
+    },
+
+    googleId: String,
+
+    twitterId: String
 
 });
 

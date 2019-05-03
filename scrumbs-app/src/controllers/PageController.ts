@@ -25,6 +25,15 @@ class PageController {
 
 
     public index(req: Request, res: Response) {
+
+        const auth = req.app.locals.specialContext;
+
+        req.app.locals.specialContext = null;
+
+        if ( auth ) {
+            return res.render( "index", { title: "Scrumbs | Application", auth } );
+        }
+
         res.render( "index", { title: "Scrumbs | Application" } );
     }
 

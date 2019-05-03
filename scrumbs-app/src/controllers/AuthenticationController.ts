@@ -14,8 +14,17 @@ import { IUser } from "../models/interfaces/IUser";
 import User from "../models/User";
 import Team from "../models/Team";
 
+const GoogleStrategy    = require("passport-google-oauth20").Strategy;
+const TwitterStrategy   = require("passport-twitter").Strategy;
 
 
+declare global {
+    namespace Express {
+        interface Request {
+            auth?: any
+        }
+    }
+}
 
 
 class AuthenticationController {
@@ -25,6 +34,8 @@ class AuthenticationController {
     constructor() {
         this.router = Router();
         this.routes();
+
+        this.genToken = this.genToken.bind( this );
     }
 
 
@@ -35,12 +46,33 @@ class AuthenticationController {
         this.router.post( "/forgot", this.forgotPassword );
         this.router.get( "/reset/:token", this.getResetPassword );
         this.router.post( "/reset/:token", this.postResetPassword );
+
+        this.router.get( "/oauth/google", this.googleAuth );
+        this.router.get( "/google/callback", passport.authenticate("google", { failureRedirect: "/" }), this.googleCallback.bind( this ) );
+
+        this.router.get( "/oauth/twitter", this.twitterAuth );
+        this.router.get( "/twitter/callback", passport.authenticate("twitter", { failureRedirect: "/authentication/login" }), this.twitterCallback.bind( this ) );
+
     }
 
 
 
     public initialize() {
         passport.use("jwt", this.getStrategy() );
+        passport.use( "google", this.getGoogleStrategy() );
+        passport.use( "twitter", this.getTwitterStrategy() );
+
+        passport.serializeUser( (user: any, done) => {
+            done( null, user._id );
+        });
+
+        passport.deserializeUser( (id, done) => {
+            User.findById( id )
+                .then( res => done( null, res as any ) )
+                .catch( err => done( err, false ) );
+        });
+
+
         return passport.initialize();
     }
 
@@ -248,6 +280,55 @@ class AuthenticationController {
 
 
 
+    public googleAuth(req: Request, res: Response, next: NextFunction) {
+        passport.authenticate( "google", { scope: [ "profile", "email" ] } )( req, res, next );
+    }
+
+
+
+    public googleCallback(req: Request, res: Response, next: NextFunction) {
+
+        const user = ( req as any ).user;
+
+        console.log( "user", user );
+
+        req.app.locals.specialContext = JSON.stringify({
+            userData: {
+                user: user._id,
+                email: user.email,
+                name: user.name },
+            tokenData: this.genToken( user )
+        });
+
+        res.redirect( '/' );
+    }
+
+
+
+    public twitterAuth(req: Request, res: Response, next: NextFunction) {
+        passport.authenticate( "twitter" )( req, res, next );
+    }
+
+
+
+    public twitterCallback(req: Request, res: Response, next: NextFunction) {
+        const user = ( req as any ).user;
+
+        console.log( "user", user );
+
+        req.app.locals.specialContext = JSON.stringify({
+            userData: {
+                user: user._id,
+                email: user.email,
+                name: user.name },
+            tokenData: this.genToken( user )
+        });
+
+        res.redirect( '/' );
+    }
+
+
+
     private genToken(user: IUser): Object {
 
         let expires = moment().utc().add({ days: 7 }).unix();
@@ -291,6 +372,94 @@ class AuthenticationController {
             });
         });
 
+    }
+
+
+
+    private getGoogleStrategy(): Strategy {
+        return new GoogleStrategy({
+            clientID: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_SECRET,
+            callbackURL: "https://app.boardme.app/api/v1/authentication/google/callback"
+        }, async (accessToken: string, refreshToken: string, profile: any, done: Function) => {
+
+            const firstName     = profile.name.givenName;
+            const lastName      = profile.name.familyName;
+            const profileImage  = profile.photos.length ? profile.photos[0].value : "";
+            const email         = profile.emails[0].value;
+            const confirmed     = profile.emails[0].verified;
+            const googleId      = profile.id;
+
+            let user = await User.findOne({ email } );
+
+            if ( ! user ) {
+
+                user = new User({
+                    name: `${ firstName } ${ lastName }`,
+                    email: email,
+                    profileImage,
+                    confirmed,
+                    googleId
+                });
+
+                const defaultTeam = new Team({
+                    name: "Scrum Team",
+                    owner: user,
+                    isDefault: true
+                });
+
+
+                await user.save();
+                await defaultTeam.save();
+            }
+
+            return done( null, user );
+        });
+    }
+
+
+
+    private getTwitterStrategy(): Strategy {
+        return new TwitterStrategy({
+            consumerKey: process.env.TWITTER_KEY,
+            consumerSecret: process.env.TWITTER_SECRET,
+            userProfileURL: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
+            callbackURL: "https://app.boardme.app/api/v1/authentication/twitter/callback",
+            profileFields: [ "id", "emails", "name" ]
+        }, async (token: string, tokenSecret: string, profile: any, done: Function) => {
+
+            const names = profile._json.name.split( ' ' );
+
+            const firstName     = names[0];
+            const lastName      = names[1];
+            const profileImage  = profile._json.profile_image_url;
+            const email         = profile.emails[0].value;
+            const twitterId     = profile.id;
+
+            let user = await User.findOne({ email } );
+
+            if ( ! user ) {
+                user = new User({
+                    name: `${ firstName + ( lastName ? lastName : '' ) }`,
+                    email: email,
+                    confirmed: true,
+                    profileImage,
+                    twitterId
+                });
+
+                const defaultTeam = new Team({
+                    name: "Scrum Team",
+                    owner: user,
+                    isDefault: true
+                });
+
+
+                await user.save();
+                await defaultTeam.save();
+            }
+
+            return done( null, user );
+        });
     }
 
 }
