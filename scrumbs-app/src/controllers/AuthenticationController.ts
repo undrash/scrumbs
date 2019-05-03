@@ -380,7 +380,7 @@ class AuthenticationController {
         return new GoogleStrategy({
             clientID: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_SECRET,
-            callbackURL: "https://app.boardme.app/api/v1/authentication/google/callback"
+            callbackURL: "https://app.scrumbs.app/api/v1/authentication/google/callback"
         }, async (accessToken: string, refreshToken: string, profile: any, done: Function) => {
 
             const firstName     = profile.name.givenName;
@@ -424,7 +424,7 @@ class AuthenticationController {
             consumerKey: process.env.TWITTER_KEY,
             consumerSecret: process.env.TWITTER_SECRET,
             userProfileURL: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
-            callbackURL: "https://app.boardme.app/api/v1/authentication/twitter/callback",
+            callbackURL: "https://app.scrumbs.app/api/v1/authentication/twitter/callback",
             profileFields: [ "id", "emails", "name" ]
         }, async (token: string, tokenSecret: string, profile: any, done: Function) => {
 
