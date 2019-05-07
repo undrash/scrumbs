@@ -25,6 +25,7 @@ ENV TIME_FORMAT='HH:mm:ss'
 ENV JWT_CONFIG_SESSION='false'
 ENV JWT_CONFIG_SESSION_FAILWITHERROR='true'
 
+ENV APP_DOMAIN='https://app.scrumbs.app'
 
 # Start command
 CMD [ "npm", "run", "start-server" ]

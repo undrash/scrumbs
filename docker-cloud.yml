@@ -35,6 +35,8 @@ services:
       - GOOGLE_CLIENT_ID=<GOOGLE_CLIENT_ID>
       - TWITTER_SECRET=<TWITTER_SECRET>
       - TWITTER_KEY=<TWITTER_KEY>
+      - LINKEDIN_SECRET=<LINKEDIN_SECRET>
+      - LINKEDIN_KEY=<LINKEDIN_KEY>
 
   website:
     image: gasparandr/scrumbs-website

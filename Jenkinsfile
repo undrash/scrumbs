@@ -29,6 +29,9 @@ pipeline {
         TWITTER_SECRET = credentials('scrumbs_twitter_secret')
         TWITTER_KEY = credentials('scrumbs_twitter_key')
 
+        LINKEDIN_SECRET = credentials('scrumbs_linkedin_secret')
+        LINKEDIN_KEY = credentials('scrumbs_linkedin_key')
+
 		HOST_NAME = 'scrumbs'
 		HOST_ADDRESS = '165.227.168.111'
     }
@@ -71,7 +74,9 @@ pipeline {
                                                      $GOOGLE_SECRET \
                                                      $GOOGLE_CLIENT_ID \
                                                      $TWITTER_SECRET \
-                                                     $TWITTER_KEY'
+                                                     $TWITTER_KEY \
+                                                     $LINKEDIN_SECRET \
+                                                     $LINKEDIN_KEY'
             }
 
         }

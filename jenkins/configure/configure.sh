@@ -3,7 +3,7 @@
 
 echo "***** Validating arguments *****"
 
-if [ $# -eq 15 ]
+if [ $# -eq 17 ]
     then
         echo "Number of arguments is valid."
     else
@@ -24,6 +24,8 @@ if [ $# -eq 15 ]
 	        echo "GOOGLE_CLIENT_ID"
 	        echo "TWITTER_SECRET"
 	        echo "TWITTER_KEY"
+	        echo "LINKEDIN_SECRET"
+	        echo "LINKEDIN_KEY"
             echo "Provided: $#"
             exit 1
 fi
@@ -44,6 +46,8 @@ GOOGLE_SECRET=${12}
 GOOGLE_CLIENT_ID=${13}
 TWITTER_SECRET=${14}
 TWITTER_KEY=${15}
+LINKEDIN_SECRET=${16}
+LINKEDIN_KEY=${17}
 
 
 echo "*****************************************"
@@ -66,6 +70,8 @@ sed -i "s,<GOOGLE_SECRET>,${GOOGLE_SECRET},g" docker-cloud.yml
 sed -i "s,<GOOGLE_CLIENT_ID>,${GOOGLE_CLIENT_ID},g" docker-cloud.yml
 sed -i "s,<TWITTER_SECRET>,${TWITTER_SECRET},g" docker-cloud.yml
 sed -i "s,<TWITTER_KEY>,${TWITTER_KEY},g" docker-cloud.yml
+sed -i "s,<LINKEDIN_SECRET>,${LINKEDIN_SECRET},g" docker-cloud.yml
+sed -i "s,<LINKEDIN_KEY>,${LINKEDIN_KEY},g" docker-cloud.yml
 
 echo "*****************************************"
 echo "******* Configuration successful ********"
