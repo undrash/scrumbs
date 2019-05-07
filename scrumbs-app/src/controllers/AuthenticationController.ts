@@ -18,13 +18,8 @@ const GoogleStrategy    = require("passport-google-oauth20").Strategy;
 const TwitterStrategy   = require("passport-twitter").Strategy;
 const LinkedInStrategy  = require("passport-linkedin-oauth2").Strategy;
 
-declare global {
-    namespace Express {
-        interface Request {
-            auth?: any
-        }
-    }
-}
+
+
 
 
 class AuthenticationController {
@@ -33,9 +28,11 @@ class AuthenticationController {
 
     constructor() {
         this.router = Router();
-        this.routes();
 
-        this.genToken = this.genToken.bind( this );
+        this.genToken       = this.genToken.bind( this );
+        this.OAuthCallback  = this.OAuthCallback.bind( this );
+
+        this.routes();
     }
 
 
@@ -48,13 +45,13 @@ class AuthenticationController {
         this.router.post( "/reset/:token", this.postResetPassword );
 
         this.router.get( "/oauth/google", this.googleAuth );
-        this.router.get( "/google/callback", passport.authenticate("google", { failureRedirect: "/" }), this.googleCallback.bind( this ) );
+        this.router.get( "/google/callback", passport.authenticate("google", { failureRedirect: "/" }), this.OAuthCallback );
 
         this.router.get( "/oauth/twitter", this.twitterAuth );
-        this.router.get( "/twitter/callback", passport.authenticate("twitter", { failureRedirect: "/" } ), this.twitterCallback.bind( this ) );
+        this.router.get( "/twitter/callback", passport.authenticate("twitter", { failureRedirect: "/" } ), this.OAuthCallback );
 
         this.router.get( "/oauth/linkedin", this.linkedinAuth );
-        this.router.get( "/linkedin/callback", passport.authenticate( "linkedin", { failureRedirect: "/" } ), this.linkedinCallback.bind( this ) );
+        this.router.get( "/linkedin/callback", passport.authenticate( "linkedin", { failureRedirect: "/" } ), this.OAuthCallback );
     }
 
 
@@ -289,45 +286,8 @@ class AuthenticationController {
 
 
 
-    public googleCallback(req: Request, res: Response, next: NextFunction) {
-
-        const user = ( req as any ).user;
-
-        console.log( "user", user );
-
-        req.app.locals.specialContext = JSON.stringify({
-            userData: {
-                user: user._id,
-                email: user.email,
-                name: user.name },
-            tokenData: this.genToken( user )
-        });
-
-        res.redirect( '/' );
-    }
-
-
-
     public twitterAuth(req: Request, res: Response, next: NextFunction) {
         passport.authenticate( "twitter" )( req, res, next );
-    }
-
-
-
-    public twitterCallback(req: Request, res: Response, next: NextFunction) {
-        const user = ( req as any ).user;
-
-        console.log( "user", user );
-
-        req.app.locals.specialContext = JSON.stringify({
-            userData: {
-                user: user._id,
-                email: user.email,
-                name: user.name },
-            tokenData: this.genToken( user )
-        });
-
-        res.redirect( '/' );
     }
 
 
@@ -338,10 +298,8 @@ class AuthenticationController {
 
 
 
-    public linkedinCallback(req: Request, res: Response, next: NextFunction) {
+    public OAuthCallback(req: Request, res: Response, next: NextFunction) {
         const user = ( req as any ).user;
-
-        console.log( "user", user );
 
         req.app.locals.specialContext = JSON.stringify({
             userData: {
@@ -506,8 +464,6 @@ class AuthenticationController {
             scope: [ "r_emailaddress", "r_basicprofile" ],
             state: true
         }, async (accessToken: string, refreshToken: string, profile: any, done: Function) => {
-
-            console.log( "Profile", profile );
 
             const firstName     = profile.name.givenName;
             const lastName      = profile.name.familyName;
