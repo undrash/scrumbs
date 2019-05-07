@@ -16,7 +16,7 @@ import Team from "../models/Team";
 
 const GoogleStrategy    = require("passport-google-oauth20").Strategy;
 const TwitterStrategy   = require("passport-twitter").Strategy;
-
+const LinkedInStrategy  = require("passport-linkedin-oauth2").Strategy;
 
 declare global {
     namespace Express {
@@ -51,16 +51,19 @@ class AuthenticationController {
         this.router.get( "/google/callback", passport.authenticate("google", { failureRedirect: "/" }), this.googleCallback.bind( this ) );
 
         this.router.get( "/oauth/twitter", this.twitterAuth );
-        this.router.get( "/twitter/callback", passport.authenticate("twitter", { failureRedirect: "/authentication/login" }), this.twitterCallback.bind( this ) );
+        this.router.get( "/twitter/callback", passport.authenticate("twitter", { failureRedirect: "/" } ), this.twitterCallback.bind( this ) );
 
+        this.router.get( "/oauth/linkedin", this.linkedinAuth );
+        this.router.get( "/linkedin/callback", passport.authenticate( "linkedin", { failureRedirect: "/" } ), this.linkedinCallback.bind( this ) );
     }
 
 
 
     public initialize() {
-        passport.use("jwt", this.getStrategy() );
+        passport.use("jwt", this.getJWTStrategy() );
         passport.use( "google", this.getGoogleStrategy() );
         passport.use( "twitter", this.getTwitterStrategy() );
+        passport.use( "linkedin", this.getLinkedInStrategy() );
 
         passport.serializeUser( (user: any, done) => {
             done( null, user._id );
@@ -89,13 +92,13 @@ class AuthenticationController {
 
             console.log( user );
 
-            if ( user === null ) throw "User not found";
+            if ( user === null ) throw new Error( "User not found" );
 
             let success = await user.comparePassword( req.body.password );
 
             console.log( "success: " + success );
 
-            if ( success === false ) throw "";
+            if ( success === false ) throw new Error( "Password incorrect" );
 
             res.status( 200 ).json({
                 success: true,
@@ -329,6 +332,30 @@ class AuthenticationController {
 
 
 
+    public linkedinAuth(req: Request, res: Response, next: NextFunction) {
+        passport.authenticate( "linkedin" )( req, res, next );
+    }
+
+
+
+    public linkedinCallback(req: Request, res: Response, next: NextFunction) {
+        const user = ( req as any ).user;
+
+        console.log( "user", user );
+
+        req.app.locals.specialContext = JSON.stringify({
+            userData: {
+                user: user._id,
+                email: user.email,
+                name: user.name },
+            tokenData: this.genToken( user )
+        });
+
+        res.redirect( '/' );
+    }
+
+
+
     private genToken(user: IUser): Object {
 
         let expires = moment().utc().add({ days: 7 }).unix();
@@ -349,11 +376,11 @@ class AuthenticationController {
 
 
 
-    private getStrategy(): Strategy {
+    private getJWTStrategy(): Strategy {
 
         const params = {
             secretOrKey: process.env.JWT_SECRET,
-            jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt"),
+            jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme( "jwt" ),
             passReqToCallback: true
         };
 
@@ -380,7 +407,7 @@ class AuthenticationController {
         return new GoogleStrategy({
             clientID: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_SECRET,
-            callbackURL: "https://app.scrumbs.app/api/v1/authentication/google/callback"
+            callbackURL: process.env.APP_DOMAIN + "/api/v1/authentication/google/callback"
         }, async (accessToken: string, refreshToken: string, profile: any, done: Function) => {
 
             const firstName     = profile.name.givenName;
@@ -396,7 +423,7 @@ class AuthenticationController {
 
                 user = new User({
                     name: `${ firstName } ${ lastName }`,
-                    email: email,
+                    email,
                     profileImage,
                     confirmed,
                     googleId
@@ -424,7 +451,7 @@ class AuthenticationController {
             consumerKey: process.env.TWITTER_KEY,
             consumerSecret: process.env.TWITTER_SECRET,
             userProfileURL: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
-            callbackURL: "https://app.scrumbs.app/api/v1/authentication/twitter/callback",
+            callbackURL: process.env.APP_DOMAIN + "/api/v1/authentication/twitter/callback",
             profileFields: [ "id", "emails", "name" ]
         }, async (token: string, tokenSecret: string, profile: any, done: Function) => {
 
@@ -445,6 +472,58 @@ class AuthenticationController {
                     confirmed: true,
                     profileImage,
                     twitterId
+                });
+
+                const defaultTeam = new Team({
+                    name: "Scrum Team",
+                    owner: user,
+                    isDefault: true
+                });
+
+
+                await user.save();
+                await defaultTeam.save();
+            }
+
+            return done( null, user );
+        });
+    }
+
+
+
+    private getLinkedInStrategy(): Strategy {
+        return new LinkedInStrategy({
+            clientID: process.env.LINKEDIN_KEY,
+            clientSecret: process.env.LINKEDIN_SECRET,
+            callbackURL: process.env.APP_DOMAIN + "/api/v1/authentication/linkedin/callback",
+            profileFields: [
+                "first-name",
+                "last-name",
+                "email-address",
+                "summary",
+                "picture-url"
+            ],
+            scope: [ "r_emailaddress", "r_basicprofile" ],
+            state: true
+        }, async (accessToken: string, refreshToken: string, profile: any, done: Function) => {
+
+            console.log( "Profile", profile );
+
+            const firstName     = profile.name.givenName;
+            const lastName      = profile.name.familyName;
+            const profileImage  = profile.photos.length ? profile.photos[0].value : "";
+            const email         = profile.emails[0].value;
+            const confirmed     = true;
+
+            let user = await User.findOne({ email } );
+
+            if ( ! user ) {
+
+                user = new User({
+                    name: `${ firstName } ${ lastName }`,
+                    email,
+                    profileImage,
+                    confirmed
                 });
 
                 const defaultTeam = new Team({
