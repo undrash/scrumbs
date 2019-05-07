@@ -1,4 +1,5 @@
 
+import RequireAuthentication from "../middlewares/RequireAuthentication";
 import { Router, Request, Response, NextFunction } from "express";
 import {InquiryTypes} from "../models/constants/InquiryTypes";
 import Inquiry from "../models/Inquiry";
@@ -23,14 +24,14 @@ class InquiryController {
 
 
     public routes() {
-        this.router.post( '/', this.createInquiry );
+        this.router.post( '/', RequireAuthentication, this.createInquiry );
     }
 
 
 
     public createInquiry(req: Request, res: Response, next: NextFunction) {
 
-        const userId                        = req.app.get( "user" )._id;
+        const userId                        = ( req as any ).user._id;
         const { type, name, description }   = req.body;
 
         const start     = moment().startOf( "day" );

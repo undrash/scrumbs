@@ -1,23 +1,19 @@
 
 import { Router, Request, Response, NextFunction } from "express";
 
-import { Strategy, ExtractJwt } from "passport-jwt";
-
 import * as nodemailer from "nodemailer";
 import * as passport from "passport";
-import * as jwt from "jwt-simple";
 import * as moment from "moment";
 import * as crypto from "crypto";
 import * as async from "async";
 
-import { IUser } from "../models/interfaces/IUser";
 import User from "../models/User";
 import Team from "../models/Team";
 
 const GoogleStrategy    = require("passport-google-oauth20").Strategy;
 const TwitterStrategy   = require("passport-twitter").Strategy;
 const LinkedInStrategy  = require("passport-linkedin-oauth2").Strategy;
-
+const LocalStrategy     = require("passport-local").Strategy;
 
 
 
@@ -29,7 +25,6 @@ class AuthenticationController {
     constructor() {
         this.router = Router();
 
-        this.genToken       = this.genToken.bind( this );
         this.OAuthCallback  = this.OAuthCallback.bind( this );
 
         this.routes();
@@ -38,7 +33,8 @@ class AuthenticationController {
 
 
     public initialize() {
-        passport.use("jwt", this.getJWTStrategy() );
+        passport.use( "login", this.getLoginStrategy() );
+        passport.use( "signup", this.getSignUpStrategy() );
         passport.use( "google", this.getGoogleStrategy() );
         passport.use( "twitter", this.getTwitterStrategy() );
         passport.use( "linkedin", this.getLinkedInStrategy() );
@@ -78,79 +74,53 @@ class AuthenticationController {
 
 
 
+    private login = async (req: Request, res: Response, next: NextFunction) => {
 
-    public authenticate = (callback: any) => passport.authenticate("jwt", { session: false, failWithError: true }, callback );
+        passport.authenticate( "login", (err, user, info) => {
+            if ( info )     return res.send( info.message );
+            if ( err )      return next( err );
+            if ( ! user )   return res.redirect( '/' );
 
+            ( req as any ).login(user, (err: any) => {
+                if ( err ) return next( err );
 
-
-    private login = async (req: Request, res: Response) => {
-
-        try {
-            let user = await User.findOne({ "email": req.body.email } ).exec();
-
-            console.log( user );
-
-            if ( user === null ) throw new Error( "User not found" );
-
-            let success = await user.comparePassword( req.body.password );
-
-            console.log( "success: " + success );
-
-            if ( success === false ) throw new Error( "Password incorrect" );
-
-            res.status( 200 ).json({
-                success: true,
-                userData: {
-                    user: user._id,
-                    email: user.email,
-                    name: user.name
-                },
-                tokenData: this.genToken( user )
+                res.status( 200 ).json({
+                    success: true,
+                    userData: {
+                        user: user._id,
+                        email: user.email,
+                        name: user.name
+                    }
+                });
             });
+        })( req, res, next );
 
-        } catch (err) {
-            res.status( 401 ).json( { success: false, message: "Invalid credentials", errors: err } );
-        }
     };
 
 
 
     private signUp = async (req: Request, res: Response, next: NextFunction) => {
 
-        const { name, email, password } = req.body;
 
-        if ( ! name || ! email || ! password ) {
-            res.status( 400 ).json( { success: false, message: "Missing parameters at sign up." } );
-            return;
-        }
+        passport.authenticate( "signup", (err, user, info) => {
 
-        const user = new User({
-            name,
-            email,
-            password
-        });
+            if ( info )     return res.send( info.message );
+            if ( err )      return next( err );
+            if ( ! user )   throw new Error( "No user found on sign-up. Please contact your system administrator." );
 
-        const defaultTeam = new Team({
-            name: "Scrum Team",
-            owner: user,
-            isDefault: true
-        });
+            ( req as any ).login(user, (err: any) => {
+                if ( err ) return next( err );
 
-
-        Promise.all([
-            user.save(),
-            defaultTeam.save()
-        ])
-            .then( () => res.status( 200 ).json({
-                success: true,
-                userData: {
-                    user: user._id,
-                    email: user.email,
-                    name: user.name },
-                tokenData: this.genToken( user )
-            }))
-            .catch( next );
-
+                res.status( 200 ).json({
+                            success: true,
+                            userData: {
+                                user: user._id,
+                                email: user.email,
+                                name: user.name
+                            }
+                        });
+            });
+        })( req, res, next );
     };
 
 
@@ -306,8 +276,8 @@ class AuthenticationController {
             userData: {
                 user: user._id,
                 email: user.email,
-                name: user.name },
-            tokenData: this.genToken( user )
+                name: user.name
+            }
         });
 
         res.redirect( '/' );
@@ -315,54 +285,92 @@ class AuthenticationController {
 
 
 
-    private genToken(user: IUser): Object {
+    private getLoginStrategy(): any {
+        return new LocalStrategy(
+            {
+                usernameField: "email",
+                passReqToCallback : true
+            },
+            (req: Request, email: string, password: string, done: Function) => {
 
-        let expires = moment().utc().add({ days: 7 }).unix();
+                User.findOne( { email } )
+                    .then(  async user => {
 
-        let token = jwt.encode({
+                        if ( ! user ) {
+                            return done( null, false, { message: "Invalid Credentials.\n" } );
+                        }
 
-            exp: expires,
-            email: user.email
+                        const passwordsMatch = await user.comparePassword( password );
 
-        }, process.env.JWT_SECRET! );
+                        if ( ! passwordsMatch ) {
+                            return done( null, false, { message: "Invalid Credentials.\n" } );
+                        }
 
-        return {
-            token: "JWT " + token,
-            expires: moment.unix(expires).format()
-        };
 
+                        if ( req.session ) {
+
+                            if ( req.body.remember ) {
+                                req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // 30 days
+                            } else {
+                                req.session.cookie.expires = false;
+                            }
+
+                        }
+
+                        return done( null, user );
+                    })
+                    .catch( err => done( err ) );
+            }
+        );
     }
 
 
 
-    private getJWTStrategy(): Strategy {
+    private getSignUpStrategy(): any {
+        return new LocalStrategy(
+            {
+                usernameField: "email",
+                passReqToCallback : true
 
-        const params = {
-            secretOrKey: process.env.JWT_SECRET,
-            jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme( "jwt" ),
-            passReqToCallback: true
-        };
+            },
+            (req: Request, email: string, password: string, done: Function) => {
 
-        return new Strategy(params, (req: any, payload: any, done: any) => {
-            User.findOne({ "email": payload.email }, (err, user) => {
+                User.findOne( { email } )
+                    .then(  async existingUser => {
 
-                if ( err ) {
-                    return done(err);
-                }
+                        if ( existingUser ) {
+                            return done( null, false, { message: "That email address is already registered.\n" } );
+                        }
 
-                if ( user === null ) {
-                    return done( null, false, { message: "The user in the token was not found" } );
-                }
+                        const { name } = req.body;
 
-                return done( null, { _id: user._id, email: user.email } );
-            });
-        });
+                        const user = new User({
+                            name,
+                            email,
+                            password
+                        });
 
+                        const defaultTeam = new Team({
+                            name: "Scrum Team",
+                            owner: user,
+                            isDefault: true
+                        });
+
+                        Promise.all([
+                            user.save(),
+                            defaultTeam.save()
+                        ])
+                            .then( () => done( null, user ) )
+                            .catch( (err: Error) => done( err ) );
+                    })
+                    .catch( err => done( err ) );
+            }
+        );
     }
 
 
 
-    private getGoogleStrategy(): Strategy {
+    private getGoogleStrategy(): any {
         return new GoogleStrategy({
             clientID: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_SECRET,
@@ -405,7 +413,7 @@ class AuthenticationController {
 
 
 
-    private getTwitterStrategy(): Strategy {
+    private getTwitterStrategy(): any {
         return new TwitterStrategy({
             consumerKey: process.env.TWITTER_KEY,
             consumerSecret: process.env.TWITTER_SECRET,
@@ -450,7 +458,7 @@ class AuthenticationController {
 
 
 
-    private getLinkedInStrategy(): Strategy {
+    private getLinkedInStrategy(): any {
         return new LinkedInStrategy({
             clientID: process.env.LINKEDIN_KEY,
             clientSecret: process.env.LINKEDIN_SECRET,

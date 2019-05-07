@@ -1,5 +1,6 @@
 
 
+import RequireAuthentication from "../middlewares/RequireAuthentication";
 import { Router, Request, Response, NextFunction } from "express";
 import Note from "../models/Note";
 
@@ -19,15 +20,15 @@ class NoteController {
 
 
     public routes() {
-        this.router.get( "/member/:id&:team&:batch&:limit", this.getMemberNotes );
-        this.router.get( "/solved", this.getSolved );
-        this.router.get( "/solved/:id", this.getSolvedOfMember );
-        this.router.get( "/unsolved", this.getUnsolved );
-        this.router.get( "/unsolved/:id", this.getUnsolvedOfMember );
-        this.router.post( '/', this.createNote );
-        this.router.put( "/solve/:id", this.solve );
-        this.router.put( "/unsolve/:id", this.unsolve );
-        this.router.delete( "/member/:id&:team", this.deleteMemberNotes );
+        this.router.get( "/member/:id&:team&:batch&:limit", RequireAuthentication, this.getMemberNotes );
+        this.router.get( "/solved", RequireAuthentication, this.getSolved );
+        this.router.get( "/solved/:id", RequireAuthentication, this.getSolvedOfMember );
+        this.router.get( "/unsolved", RequireAuthentication, this.getUnsolved );
+        this.router.get( "/unsolved/:id", RequireAuthentication, this.getUnsolvedOfMember );
+        this.router.post( '/', RequireAuthentication, this.createNote );
+        this.router.put( "/solve/:id", RequireAuthentication, this.solve );
+        this.router.put( "/unsolve/:id", RequireAuthentication, this.unsolve );
+        this.router.delete( "/member/:id&:team", RequireAuthentication, this.deleteMemberNotes );
     }
 
 
@@ -53,7 +54,7 @@ class NoteController {
 
 
     public getSolved(req: Request, res: Response, next: NextFunction) {
-        const userId = req.app.get( "user" )._id;
+        const userId = ( req as any ).user._id;
 
         Note.find( { owner: userId, isImpediment: true, isSolved: true } )
             .populate( "member", "name _id" )
@@ -64,7 +65,7 @@ class NoteController {
 
 
     public getSolvedOfMember(req: Request, res: Response, next: NextFunction) {
-        const userId = req.app.get( "user" )._id;
+        const userId = ( req as any ).user._id;
 
         const memberId = req.params.id;
 
@@ -76,7 +77,7 @@ class NoteController {
 
 
     public getUnsolved(req: Request, res: Response, next: NextFunction) {
-        const userId = req.app.get( "user" )._id;
+        const userId = ( req as any ).user._id;
 
         Note.find( { owner: userId, isImpediment: true, isSolved: false } )
             .populate( "member", "name _id" )
@@ -87,7 +88,7 @@ class NoteController {
 
 
     public getUnsolvedOfMember(req: Request, res: Response, next: NextFunction) {
-        const userId = req.app.get( "user" )._id;
+        const userId = ( req as any ).user._id;
 
         const memberId = req.params.id;
 
@@ -100,7 +101,7 @@ class NoteController {
 
 
     public createNote(req: Request, res: Response, next: NextFunction) {
-        const userId                                    = req.app.get( "user" )._id;
+        const userId                                    = ( req as any ).user._id;
         const { member, team, content, isImpediment }   = req.body;
 
         const note = new Note({
