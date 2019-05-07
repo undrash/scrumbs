@@ -6,6 +6,7 @@ import {ICreateNoteModel} from "./models/interfaces/ICreateNoteModel";
 import {ICreateTeamModel} from "./models/interfaces/ICreateTeamModel";
 import {IUpdateTeamModel} from "./models/interfaces/IUpdateTeamModel";
 import {IEditMemberModel} from "./models/interfaces/IEditMemberModel";
+import {ISignUpModel} from "./models/interfaces/ISignUpModel";
 import {ILoginModel} from "./models/interfaces/ILoginModel";
 import {HTTPMethods} from "../core/HTTPMethods";
 import {Proxy} from "../core/Proxy";
@@ -37,9 +38,7 @@ export class ConnectionProxy extends Proxy {
         const data      = DATA_SOURCE;
         const dataSrc   = document.getElementById( "data-source" );
 
-        dataSrc.parentNode.removeChild( dataSrc );
-
-        this.setToken( data.tokenData );
+        if ( dataSrc ) dataSrc.parentNode.removeChild( dataSrc );
 
         const {  name, email } = data.userData;
 
@@ -62,7 +61,7 @@ export class ConnectionProxy extends Proxy {
             data,
             (response: any ) => {
 
-                this.setToken( response.tokenData );
+                // this.setToken( response.tokenData );
 
                 const {  name, email } = response.userData;
 
@@ -79,7 +78,7 @@ export class ConnectionProxy extends Proxy {
 
 
 
-    public signUp(data: ILoginModel, success: Function, failure: Function): void {
+    public signUp(data: ISignUpModel, success: Function, failure: Function): void {
 
         this.httpRequest(
             HTTPMethods.POST,
@@ -87,7 +86,7 @@ export class ConnectionProxy extends Proxy {
             data,
             (response: any) => {
 
-                this.setToken( response.tokenData );
+                // this.setToken( response.tokenData );
 
                 const {  name, email } = response.userData;
 

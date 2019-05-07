@@ -37,6 +37,7 @@ export class AuthenticationLogin extends ViewComponent {
     private passwordInput: HTMLInputElement;
     private passwordInputError: HTMLSpanElement;
 
+    private rememberMe: HTMLInputElement;
     private forgotPassBtn: HTMLParagraphElement;
     private loginBtn: HTMLButtonElement;
 
@@ -62,6 +63,7 @@ export class AuthenticationLogin extends ViewComponent {
         this.passwordInput          = document.getElementById( "authentication-login-password-input" ) as HTMLInputElement;
         this.passwordInputError     = document.getElementById( "authentication-login-password-input-error" ) as HTMLSpanElement;
 
+        this.rememberMe             = document.getElementById( "remember-me" ) as HTMLInputElement;
         this.forgotPassBtn          = document.getElementById( "authentication-login-forgot-password" ) as HTMLParagraphElement;
         this.loginBtn               = document.getElementById( "authentication-login-btn" ) as HTMLButtonElement;
 
@@ -124,8 +126,9 @@ export class AuthenticationLogin extends ViewComponent {
 
         const email     = this.emailInput.value;
         const password  = this.passwordInput.value;
+        const remember  = this.rememberMe.checked;
 
-        const loginModel = new LoginModel( email, password );
+        const loginModel = new LoginModel( email, password, remember );
 
         this.connection.login(
             loginModel,

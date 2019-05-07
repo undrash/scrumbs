@@ -1,6 +1,7 @@
 
 import { Router, Request, Response, NextFunction } from "express";
 
+import RequireAuthentication from "../middlewares/RequireAuthentication";
 import Member from "../models/Member";
 import Team from "../models/Team";
 
@@ -21,15 +22,15 @@ class TeamController {
 
 
     public routes() {
-        this.router.get( '/', this.getTeams );
-        this.router.post( '/', this.createTeam );
-        this.router.put( '/', this.updateTeam );
+        this.router.get( '/', RequireAuthentication, this.getTeams );
+        this.router.post( '/', RequireAuthentication, this.createTeam );
+        this.router.put( '/', RequireAuthentication, this.updateTeam );
     }
 
 
 
     public getTeams(req: Request, res: Response, next: NextFunction) {
-        const userId = req.app.get( "user" )._id;
+        const userId = ( req as any ).user._id;
 
         Team.find( { owner: userId } )
             .then( teams => {
@@ -41,7 +42,7 @@ class TeamController {
 
 
     public createTeam = async (req: Request, res: Response, next: NextFunction) => {
-        const userId = req.app.get( "user" )._id;
+        const userId = ( req as any ).user._id;
 
         const { name, members } = req.body;
 

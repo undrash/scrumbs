@@ -33,6 +33,7 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "4.0.0",
     "passport-linkedin-oauth2": "^1.6.1",
+    "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
     "request": "^2.88.0"
   },
@@ -56,6 +57,7 @@
     "@types/nodemailer": "4.6.5",
     "@types/passport": "1.0.0",
     "@types/passport-jwt": "3.0.1",
+    "@types/passport-local": "^1.0.33",
     "@types/request": "^2.48.1",
     "typescript": "3.3.1"
   }

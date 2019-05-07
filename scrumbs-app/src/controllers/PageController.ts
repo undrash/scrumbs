@@ -1,6 +1,6 @@
 
 
-import { Router, Request, Response, NextFunction } from "express";
+import { Router, Request, Response } from "express";
 
 
 
@@ -32,6 +32,20 @@ class PageController {
 
         if ( auth ) {
             return res.render( "index", { title: "Scrumbs | Application", auth } );
+        }
+
+
+        const user = ( req as any ).user;
+
+
+        if ( user ) {
+            return res.render( "index", { title: "Scrumbs | Application", auth: JSON.stringify({
+                userData: {
+                    user: user._id,
+                    email: user.email,
+                    name: user.name
+                }
+            })});
         }
 
         res.render( "index", { title: "Scrumbs | Application" } );
