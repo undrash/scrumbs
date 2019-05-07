@@ -1,5 +1,4 @@
 
-import {AuthenticationNotifications} from "../pages/app/authentication/AuthenticationNotifications";
 import {IAddRemoveMemberModel} from "./models/interfaces/IAddRemoveMemberModel";
 import {ICreateInquiryModel} from "./models/interfaces/ICreateInquiryModel";
 import {ICreateMemberModel} from "./models/interfaces/ICreateMemberModel";
