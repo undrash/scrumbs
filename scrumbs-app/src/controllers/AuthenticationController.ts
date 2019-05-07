@@ -37,25 +37,6 @@ class AuthenticationController {
 
 
 
-    public routes() {
-        this.router.post( "/login", this.login );
-        this.router.post( "/sign-up", this.signUp );
-        this.router.post( "/forgot", this.forgotPassword );
-        this.router.get( "/reset/:token", this.getResetPassword );
-        this.router.post( "/reset/:token", this.postResetPassword );
-
-        this.router.get( "/oauth/google", this.googleAuth );
-        this.router.get( "/google/callback", passport.authenticate("google", { failureRedirect: "/" }), this.OAuthCallback );
-
-        this.router.get( "/oauth/twitter", this.twitterAuth );
-        this.router.get( "/twitter/callback", passport.authenticate("twitter", { failureRedirect: "/" } ), this.OAuthCallback );
-
-        this.router.get( "/oauth/linkedin", this.linkedinAuth );
-        this.router.get( "/linkedin/callback", passport.authenticate( "linkedin", { failureRedirect: "/" } ), this.OAuthCallback );
-    }
-
-
-
     public initialize() {
         passport.use("jwt", this.getJWTStrategy() );
         passport.use( "google", this.getGoogleStrategy() );
@@ -75,6 +56,26 @@ class AuthenticationController {
 
         return passport.initialize();
     }
+
+
+
+    public routes() {
+        this.router.post( "/login", this.login );
+        this.router.post( "/sign-up", this.signUp );
+        this.router.post( "/forgot", this.forgotPassword );
+        this.router.get( "/reset/:token", this.getResetPassword );
+        this.router.post( "/reset/:token", this.postResetPassword );
+
+        this.router.get( "/oauth/google", this.googleAuth );
+        this.router.get( "/google/callback", passport.authenticate("google", { failureRedirect: "/" }), this.OAuthCallback );
+
+        this.router.get( "/oauth/twitter", this.twitterAuth );
+        this.router.get( "/twitter/callback", passport.authenticate("twitter", { failureRedirect: "/" } ), this.OAuthCallback );
+
+        this.router.get( "/oauth/linkedin", this.linkedinAuth );
+        this.router.get( "/linkedin/callback", passport.authenticate( "linkedin", { failureRedirect: "/" } ), this.OAuthCallback );
+    }
+
 
 
 
