@@ -101,7 +101,6 @@ export class ScrumCreateTeam extends ViewComponent {
             createTeamModel,
             (response: any) => {
                 console.log( response );
-                this.selectedMembers = [];
                 this.sendSignal( ScrumSignals.TEAM_CREATED, response.team );
                 this.exitScene( ViewExitTypes.HIDE_COMPONENT );
             },
@@ -242,6 +241,8 @@ export class ScrumCreateTeam extends ViewComponent {
 
     public exitScene(exitType?: string): void {
         console.info( "Exit being called in scrum create team view component" );
+
+        this.selectedMembers = [];
 
         switch ( exitType ) {
 
