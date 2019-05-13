@@ -35,6 +35,7 @@ export class ScrumCreateTeam extends ViewComponent {
     private memberContainer: HTMLDivElement;
     private searchMembers: HTMLInputElement;
 
+    private selectedMembers: string[];
 
     private searchTimer: any;
 
@@ -59,6 +60,8 @@ export class ScrumCreateTeam extends ViewComponent {
         this.saveBtnHandler     = this.saveBtnHandler.bind( this );
         this.searchListener     = this.searchListener.bind( this );
         this.searchForMembers   = this.searchForMembers.bind( this );
+
+        this.selectedMembers    = [];
 
         this.enterScene();
     }
@@ -92,22 +95,19 @@ export class ScrumCreateTeam extends ViewComponent {
 
         if ( ! name ) return;
 
-        const members = this.getSelectedMembers();
-
-        const createTeamModel = new CreateTeamModel( name, members );
+        const createTeamModel = new CreateTeamModel( name, this.selectedMembers );
 
         this.connection.createTeam(
             createTeamModel,
             (response: any) => {
                 console.log( response );
+                this.selectedMembers = [];
                 this.sendSignal( ScrumSignals.TEAM_CREATED, response.team );
                 this.exitScene( ViewExitTypes.HIDE_COMPONENT );
             },
             (err: string) => console.error( err )
         );
 
-
-        console.log( members );
     }
 
 
@@ -159,8 +159,20 @@ export class ScrumCreateTeam extends ViewComponent {
 
         this.memberContainer.insertBefore( member, this.memberContainer.firstChild );
 
-        member.addEventListener( "click", () => member.classList.toggle( "active" ) );
+        if ( this.selectedMembers.indexOf( member.id ) !== -1 ) member.classList.add( "active" );
 
+        member.addEventListener( "click", () => {
+            const memberId = member.id;
+
+            if ( member.classList.contains( "active" ) ) {
+                member.classList.remove( "active" );
+                this.selectedMembers = this.selectedMembers.filter( id => id !== memberId );
+            } else {
+                member.classList.add( "active" );
+                this.selectedMembers.push( memberId );
+            }
+
+        });
 
     }
 
@@ -206,22 +218,6 @@ export class ScrumCreateTeam extends ViewComponent {
 
 
 
-    private getSelectedMembers(): string[] {
-        let memberIds = [];
-
-        for ( let i = 0; i < this.memberContainer.children.length; i++ ) {
-            let member = this.memberContainer.children[ i ];
-
-            if ( member.classList.contains( "active" ) ) {
-                memberIds.push( member.id );
-            }
-        }
-
-        return memberIds;
-    }
-
-
-
     public enterScene(enterType?: string): void {
         console.info( "Enter being called in scrum create team view component" );
 
@@ -239,7 +235,6 @@ export class ScrumCreateTeam extends ViewComponent {
                 this.registerEventListeners();
                 break;
         }
-
 
     }
 
