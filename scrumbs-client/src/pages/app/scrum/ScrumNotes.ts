@@ -9,6 +9,7 @@ import {SnackBarType} from "../../../common/SnackBarType";
 import {ModalTypes} from "../../../common/ModalTypes";
 import {ScrumSignals} from "./ScrumSignals";
 import {View} from "../../../core/View";
+import {Note} from "./Note";
 
 import TweenLite = gsap.TweenLite;
 import Power0 = gsap.Power0;
@@ -474,42 +475,7 @@ export class ScrumNotes extends ViewComponent {
 
     public addNote(noteData: any, prepend?: boolean): void {
 
-        let note        = document.createElement( "li" );
-        note.id         = noteData._id;
-        note.className  = "scrum-note pointer";
-
-        if ( noteData.isImpediment ) note.classList.add( "impediment" );
-        if ( noteData.isSolved ) note.classList.add( "solved" );
-
-        let noteText            = document.createElement( "p" );
-        noteText.className      = "scrum-note-text";
-        noteText.innerText      = noteData.content;
-
-        let noteOptions         = document.createElement( "div" );
-        noteOptions.className   = "scrum-note-options-button";
-
-        let noteCheckmark       = document.createElement( "span" );
-        noteCheckmark.className = "scrum-note-checkmark";
-
-        note.appendChild( noteText );
-        note.appendChild( noteOptions );
-        note.appendChild( noteCheckmark );
-
-
-        noteCheckmark.addEventListener( "click", () => {
-
-            if ( note.classList.contains( "solved" ) ) {
-                this.unsolveImpediment( note );
-            } else {
-                this.solveImpediment( note );
-            }
-        });
-
-        if ( prepend ) {
-            this.notesContainer.insertBefore( note, this.notesContainer.firstChild );
-        } else {
-            this.notesContainer.appendChild( note );
-        }
+        new Note( this.notesContainer, noteData, prepend );
 
         if ( this.noteBatchIndex <= 1 ) {
             this.notesContainer.scrollTo( 0, this.notesContainer.scrollHeight );
