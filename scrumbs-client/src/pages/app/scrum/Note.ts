@@ -16,8 +16,14 @@ export class Note {
     private note: any;
 
     private content: HTMLElement;
-    private options: HTMLElement;
+    private optionsBtn: HTMLElement;
+    private optionsDropdown: HTMLElement;
     private checkmark: HTMLElement;
+
+    private convertToNote: HTMLElement;
+    private convertToImpediment: HTMLElement;
+    private editNote: HTMLElement;
+    private deleteNote: HTMLElement;
 
 
 
@@ -34,8 +40,14 @@ export class Note {
         this.container.innerHTML    = template;
 
         this.content                = this.container.querySelector( ".scrum-note-text" ) as HTMLElement;
-        this.options                = this.container.querySelector( ".scrum-note-options-button" ) as HTMLElement;
+        this.optionsBtn             = this.container.querySelector( ".scrum-note-options-button" ) as HTMLElement;
+        this.optionsDropdown        = this.container.querySelector( ".scrum-note-options-list" ) as HTMLElement;
         this.checkmark              = this.container.querySelector( ".scrum-note-checkmark" ) as HTMLElement;
+
+        this.convertToNote          = this.container.querySelector( ".scrum-note-option-convert-to-note" ) as HTMLElement;
+        this.convertToImpediment    = this.container.querySelector( ".scrum-note-option-convert-to-impediment" ) as HTMLElement;
+        this.editNote               = this.container.querySelector( ".scrum-note-option-edit-note" ) as HTMLElement;
+        this.deleteNote             = this.container.querySelector( ".scrum-note-option-delete-note" ) as HTMLElement;
 
         this.content.innerText      = this.note.content;
 
@@ -49,7 +61,8 @@ export class Note {
             this.parent.appendChild( this.container );
         }
 
-        this.checkMarkListener = this.checkMarkListener.bind( this );
+        this.checkMarkListener  = this.checkMarkListener.bind( this );
+        this.optionsListener    = this.optionsListener.bind( this );
 
         this.enterScene();
     }
@@ -58,12 +71,19 @@ export class Note {
 
     private registerEventListeners(): void {
         this.checkmark.addEventListener( "click", this.checkMarkListener );
+        this.optionsBtn.addEventListener( "click", this.optionsListener );
     }
 
 
 
     private checkMarkListener(): void {
         this.container.classList.contains( "solved" ) ? this.unsolveImpediment() : this.solveImpediment();
+    }
+
+
+
+    private optionsListener(): void {
+        this.optionsDropdown.style.display = "block";
     }
 
 
