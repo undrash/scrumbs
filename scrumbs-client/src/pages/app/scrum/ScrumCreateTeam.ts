@@ -34,6 +34,7 @@ export class ScrumCreateTeam extends ViewComponent {
     private mainMemberContainer: HTMLUListElement;
     private memberContainer: HTMLDivElement;
     private searchMembers: HTMLInputElement;
+    private clearSearch: HTMLImageElement;
 
     private selectedMembers: string[];
 
@@ -50,6 +51,8 @@ export class ScrumCreateTeam extends ViewComponent {
         this.teamNameInput          = document.getElementById( "create-team-name-input" ) as HTMLInputElement;
         this.mainMemberContainer    = document.getElementById( "create-team-members-container" ) as HTMLUListElement;
         this.searchMembers          = document.getElementById( "create-team-member-search-input" ) as HTMLInputElement;
+        this.clearSearch            = document.getElementById( "create-team-member-search-clear" ) as HTMLImageElement;
+
 
         new SimpleBar( this.mainMemberContainer );
 
@@ -60,6 +63,7 @@ export class ScrumCreateTeam extends ViewComponent {
         this.saveBtnHandler     = this.saveBtnHandler.bind( this );
         this.searchListener     = this.searchListener.bind( this );
         this.searchForMembers   = this.searchForMembers.bind( this );
+        this.clearSearchHandler = this.clearSearchHandler.bind( this );
 
         this.selectedMembers    = [];
 
@@ -72,6 +76,7 @@ export class ScrumCreateTeam extends ViewComponent {
         this.exitBtn.addEventListener( "click", this.exitBtnHandler );
         this.saveBtn.addEventListener( "click", this.saveBtnHandler );
         this.searchMembers.addEventListener( "keyup", this.searchListener );
+        this.clearSearch.addEventListener( "click", this.clearSearchHandler );
     }
 
 
@@ -80,6 +85,7 @@ export class ScrumCreateTeam extends ViewComponent {
         this.exitBtn.removeEventListener( "click", this.exitBtnHandler );
         this.saveBtn.removeEventListener( "click", this.saveBtnHandler );
         this.searchMembers.removeEventListener( "keyup", this.searchListener );
+        this.clearSearch.removeEventListener( "click", this.clearSearchHandler );
     }
 
 
@@ -114,11 +120,16 @@ export class ScrumCreateTeam extends ViewComponent {
     private searchListener(e: any): void {
         const key = e.which || e.keyCode;
 
-        console.log( key );
-
         if ( this.searchTimer ) clearTimeout( this.searchTimer );
 
-        if ( ! this.searchMembers.value )   return this.populate();
+        if ( ! this.searchMembers.value ) {
+            this.clearSearch.style.display = "none";
+            return this.populate();
+
+        } else {
+            this.clearSearch.style.display = "block";
+        }
+
 
         if ( key === 13 ) { // ENTER
 
@@ -138,6 +149,14 @@ export class ScrumCreateTeam extends ViewComponent {
 
 
 
+    private clearSearchHandler(): void {
+        this.searchMembers.value = null;
+        this.clearSearch.style.display = "none";
+        this.populate();
+    }
+
+
+
     private resetView(): void {
         this.teamNameInput.value            = null;
         this.memberContainer.innerHTML      = null;
@@ -149,7 +168,7 @@ export class ScrumCreateTeam extends ViewComponent {
     private addMember(memberData: any): void {
 
         let member          = document.createElement( "li" );
-        member.innerHTML    = memberData.name;
+        member.innerHTML    = this.highlightSearchString( memberData.name, this.searchMembers.value );
         member.id           = memberData._id;
         let checkbox        = document.createElement( "span" );
         checkbox.className  = "create-team-member-checkbox";
@@ -173,6 +192,15 @@ export class ScrumCreateTeam extends ViewComponent {
 
         });
 
+    }
+
+
+
+    private highlightSearchString(itemName: string, searchString:string): string {
+
+        const pattern = new RegExp( '(' + searchString + ')', "gi" );
+
+        return itemName.replace( pattern, "<strong>$1</strong>" );
     }
 
 
