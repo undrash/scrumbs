@@ -264,7 +264,7 @@ export class Inquiry extends ViewComponent {
         }
 
 
-        if ( this.descriptionInput.value.length < 100 ) {
+        if ( this.descriptionInput.value.length < 10 ) {
             this.descriptionError.style.display = "block";
             valid = false;
         }
