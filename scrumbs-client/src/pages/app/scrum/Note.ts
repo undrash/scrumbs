@@ -1,5 +1,6 @@
 
 import {ConnectionProxy} from "../../../connection/ConnectionProxy";
+import {NoteOptions} from "./NoteOptions";
 
 const template = require( "../../../templates/note.html" );
 
@@ -10,13 +11,13 @@ const template = require( "../../../templates/note.html" );
 
 export class Note {
     private id: string;
-    private container: HTMLElement;
-    private parent: HTMLElement;
+    public container: HTMLElement;
+    public parent: HTMLElement;
 
     private note: any;
 
     private content: HTMLElement;
-    private optionsBtn: HTMLElement;
+    public optionsBtn: HTMLElement;
     private optionsDropdown: HTMLElement;
     private checkmark: HTMLElement;
 
@@ -48,6 +49,8 @@ export class Note {
         this.convertToImpediment    = this.container.querySelector( ".scrum-note-option-convert-to-impediment" ) as HTMLElement;
         this.editNote               = this.container.querySelector( ".scrum-note-option-edit-note" ) as HTMLElement;
         this.deleteNote             = this.container.querySelector( ".scrum-note-option-delete-note" ) as HTMLElement;
+
+        this.optionsBtn.id          = `${ this.id }-options`;
 
         this.content.innerText      = this.note.content;
 
@@ -83,7 +86,7 @@ export class Note {
 
 
     private optionsListener(): void {
-        this.optionsDropdown.style.display = "block";
+        new NoteOptions( this );
     }
 
 

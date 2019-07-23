@@ -23,6 +23,28 @@ export class HTMLHelper {
 
 
     /**
+     * Calculates the element position in relation to an element with the target id provided
+     *
+     * @param element
+     * @param {string} targetId
+     * @return {any}
+     */
+    public static getPositionToTargetId(element: any, targetId: string): any {
+        let xPosition = 0;
+        let yPosition = 0;
+
+        while( element.id !== targetId ) {
+            xPosition += ( element.offsetLeft - element.scrollLeft + element.clientLeft );
+            yPosition += ( element.offsetTop - element.scrollTop + element.clientTop );
+            element = element.offsetParent;
+        }
+
+        return { x: xPosition, y: yPosition };
+    }
+
+
+
+    /**
      * Calculates the absolute height of a specified HTML element
      * @param {HTMLElement} el
      * @return {number}
@@ -123,5 +145,63 @@ export class HTMLHelper {
             rect.top < ( window.innerHeight || document.documentElement.clientHeight ) /* or $(window).height() */;
     };
 
+
+
+    /**
+     * Copies a string to the clipboard
+     *
+     * @param {string} str
+     */
+    public static copyToClipboard(str: string): void {
+        let el              = document.createElement( "textarea" );
+        el.value            = str;
+        el.style.position   = "absolute";
+        el.style.left       = "-9999px";
+        el.setAttribute( "readonly", '' );
+        document.body.appendChild( el );
+
+        if ( navigator.userAgent.match( /ipad|ipod|iphone/i ) ) {
+            // save current contentEditable/readOnly status
+            let editable = el.contentEditable;
+            let readOnly = el.readOnly;
+
+            // convert to editable with readonly to stop iOS keyboard opening
+            el.contentEditable = "true";
+            el.readOnly = true;
+
+            // create a selectable range
+            let range = document.createRange();
+            range.selectNodeContents( el );
+
+            // select the range
+            let selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange( range );
+            el.setSelectionRange( 0, 999999 );
+
+            // restore contentEditable/readOnly to original state
+            el.contentEditable  = editable;
+            el.readOnly         = readOnly;
+        } else {
+            el.select();
+        }
+
+        document.execCommand( "copy" );
+        document.body.removeChild( el );
+    }
+
+
+
+    /**
+     * Returns the index of an element in relationship to it's parent
+     * element
+     *
+     * Useful when working with lists or dropdowns.
+     *
+     * @param {HTMLElement} element
+     */
+    public static indexOfElement(element: HTMLElement): void {
+        return Array.prototype.indexOf.call( element.parentElement.children, element );
+    }
 
 }
