@@ -58,6 +58,53 @@
             display: none;
         }
 
+        #user-options-panel {
+            height: auto;
+            width: 275px;
+            top: 65px;
+            padding: 20px;
+
+            .primary-button {
+                height: 58px;
+                width: 100%;
+                position: relative;
+                line-height: 58px;
+                padding-left: 60px;
+                margin-top: 20px;
+                cursor: pointer;
+
+                &::before {
+                    content: url("../../style/img/icons/coffee-cup-icon.svg");
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                }
+            }
+
+            .user-options-list {
+                margin-top: 20px;
+            }
+        }
+
+        .user-summary {
+
+            height: 65px;
+            border-bottom: 1px solid $quaternary-color;
+
+            .profile-avatar {
+                display: inline-block;
+                vertical-align: middle;
+                transform: scale(1.2);
+            }
+
+            .profile-user-name {
+                display: inline-block;
+                font-size: 18px;
+                vertical-align: middle;
+                margin-left: 10px;
+            }
+        }
+
 
         #profile-inquiry {
             width: 25px;
@@ -169,6 +216,10 @@
             @include center( "vertical" );
             right: 0;
             background: url( "../img/icons/icon-dropdown-accent.svg" ) no-repeat center / contain;
+
+            &.active {
+                background: url( "../img/icons/dropdown-arrow-active.svg" ) no-repeat center / contain;
+            }
     
         }
     
