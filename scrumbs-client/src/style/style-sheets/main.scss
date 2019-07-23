@@ -34,7 +34,21 @@
   }
 
 
-
+.profile-avatar {
+    display: block;
+    width: 45px;
+    height: 45px;
+    //margin-right: 30px;
+    border: 2px solid rgba(36, 46, 76, .1);
+    border-radius: 50%;
+    line-height: 40px;
+    text-align: center;
+    color: #9B9AA9;
+    text-transform: uppercase;
+    font-weight: bold;
+    overflow: hidden;
+    font-size: 16px;
+}
 
 
 
@@ -381,6 +395,56 @@ input, textarea {
       background: url( "../img/icons/icon-close.svg" ) no-repeat center / contain;
     }
 
+}
+
+
+
+/** ==================================== Dropdowns ==================================== */
+
+.options-list-bg {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    box-shadow: 0 5px 20px 0 #E1E0E9;
+    font-size: 16px;
+    color: #242E4C;
+    white-space: nowrap;
+}
+
+.options-list-btn {
+    line-height: 45px;
+    padding: 0 20px 0 50px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+
+    &:hover {
+        background-color: #f5f5f8;
+    }
+
+    &.settings {
+        background-image: url("../../style/img/icons/settings-icon.svg");
+        //background-size: 13px 15px;
+        background-position: 21px center;
+    }
+
+    &.log-out {
+        background-image: url("../../style/img/icons/logout-icon.svg");
+        //background-size: 13px 15px;
+        background-position: 21px center;
+    }
+}
+
+
+/** ==================================== Empty State ==================================== */
+
+
+.empty-state-label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 
