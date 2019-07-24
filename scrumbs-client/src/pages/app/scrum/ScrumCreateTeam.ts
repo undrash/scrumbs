@@ -36,6 +36,8 @@ export class ScrumCreateTeam extends ViewComponent {
     private searchMembers: HTMLInputElement;
     private clearSearch: HTMLImageElement;
 
+    private emptySearchResults: HTMLElement;
+
     private selectedMembers: string[];
 
     private searchTimer: any;
@@ -52,7 +54,7 @@ export class ScrumCreateTeam extends ViewComponent {
         this.mainMemberContainer    = document.getElementById( "create-team-members-container" ) as HTMLUListElement;
         this.searchMembers          = document.getElementById( "create-team-member-search-input" ) as HTMLInputElement;
         this.clearSearch            = document.getElementById( "create-team-member-search-clear" ) as HTMLImageElement;
-
+        this.emptySearchResults     = document.getElementById( "member-search-empty" );
 
         new SimpleBar( this.mainMemberContainer );
 
@@ -215,6 +217,7 @@ export class ScrumCreateTeam extends ViewComponent {
                 const { members } = response;
 
                 this.populateMembers( members );
+
             },
             (err: string) => console.error( err )
         );
@@ -223,6 +226,13 @@ export class ScrumCreateTeam extends ViewComponent {
 
 
     private populateMembers(members: any): void {
+
+        if ( ! members.length ) {
+            return this.showEmptyState();
+        }
+
+        this.hideEmptyState();
+
         this.memberContainer.innerHTML = null;
 
         for ( let member of members ) {
@@ -241,6 +251,20 @@ export class ScrumCreateTeam extends ViewComponent {
             },
             (err: string) => console.error( err )
         )
+    }
+
+
+
+    private showEmptyState(): void {
+        this.mainMemberContainer.style.display  = "none";
+        this.emptySearchResults.style.display   = "block";
+    }
+
+
+
+    private hideEmptyState(): void {
+        this.emptySearchResults.style.display   = "none";
+        this.mainMemberContainer.style.display  = "block";
     }
 
 
