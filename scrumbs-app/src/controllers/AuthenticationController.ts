@@ -57,8 +57,12 @@ class AuthenticationController {
 
     public routes() {
         this.router.post( "/login", this.login );
+        this.router.get( "/log-out", this.logOut );
+
         this.router.post( "/sign-up", this.signUp );
+
         this.router.post( "/forgot", this.forgotPassword );
+
         this.router.get( "/reset/:token", this.getResetPassword );
         this.router.post( "/reset/:token", this.postResetPassword );
 
@@ -70,6 +74,8 @@ class AuthenticationController {
 
         this.router.get( "/oauth/linkedin", this.linkedinAuth );
         this.router.get( "/linkedin/callback", passport.authenticate( "linkedin", { failureRedirect: "/" } ), this.OAuthCallback );
+
+
     }
 
 
@@ -97,6 +103,20 @@ class AuthenticationController {
 
     };
 
+
+
+    public logOut(req: Request, res: Response) {
+
+        const cookie = req.cookies;
+
+        for ( let prop in cookie ) {
+            if ( ! cookie.hasOwnProperty( prop ) ) continue;
+
+            res.cookie( prop, '', { expires: new Date( 0 ) } );
+        }
+
+        res.redirect( '/' );
+    }
 
 
     private signUp = async (req: Request, res: Response, next: NextFunction) => {

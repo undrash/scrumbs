@@ -50,6 +50,8 @@ export class HeaderComponent extends ViewComponent {
     private profileDropdownBtn: HTMLElement;
     private userOptionsPanel: HTMLElement;
 
+    private panelOptionSettings: HTMLElement;
+
     private avatar: HTMLElement;
 
     constructor(view: View, container: HTMLElement) {
@@ -82,6 +84,8 @@ export class HeaderComponent extends ViewComponent {
 
         this.profileDropdownBtn         = document.getElementById( "profile-dropdown-button" );
         this.userOptionsPanel           = document.getElementById( "user-options-panel" );
+
+        this.panelOptionSettings        = document.getElementById( "user-settings-btn" );
 
         this.actionBtnClickListener     = this.actionBtnClickListener.bind( this );
         this.scrumBtnListener           = this.scrumBtnListener.bind( this );
