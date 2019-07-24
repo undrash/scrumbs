@@ -56,6 +56,8 @@
 					line-height: 45px;
 					padding: 0 20px 0 50px;
 					background-repeat: no-repeat;
+					background-color: $tertiary-color;
+					transition: background-color 0.3s ease-in-out;
 
 					&:hover { background-color: $nonary-color; }
 				}
