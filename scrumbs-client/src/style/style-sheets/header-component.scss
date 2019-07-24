@@ -25,20 +25,29 @@
     
             position: absolute;
             @include center();
-            font-weight: 900;
+            font-weight: normal;
             color: $text-tertiary-color;
             font-size: 16px;
             display: none;
+
     
             li {
                 display: inline-block;
                 padding: 10px;
+                font-weight: normal;
+                color: $text-tertiary-color;
+                transition: color 0.3s ease-in-out;
     
                 &:not( :last-child ) { margin-right: 15px; }
     
                 &.active {
                     color: $text-primary-color;
                     cursor: default;
+                }
+
+                &:hover {
+                    color: $text-primary-color;
+
                 }
             }
     
