@@ -10,7 +10,7 @@ const template = require( "../../../templates/note.html" );
 
 
 export class Note {
-    private id: string;
+    public id: string;
     public container: HTMLElement;
     public parent: HTMLElement;
 

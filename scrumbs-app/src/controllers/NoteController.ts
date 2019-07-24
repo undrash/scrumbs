@@ -29,6 +29,7 @@ class NoteController {
         this.router.put( "/solve/:id", RequireAuthentication, this.solve );
         this.router.put( "/unsolve/:id", RequireAuthentication, this.unsolve );
         this.router.delete( "/member/:id&:team", RequireAuthentication, this.deleteMemberNotes );
+        this.router.put( "/convert", RequireAuthentication, this.convert );
     }
 
 
@@ -147,6 +148,20 @@ class NoteController {
         Note.deleteMany( { member: id, team: team } )
             .then( () => res.status( 200 ).json( { success: true, message: "Notes deleted." } ) )
             .catch( next );
+    }
+
+
+
+    public convert(req: Request, res: Response, next: NextFunction) {
+
+        const { id, isImpediment } = req.body;
+
+        Note.findByIdAndUpdate( id, { isImpediment } )
+            .then( () => res.status( 200 ).json({
+                success: true,
+                message: `${ isImpediment ? "Impediment" : "Note" } successfully converted to ${ isImpediment ? "Note." : "Impediment." }`
+            }))
+            .catch( next )
     }
 
 }

@@ -280,7 +280,33 @@ export class ConnectionProxy extends Proxy {
             data,
             success,
             failure
-        )
+        );
+    }
+
+
+
+    public convertNote(id: string, isImpediment: boolean, success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.PUT,
+            "/api/v1/notes/convert",
+            { id, isImpediment },
+            success,
+            failure
+        );
+    }
+
+
+
+    public deleteNote(id: string, success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.DELETE,
+            `/api/v1/notes/${ id }`,
+            null,
+                success,
+                failure
+        );
     }
 
 
