@@ -345,6 +345,10 @@ input, textarea {
     line-height: 49px;
     background: transparent;
     transition: color 0.3s ease-in-out, border 0.3s ease-in-out;
+
+    &:hover {
+        color: $text-quaternary-color;
+    }
 }
 
 
