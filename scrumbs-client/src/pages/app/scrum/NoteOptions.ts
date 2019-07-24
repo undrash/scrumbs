@@ -1,6 +1,10 @@
 
+import {ConfirmationModal} from "../../../common/ConfirmationModal";
 import {ConnectionProxy} from "../../../connection/ConnectionProxy";
+import {SnackBarType} from "../../../common/SnackBarType";
 import {HTMLHelper} from "../../../helpers/HTMLHelper";
+import {ModalTypes} from "../../../common/ModalTypes";
+import {SnackBar} from "../../../common/SnackBar";
 import {Note} from "./Note";
 
 const template = require( "../../../templates/note-options.html" );
@@ -22,11 +26,12 @@ export class NoteOptions {
     private deleteBtn: HTMLElement;
 
     private connection: ConnectionProxy;
-
+    private snackbar: SnackBar;
 
     constructor(target: Note) {
 
         this.connection             = new ConnectionProxy( "NoteOptionsProxy" );
+        this.snackbar               = SnackBar._instance;
 
         this.target                 = target;
         this.targetContainer        = this.target.parent;
@@ -54,6 +59,7 @@ export class NoteOptions {
         this.scrollListener                 = this.scrollListener.bind( this );
         this.convertToNoteListener          = this.convertToNoteListener.bind( this );
         this.convertToImpedimentListener    = this.convertToImpedimentListener.bind( this );
+        this.deleteNoteListener             = this.deleteNoteListener.bind( this );
 
 
         this.enterScene();
@@ -65,6 +71,7 @@ export class NoteOptions {
     private registerEventListeners(): void {
         this.convertToNoteBtn.addEventListener( "click", this.convertToNoteListener );
         this.convertToImpedimentBtn.addEventListener( "click", this.convertToImpedimentListener );
+        this.deleteBtn.addEventListener( "click", this.deleteNoteListener );
         document.addEventListener( "click", this.documentClickListener);
         window.addEventListener( "resize", this.positionDropdown );
         this.targetContainer.addEventListener( "scroll", this.scrollListener );
@@ -75,6 +82,7 @@ export class NoteOptions {
     private unregisterEventListeners(): void {
         this.convertToNoteBtn.removeEventListener( "click", this.convertToNoteListener );
         this.convertToImpedimentBtn.removeEventListener( "click", this.convertToImpedimentListener );
+        this.deleteBtn.removeEventListener( "click", this.deleteNoteListener );
         document.removeEventListener( "click", this.documentClickListener);
         window.removeEventListener( "resize", this.positionDropdown );
         this.targetContainer.removeEventListener( "scroll", this.scrollListener );
@@ -96,6 +104,7 @@ export class NoteOptions {
 
 
     private convertToImpedimentListener(): void {
+
         this.connection.convertNote(
             this.target.id,
             true,
@@ -103,6 +112,40 @@ export class NoteOptions {
             (err: Error) => console.error( err )
         );
     }
+
+
+
+    private deleteNoteListener(): void {
+
+        let text = this.target.container.querySelector( ".scrum-note-text" ).innerHTML;
+
+        text = text.length > 50 ? `${ text.substr( 0, 50 )}...` : text;
+
+        new ConfirmationModal(
+            ModalTypes.DELETE,
+            "Yes, Delete Note",
+            "Cancel, Keep Note",
+            "Deleting Note",
+            [
+                `Are you sure you want to delete the note <strong>${ text }</strong>?`,
+                `<br>The note will be deleted, and the operation cannot be undone.`
+            ]
+        )
+            .onSubmit( () => {
+
+                this.connection.deleteNote(
+                    this.target.id,
+                    () => {
+                        this.target.container.parentNode.removeChild( this.target.container );
+                        this.snackbar.show( SnackBarType.SUCCESS, `Note successfully deleted.` );
+                    },
+                    (err: Error) => console.error( err )
+                );
+
+            })
+            .onDismiss( () => console.info( "Modal dismissed" ) );
+    }
+
 
 
     private documentClickListener(e: any): void {

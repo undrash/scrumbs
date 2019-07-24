@@ -26,6 +26,7 @@ class NoteController {
         this.router.get( "/unsolved", RequireAuthentication, this.getUnsolved );
         this.router.get( "/unsolved/:id", RequireAuthentication, this.getUnsolvedOfMember );
         this.router.post( '/', RequireAuthentication, this.createNote );
+        this.router.delete( "/:id", RequireAuthentication, this.deleteNote );
         this.router.put( "/solve/:id", RequireAuthentication, this.solve );
         this.router.put( "/unsolve/:id", RequireAuthentication, this.unsolve );
         this.router.delete( "/member/:id&:team", RequireAuthentication, this.deleteMemberNotes );
@@ -115,6 +116,27 @@ class NoteController {
 
         note.save()
             .then( note => res.status( 200 ).json( { success: true, note } ) )
+            .catch( next );
+    }
+
+
+
+    public deleteNote(req: Request, res: Response, next: NextFunction) {
+
+        const id = req.params.id;
+
+        if ( ! id ) {
+            return res.status( 422 ).json({
+                success: false,
+                message: "Invalid note id provided"
+            });
+        }
+
+        Note.findByIdAndDelete( id )
+            .then( () => res.status( 200 ).json( {
+                success: true,
+                message: "Note successfully deleted."
+            }))
             .catch( next );
     }
 
