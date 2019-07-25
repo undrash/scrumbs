@@ -117,6 +117,25 @@ export class Note {
 
 
 
+    public getNote(): any {
+        return this.note;
+    }
+
+
+
+    public setNote(noteData: any): void {
+        this.note               = noteData;
+        this.content.innerText  = noteData.content;
+
+        if ( noteData.isImpediment ) {
+            if ( ! this.container.classList.contains( "impediment" ) ) this.container.classList.add( "impediment" );
+        } else {
+            this.container.classList.remove( "impediment" );
+        }
+    }
+
+
+
     private enterScene(): void {
         this.registerEventListeners();
     }

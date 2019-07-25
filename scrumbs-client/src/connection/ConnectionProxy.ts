@@ -6,6 +6,7 @@ import {ICreateNoteModel} from "./models/interfaces/ICreateNoteModel";
 import {ICreateTeamModel} from "./models/interfaces/ICreateTeamModel";
 import {IUpdateTeamModel} from "./models/interfaces/IUpdateTeamModel";
 import {IEditMemberModel} from "./models/interfaces/IEditMemberModel";
+import {IEditNoteModel} from "./models/interfaces/IEditNoteModel";
 import {ISignUpModel} from "./models/interfaces/ISignUpModel";
 import {ILoginModel} from "./models/interfaces/ILoginModel";
 import {HTTPMethods} from "../core/HTTPMethods";
@@ -276,6 +277,19 @@ export class ConnectionProxy extends Proxy {
 
         this.httpRequest(
             HTTPMethods.POST,
+            "/api/v1/notes/",
+            data,
+            success,
+            failure
+        );
+    }
+
+
+
+    public editNote(data: IEditNoteModel, success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.PUT,
             "/api/v1/notes/",
             data,
             success,

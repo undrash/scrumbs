@@ -272,6 +272,10 @@
 
 			&:focus { box-shadow: inset 0 0 0 2px $accent-color; }
 
+			&.edit {
+				padding-right: 190px;
+			}
+
 		}
 
 		#scrum-notes-impediment-checkbox-container {
@@ -286,6 +290,15 @@
 				&::after { top: 6px; }
 			}
 
+		}
+
+		#exit-note-edit-mode {
+			position: absolute;
+			right: 160px;
+			width: 14px;
+			top: 30px;
+			cursor: pointer;
+			display: none;
 		}
 
 	}

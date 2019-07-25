@@ -1,6 +1,7 @@
 
 import {CreateNoteModel} from "../../../connection/models/CreateNoteModel";
 import {EditMemberModel} from "../../../connection/models/EditMemberModel";
+import {EditNoteModel} from "../../../connection/models/EditNoteModel";
 import {ConfirmationModal} from "../../../common/ConfirmationModal";
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
@@ -48,6 +49,7 @@ export class ScrumNotes extends ViewComponent {
 
     private noteInput: HTMLInputElement;
     private impedimentCheckbox: HTMLInputElement;
+    private exitEditModeBtn: HTMLImageElement;
 
     private emptyState: HTMLDivElement;
 
@@ -55,6 +57,10 @@ export class ScrumNotes extends ViewComponent {
     /** Load more feature related properties */
     private noteBatchIndex: number;
     private datesDisplayed: string[];
+
+    /** Edit mode loads a note into the input field for editing */
+    private editMode: boolean;
+    private editingNote: Note;
 
 
     constructor(view: View, container: HTMLElement) {
@@ -84,8 +90,10 @@ export class ScrumNotes extends ViewComponent {
 
         this.noteInput              = document.getElementById( "scrum-note-input" ) as HTMLInputElement;
         this.impedimentCheckbox     = document.getElementById( "scrum-notes-impediment-checkbox" ) as HTMLInputElement;
+        this.exitEditModeBtn        = document.getElementById( "exit-note-edit-mode" ) as HTMLImageElement;
 
         this.noteInputListener              = this.noteInputListener.bind( this );
+        this.exitEditMode                   = this.exitEditMode.bind( this );
         this.loadMoreNotes                  = this.loadMoreNotes.bind( this );
         this.memberNameListener             = this.memberNameListener.bind( this );
         this.memberNameInputBlurListener    = this.memberNameInputBlurListener.bind( this );
@@ -108,6 +116,7 @@ export class ScrumNotes extends ViewComponent {
         this.memberNameInput.addEventListener( "blur", this.memberNameInputBlurListener );
         this.memberNameInput.addEventListener( "keydown", this.memberNameKeydownListener );
         this.noteInput.addEventListener( "keyup", this.noteInputListener );
+        this.exitEditModeBtn.addEventListener( "click", this.exitEditMode );
         this.notesContainer.addEventListener( "scroll", this.loadMoreNotes );
         this.options.addEventListener( "click", this.optionsBtnListener );
         this.optionClearNotes.addEventListener( "click", this.clearNotesListener );
@@ -124,6 +133,7 @@ export class ScrumNotes extends ViewComponent {
         this.memberNameInput.removeEventListener( "blur", this.memberNameInputBlurListener );
         this.memberNameInput.removeEventListener( "keydown", this.memberNameKeydownListener );
         this.noteInput.removeEventListener( "keyup", this.noteInputListener );
+        this.exitEditModeBtn.removeEventListener( "click", this.exitEditMode );
         this.notesContainer.removeEventListener( "scroll", this.loadMoreNotes );
         this.options.removeEventListener( "click", this.optionsBtnListener );
         this.optionClearNotes.removeEventListener( "click", this.clearNotesListener );
@@ -364,10 +374,22 @@ export class ScrumNotes extends ViewComponent {
 
         const key = e.which || e.keyCode;
 
+        if ( key === 27 && this.editMode ) return this.exitEditMode();
+
         this.checkForImpedimentFlag();
 
         if ( key !== 13 ) return; // If not ENTER, abort.
 
+        if ( this.editMode ) {
+            this.editNote();
+        } else {
+            this.createNote();
+        }
+    }
+
+
+
+    private createNote(): void {
         const createNoteModel = new CreateNoteModel(
             this.memberId,
             this.memberTeamId,
@@ -409,6 +431,43 @@ export class ScrumNotes extends ViewComponent {
             },
             (err: string) => console.error( err )
         );
+    }
+
+
+
+    private editNote(): void {
+        console.log( "edit note executed" );
+
+        const editNoteModel = new EditNoteModel(
+            this.editingNote.id,
+            this.noteInput.value,
+            this.impedimentCheckbox.checked
+        );
+
+        this.exitEditMode();
+
+        this.connection.editNote(
+            editNoteModel,
+            (response: any) => {
+
+                const { note } = response;
+
+                this.editingNote.setNote( note );
+                this.editingNote = null;
+            },
+            (err: Error) => console.error( err )
+        );
+    }
+
+
+
+    private exitEditMode(): void {
+        this.editMode = false;
+        this.exitEditModeBtn.style.display = "none";
+        this.noteInput.classList.remove( "edit" );
+        this.noteInput.value = "";
+        this.impedimentCheckbox.checked = false;
+        this.noteInput.blur();
     }
 
 
@@ -535,26 +594,6 @@ export class ScrumNotes extends ViewComponent {
 
 
 
-    public enterScene(enterType?: string): void {
-        console.info( "Enter being called in scrum notes view component" );
-
-        switch ( enterType ) {
-
-            case ViewEnterTypes.REVEAL_COMPONENT :
-
-                this.container.style.display = "block";
-
-                break;
-
-
-            default :
-                this.registerEventListeners();
-                break;
-        }
-    }
-
-
-
     public solveImpediment(note: HTMLElement): void {
 
         this.connection.solveImpediment(
@@ -573,6 +612,44 @@ export class ScrumNotes extends ViewComponent {
             () => note.classList.remove( "solved" ),
             (err: string) => console.error( err )
         )
+    }
+
+
+
+    public initNoteEditing(note: Note): void {
+        this.editMode = true;
+
+        const noteData = note.getNote();
+
+        this.noteInput.value = noteData.content;
+        if ( noteData.isImpediment ) this.impedimentCheckbox.checked = true;
+
+        this.noteInput.focus();
+
+        this.noteInput.classList.add( "edit" );
+        this.exitEditModeBtn.style.display = "block";
+
+        this.editingNote = note;
+    }
+
+
+
+    public enterScene(enterType?: string): void {
+        console.info( "Enter being called in scrum notes view component" );
+
+        switch ( enterType ) {
+
+            case ViewEnterTypes.REVEAL_COMPONENT :
+
+                this.container.style.display = "block";
+
+                break;
+
+
+            default :
+                this.registerEventListeners();
+                break;
+        }
     }
 
 

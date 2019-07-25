@@ -2,6 +2,8 @@
 import {ConfirmationModal} from "../../../common/ConfirmationModal";
 import {ConnectionProxy} from "../../../connection/ConnectionProxy";
 import {SnackBarType} from "../../../common/SnackBarType";
+import {ScrumNotifications} from "./ScrumNotifications";
+import {EventManager} from "../../../core/EventManager";
 import {HTMLHelper} from "../../../helpers/HTMLHelper";
 import {ModalTypes} from "../../../common/ModalTypes";
 import {SnackBar} from "../../../common/SnackBar";
@@ -27,11 +29,14 @@ export class NoteOptions {
 
     private connection: ConnectionProxy;
     private snackbar: SnackBar;
+    private eventManager: EventManager;
+
 
     constructor(target: Note) {
 
         this.connection             = new ConnectionProxy( "NoteOptionsProxy" );
         this.snackbar               = SnackBar._instance;
+        this.eventManager           = EventManager._instance;
 
         this.target                 = target;
         this.targetContainer        = this.target.parent;
@@ -60,7 +65,7 @@ export class NoteOptions {
         this.convertToNoteListener          = this.convertToNoteListener.bind( this );
         this.convertToImpedimentListener    = this.convertToImpedimentListener.bind( this );
         this.deleteNoteListener             = this.deleteNoteListener.bind( this );
-
+        this.editNoteListener               = this.editNoteListener.bind( this );
 
         this.enterScene();
 
@@ -71,6 +76,7 @@ export class NoteOptions {
     private registerEventListeners(): void {
         this.convertToNoteBtn.addEventListener( "click", this.convertToNoteListener );
         this.convertToImpedimentBtn.addEventListener( "click", this.convertToImpedimentListener );
+        this.editBtn.addEventListener( "click", this.editNoteListener );
         this.deleteBtn.addEventListener( "click", this.deleteNoteListener );
         document.addEventListener( "click", this.documentClickListener);
         window.addEventListener( "resize", this.positionDropdown );
@@ -82,6 +88,7 @@ export class NoteOptions {
     private unregisterEventListeners(): void {
         this.convertToNoteBtn.removeEventListener( "click", this.convertToNoteListener );
         this.convertToImpedimentBtn.removeEventListener( "click", this.convertToImpedimentListener );
+        this.editBtn.removeEventListener( "click", this.editNoteListener );
         this.deleteBtn.removeEventListener( "click", this.deleteNoteListener );
         document.removeEventListener( "click", this.documentClickListener);
         window.removeEventListener( "resize", this.positionDropdown );
@@ -111,6 +118,12 @@ export class NoteOptions {
             () => this.target.container.classList.add( "impediment" ),
             (err: Error) => console.error( err )
         );
+    }
+
+
+
+    private editNoteListener(): void {
+        this.eventManager.sendNotification( ScrumNotifications.EDIT_NOTE, this.target );
     }
 
 

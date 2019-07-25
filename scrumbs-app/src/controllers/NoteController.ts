@@ -27,6 +27,7 @@ class NoteController {
         this.router.get( "/unsolved/:id", RequireAuthentication, this.getUnsolvedOfMember );
         this.router.post( '/', RequireAuthentication, this.createNote );
         this.router.delete( "/:id", RequireAuthentication, this.deleteNote );
+        this.router.put( '/', RequireAuthentication, this.editNote );
         this.router.put( "/solve/:id", RequireAuthentication, this.solve );
         this.router.put( "/unsolve/:id", RequireAuthentication, this.unsolve );
         this.router.delete( "/member/:id&:team", RequireAuthentication, this.deleteMemberNotes );
@@ -118,6 +119,29 @@ class NoteController {
             .then( note => res.status( 200 ).json( { success: true, note } ) )
             .catch( next );
     }
+
+
+
+    public editNote = async (req: Request, res: Response, next: NextFunction) => {
+        const userId                            = ( req as any ).user._id;
+        const { id, content, isImpediment }     = req.body;
+
+        const note = await Note.findOne({
+            owner: userId,
+            _id: id
+        });
+
+        if ( ! note ) {
+            return res.status( 404 ).json( { success: false, message: "Note not found." } )
+        }
+
+        note.content        = content;
+        note.isImpediment   = isImpediment;
+
+        note.save()
+            .then( note => res.status( 200 ).json( { success: true, message: "Note successfully updated.", note } ) )
+            .catch( next );
+    };
 
 
 

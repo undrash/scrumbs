@@ -6,6 +6,7 @@ import {ViewExitTypes} from "../../../core/ViewExitTypes";
 import {INotification} from "../../../core/INotification";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {ScrumWelcomeScreen} from "./ScrumWelcomeScreen";
+import {ScrumNotifications} from "./ScrumNotifications";
 import {ViewNotifications} from "../ViewNotifications";
 import {ScrumManageTeams} from "./ScrumManageTeams";
 import {ScrumCreateTeam} from "./ScrumCreateTeam";
@@ -98,6 +99,7 @@ export class ScrumView extends View {
     public listNotificationInterests(): string[] {
         let notifications = super.listNotificationInterests();
 
+        notifications.push( ScrumNotifications.EDIT_NOTE );
 
         return notifications;
     }
@@ -109,6 +111,11 @@ export class ScrumView extends View {
 
         switch ( notification.name ) {
 
+            case ScrumNotifications.EDIT_NOTE :
+
+                ( this.notes as ScrumNotes ).initNoteEditing( notification.data );
+
+                break;
 
             default :
                 break;
