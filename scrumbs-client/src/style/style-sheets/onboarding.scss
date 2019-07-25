@@ -1,19 +1,143 @@
+@import "color-variables";
+
+.modal-title {
+  font-size: 24px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.guide-description {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: normal;
+}
 
 
-#onboarding {
+//buttons
+
+.guide-primary-btn {
+  color: #FFFFFF;
+  font-size: 16px;
+  background-color: $secondary-color;
+  border-radius: 5px;
+  padding: 15px 20px;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+
+  &:hover {
+    background-color: $accent-color;
+  }
+
+}
+
+.onboarding-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  opacity: 0.3;
+  background: url("../../style/img/onboarding/guide-close-icon.png") no-repeat center;
+  width: 25px;
+  height: 25px;
+  transition: opacity 0.3s ease-in-out;
+  cursor: pointer;
+
+  &.guide {
+    top: 5px;
+    right: 5px;
+  }
+
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+//----------------------------
+
+
+
+
+.onboarding-modal-overlay {
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(36,46,76,0.4);
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 5;
 }
 
-
-#onboarding-modal-welcome {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  background-color: red;
+.onboarding-modal-welcome {
+  //position: absolute;
+  width: 530px;
+  height: auto;
+  background-color: #242E4C;
+  border-radius: 5px;
+  box-shadow: 0 14px 27px -7px rgba(43,62,119,0.38);
+  color: #FFFFFF;
+  position: relative;
+  margin: 200px auto 0;
   z-index: 10;
+  padding: 45px 20px;
+
+  .modal-title {
+    margin-bottom: 15px;
+  }
+
+  .guide-description {
+    width: 330px;
+    margin: 0 auto 50px;
+    display: block;
+    text-align: center;
+  }
+
+  .guide-primary-btn {
+    margin: 45px auto 0;
+    display: table;
+  }
+
 }
+
+.modal-features-list {
+  font-size: 14px;
+  padding-left: 60px;
+  height: 52px;
+  padding-top: 15px;
+  margin-left: 80px;
+
+  &.notes {
+    background: url("../../style/img/onboarding/notes.svg") no-repeat left center;
+  }
+
+  &.impediments {
+    background: url("../../style/img/onboarding/impediments.svg") no-repeat left center;
+    margin: 15px 0 15px 80px;
+  }
+
+  &.reports {
+    background: url("../../style/img/onboarding/reports.svg") no-repeat left center;
+    padding-top: 8px;
+    position: relative;
+
+    &::after {
+      content: "COMING SOON";
+      position: absolute;
+      color: $accent-color;
+      border: 1px solid $accent-color;
+      border-radius: 25px;
+      font-size: 10px;
+      left: 60px;
+      top: 30px;
+      padding: 0 3px;
+    }
+  }
+
+}
+
+
+
+
+
 
 
 
@@ -23,6 +147,7 @@
   height: 200px;
   background-color: yellow;
   z-index: 10;
+  display: none;
 }
 
 
@@ -34,6 +159,7 @@
   background-color: #63ecff;
   z-index: 10;
   top: 100px;
+  display: none;
 }
 
 
@@ -45,6 +171,7 @@
   background-color: #2fff56;
   z-index: 10;
   right: 0;
+  display: none;
 }
 
 
@@ -57,6 +184,7 @@
   z-index: 10;
   bottom: 0;
   right: 0;
+  display: none;
 }
 
 
@@ -68,4 +196,5 @@
   background-color: #84bcff;
   z-index: 10;
   bottom: 0;
+  display: none;
 }
