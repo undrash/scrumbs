@@ -10,10 +10,12 @@
   font-size: 16px;
   line-height: 24px;
   font-weight: normal;
+  vertical-align: middle;
+  display: inline-block;
 }
 
 
-//buttons
+//buttons -----------------------------------------------------------
 
 .guide-primary-btn {
   color: #FFFFFF;
@@ -29,6 +31,45 @@
     background-color: $accent-color;
   }
 
+  &.small {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+
+}
+
+.guide-secondary-btn {
+  color: #FFFFFF;
+  font-size: 16px;
+  border: 1px solid $secondary-color;
+  border-radius: 5px;
+  padding: 15px 20px;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+
+  &:hover {
+    background-color: $accent-color;
+  }
+
+  &.small {
+    padding: 9px 14px;
+    font-size: 14px;
+  }
+
+}
+
+.skip-link-btn {
+  font-size: 14px;
+  color: $secondary-color;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+  display: inline-block;
+  margin-top: 10px;
+
+  &:hover {
+    color: $accent-color;
+  }
 }
 
 .onboarding-close-btn {
@@ -43,8 +84,8 @@
   cursor: pointer;
 
   &.guide {
-    top: 5px;
-    right: 5px;
+    top: 15px;
+    right: 15px;
   }
 
   &:hover {
@@ -52,10 +93,8 @@
   }
 }
 
-//----------------------------
 
-
-
+//---------------------------------------------------------------------------------------
 
 .onboarding-modal-overlay {
   width: 100%;
@@ -65,10 +104,10 @@
   top: 0;
   left: 0;
   z-index: 5;
+  display: none;
 }
 
 .onboarding-modal-welcome {
-  //position: absolute;
   width: 530px;
   height: auto;
   background-color: #242E4C;
@@ -130,71 +169,158 @@
       top: 30px;
       padding: 0 3px;
     }
+
   }
 
 }
 
 
+//guides base -----------------------------------------------------------
+
+.onboarding-tooltip {
+  background-color: #242E4C;
+  border-radius: 5px;
+  box-shadow: 0 14px 27px -7px rgba(43,62,119,0.38);
+  color: #FFFFFF;
+  padding: 40px 25px 25px;
+  width: 335px;
+  height: auto;
+  z-index: 10;
+  position: absolute;
+
+  &::after {
+    content: "";
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    position: absolute;
+    transform: rotate( 45deg );
+    background-color: #242E4C;
+    left: -5px;
+    top: 87px;
+  }
+
+  &.image {
+    width: 356px;
+
+    img {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 15px;
+      width: 66px
+    }
+
+    .guide-description {
+      width: 210px;
+    }
+
+    .guide-primary-btn {
+      float: right;
+    }
+
+    .guide-secondary-btn {
+      float: right;
+      margin-right: 10px;
+    }
+
+  }
+
+}
+
+.guide-content-wrapper {
+  margin-bottom: 30px;
+}
 
 
-
-
-
+//---------------------------------------------------------------------------------------
 
 #onboarding-tip-new-member {
-  position: absolute;
-  width: 300px;
-  height: 200px;
-  background-color: yellow;
-  z-index: 10;
-  display: none;
+  left: 30%;
+  top: 5%;
+  //display: none;
+
+  .guide-add-icon {
+    margin: 0 5px;
+  }
+
+  .guide-primary-btn {
+    float: right;
+    margin-top: 20px;
+  }
+
 }
 
 
+//---------------------------------------------------------------------------------------
 
 #onboarding-tip-edit-member-name {
-  position: absolute;
-  width: 300px;
-  height: 200px;
-  background-color: #63ecff;
   z-index: 10;
-  top: 100px;
-  display: none;
+  left: 30%;
+  top: 5%;
+  //display: none;
 }
 
 
+//---------------------------------------------------------------------------------------
 
 #onboarding-tip-member-options {
-  position: absolute;
-  width: 300px;
-  height: 200px;
-  background-color: #2fff56;
-  z-index: 10;
-  right: 0;
-  display: none;
+  right: 15%;
+  //display: none;
+
+  &::after {
+    content: "";
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    position: absolute;
+    transform: rotate( 45deg );
+    background-color: #242E4C;
+    right: -5px;
+    left: unset;
+    top: 87px;
+  }
 }
 
 
+//---------------------------------------------------------------------------------------
 
 #onboarding-tip-impediment-checkbox {
-  position: absolute;
-  width: 300px;
-  height: 200px;
-  background-color: #ff8a2a;
-  z-index: 10;
-  bottom: 0;
-  right: 0;
-  display: none;
+  bottom: 10%;
+  right: 10%;
+  //display: none;
+
+  &::after {
+    content: "";
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    position: absolute;
+    transform: rotate( 45deg );
+    background-color: #242E4C;
+    left: 50%;
+    top: unset;
+    bottom: -5px;
+  }
 }
 
 
+//---------------------------------------------------------------------------------------
 
 #onboarding-tip-impediment-shortcut {
-  position: absolute;
-  width: 300px;
-  height: 200px;
-  background-color: #84bcff;
-  z-index: 10;
-  bottom: 0;
-  display: none;
+  bottom: 10%;
+  left: 30%;
+  //display: none;
+
+  &::after {
+    content: "";
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    position: absolute;
+    transform: rotate( 45deg );
+    background-color: #242E4C;
+    left: 50%;
+    top: unset;
+    bottom: -5px;
+  }
 }
