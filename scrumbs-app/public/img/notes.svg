@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="52px" height="52px" viewBox="0 0 52 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>notes</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Onboarding" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Scrum-Welcome-Pop-Up" transform="translate(-551.000000, -386.000000)">
+            <g id="Group-12" transform="translate(454.000000, 198.000000)">
+                <g id="Group-11" transform="translate(98.000000, 189.000000)">
+                    <g id="Group-10">
+                        <g id="notes">
+                            <circle id="Oval" stroke="#354577" stroke-width="1.5625" fill="#2D3A5F" fill-rule="nonzero" cx="25" cy="25" r="25"></circle>
+                            <g id="files-and-folders-(1)" transform="translate(11.718750, 11.718750)">
+                                <polygon id="Path" fill="#9B9AA9" points="18.3809697 2.53849141 3.61657143 0.0266508285 2.68530846 5.29997531"></polygon>
+                                <polygon id="Path" fill="#9B9AA9" points="1.99645755 9.19932465 0 20.5034401 4.12100551 21.2280095"></polygon>
+                                <polygon id="Shape" fill="#FFFFFF" fill-rule="nonzero" points="23.7263441 3.22204353 3.20559743 6.83239795 6.82300327 27.3131432 27.34375 23.7027888"></polygon>
+                                <polygon id="Path" fill="#7985FF" points="7.61511923 13.3672643 21.8214691 10.8668753 22.0999718 12.4415645 7.89362195 14.9419535"></polygon>
+                                <polygon id="Path" fill="#7985FF" points="8.72787832 19.6685196 8.44937566 18.0938305 22.6557255 15.5934414 22.9344368 17.1681306"></polygon>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

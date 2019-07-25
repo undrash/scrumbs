@@ -268,8 +268,13 @@
         .impediments-unsolved-member-impediment {
             opacity: 1;
             border: 1px solid $denary-color;
+            transition: border 0.3s ease-in-out;
 
-            &.active { opacity: 0; } 
+            &.active { opacity: 0; }
+
+            &:hover {
+                border: 1px solid #B2B5C0;
+            }
 
         }
 
