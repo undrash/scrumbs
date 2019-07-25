@@ -47,6 +47,7 @@ export class HeaderComponent extends ViewComponent {
     private inquiryNotification: HTMLElement;
     private inquiryToolTip: HTMLElement;
 
+    private headerProfile: HTMLElement;
     private profileDropdownBtn: HTMLElement;
     private userOptionsPanel: HTMLElement;
 
@@ -82,6 +83,7 @@ export class HeaderComponent extends ViewComponent {
 
         this.avatar                     = document.getElementById( "profile-avatar" );
 
+        this.headerProfile              = document.getElementById( "header-profile-wrapper" );
         this.profileDropdownBtn         = document.getElementById( "profile-dropdown-button" );
         this.userOptionsPanel           = document.getElementById( "user-options-panel" );
 
@@ -94,7 +96,7 @@ export class HeaderComponent extends ViewComponent {
         this.showInquiryToolTip         = this.showInquiryToolTip.bind( this );
         this.hideInquiryToolTip         = this.hideInquiryToolTip.bind( this );
         this.inquiryBtnClickListener    = this.inquiryBtnClickListener.bind( this );
-        this.profileDropdownBtnListener = this.profileDropdownBtnListener.bind( this );
+        this.profileListener            = this.profileListener.bind( this );
         this.documentClickListener      = this.documentClickListener.bind( this );
 
         this.enterScene();
@@ -110,7 +112,7 @@ export class HeaderComponent extends ViewComponent {
         this.inquiry.addEventListener( "mouseenter", this.showInquiryToolTip );
         this.inquiry.addEventListener( "mouseleave", this.hideInquiryToolTip );
         this.inquiry.addEventListener( "click", this.inquiryBtnClickListener );
-        this.profileDropdownBtn.addEventListener( "click", this.profileDropdownBtnListener );
+        this.headerProfile.addEventListener( "click", this.profileListener );
         document.addEventListener( "click", this.documentClickListener );
     }
 
@@ -124,14 +126,14 @@ export class HeaderComponent extends ViewComponent {
         this.inquiry.removeEventListener( "mouseenter", this.showInquiryToolTip );
         this.inquiry.removeEventListener( "mouseleave", this.hideInquiryToolTip );
         this.inquiry.removeEventListener( "click", this.inquiryBtnClickListener );
-        this.profileDropdownBtn.removeEventListener( "click", this.profileDropdownBtnListener );
+        this.headerProfile.removeEventListener( "click", this.profileListener );
         document.removeEventListener( "click", this.documentClickListener );
     }
 
 
 
     private documentClickListener(e: any): void {
-        if ( e.target.id === this.profileDropdownBtn.id ) return;
+        if ( e.target.id === this.headerProfile.id ) return;
 
         this.profileDropdownBtn.classList.remove( "active" );
         this.userOptionsPanel.style.display = "none";
@@ -183,7 +185,7 @@ export class HeaderComponent extends ViewComponent {
 
 
 
-    private profileDropdownBtnListener(): void {
+    private profileListener(): void {
         if ( this.profileDropdownBtn.classList.contains( "active" ) ) {
             this.userOptionsPanel.style.display = "none";
             this.profileDropdownBtn.classList.remove( "active" );

@@ -218,6 +218,7 @@
             font-weight: bold;
             overflow: hidden;
             font-size: 16px;
+            pointer-events: none;
         }
     
         #profile-dropdown-button {
@@ -226,6 +227,7 @@
             @include center( "vertical" );
             right: 0;
             background: url( "../img/icons/icon-dropdown-accent.svg" ) no-repeat center / contain;
+            pointer-events: none;
 
             &.active {
                 background: url( "../img/icons/dropdown-arrow-active.svg" ) no-repeat center / contain;
