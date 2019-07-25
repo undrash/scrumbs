@@ -78,6 +78,11 @@ export class Note {
     }
 
 
+    private unregisterEventListeners(): void {
+        this.checkmark.removeEventListener( "click", this.checkMarkListener );
+        this.optionsBtn.removeEventListener( "click", this.optionsListener );
+    }
+
 
     private checkMarkListener(): void {
         this.container.classList.contains( "solved" ) ? this.unsolveImpediment() : this.solveImpediment();
@@ -138,6 +143,27 @@ export class Note {
 
     private enterScene(): void {
         this.registerEventListeners();
+    }
+
+
+
+    public destroy(): void {
+        this.unregisterEventListeners();
+
+        /** If it's the only one on that date, remove the date separator */
+        if (
+            this.container.previousElementSibling.classList.contains( "scrum-note-date" ) &&
+            ! this.container.nextSibling
+
+            ||
+
+            this.container.previousElementSibling.classList.contains( "scrum-note-date" ) &&
+            this.container.nextElementSibling.classList.contains( "scrum-note-date" )
+        ) {
+            this.container.previousElementSibling.parentNode.removeChild( this.container.previousElementSibling );
+        }
+
+        this.container.parentNode.removeChild( this.container );
     }
 
 }

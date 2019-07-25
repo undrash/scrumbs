@@ -149,7 +149,7 @@ export class NoteOptions {
                 this.connection.deleteNote(
                     this.target.id,
                     () => {
-                        this.target.container.parentNode.removeChild( this.target.container );
+                        this.target.destroy();
                         this.snackbar.show( SnackBarType.SUCCESS, `Note successfully deleted.` );
                     },
                     (err: Error) => console.error( err )

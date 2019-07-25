@@ -56,7 +56,6 @@ export class ScrumNotes extends ViewComponent {
 
     /** Load more feature related properties */
     private noteBatchIndex: number;
-    private datesDisplayed: string[];
 
     /** Edit mode loads a note into the input field for editing */
     private editMode: boolean;
@@ -67,7 +66,6 @@ export class ScrumNotes extends ViewComponent {
         super( view, container, "ScrumNotes" );
 
         this.noteBatchIndex = 0;
-        this.datesDisplayed = [];
 
         this.container.innerHTML        = template;
 
@@ -338,8 +336,6 @@ export class ScrumNotes extends ViewComponent {
         this.memberTeamId               = team;
         this.memberName.innerText       = name;
 
-        console.log( id, team );
-
         this.resetNotesContainer();
 
         this.connection.getNotesOfMember(
@@ -363,7 +359,6 @@ export class ScrumNotes extends ViewComponent {
     private resetNotesContainer(): void {
         this.notesContainer.innerHTML   = "";
         this.noteBatchIndex             = 0;
-        this.datesDisplayed             = [];
     }
 
 
@@ -419,7 +414,7 @@ export class ScrumNotes extends ViewComponent {
                 }
 
                 /** If this is the first note today, add a separator */
-                if ( this.datesDisplayed.indexOf( currentDate ) === -1 ) {
+                if ( ! this.isDateSeparatorPresentForDate( currentDate ) ) {
                     /** Add a separator with the current date */
                     this.addSeparator( currentDate );
                 }
@@ -507,8 +502,7 @@ export class ScrumNotes extends ViewComponent {
                 this.addNote( note, prepend );
 
                 /** If it's a new date, AND the date is not yet present -> add a separator before adding the note */
-
-                if ( date !== noteCreated && this.datesDisplayed.indexOf( noteCreated ) === -1 ) {
+                if ( date !== noteCreated && ! this.isDateSeparatorPresentForDate( noteCreated ) ) {
                     this.addSeparator( noteCreated, prepend );
                     date = noteCreated;
                 }
@@ -520,7 +514,7 @@ export class ScrumNotes extends ViewComponent {
                 let noteCreated = this.getParsedDate( notes[i].date );
 
                 /** If it's a new date, AND the date is not yet present -> add a separator before adding the note */
-                if ( date !== noteCreated && this.datesDisplayed.indexOf( noteCreated ) === -1 ) {
+                if ( date !== noteCreated && ! this.isDateSeparatorPresentForDate( noteCreated ) ) {
                     this.addSeparator( noteCreated );
                     date = noteCreated;
                 }
@@ -547,15 +541,12 @@ export class ScrumNotes extends ViewComponent {
 
     public addSeparator(date: string, prepend?: boolean) {
 
-        this.datesDisplayed.push( date );
-
-        console.log( this.datesDisplayed );
-
         let separator       = document.createElement( "li" );
         separator.className = "scrum-note-date bold";
 
         let dateText        = document.createElement( "span" );
         dateText.innerText  = date;
+        dateText.className  = "scrum-note-date-text";
 
         separator.appendChild( dateText );
 
@@ -565,6 +556,19 @@ export class ScrumNotes extends ViewComponent {
         } else {
             this.notesContainer.appendChild( separator );
         }
+    }
+
+
+
+    private isDateSeparatorPresentForDate(date: string): boolean {
+
+        const dateElements = document.getElementsByClassName( "scrum-note-date-text" );
+
+        for ( let i = 0; i < dateElements.length; i++ ) {
+            if ( dateElements[ i ].innerHTML === date ) return true;
+        }
+
+        return false;
     }
 
 
