@@ -147,6 +147,8 @@ export class ScrumView extends View {
 
                 ( this.welcomeScreen as ScrumWelcomeScreen ).exitScene( ViewExitTypes.SWITCH_COMPONENT );
 
+                this.sendNotification( ViewNotifications.INIT_SCRUM_ONBOARDING );
+
                 break;
 
             case ScrumSignals.TEAM_UPDATED :

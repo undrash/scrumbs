@@ -2,7 +2,6 @@
 
 import {AuthenticationNotifications} from "./authentication/AuthenticationNotifications";
 import {AuthenticationView} from "./authentication/AuthenticationView";
-import {HeaderNotifications} from "./header/HeaderNotifications";
 import {ConnectionProxy} from "../../connection/ConnectionProxy";
 import {ImpedimentsView} from "./impediments/ImpedimentsView";
 import {ViewExitTypes} from "../../core/ViewExitTypes";
@@ -14,6 +13,7 @@ import {CoreEntity} from "../../core/CoreEntity";
 import {HeaderView} from "./header/HeaderView";
 import {ScrumView} from "./scrum/ScrumView";
 import {View} from "../../core/View";
+import {Onboarding} from "./onboarding/Onboarding";
 
 
 
@@ -21,18 +21,23 @@ import {View} from "../../core/View";
 export class AppViewManager extends ViewManager {
     private headerView: View;
 
-
+    private onboarding: Onboarding;
 
 
 
 
     constructor() {
         super();
+
+        this.onboarding = new Onboarding();
+
         this.headerView = new HeaderView();
 
         if ( ConnectionProxy.EXTERNAL_AUTH ) {
             this.initView( ScrumView );
             this.sendNotification( ViewNotifications.SWITCH_HEADER_STATE );
+
+            this.onboarding.initWelcomeFlow();
         } else {
             this.initView( AuthenticationView );
         }
@@ -52,6 +57,8 @@ export class AppViewManager extends ViewManager {
         notifications.push( ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW );
         notifications.push( ViewNotifications.SWITCH_TO_REPORTS_VIEW );
 
+        notifications.push( ViewNotifications.INIT_SCRUM_ONBOARDING );
+
         return notifications;
     }
 
@@ -62,20 +69,12 @@ export class AppViewManager extends ViewManager {
         switch ( notification.name ) {
 
             case AuthenticationNotifications.LOGIN :
-
-                this.switchView( ScrumView, null );
-
-                break;
-
             case AuthenticationNotifications.SIGN_UP :
-
-                this.switchView( ScrumView, null );
-
-                break;
-
             case ViewNotifications.SWITCH_TO_SCRUM_VIEW :
 
                 this.switchView( ScrumView, null );
+
+                this.onboarding.initWelcomeFlow();
 
                 break;
 
@@ -88,6 +87,14 @@ export class AppViewManager extends ViewManager {
             case ViewNotifications.SWITCH_TO_REPORTS_VIEW :
 
                 this.switchView( ReportsView, null );
+
+                break;
+
+            case ViewNotifications.INIT_SCRUM_ONBOARDING :
+
+                this.onboarding.initMemberFlow();
+
+                this.onboarding.initImpedimentFlow();
 
                 break;
 

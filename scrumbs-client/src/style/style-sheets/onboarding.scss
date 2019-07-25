@@ -1,0 +1,71 @@
+
+
+#onboarding {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+
+#onboarding-modal-welcome {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background-color: red;
+  z-index: 10;
+}
+
+
+
+#onboarding-tip-new-member {
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  background-color: yellow;
+  z-index: 10;
+}
+
+
+
+#onboarding-tip-edit-member-name {
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  background-color: #63ecff;
+  z-index: 10;
+  top: 100px;
+}
+
+
+
+#onboarding-tip-member-options {
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  background-color: #2fff56;
+  z-index: 10;
+  right: 0;
+}
+
+
+
+#onboarding-tip-impediment-checkbox {
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  background-color: #ff8a2a;
+  z-index: 10;
+  bottom: 0;
+  right: 0;
+}
+
+
+
+#onboarding-tip-impediment-shortcut {
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  background-color: #84bcff;
+  z-index: 10;
+  bottom: 0;
+}
