@@ -12,6 +12,7 @@ import {ViewExitTypes} from "../../../core/ViewExitTypes";
 import {ISignal} from "../../../core/ISignal";
 import {View} from "../../../core/View";
 
+declare const SimpleBar: any;
 
 // CSS
 import "../../../style/style-sheets/impediments-view.scss";
@@ -26,6 +27,9 @@ const impedimentsViewTemplate = require( "../../../templates/impediments-view.ht
 
 
 export class ImpedimentsView extends View {
+
+    private impedimentsContainer: HTMLElement;
+
     private impedimentsHeader: ViewComponent;
     private impedimentsHeaderContainer: HTMLElement;
 
@@ -34,6 +38,7 @@ export class ImpedimentsView extends View {
 
     private impedimentsUnsolved: ViewComponent;
     private impedimentsUnsolvedContainer: HTMLElement;
+
 
 
 
@@ -48,6 +53,11 @@ export class ImpedimentsView extends View {
 
         this.container.innerHTML                    = impedimentsViewTemplate;
 
+        this.impedimentsContainer                   = document.getElementById( "impediments-container" );
+
+        new SimpleBar( this.impedimentsContainer );
+
+
         this.impedimentsHeaderContainer             = document.getElementById( "impediments-header-container" );
         this.impedimentsUnsolvedContainer           = document.getElementById( "impediments-unsolved-container" );
         this.impedimentsSolvedContainer             = document.getElementById( "impediments-solved-container" );
@@ -55,7 +65,6 @@ export class ImpedimentsView extends View {
         this.impedimentsHeader                      = new ImpedimentsHeader( this, this.impedimentsHeaderContainer );
         this.impedimentsUnsolved                    = new ImpedimentsUnsolved( this, this.impedimentsUnsolvedContainer );
         this.impedimentsSolved                      = new ImpedimentsSolved( this, this.impedimentsSolvedContainer );
-
 
 
         this.enterScene();

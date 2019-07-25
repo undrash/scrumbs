@@ -252,15 +252,24 @@
 }
 
 
+/** Impediments Container */
 
+#impediments-container {
+    width: 850px;
+    margin: 0 auto;
+    overflow-y: auto;
+    height: calc( 100vh - 235px );
+    padding-right: 20px;
+
+    .simplebar-track { right: 0; }
+
+    .simplebar-horizontal { display: none; }
+}
 
 
 /** Impediments Unsolved */
 
 #impediments-unsolved-container {
-
-    width: 850px;
-    margin: 0 auto;
 
     .impediments-unsolved-member-container {
         margin-top: 15px;
@@ -288,12 +297,10 @@
 /** Impediments Solved */
 
 #impediments-solved-container {
-    
-    width: 850px;
-    margin: 15px auto 0;
+    margin-top: 15px;
 
     .impediments-solved-header {
-
+        display: none;
         height: 51px;
         position: relative;
 
@@ -322,7 +329,9 @@
 
     }
 
+
     #impediments-solved-body {
+        display: none;
 
         .impediments-solved-member-container {
             margin-top: 15px;

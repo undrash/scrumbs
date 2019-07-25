@@ -26,6 +26,7 @@ const template = require( "../../../templates/impediments-solved.html" );
 
 export class ImpedimentsSolved extends ViewComponent {
 
+    private header: HTMLElement;
     private toggleVisibilityBtn: HTMLButtonElement;
     private solvedImpedimentsContainer: HTMLUListElement;
 
@@ -36,7 +37,7 @@ export class ImpedimentsSolved extends ViewComponent {
 
         this.container.innerHTML = template;
 
-
+        this.header                         = document.getElementById( "impediments-solved-header" );
         this.toggleVisibilityBtn            = document.getElementById( "impediments-solved-toggle-button" ) as HTMLButtonElement;
         this.solvedImpedimentsContainer     = document.getElementById( "impediments-solved-body" ) as HTMLUListElement;
 
@@ -60,7 +61,7 @@ export class ImpedimentsSolved extends ViewComponent {
 
 
     private toggleVisibilityBtnListener(e: any): void {
-        this.solvedImpedimentsContainer.style.display = this.solvedImpedimentsContainer.style.display === "none" ? "block" : "none";
+        this.solvedImpedimentsContainer.style.display = this.solvedImpedimentsContainer.style.display === "block" ? "none" : "block";
 
         this.toggleVisibilityBtn.innerText = this.toggleVisibilityBtn.innerText === "Hide Completed" ? "Show Completed" : "Hide Completed";
     }
@@ -77,7 +78,11 @@ export class ImpedimentsSolved extends ViewComponent {
             (response: any) => {
                 const { impediments } = response;
 
-                console.log( impediments );
+                if ( impediments.length ) {
+                    this.header.style.display = "block";
+                } else {
+                    this.header.style.display = "none";
+                }
 
                 for ( let impediment of impediments ) {
                     this.addImpediment( impediment );
@@ -96,6 +101,12 @@ export class ImpedimentsSolved extends ViewComponent {
             (response: any) => {
                 const { impediments } = response;
 
+                if ( impediments.length ) {
+                    this.header.style.display = "block";
+                } else {
+                    this.header.style.display = "none";
+                }
+
                 for ( let impediment of impediments ) {
                     this.addImpediment( impediment );
                 }
@@ -107,6 +118,9 @@ export class ImpedimentsSolved extends ViewComponent {
 
 
     public addImpediment(impedimentData: any): void {
+
+        if ( ! this.solvedImpedimentsContainer.children.length ) this.header.style.display = "block";
+
         /** Check if member is already rendered, if so - we append */
         let memberContainer = document.getElementById( `solved-${ impedimentData.member._id }` );
 
@@ -175,6 +189,11 @@ export class ImpedimentsSolved extends ViewComponent {
                     impediment.parentNode.parentNode.parentNode.removeChild( impediment.parentNode.parentNode );
                 } else {
                     impediment.parentNode.removeChild( impediment )
+                }
+
+                /** Hide the header if there are no solved impediments left */
+                if ( ! this.solvedImpedimentsContainer.children.length ) {
+                    this.header.style.display = "none";
                 }
             }, 300 );
 
