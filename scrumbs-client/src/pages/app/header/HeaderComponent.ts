@@ -50,10 +50,13 @@ export class HeaderComponent extends ViewComponent {
     private headerProfile: HTMLElement;
     private profileDropdownBtn: HTMLElement;
     private userOptionsPanel: HTMLElement;
+    private profileAvatar: HTMLElement;
+    private profileUserName: HTMLElement;
 
     private panelOptionSettings: HTMLElement;
 
     private avatar: HTMLElement;
+
 
     constructor(view: View, container: HTMLElement) {
         super( view, container, "HeaderComponent" );
@@ -86,6 +89,8 @@ export class HeaderComponent extends ViewComponent {
         this.headerProfile              = document.getElementById( "header-profile-wrapper" );
         this.profileDropdownBtn         = document.getElementById( "profile-dropdown-button" );
         this.userOptionsPanel           = document.getElementById( "user-options-panel" );
+        this.profileAvatar              = document.getElementById( "profile-avatar-dropdown" );
+        this.profileUserName            = document.getElementById( "profile-user-name-dropdown" );
 
         this.panelOptionSettings        = document.getElementById( "user-settings-btn" );
 
@@ -267,7 +272,9 @@ export class HeaderComponent extends ViewComponent {
             monogram += name[0];
         }
 
-        this.avatar.innerText = monogram;
+        this.avatar.innerText           = monogram;
+        this.profileAvatar.innerText    = monogram;
+        this.profileUserName.innerText  = userData.name;
     }
 
 
