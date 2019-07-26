@@ -272,6 +272,34 @@
     bottom: 30px;
 }
 
+.impediment-empty-container {
+    margin-top: 25px;
+    text-align: center;
+
+    .empty-impediment-img {
+        margin-bottom: 30px;
+    }
+
+    .bold {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .add-impediment-icon {
+        margin: 0 5px;
+    }
+
+    p {
+        width: 350px;
+        margin: auto;
+        line-height: 22px;
+
+        .bold {
+            font-size: 14px;
+        }
+    }
+}
+
 /** Impediments Unsolved */
 
 #impediments-unsolved-container {
