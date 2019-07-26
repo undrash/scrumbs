@@ -64,6 +64,8 @@ export class ImpedimentsUnsolved extends ViewComponent {
             (response: any) => {
                 const { impediments } = response;
 
+                if ( ! impediments.length ) this.sendSignal( ImpedimentSignals.IMPEDIMENTS_UNSOLVED_EMPTY );
+
                 for ( let impediment of impediments ) {
                     this.addImpediment( impediment );
                 }
@@ -80,6 +82,8 @@ export class ImpedimentsUnsolved extends ViewComponent {
         this.connection.getUnsolvedImpediments(
             (response: any) => {
                 const { impediments } = response;
+
+                if ( ! impediments.length ) this.sendSignal( ImpedimentSignals.IMPEDIMENTS_UNSOLVED_EMPTY );
 
                 for ( let impediment of impediments ) {
                     this.addImpediment( impediment );

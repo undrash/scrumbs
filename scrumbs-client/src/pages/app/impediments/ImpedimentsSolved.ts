@@ -82,6 +82,7 @@ export class ImpedimentsSolved extends ViewComponent {
                     this.header.style.display = "block";
                 } else {
                     this.header.style.display = "none";
+                    this.sendSignal( ImpedimentSignals.IMPEDIMENTS_SOLVED_EMPTY );
                 }
 
                 for ( let impediment of impediments ) {
@@ -105,6 +106,7 @@ export class ImpedimentsSolved extends ViewComponent {
                     this.header.style.display = "block";
                 } else {
                     this.header.style.display = "none";
+                    this.sendSignal( ImpedimentSignals.IMPEDIMENTS_SOLVED_EMPTY );
                 }
 
                 for ( let impediment of impediments ) {

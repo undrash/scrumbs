@@ -39,8 +39,9 @@ export class ImpedimentsView extends View {
     private impedimentsUnsolved: ViewComponent;
     private impedimentsUnsolvedContainer: HTMLElement;
 
-
-
+    private impedimentsEmptyState: HTMLElement;
+    private isImpedimensSolvedEmpty: boolean;
+    private isImpedimentsUnsolvedEmpty: boolean;
 
 
     constructor() {
@@ -57,6 +58,7 @@ export class ImpedimentsView extends View {
 
         new SimpleBar( this.impedimentsContainer );
 
+        this.impedimentsEmptyState                  = document.getElementById( "impediment-empty-state" );
 
         this.impedimentsHeaderContainer             = document.getElementById( "impediments-header-container" );
         this.impedimentsUnsolvedContainer           = document.getElementById( "impediments-unsolved-container" );
@@ -113,6 +115,15 @@ export class ImpedimentsView extends View {
 
 
 
+    private displayEmptyState(): void {
+
+        if ( this.isImpedimensSolvedEmpty && this.isImpedimentsUnsolvedEmpty ) {
+            this.impedimentsEmptyState.style.display = "block";
+        }
+    }
+
+
+
     public handleSignal(signal: ISignal) {
         console.log( "Signal received in " + this.NAME + ": " + signal.name );
 
@@ -134,6 +145,22 @@ export class ImpedimentsView extends View {
 
                 ( this.impedimentsSolved as ImpedimentsSolved ).populateFiltered( signal.data );
                 ( this.impedimentsUnsolved as ImpedimentsUnsolved ).populateFiltered( signal.data );
+
+                break;
+
+            case ImpedimentSignals.IMPEDIMENTS_SOLVED_EMPTY :
+
+                this.isImpedimensSolvedEmpty = true;
+
+                this.displayEmptyState();
+
+                break;
+
+            case ImpedimentSignals.IMPEDIMENTS_UNSOLVED_EMPTY :
+
+                this.isImpedimentsUnsolvedEmpty = true;
+
+                this.displayEmptyState();
 
                 break;
 
