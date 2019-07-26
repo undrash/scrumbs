@@ -255,11 +255,11 @@
 /** Impediments Container */
 
 #impediments-container {
-    width: 850px;
+    width: 100%;
     margin: 0 auto;
     overflow-y: auto;
     height: calc( 100vh - 235px );
-    padding-right: 20px;
+    padding: 0 20px;
 
     .simplebar-track { right: 0; }
 
@@ -270,6 +270,8 @@
 /** Impediments Unsolved */
 
 #impediments-unsolved-container {
+
+    //padding: 0 20px;
 
     .impediments-unsolved-member-container {
         margin-top: 15px;
