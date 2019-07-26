@@ -382,6 +382,34 @@ input, textarea {
 
   }
 
+.add-object-button {
+    height: 60px;
+    width: 60px;
+    background: linear-gradient(90deg, #62B2FF 0%, #6E7BFF 100%);
+    box-shadow: 0 4px 11px 0 rgba(99,144,246,0.3);
+    border-radius: 45px;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+    position: absolute;
+
+    &::after {
+        content: "";
+        background: url("../../style/img/icons/icon-add.svg") no-repeat center;
+        background-size: 20px;
+        position: absolute;
+        width: 20px;
+        top: 10px;
+        transform: translateY(50%);
+        left: 20px;
+        height: 20px;
+    }
+
+    &:hover {
+        transform: scale( 1.05 );
+        box-shadow: 0 12px 8px -9px lighten( $secondary-color, 17% );
+    }
+}
+
 
 .exit-overlay-button {
     display: block;
