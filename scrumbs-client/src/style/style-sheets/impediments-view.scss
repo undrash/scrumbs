@@ -176,6 +176,7 @@
                 border-bottom: 1px solid $denary-color;
                 padding: 10px 15px 10px 45px;
                 position: relative;
+                transition: border-bottom-color 0.3s ease-in-out;
 
                 &::before {
                     content: "";
@@ -183,7 +184,11 @@
                     height: 20px;
                     @include center( "vertical" );
                     left: 15px;
-                    background: url("../img/icons/icon-user.svg") no-repeat center / contain;
+                    background: url("../img/icons/search-icon.svg") no-repeat center left / contain;
+                }
+
+                &:hover {
+                    border-bottom: 1px solid $accent-color;
                 }
 
                 input {
@@ -204,7 +209,13 @@
                 li {
                     line-height: 42px;
                     border-radius: 3px;
-                    padding: 0 20px;
+                    padding: 0 20px 0 35px;
+                    background: url("../img/icons/icon-member.svg") no-repeat center left 15px;
+                    background-size: 11px;
+
+                    &.all {
+                        background: url("../img/icons/multiple-members.svg") no-repeat center left 15px;
+                    }
 
                     &:hover { background-color: $nonary-color; }
                 }
@@ -267,7 +278,7 @@
 }
 
 .add-object-button {
-
+    position: fixed;
     right: 30px;
     bottom: 30px;
 }
