@@ -143,7 +143,7 @@
 
         #impediments-filter-dropdown {
             width: 275px;
-            max-height: 355px;
+            //max-height: 355px;
             @include center( "horizontal" );
             top: 40px;
             padding: 15px 20px 0;
@@ -171,6 +171,18 @@
                 right: 0;
             }
 
+            .all-impediments-btn {
+                line-height: 42px;
+                border-radius: 3px;
+                padding: 0 20px 0 40px;
+                background: url("../img/icons/multiple-members.svg") no-repeat center left 15px;
+                cursor: pointer;
+                margin-top: 10px;
+                transition: background 0.3s ease-in-out;
+
+                &:hover { background-color: $nonary-color; }
+
+            }
 
             .impediments-filter-dropdown-header {
                 border-bottom: 1px solid $denary-color;
@@ -200,7 +212,7 @@
             }
 
             ul {
-                margin: 10px 0;
+                margin: 0 0 10px 0;
                 max-height: 250px;
                 overflow-y: auto;
                 overflow-x: hidden;
@@ -209,13 +221,10 @@
                 li {
                     line-height: 42px;
                     border-radius: 3px;
-                    padding: 0 20px 0 35px;
-                    background: url("../img/icons/icon-member.svg") no-repeat center left 15px;
+                    padding: 0 20px 0 40px;
+                    background: url("../img/icons/icon-member.svg") no-repeat center left 18px;
                     background-size: 11px;
-
-                    &.all {
-                        background: url("../img/icons/multiple-members.svg") no-repeat center left 15px;
-                    }
+                    transition: background 0.3s ease-in-out;
 
                     &:hover { background-color: $nonary-color; }
                 }
