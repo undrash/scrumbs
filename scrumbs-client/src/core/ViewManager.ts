@@ -1,5 +1,5 @@
 
-
+import {Onboarding} from "../pages/app/onboarding/Onboarding";
 import { INotification } from "./INotification";
 import { ViewExitTypes } from "./ViewExitTypes";
 import { CoreEntity } from "./CoreEntity";
@@ -14,13 +14,14 @@ export class ViewManager extends CoreEntity {
 
     protected currentView: View;
 
-
+    protected onboarding: Onboarding;
 
 
 
     constructor() {
         super( "ViewManager" );
 
+        this.onboarding = new Onboarding();
     }
 
 
@@ -32,6 +33,8 @@ export class ViewManager extends CoreEntity {
 
 
     protected switchView(view: any, exitType?: string, callback?: Function): void {
+
+        this.onboarding.clearGuides();
 
         if ( ! exitType ) exitType = ViewExitTypes.DEFAULT;
 

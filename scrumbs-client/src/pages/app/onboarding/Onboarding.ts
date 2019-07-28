@@ -101,7 +101,7 @@ export class Onboarding {
 
 
 
-    private clearGuides(): void {
+    public clearGuides(): void {
 
         for ( let guide of this.activeGuides ) {
             guide.exitScene();

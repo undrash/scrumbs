@@ -22,15 +22,13 @@ import {View} from "../../core/View";
 export class AppViewManager extends ViewManager {
     private headerView: View;
 
-    private onboarding: Onboarding;
+
 
 
 
 
     constructor() {
         super();
-
-        this.onboarding = new Onboarding();
 
         this.headerView = new HeaderView();
 
