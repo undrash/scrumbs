@@ -347,6 +347,8 @@ export class ScrumNotes extends ViewComponent {
                 console.log( response );
 
                 this.populate( response.notes );
+
+                this.sendSignal( ScrumSignals.MEMBER_NOTES_LOADED );
             },
             (err: any) => console.error( err )
         );
@@ -411,6 +413,9 @@ export class ScrumNotes extends ViewComponent {
 
                     /** Add a separator with the current date */
                     this.addSeparator( currentDate );
+
+                    /** If it's the first note we initialize the onboarding flow for the impediment feature */
+                    this.sendSignal( ScrumSignals.FIRST_NOTE_CREATED );
                 }
 
                 /** If this is the first note today, add a separator */
@@ -421,7 +426,6 @@ export class ScrumNotes extends ViewComponent {
 
                 /** Add the note */
                 this.addNote( note );
-
 
             },
             (err: string) => console.error( err )

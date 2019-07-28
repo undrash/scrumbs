@@ -45,6 +45,21 @@ export class HTMLHelper {
 
 
     /**
+     * Calculates the element position in relation to the document body
+     *
+     * @param element
+     * @return {any}
+     */
+    public static getOffset(element: any): any {
+        const rect = element.getBoundingClientRect(),
+            scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+            scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
+    }
+
+
+
+    /**
      * Calculates the absolute height of a specified HTML element
      * @param {HTMLElement} el
      * @return {number}

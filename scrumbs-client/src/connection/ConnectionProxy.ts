@@ -415,4 +415,17 @@ export class ConnectionProxy extends Proxy {
         );
     }
 
+
+
+    public onboardingGuideDisplayed(guideId: string, success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.POST,
+            `/api/v1/users/onboarding/${ guideId }`,
+            null,
+            success,
+            failure
+        );
+    }
+
 }

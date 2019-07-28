@@ -8,12 +8,13 @@ import {ViewExitTypes} from "../../core/ViewExitTypes";
 import {INotification} from "../../core/INotification";
 import {ViewNotifications} from "./ViewNotifications";
 import {ViewManager} from "../../core/ViewManager";
+import {Onboarding} from "./onboarding/Onboarding";
 import {ReportsView} from "./reports/ReportsView";
 import {CoreEntity} from "../../core/CoreEntity";
 import {HeaderView} from "./header/HeaderView";
 import {ScrumView} from "./scrum/ScrumView";
+import {Flows} from "./onboarding/Flows";
 import {View} from "../../core/View";
-import {Onboarding} from "./onboarding/Onboarding";
 
 
 
@@ -37,7 +38,7 @@ export class AppViewManager extends ViewManager {
             this.initView( ScrumView );
             this.sendNotification( ViewNotifications.SWITCH_HEADER_STATE );
 
-            this.onboarding.initWelcomeFlow();
+            this.onboarding.initFlow( Flows.WELCOME );
         } else {
             this.initView( AuthenticationView );
         }
@@ -57,7 +58,8 @@ export class AppViewManager extends ViewManager {
         notifications.push( ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW );
         notifications.push( ViewNotifications.SWITCH_TO_REPORTS_VIEW );
 
-        notifications.push( ViewNotifications.INIT_SCRUM_ONBOARDING );
+        notifications.push( ViewNotifications.INIT_ONBOARDING_MEMBER_EDIT_FLOW );
+        notifications.push( ViewNotifications.INIT_ONBOARDING_IMPEDIMENT_FEATURE_FLOW );
 
         return notifications;
     }
@@ -74,7 +76,7 @@ export class AppViewManager extends ViewManager {
 
                 this.switchView( ScrumView, null );
 
-                this.onboarding.initWelcomeFlow();
+                this.onboarding.initFlow( Flows.WELCOME );
 
                 break;
 
@@ -90,11 +92,15 @@ export class AppViewManager extends ViewManager {
 
                 break;
 
-            case ViewNotifications.INIT_SCRUM_ONBOARDING :
+            case ViewNotifications.INIT_ONBOARDING_MEMBER_EDIT_FLOW :
 
-                this.onboarding.initMemberFlow();
+                this.onboarding.initFlow( Flows.MEMBER_EDIT );
 
-                this.onboarding.initImpedimentFlow();
+                break;
+
+            case ViewNotifications.INIT_ONBOARDING_IMPEDIMENT_FEATURE_FLOW :
+
+                this.onboarding.initFlow( Flows.IMPEDIMENTS_FEATURE );
 
                 break;
 

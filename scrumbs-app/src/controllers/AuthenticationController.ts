@@ -95,7 +95,8 @@ class AuthenticationController {
                     userData: {
                         user: user._id,
                         email: user.email,
-                        name: user.name
+                        name: user.name,
+                        onboardingGuidesDisplayed: user.onboardingGuidesDisplayed
                     }
                 });
             });
@@ -136,7 +137,8 @@ class AuthenticationController {
                             userData: {
                                 user: user._id,
                                 email: user.email,
-                                name: user.name
+                                name: user.name,
+                                onboardingGuidesDisplayed: user.onboardingGuidesDisplayed
                             }
                         });
             });
@@ -155,9 +157,6 @@ class AuthenticationController {
                 crypto.randomBytes(20, (err, buf) => {
 
                     const token = buf.toString( "hex" );
-
-                    console.log( "token: " + token );
-
 
                     done( err, token );
                 });
@@ -296,7 +295,8 @@ class AuthenticationController {
             userData: {
                 user: user._id,
                 email: user.email,
-                name: user.name
+                name: user.name,
+                onboardingGuidesDisplayed: user.onboardingGuidesDisplayed
             }
         });
 

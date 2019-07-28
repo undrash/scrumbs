@@ -62,7 +62,12 @@ const UserSchema = new Schema({
 
     googleId: String,
 
-    twitterId: String
+    twitterId: String,
+
+    onboardingGuidesDisplayed: {
+        type: [ Number ],
+        default: []
+    }
 
 });
 

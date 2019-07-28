@@ -104,7 +104,7 @@
   top: 0;
   left: 0;
   z-index: 5;
-  display: none;
+  //display: none;
 }
 
 .onboarding-modal-welcome {
@@ -178,7 +178,7 @@
 //guides base -----------------------------------------------------------
 
 .onboarding-tooltip {
-  display: none;
+  //display: none;
   background-color: #242E4C;
   border-radius: 5px;
   box-shadow: 0 14px 27px -7px rgba(43,62,119,0.38);
@@ -239,6 +239,7 @@
   left: 30%;
   top: 5%;
   //display: none;
+  opacity: 0;
 
   .guide-add-icon {
     margin: 0 5px;

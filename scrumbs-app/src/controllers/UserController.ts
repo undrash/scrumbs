@@ -21,10 +21,21 @@ class UserController {
 
 
     public routes() {
-
+        this.router.post( "/onboarding/:guide", this.onboarding );
     }
 
 
+
+    public onboarding(req: Request, res: Response, next: NextFunction): void {
+        const userId    = ( req as any ).user._id;
+        const guide     = req.params.guide;
+
+        User.findByIdAndUpdate( userId,
+        { $push: { onboardingGuidesDisplayed: guide } }
+        )
+            .then( user => res.status( 200 ).json( user ) )
+            .catch( next );
+    }
 
 
 }

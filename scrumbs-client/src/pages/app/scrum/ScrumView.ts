@@ -154,8 +154,11 @@ export class ScrumView extends View {
 
                 ( this.welcomeScreen as ScrumWelcomeScreen ).exitScene( ViewExitTypes.SWITCH_COMPONENT );
 
-                this.sendNotification( ViewNotifications.INIT_SCRUM_ONBOARDING );
+                break;
 
+
+            case ScrumSignals.MEMBER_NOTES_LOADED :
+                this.sendNotification( ViewNotifications.INIT_ONBOARDING_MEMBER_EDIT_FLOW );
                 break;
 
             case ScrumSignals.TEAM_UPDATED :
@@ -196,6 +199,12 @@ export class ScrumView extends View {
             case ScrumSignals.SWITCH_TO_IMPEDIMENTS_VIEW :
 
                 this.sendNotification( ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW );
+
+                break;
+
+            case ScrumSignals.FIRST_NOTE_CREATED :
+
+                this.sendNotification( ViewNotifications.INIT_ONBOARDING_IMPEDIMENT_FEATURE_FLOW );
 
                 break;
 
