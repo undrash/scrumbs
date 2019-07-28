@@ -41,11 +41,12 @@ export class ConnectionProxy extends Proxy {
 
         if ( dataSrc ) dataSrc.parentNode.removeChild( dataSrc );
 
-        const {  name, email } = data.userData;
+        const {  name, email, onboardingGuidesDisplayed } = data.userData;
 
         ConnectionProxy.setVO( new UserVO(
             name,
-            email
+            email,
+            onboardingGuidesDisplayed
         ));
 
         console.log( "EXTERNAL ACCESS: ", data );
@@ -64,11 +65,12 @@ export class ConnectionProxy extends Proxy {
 
                 // this.setToken( response.tokenData );
 
-                const {  name, email } = response.userData;
+                const {  name, email, onboardingGuidesDisplayed } = response.userData;
 
                 ConnectionProxy.setVO( new UserVO(
                     name,
-                    email
+                    email,
+                    onboardingGuidesDisplayed
                 ));
 
                 success( response );
@@ -89,11 +91,12 @@ export class ConnectionProxy extends Proxy {
 
                 // this.setToken( response.tokenData );
 
-                const {  name, email } = response.userData;
+                const {  name, email, onboardingGuidesDisplayed } = response.userData;
 
                 ConnectionProxy.setVO( new UserVO(
                     name,
-                    email
+                    email,
+                    onboardingGuidesDisplayed
                 ));
 
                 success( response );

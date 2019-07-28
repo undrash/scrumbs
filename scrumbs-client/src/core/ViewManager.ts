@@ -1,9 +1,10 @@
 
+import {ConnectionProxy} from "../connection/ConnectionProxy";
 import {Onboarding} from "../pages/app/onboarding/Onboarding";
-import { INotification } from "./INotification";
-import { ViewExitTypes } from "./ViewExitTypes";
-import { CoreEntity } from "./CoreEntity";
-import { View } from "./View";
+import {INotification} from "./INotification";
+import {ViewExitTypes} from "./ViewExitTypes";
+import {CoreEntity} from "./CoreEntity";
+import {View} from "./View";
 
 
 // CSS
@@ -16,12 +17,18 @@ export class ViewManager extends CoreEntity {
 
     protected onboarding: Onboarding;
 
+    protected connection: ConnectionProxy;
 
 
     constructor() {
         super( "ViewManager" );
 
         this.onboarding = new Onboarding();
+        this.connection = new ConnectionProxy( this.NAME );
+
+        this.onboarding.setGuidesDisplayed(
+            this.connection.getVO().onboardingGuidesDisplayed
+        );
     }
 
 

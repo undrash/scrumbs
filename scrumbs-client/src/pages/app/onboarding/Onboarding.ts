@@ -58,6 +58,8 @@ export class Onboarding {
 
         for ( let guide of this.flows[ flow ] ) {
             if ( this.displayed.indexOf( guide.id ) === -1 ) {
+
+                this.displayed.push( guide.id );
                 return this.activeGuides.push( new guide.ctor( this ) );
             }
         }
@@ -66,8 +68,8 @@ export class Onboarding {
 
 
 
-    public setGuidesDisplayed(): void {
-
+    public setGuidesDisplayed(displayed: number[]): void {
+        if ( displayed ) this.displayed = displayed;
     }
 
 
@@ -82,13 +84,19 @@ export class Onboarding {
 
                     if ( this.flows[ flow ][ i ].id === guideId ) {
 
-                        if ( toPrevious && i > 0 && this.displayed.indexOf( this.flows[ flow ][ i - 1 ].id ) === -1 ) {
+                        if ( toPrevious && i > 0 ) {
+
+                            this.displayed.push( this.flows[ flow ][ i - 1 ].id );
+
                             return this.activeGuides.push(
                                 new this.flows[ flow ][ i - 1 ].ctor( this )
                             );
                         }
 
-                        if ( ! toPrevious && i < this.flows[ flow ].length - 1 && this.displayed.indexOf( this.flows[ flow ][ i + 1 ].id ) === -1 ) {
+                        if ( ! toPrevious && i < this.flows[ flow ].length - 1 ) {
+
+                            this.displayed.push( this.flows[ flow ][ i + 1 ].id );
+
                             return this.activeGuides.push(
                                 new this.flows[ flow ][ i + 1 ].ctor( this )
                             );

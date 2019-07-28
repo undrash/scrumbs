@@ -1,6 +1,8 @@
 
 
+
 export interface IProxyVO {
     name: string,
-    email: string
+    email: string,
+    onboardingGuidesDisplayed: number[]
 }
