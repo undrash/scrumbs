@@ -46,7 +46,7 @@
       right: 15px;
       top: 13px;
       cursor: pointer;
-      background: url("../img/icons/icon-close-simple.svg") no-repeat center / 10px;
+      background: url("../img/icons/icon-close-simple.svg") no-repeat center / 10px ;
     }
 
     &.error {
@@ -54,7 +54,8 @@
     }
 
     &.warning {
-
+      background:  url("../img/icons/info-icon.svg") no-repeat center left 10px $text-secondary-color;
+      padding-left: 15px;
     }
 
     &.info {
