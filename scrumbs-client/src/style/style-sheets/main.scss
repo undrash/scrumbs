@@ -459,13 +459,21 @@ input, textarea {
 
     &.settings {
         background-image: url("../../style/img/icons/settings-icon.svg");
-        //background-size: 13px 15px;
         background-position: 21px center;
     }
 
     &.log-out {
         background-image: url("../../style/img/icons/logout-icon.svg");
-        //background-size: 13px 15px;
+        background-position: 21px center;
+    }
+
+    &.export-impediments {
+        background-image: url("../../style/img/icons/icon-impediment-grey.svg");
+        background-position: 21px center;
+    }
+
+    &.clear-impediments {
+        background-image: url("../../style/img/icons/icon-delete.svg");
         background-position: 21px center;
     }
 }

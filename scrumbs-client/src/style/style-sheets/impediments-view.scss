@@ -138,8 +138,9 @@
                 background-color: $denary-color;
             }
 
-
         }
+
+
 
         #impediments-filter-dropdown {
             width: 275px;
@@ -270,6 +271,13 @@
     }
 
 }
+
+#impediments-header-options-button {
+    .options-list-bg {
+        top: 45px;
+    }
+}
+
 
 
 /** Impediments Container */
