@@ -43,7 +43,8 @@ class PageController {
                 userData: {
                     user: user._id,
                     email: user.email,
-                    name: user.name
+                    name: user.name,
+                    onboardingGuidesDisplayed: user.onboardingGuidesDisplayed
                 }
             })});
         }
