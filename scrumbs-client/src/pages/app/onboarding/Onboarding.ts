@@ -1,6 +1,7 @@
 
 import {TipImpedimentCheckbox} from "./guides/TipImpedimentCheckbox";
 import {TipImpedimentShortcut} from "./guides/TipImpedimentShortcut";
+import {ConnectionProxy} from "../../../connection/ConnectionProxy";
 import {TipEditMemberName} from "./guides/TipEditMemberName";
 import {TipMemberOptions} from "./guides/TipMemberOptions";
 import {OnboardingSignals} from "./OnboardingSignals";
@@ -24,9 +25,11 @@ export class Onboarding {
 
     private activeGuides: Guide[];
 
-
+    private connection: ConnectionProxy;
 
     constructor() {
+
+        this.connection = new ConnectionProxy( "Onboarding" );
 
         this.displayed = [];
 
@@ -58,8 +61,9 @@ export class Onboarding {
 
         for ( let guide of this.flows[ flow ] ) {
             if ( this.displayed.indexOf( guide.id ) === -1 ) {
+                
+                this.guideDisplayed( guide.id );
 
-                this.displayed.push( guide.id );
                 return this.activeGuides.push( new guide.ctor( this ) );
             }
         }
@@ -86,7 +90,7 @@ export class Onboarding {
 
                         if ( toPrevious && i > 0 ) {
 
-                            this.displayed.push( this.flows[ flow ][ i - 1 ].id );
+                            this.guideDisplayed( this.flows[ flow ][ i - 1 ].id );
 
                             return this.activeGuides.push(
                                 new this.flows[ flow ][ i - 1 ].ctor( this )
@@ -95,7 +99,7 @@ export class Onboarding {
 
                         if ( ! toPrevious && i < this.flows[ flow ].length - 1 ) {
 
-                            this.displayed.push( this.flows[ flow ][ i + 1 ].id );
+                            this.guideDisplayed( this.flows[ flow ][ i + 1 ].id );
 
                             return this.activeGuides.push(
                                 new this.flows[ flow ][ i + 1 ].ctor( this )
@@ -124,9 +128,18 @@ export class Onboarding {
 
 
 
-    public handleSignal(signal: ISignal): void {
+    public guideDisplayed(guideId: number): void {
+        this.displayed.push( guideId );
 
-        console.log( "Onboarding signal", signal.name );
+        this.connection.onboardingGuideDisplayed(
+            guideId,
+            (resp: any) => console.log( resp ),
+            (err: Error) => console.error( err )
+        )
+    }
+
+
+    public handleSignal(signal: ISignal): void {
 
         switch ( signal.name ) {
 

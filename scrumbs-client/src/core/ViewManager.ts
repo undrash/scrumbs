@@ -26,9 +26,15 @@ export class ViewManager extends CoreEntity {
         this.onboarding = new Onboarding();
         this.connection = new ConnectionProxy( this.NAME );
 
-        this.onboarding.setGuidesDisplayed(
-            this.connection.getVO().onboardingGuidesDisplayed
-        );
+        const vo = this.connection.getVO();
+
+        if ( vo ) {
+            this.onboarding.setGuidesDisplayed(
+                vo.onboardingGuidesDisplayed
+            );
+        }
+
+
     }
 
 

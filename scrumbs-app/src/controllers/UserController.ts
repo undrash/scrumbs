@@ -31,7 +31,7 @@ class UserController {
         const guide     = req.params.guide;
 
         User.findByIdAndUpdate( userId,
-        { $push: { onboardingGuidesDisplayed: guide } }
+        { $addToSet: { onboardingGuidesDisplayed: guide } }
         )
             .then( user => res.status( 200 ).json( user ) )
             .catch( next );

@@ -72,6 +72,10 @@ export class AppViewManager extends ViewManager {
             case AuthenticationNotifications.SIGN_UP :
             case ViewNotifications.SWITCH_TO_SCRUM_VIEW :
 
+                this.onboarding.setGuidesDisplayed(
+                    this.connection.getVO().onboardingGuidesDisplayed
+                );
+
                 this.switchView( ScrumView, null );
 
                 this.onboarding.initFlow( Flows.WELCOME );

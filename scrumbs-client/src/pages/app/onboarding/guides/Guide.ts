@@ -1,5 +1,4 @@
 
-import {ConnectionProxy} from "../../../../connection/ConnectionProxy";
 import {OnboardingSignals} from "../OnboardingSignals";
 import {GuideSwitchType} from "../GuideSwitchType";
 import {Onboarding} from "../Onboarding";
@@ -13,8 +12,6 @@ export class Guide {
     public id: number;
     protected container: HTMLElement;
 
-    protected connection: ConnectionProxy;
-
 
 
     constructor(parent: Onboarding, id: number, template: string) {
@@ -23,8 +20,6 @@ export class Guide {
         this.container              = document.createElement( "div" );
         this.container.className    = `onboarding-guide-${ this.id }`;
         this.container.innerHTML    = template;
-
-        this.connection             = new ConnectionProxy( `Guide${ this.id }Proxy` );
     }
 
 

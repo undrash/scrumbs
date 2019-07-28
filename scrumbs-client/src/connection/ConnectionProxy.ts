@@ -420,7 +420,7 @@ export class ConnectionProxy extends Proxy {
 
 
 
-    public onboardingGuideDisplayed(guideId: string, success: Function, failure: Function): void {
+    public onboardingGuideDisplayed(guideId: number, success: Function, failure: Function): void {
 
         this.httpRequest(
             HTTPMethods.POST,
