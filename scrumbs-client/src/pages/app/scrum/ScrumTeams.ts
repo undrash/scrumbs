@@ -340,6 +340,12 @@ export class ScrumTeams extends ViewComponent {
                     name
                 });
 
+                this.updateMemory( { selectedMember: {
+                    id,
+                    team,
+                    name
+                }});
+
                 break;
 
             }
