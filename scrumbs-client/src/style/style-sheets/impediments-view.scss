@@ -215,8 +215,6 @@
             ul {
                 margin: 0 0 10px 0;
                 max-height: 250px;
-                overflow-y: auto;
-                overflow-x: hidden;
                 max-width: 235px;
 
                 li {
@@ -274,6 +272,7 @@
 
 #impediments-header-options-button {
     .options-list-bg {
+        display: none;
         top: 45px;
     }
 }

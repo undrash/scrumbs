@@ -33,6 +33,7 @@ export class ImpedimentsHeader extends ViewComponent {
     private filterSearch: HTMLInputElement;
     private filterDropdownHeader: HTMLElement;
     private filterDropdown: HTMLElement;
+    private filterReset: HTMLElement;
 
     private filterMemberListMainContainer: HTMLElement;
     private filterMemberListContainer: HTMLElement;
@@ -51,6 +52,7 @@ export class ImpedimentsHeader extends ViewComponent {
         this.filterSearch           = document.getElementById( "impediments-filter-input" ) as HTMLInputElement;
         this.filterDropdownHeader   = document.getElementById( "impediments-filter-dropdown-header" );
         this.filterDropdown         = document.getElementById( "impediments-filter-dropdown" );
+        this.filterReset            = document.getElementById( "impediments-filter-reset" );
 
         this.filterMemberListMainContainer = document.getElementById( "impediments-filter-dropdown-member-list" );
 
@@ -63,6 +65,7 @@ export class ImpedimentsHeader extends ViewComponent {
         this.documentClickListener  = this.documentClickListener.bind( this );
         this.filterSearchListener   = this.filterSearchListener.bind( this );
         this.filteredMemberSearch   = this.filteredMemberSearch.bind( this );
+        this.filterResetListener    = this.filterResetListener.bind( this );
 
 
         this.enterScene();
@@ -73,6 +76,7 @@ export class ImpedimentsHeader extends ViewComponent {
     private registerEventListeners(): void {
         this.filterBtn.addEventListener( "click", this.filterBtnListener );
         this.filterSearch.addEventListener( "keyup", this.filterSearchListener );
+        this.filterReset.addEventListener( "click", this.filterResetListener );
 
         document.addEventListener( "click", this.documentClickListener );
     }
@@ -82,6 +86,7 @@ export class ImpedimentsHeader extends ViewComponent {
     private unregisterEventListeners(): void {
         this.filterBtn.removeEventListener( "click", this.filterBtnListener );
         this.filterSearch.removeEventListener( "keyup", this.filterSearchListener );
+        this.filterReset.removeEventListener( "click", this.filterResetListener );
 
         document.removeEventListener( "click", this.documentClickListener );
     }
@@ -154,6 +159,14 @@ export class ImpedimentsHeader extends ViewComponent {
             this.filterDropdown.style.display = "none";
         }
 
+    }
+
+
+
+    private filterResetListener(): void {
+        this.filterSearch.value = '';
+        this.filterBtn.innerText = "All Impediments";
+        this.sendSignal( ImpedimentSignals.LOAD_ALL_IMPEDIMENTS );
     }
 
 

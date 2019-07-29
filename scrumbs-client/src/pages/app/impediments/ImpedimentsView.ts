@@ -124,6 +124,12 @@ export class ImpedimentsView extends View {
 
 
 
+    private hideEmptyState(): void {
+        this.impedimentsEmptyState.style.display = "none";
+    }
+
+
+
     public handleSignal(signal: ISignal) {
         console.log( "Signal received in " + this.NAME + ": " + signal.name );
 
@@ -161,6 +167,15 @@ export class ImpedimentsView extends View {
                 this.isImpedimentsUnsolvedEmpty = true;
 
                 this.displayEmptyState();
+
+                break;
+
+            case ImpedimentSignals.LOAD_ALL_IMPEDIMENTS :
+
+                this.hideEmptyState();
+
+                ( this.impedimentsSolved as ImpedimentsSolved ).populate();
+                ( this.impedimentsUnsolved as ImpedimentsUnsolved ).populate();
 
                 break;
 

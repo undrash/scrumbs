@@ -70,7 +70,7 @@ export class ImpedimentsSolved extends ViewComponent {
 
     public populateFiltered(memberId: string): void {
 
-        this.solvedImpedimentsContainer.innerHTML = null;
+        this.solvedImpedimentsContainer.innerHTML = '';
 
 
         this.connection.getSolvedImpedimentsOfMember(
@@ -96,7 +96,9 @@ export class ImpedimentsSolved extends ViewComponent {
 
 
 
-    private populate(): void {
+    public populate(): void {
+
+        this.solvedImpedimentsContainer.innerHTML = '';
 
         this.connection.getSolvedImpediments(
             (response: any) => {

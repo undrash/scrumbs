@@ -77,7 +77,9 @@ export class ImpedimentsUnsolved extends ViewComponent {
 
 
 
-    private populate(): void {
+    public populate(): void {
+
+        this.container.innerHTML = '';
 
         this.connection.getUnsolvedImpediments(
             (response: any) => {

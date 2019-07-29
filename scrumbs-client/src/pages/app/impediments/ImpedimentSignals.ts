@@ -7,4 +7,5 @@ export class ImpedimentSignals {
     public static readonly FILTER_IMPEDIMENTS: string               = "FILTER_IMPEDIMENTS";
     public static readonly IMPEDIMENTS_SOLVED_EMPTY: string         = "IMPEDIMENTS_SOLVED_EMPTY";
     public static readonly IMPEDIMENTS_UNSOLVED_EMPTY: string       = "IMPEDIMENTS_UNSOLVED_EMPTY";
+    public static readonly LOAD_ALL_IMPEDIMENTS: string             = "LOAD_ALL_IMPEDIMENTS";
 }
