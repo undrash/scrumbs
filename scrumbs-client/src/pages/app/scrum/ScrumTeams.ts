@@ -254,8 +254,30 @@ export class ScrumTeams extends ViewComponent {
 
         if ( ! prepend ) {
             membersContainer.appendChild( member );
+
         } else {
+
+            /** If the user has just been created, we select it automatically */
+
             membersContainer.insertBefore( member, membersContainer.firstChild );
+
+            this.applySelectionToMember( member.id );
+
+            this.sendSignal(
+                ScrumSignals.LOAD_MEMBER_NOTES,
+                {
+                    id: memberData._id,
+                    team: teamId,
+                    name: member.innerText
+                }
+            );
+
+            this.updateMemory( { selectedMember: {
+                id: memberData._id,
+                team: teamId,
+                name: member.innerText
+            }});
+
         }
     }
 
