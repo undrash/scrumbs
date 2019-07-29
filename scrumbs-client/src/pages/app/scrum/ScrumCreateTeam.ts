@@ -36,6 +36,8 @@ export class ScrumCreateTeam extends ViewComponent {
     private searchMembers: HTMLInputElement;
     private clearSearch: HTMLImageElement;
 
+    private teamNameError: HTMLElement;
+
     private emptySearchResults: HTMLElement;
 
     private selectedMembers: string[];
@@ -55,6 +57,8 @@ export class ScrumCreateTeam extends ViewComponent {
         this.searchMembers          = document.getElementById( "create-team-member-search-input" ) as HTMLInputElement;
         this.clearSearch            = document.getElementById( "create-team-member-search-clear" ) as HTMLImageElement;
         this.emptySearchResults     = document.getElementById( "member-search-empty" );
+
+        this.teamNameError          = document.getElementById( "scrum-create-team-name-error" );
 
         new SimpleBar( this.mainMemberContainer );
 
@@ -101,7 +105,7 @@ export class ScrumCreateTeam extends ViewComponent {
     private saveBtnHandler() {
         const name = this.teamNameInput.value;
 
-        if ( ! name ) return;
+        if ( ! name ) return this.teamNameError.style.display = "block";
 
         const createTeamModel = new CreateTeamModel( name, this.selectedMembers );
 
@@ -160,9 +164,10 @@ export class ScrumCreateTeam extends ViewComponent {
 
 
     private resetView(): void {
-        this.teamNameInput.value            = null;
-        this.memberContainer.innerHTML      = null;
-        this.searchMembers.value            = null;
+        this.teamNameInput.value            = '';
+        this.memberContainer.innerHTML      = '';
+        this.searchMembers.value            = '';
+        this.teamNameError.style.display    = "none";
     }
 
 

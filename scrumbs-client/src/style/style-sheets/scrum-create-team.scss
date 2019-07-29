@@ -36,6 +36,13 @@
     margin-top: 40px;
   }
 
+  .input-error {
+    font-size: 14px;
+    color: #D00262;
+    display: none;
+    margin: 10px 0;
+  }
+
   #create-team-name-input {
 
     display: block;
