@@ -6,15 +6,16 @@
 
         <span id="manage-teams-exit-button" class="exit-overlay-button pointer"></span>
 
-        <h1 class="bold">Manage your teams</h1>
+        <h1 class="bold">Settings</h1>
 
-        <!--<div class="button-group">-->
 
-            <!--<button id="manage-teams-cancel-button" class="pointer noselect">Cancel</button>-->
+        <nav class="settings-nav">
 
-            <!--<button id="manage-teams-save-button" class="manage-teams-save-button primary-button">Save</button>-->
+            <a class="settings-nav-btn active">Teams</a>
 
-        <!--</div>-->
+            <a class="settings-nav-btn">Members</a>
+
+        </nav>
 
     </div>
 
@@ -22,15 +23,19 @@
 
         <div class="manage-teams-list-container">
 
-            <div id="manage-teams-add-team-button" class="add-button pointer noselect">
-                <p class="accent bold">Add Team</p>
-            </div>
+            <h1>Teams</h1>
 
-            <ul id="manage-teams-team-container" class="manage-teams-team-list">
-                <!--<li class="manage-teams-team noselect pointer">Scrum Team</li>-->
-                <!--<li class="manage-teams-team noselect pointer active">Front-End Development</li>-->
-                <!--<li class="manage-teams-team noselect pointer">UI/UX</li>-->
-                <!--<li class="manage-teams-team noselect pointer">Android Development</li>-->
+            <ul class="teams-list-container">
+
+                <li class="teams-list-item">Scrum team</li>
+
+                <li class="teams-list-item active">Front-End Development</li>
+
+                <li class="teams-list-item">UI/UX</li>
+
+                <li class="teams-list-item">Management</li>
+
+
             </ul>
 
         </div>
@@ -39,9 +44,27 @@
 
             <div class="manage-teams-settings-header">
 
-                <input id="manage-teams-input-edit-team-name" class="bold" type="text" placeholder="Edit team name" spellcheck="false" value="Front-End Development">
+                <ul class="scrum-master-list-container">
 
-                <button id="manage-teams-delete-team-button" class="bold">Delete Team</button>
+                    <li class="profile-avatar"></li>
+
+                    <li class="profile-avatar"></li>
+
+                    <li class="profile-avatar"></li>
+
+                    <li class="profile-avatar"></li>
+
+                    <li class="profile-avatar"></li>
+
+                    <li class="profile-avatar"></li>
+
+                    <div class="invite-scrum-master-btn"></div>
+
+                </ul>
+
+                <!--<input id="manage-teams-input-edit-team-name" class="bold" type="text" placeholder="Edit team name" spellcheck="false" value="Front-End Development">-->
+
+                <button id="manage-teams-delete-team-button" class="delete-team-button bold">Delete Team</button>
 
             </div>
 
