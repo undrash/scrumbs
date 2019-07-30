@@ -104,7 +104,6 @@
   top: 0;
   left: 0;
   z-index: 5;
-  //display: none;
 }
 
 .onboarding-modal-welcome {
@@ -238,7 +237,6 @@
 #onboarding-tip-new-member {
   left: 30%;
   top: 5%;
-  //display: none;
   opacity: 0;
 
   .guide-add-icon {
@@ -259,7 +257,7 @@
   z-index: 10;
   left: 30%;
   top: 5%;
-  //display: none;
+  opacity: 0;
 }
 
 
@@ -267,7 +265,7 @@
 
 #onboarding-tip-member-options {
   right: 15%;
-  //display: none;
+  opacity: 0;
 
   &::after {
     content: "";
@@ -289,7 +287,7 @@
 #onboarding-tip-impediment-checkbox {
   bottom: 10%;
   right: 10%;
-  //display: none;
+  opacity: 0;
 
   &::after {
     content: "";
@@ -311,7 +309,7 @@
 #onboarding-tip-impediment-shortcut {
   bottom: 10%;
   left: 30%;
-  //display: none;
+  opacity: 0;
 
   &::after {
     content: "";
