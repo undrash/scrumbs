@@ -5,7 +5,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  //display: none;
+  display: none;
 }
 
 .no-support-bg {
@@ -39,7 +39,40 @@
   .no-support-title {
     font-size: 20px;
     font-weight: bold;
-    margin-bottom: 20px;
+    margin: 30px auto 20px;
+  }
+
+  .no-support-description {
+    max-width: 250px;
+    margin: auto;
+    font-size: 16px;
+  }
+
+}
+
+
+@media screen and ( max-width: 470px ) {
+
+  .no-support-bg {
+    padding: 30px;
+
+    .no-support-container {
+      padding: 110px 20px 50px;
+    }
+
+    .no-support-logo {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .no-support-icon {
+      width: 50%;
+    }
+
+    .no-support-title {
+      max-width: 250px;
+    }
+
   }
 
 }
