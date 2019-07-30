@@ -3,6 +3,7 @@
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
+import {SnackBarType} from "../../../common/SnackBarType";
 import {ImpedimentSignals} from "./ImpedimentSignals";
 import {View} from "../../../core/View";
 
@@ -206,7 +207,7 @@ export class ImpedimentsHeader extends ViewComponent {
         switch ( e.target.id ) {
 
             case this.optionExport.id :
-                console.log( "export clicked" );
+                this.snackbar.show( SnackBarType.WARNING, "Export feature coming soon" );
                 break;
 
             case this.optionSolveAll.id :
