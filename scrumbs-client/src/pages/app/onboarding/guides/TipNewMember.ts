@@ -78,7 +78,7 @@ export class TipNewMember extends Guide {
         const position      = HTMLHelper.getOffset( this.target );
 
         const offsetX       = 42;
-        const offsetY       = this.container.firstElementChild.clientHeight / 2 - 3;
+        const offsetY       = this.guide.clientHeight / 2 - 3;
 
         this.guide.style.left   = `${ position.left + offsetX }px`;
         this.guide.style.top    = `${ position.top - offsetY }px`;

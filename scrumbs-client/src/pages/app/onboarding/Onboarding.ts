@@ -70,11 +70,7 @@ export class Onboarding {
 
                 if ( this.timeout ) clearTimeout( this.timeout );
 
-                console.log( guide.id );
-
                 return this.timeout = setTimeout( () => {
-
-                    console.log( guide.id );
 
                     this.guideDisplayed( guide.id );
 

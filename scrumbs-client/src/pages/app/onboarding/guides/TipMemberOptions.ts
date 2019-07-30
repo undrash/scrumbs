@@ -29,7 +29,7 @@ export class TipMemberOptions extends Guide {
 
         this.guide              = this.container.firstElementChild as HTMLElement;
 
-        this.target             = document.querySelector( ".scrum-notes-member-options-button" ) as HTMLElement;
+        this.target             = document.querySelector( "#scrum-notes-member-options-button" ) as HTMLElement;
 
         this.closeBtn           = this.container.querySelector( ".onboarding-close-btn" ) as HTMLElement;
         this.gotItBtn           = this.container.querySelector( ".guide-primary-btn" ) as HTMLElement;
@@ -81,14 +81,15 @@ export class TipMemberOptions extends Guide {
 
 
     private setPosition(): void {
+
         if ( ! this.target ) return;
 
         const position      = HTMLHelper.getOffset( this.target );
 
-        const offsetX       = 42;
-        const offsetY       = this.container.firstElementChild.clientHeight / 2 - 3;
+        const offsetX       = this.guide.offsetWidth + 15;
+        const offsetY       = this.guide.clientHeight / 2 - 25;
 
-        this.guide.style.left   = `${ position.left + offsetX }px`;
+        this.guide.style.left   = `${ position.left - offsetX }px`;
         this.guide.style.top    = `${ position.top - offsetY }px`;
     }
 
