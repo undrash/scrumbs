@@ -179,8 +179,36 @@ export class ImpedimentsUnsolved extends ViewComponent {
                     this.sendSignal( ImpedimentSignals.IMPEDIMENT_SOLVED, note );
                 },
                 (err: string) => console.error( err )
-            )
+            );
         });
+    }
+
+
+
+    public solveAll(): void {
+        const impediments = document.getElementsByClassName( "impediments-unsolved-member-impediment" );
+
+        let ids = [];
+
+        for ( let i = 0; i < impediments.length; i++ ) {
+            ids.push( impediments[ i ].id );
+        }
+
+        this.container.innerHTML = '';
+
+        for ( let impedimentId of ids ) {
+
+            this.connection.solveImpediment(
+                impedimentId,
+                (response: any) => {
+                    console.log( response );
+
+                    const { note } = response;
+                    this.sendSignal( ImpedimentSignals.IMPEDIMENT_SOLVED, note );
+                },
+                (err: string) => console.error( err )
+            );
+        }
     }
 
 

@@ -74,10 +74,7 @@ export class ImpedimentsView extends View {
 
 
 
-    public enterScene(): void {
-
-
-    }
+    public enterScene(): void {}
 
 
 
@@ -180,6 +177,12 @@ export class ImpedimentsView extends View {
 
                 ( this.impedimentsSolved as ImpedimentsSolved ).populate();
                 ( this.impedimentsUnsolved as ImpedimentsUnsolved ).populate();
+
+                break;
+
+            case ImpedimentSignals.SOLVE_ALL_IMPEDIMENTS :
+
+                ( this.impedimentsUnsolved as ImpedimentsUnsolved ).solveAll();
 
                 break;
 
