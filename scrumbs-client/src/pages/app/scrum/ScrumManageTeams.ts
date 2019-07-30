@@ -50,24 +50,11 @@ export class ScrumManageTeams extends ViewComponent {
 
         this.container.innerHTML = template;
 
-        this.saveBtn            = document.getElementById( "manage-teams-save-button" ) as HTMLButtonElement;
-        this.cancelBtn          = document.getElementById( "manage-teams-cancel-button" ) as HTMLButtonElement;
         this.exitBtn            = document.getElementById( "manage-teams-exit-button" ) as HTMLSpanElement;
-
-        this.teamNameInput      = document.getElementById( "manage-teams-input-edit-team-name" ) as HTMLInputElement;
-        this.deleteTeamBtn      = document.getElementById( "manage-teams-delete-team-button" ) as HTMLButtonElement;
-
-        this.addMemberBtn       = document.getElementById( "manage-teams-add-member-button" ) as HTMLElement;
-        this.memberContainer    = document.getElementById( "manage-teams-member-container" ) as HTMLUListElement;
-
-        this.addTeamBtn         = document.getElementById( "manage-teams-add-team-button" ) as HTMLElement;
-        this.teamContainer      = document.getElementById( "manage-teams-team-container" ) as HTMLUListElement;
 
 
         this.exitBtnHandler         = this.exitBtnHandler.bind( this );
-        this.cancelBtnHandler       = this.cancelBtnHandler.bind( this );
-        this.saveBtnHandler         = this.saveBtnHandler.bind( this );
-        this.addMemberBtnHandler    = this.addMemberBtnHandler.bind( this );
+
 
         this.enterScene();
     }
@@ -76,18 +63,13 @@ export class ScrumManageTeams extends ViewComponent {
 
     private registerEventListeners(): void {
         this.exitBtn.addEventListener( "click", this.exitBtnHandler );
-        this.cancelBtn.addEventListener( "click", this.exitBtnHandler );
-        this.saveBtn.addEventListener( "click", this.saveBtnHandler );
-        this.addMemberBtn.addEventListener( "click", this.addMemberBtnHandler );
+
     }
 
 
 
     private unregisterEventListeners(): void {
         this.exitBtn.removeEventListener( "click", this.exitBtnHandler );
-        this.cancelBtn.removeEventListener( "click", this.exitBtnHandler );
-        this.saveBtn.removeEventListener( "click", this.saveBtnHandler );
-        this.addMemberBtn.removeEventListener( "click", this.addMemberBtnHandler );
     }
 
 
@@ -100,21 +82,21 @@ export class ScrumManageTeams extends ViewComponent {
 
     private populateTeams(resolve: Function): void {
 
-        this.connection.getTeams(
-            (response: any) => {
-                console.log( response );
-
-                const { teams } = response;
-
-                for ( let team of teams ) {
-                    this.addTeam( team );
-                }
-
-                resolve();
-
-            },
-            (err: string) => console.error( err )
-        );
+        // this.connection.getTeams(
+        //     (response: any) => {
+        //         console.log( response );
+        //
+        //         const { teams } = response;
+        //
+        //         for ( let team of teams ) {
+        //             this.addTeam( team );
+        //         }
+        //
+        //         resolve();
+        //
+        //     },
+        //     (err: string) => console.error( err )
+        // );
     }
 
 
@@ -155,85 +137,85 @@ export class ScrumManageTeams extends ViewComponent {
 
     private populateMembers(resolve: Function): void {
 
-        this.connection.getMembers(
-            (response: any) => {
-                console.log( response );
-                const { members } = response;
-
-                for ( let member of members ) {
-                    this.addMember( member );
-                }
-
-                resolve();
-            },
-            (err: string) => console.error( err )
-        )
+        // this.connection.getMembers(
+        //     (response: any) => {
+        //         console.log( response );
+        //         const { members } = response;
+        //
+        //         for ( let member of members ) {
+        //             this.addMember( member );
+        //         }
+        //
+        //         resolve();
+        //     },
+        //     (err: string) => console.error( err )
+        // )
     }
 
 
 
     private addMember(memberData: any, active?: boolean): void {
-        let member          = document.createElement( "li" );
-        member.innerHTML    = memberData.name;
-        member.id           = `${ this.localPrefix }${ memberData._id }`;
-
-        if ( active ) member.classList.add( "active" );
-
-        let checkbox        = document.createElement( "span" );
-        checkbox.className  = "create-team-member-checkbox";
-
-        member.appendChild( checkbox );
-
-        this.memberContainer.insertBefore( member, this.memberContainer.firstChild );
-
-        member.addEventListener( "click", () => member.classList.toggle( "active" ) );
+        // let member          = document.createElement( "li" );
+        // member.innerHTML    = memberData.name;
+        // member.id           = `${ this.localPrefix }${ memberData._id }`;
+        //
+        // if ( active ) member.classList.add( "active" );
+        //
+        // let checkbox        = document.createElement( "span" );
+        // checkbox.className  = "create-team-member-checkbox";
+        //
+        // member.appendChild( checkbox );
+        //
+        // this.memberContainer.insertBefore( member, this.memberContainer.firstChild );
+        //
+        // member.addEventListener( "click", () => member.classList.toggle( "active" ) );
     }
 
 
 
     private loadTeamData(id?: string): void {
 
-        let team: Element;
-        let teamId: string;
-
-        if ( ! id ) {
-            /** If there is no id specified, we default to the first team in the list */
-            team = this.teamContainer.firstElementChild;
-            team.classList.add( "active" );
-        } else {
-            /** If we got the team id as an argument, we isolate the element and extract the id later  */
-            team = document.getElementById( id );
-        }
-
-        /** If there is no valid team, we return */
-        if ( ! team ) return;
-
-        /** Parse the real id, without the local prefix */
-        teamId = team.id.replace( this.localPrefix, "" );
-
-        /** We save the currently loaded team Id (will be used for further operations, e.g. updating the team on save) */
-        this.loadedTeamId = teamId;
-
-        /** Set the input value as the name of the team selected */
-        this.teamNameInput.value = team.innerHTML;
-
-        /** Remove the active member mark from the previous team */
-        this.clearActiveMembers();
-
-        /** Get the members of the team and mark them as active members of the team */
-        this.connection.getMembersOfTeam(
-            teamId,
-            (response: any) => {
-                console.log( response );
-
-                const { members } = response;
-
-                for ( let member of members ) {
-                    document.getElementById( `${ this.localPrefix }${ member._id }` ).classList.add( "active" );
-                }
-            },
-            (err: string) => console.error( err )
-        );
+        // let team: Element;
+        // let teamId: string;
+        //
+        // if ( ! id ) {
+        //     /** If there is no id specified, we default to the first team in the list */
+        //     team = this.teamContainer.firstElementChild;
+        //     team.classList.add( "active" );
+        // } else {
+        //     /** If we got the team id as an argument, we isolate the element and extract the id later  */
+        //     team = document.getElementById( id );
+        // }
+        //
+        // /** If there is no valid team, we return */
+        // if ( ! team ) return;
+        //
+        // /** Parse the real id, without the local prefix */
+        // teamId = team.id.replace( this.localPrefix, "" );
+        //
+        // /** We save the currently loaded team Id (will be used for further operations, e.g. updating the team on save) */
+        // this.loadedTeamId = teamId;
+        //
+        // /** Set the input value as the name of the team selected */
+        // this.teamNameInput.value = team.innerHTML;
+        //
+        // /** Remove the active member mark from the previous team */
+        // this.clearActiveMembers();
+        //
+        // /** Get the members of the team and mark them as active members of the team */
+        // this.connection.getMembersOfTeam(
+        //     teamId,
+        //     (response: any) => {
+        //         console.log( response );
+        //
+        //         const { members } = response;
+        //
+        //         for ( let member of members ) {
+        //             document.getElementById( `${ this.localPrefix }${ member._id }` ).classList.add( "active" );
+        //         }
+        //     },
+        //     (err: string) => console.error( err )
+        // );
     }
 
 
@@ -259,14 +241,15 @@ export class ScrumManageTeams extends ViewComponent {
         }
 
         return memberIds;
+
     }
 
 
 
     private resetView(): void {
-        this.teamNameInput.value        = null;
-        this.teamContainer.innerHTML    = null;
-        this.memberContainer.innerHTML  = null;
+        // this.teamNameInput.value        = null;
+        // this.teamContainer.innerHTML    = null;
+        // this.memberContainer.innerHTML  = null;
     }
 
 

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="226px" height="226px" viewBox="0 0 226 226" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>no-support-icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-18.0%" y="-35.4%" width="136.7%" height="169.6%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.386769877   0 0 0 0 0.472897645   0 0 0 0 0.685427296  0 0 0 0.23547894 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <rect id="path-2" x="0" y="0" width="77.9813879" height="147.499027" rx="2.15418199"></rect>
+        <linearGradient x1="7.91808757%" y1="50%" x2="96.6726075%" y2="50%" id="linearGradient-4">
+            <stop stop-color="#62B2FF" offset="0%"></stop>
+            <stop stop-color="#6E9AFF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Day-886-Not-Supported-Screen-Size-UI-Design" transform="translate(-687.000000, -430.000000)">
+            <g id="Group-7" transform="translate(481.000000, 300.000000)">
+                <g id="Group-6" transform="translate(144.000000, 130.000000)">
+                    <g id="no-support-icon" transform="translate(62.000000, 0.000000)">
+                        <circle id="Oval" fill-opacity="0.5" fill="#E9E9F3" fill-rule="nonzero" cx="113" cy="113" r="113"></circle>
+                        <g id="Group" filter="url(#filter-1)" transform="translate(38.000000, 73.000000)">
+                            <g id="Group-2" transform="translate(75.411125, 39.409437) rotate(-90.000000) translate(-75.411125, -39.409437) translate(36.146419, -34.762786)">
+                                <g id="Group-3">
+                                    <mask id="mask-3" fill="white">
+                                        <use xlink:href="#path-2"></use>
+                                    </mask>
+                                    <use id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" xlink:href="#path-2"></use>
+                                    <g id="Group-4" mask="url(#mask-3)" fill="#ECECF2" fill-rule="nonzero">
+                                        <g transform="translate(14.648438, 37.732309)">
+                                            <rect id="Rectangle" x="42.6528033" y="0" width="6.03170956" height="96.9034306" rx="2.15418199"></rect>
+                                            <rect id="Rectangle-Copy" x="28.4352022" y="0" width="6.03170956" height="53.5970302" rx="2.15418199"></rect>
+                                            <rect id="Rectangle-Copy-2" x="14.2176011" y="0" width="6.03170956" height="72.4631848" rx="2.15418199"></rect>
+                                            <rect id="Rectangle-Copy-3" x="0" y="0" width="6.03170956" height="90.9005632" rx="2.15418199"></rect>
+                                        </g>
+                                    </g>
+                                    <rect id="Rectangle" fill="url(#linearGradient-4)" fill-rule="nonzero" mask="url(#mask-3)" x="0" y="0" width="77.9813879" height="30.0143369"></rect>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
