@@ -27,7 +27,13 @@ export class Onboarding {
 
     private connection: ConnectionProxy;
 
+    private testing: boolean;
+
+    private timeout: any;
+
     constructor() {
+
+        this.testing = true;
 
         this.connection = new ConnectionProxy( "Onboarding" );
 
@@ -58,13 +64,22 @@ export class Onboarding {
 
         this.clearGuides();
 
-
         for ( let guide of this.flows[ flow ] ) {
-            if ( this.displayed.indexOf( guide.id ) === -1 ) {
-                
-                this.guideDisplayed( guide.id );
 
-                return this.activeGuides.push( new guide.ctor( this ) );
+            if ( this.testing || this.displayed.indexOf( guide.id ) === -1 ) {
+
+                if ( this.timeout ) clearTimeout( this.timeout );
+
+                console.log( guide.id );
+
+                return this.timeout = setTimeout( () => {
+
+                    console.log( guide.id );
+
+                    this.guideDisplayed( guide.id );
+
+                    this.activeGuides.push( new guide.ctor( this ) );
+                }, 1500 );
             }
         }
 

@@ -6,6 +6,8 @@ import {Onboarding} from "../Onboarding";
 import {Guides} from "../Guides";
 import {Guide} from "./Guide";
 
+import TweenLite = gsap.TweenLite;
+
 const template = require( "../../../../templates/onboarding-tip-new-member.html" );
 
 
@@ -89,16 +91,28 @@ export class TipNewMember extends Guide {
         this.setPosition();
         this.registerEventListeners();
 
-        setTimeout( () => { this.guide.style.opacity = '1' }, 1500 );
+        setTimeout( () => {
+
+            TweenLite.from( this.guide,
+                0.5,
+                {
+                    top: this.guide.getBoundingClientRect().top + 20
+                });
+
+            TweenLite.to( this.guide, 0.4,{ opacity: 1 } );
+
+
+        }, 1500 );
     }
 
 
 
     public exitScene(switchType?: GuideSwitchType): void {
 
-        // TODO: Some animation could go here
-        this.unregisterEventListeners();
-        super.exitScene( switchType );
+        TweenLite.to( this.guide, 0.2,{ opacity: 0, onComplete: () => {
+            this.unregisterEventListeners();
+            super.exitScene( switchType );
+        }});
     }
 
 }
