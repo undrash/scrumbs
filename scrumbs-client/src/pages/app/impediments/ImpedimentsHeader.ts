@@ -167,12 +167,14 @@ export class ImpedimentsHeader extends ViewComponent {
         this.filterSearch.value = '';
         this.filterBtn.innerText = "All Impediments";
         this.sendSignal( ImpedimentSignals.LOAD_ALL_IMPEDIMENTS );
+
+        this.populate();
     }
 
 
 
     private populateFilterDropdownMembers(members: any[]): void {
-        this.filterMemberListContainer.innerHTML = null;
+        this.filterMemberListContainer.innerHTML = '';
 
         for ( let member of members ) {
             this.addMemberToFilterDropdown( member );
@@ -205,6 +207,8 @@ export class ImpedimentsHeader extends ViewComponent {
 
 
     private populate(): void {
+
+        this.filterMemberListContainer.innerHTML = '';
 
         this.connection.getMembers(
             (response: any) => {
