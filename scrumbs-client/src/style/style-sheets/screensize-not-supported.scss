@@ -50,6 +50,12 @@
 
 }
 
+@media screen and ( max-width: 750px ) {
+
+  #screen-not-supported-alert {
+    display: block;
+  }
+}
 
 @media screen and ( max-width: 470px ) {
 

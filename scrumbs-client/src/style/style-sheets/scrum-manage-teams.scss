@@ -5,6 +5,16 @@
 
 /** ============================= MANAGE TEAMS COMPONENT ============================= */
 
+.remove-member-btn {
+    background: url("../../style/img/icons/icon-close-simple-dark.svg") no-repeat center #ffffff;
+    height: 24px;
+    width: 24px;
+    border-radius: 15px;
+    border: 2px solid $denary-color;
+    background-size: 10px;
+
+}
+
 #manage-teams-container {
 
     background-color: $tertiary-color;
@@ -35,7 +45,7 @@
 
             .settings-nav-btn{
                 font-size: 16px;
-                font-weight: bold;
+                font-weight: normal;
                 color: #d0cfe0;
                 transition: color 0.3s ease-in-out;
                 margin: 0 25px;
@@ -56,7 +66,6 @@
         max-width: 870px;
         height: calc( 100% - 100px );
         margin: 0 auto;
-
     }
 
     .manage-teams-list-container {
@@ -73,7 +82,7 @@
         }
 
         .teams-list-container {
-            height: 90%;
+            height: 91%;
             overflow: scroll;
         }
 
@@ -90,9 +99,7 @@
                 background-color: $denary-color;
 
             }
-
         }
-
     }
 
 
@@ -102,25 +109,43 @@
         height: 90%;
         padding: 25px;
 
-
         .manage-teams-settings-header {
             overflow: hidden;
         }
-
-        //#manage-teams-delete-team-button {
-        //    margin-left: 35px;
-        //    color: $senary-color;
-        //    background-color: transparent;
-        //}
 
         .scrum-master-list-container {
             width: calc(100% - 145px);
             float: left;
             vertical-align: middle;
+            padding: 10px 0;
 
-            .profile-avatar {
+            .default-scrum-master-container {
                 display: inline-block;
                 margin-right: 5px;
+                position: relative;
+            }
+
+            .invited-scrum-master-container {
+                display: inline-block;
+                margin-right: 5px;
+                position: relative;
+                cursor: pointer;
+
+                .remove-member-btn {
+                    position: absolute;
+                    top: -5px;
+                    right: 2px;
+                    opacity: 0;
+                    transition: opacity 0.3s ease-in-out;
+                }
+
+                &:hover {
+
+                    .remove-member-btn {
+                        opacity: 1;
+                        cursor: pointer;
+                    }
+                }
             }
 
             .invite-scrum-master-btn {
@@ -130,6 +155,14 @@
                 border: 2px solid #ECECF2;
                 background: url("../../style/img/icons/icon-add-accent.svg") no-repeat center;
                 border-radius: 25px;
+                cursor: pointer;
+                transition: border 0.3s ease-in-out;
+                box-shadow: 1px 4px 10px 0px rgba(99, 144, 246, 0);
+
+
+                &:hover {
+                    border: 2px solid $accent-color;
+                }
             }
         }
 
@@ -137,56 +170,61 @@
             cursor: pointer;
             float: right;
             vertical-align: middle;
-            margin: 10px 0 0 35px;
-            color: $senary-color;
+            margin: 23px 0 0 35px;
+            color: #D00262;
             background-color: transparent;
             width: 110px;
+            font-size: 14px;
+            text-align: right;
+            padding: 0;
         }
 
+        .manage-teams-input-edit-team-name {
 
+            display: inline-block;
+            width: 100%;
+            border-radius: 3px;
+            border: 2px solid $denary-color;
+            font-size: 24px;
+            padding: 0 16px;
+            line-height: 70px;
+            transition: border 0.2s linear;
+            margin-bottom: 25px;
 
+            &:focus, &:hover { border: 2px solid $accent-color; }
 
-            #manage-teams-input-edit-team-name {
+        }
 
-                display: inline-block;
-                width: calc( 100% - 135px );
-                border-radius: 3px;
-                border: 2px solid $denary-color;
-                font-size: 24px;
-                padding: 0 16px;
-                line-height: 70px;
-                transition: border 0.2s linear;
+        .manage-teams-settings-body {
+            height: calc( 100% - 105px );
+            clear: both;
+        }
 
-                &:focus { border: 2px solid $accent-color; }
+        .manage-teams-settings-member-list-header {
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 10px;
 
+            h1 {
+                font-size: 16px;
+                float: left;
+                display: block;
+                margin-top: 12px;
             }
 
-            .manage-teams-settings-body {
-                height: calc( 100% - 105px );
-                clear: both;
+            & > p { color: $text-tertiary-color; }
+
+            #manage-teams-add-member-button {
+                float: right;
             }
-
-            .manage-teams-settings-member-list-header {
-
-                margin: 30px 0 25px;
-                position: relative;
-
-                h2 {
-                    font-size: 24px;
-                    margin-bottom: 12px;
-                }
-
-                & > p { color: $text-tertiary-color; }
-
-                #manage-teams-add-member-button {
-                    position: absolute;
-                    bottom: 0;
-                    right: 0;
-                }
             
-            }
+        }
 
-            .manage-teams-settings-member-list-body {
+        .manage-teams-settings-member-list-body {
+            height: 90%;
+            overflow: scroll;
+
+            .team-members-list-container {
 
                 height: calc( 100% - 75px );
 
@@ -195,45 +233,23 @@
                     overflow-y: auto;
                 }
 
-                li {
+                .team-members-list-item {
 
-                    line-height: 50px;
-                    padding-left: 20px;
+                    padding: 15px 15px 15px 40px;
                     border-radius: 3px;
-                    box-shadow: inset 0 0 0 1px $quinary-color;
-                    color: $text-tertiary-color;
-                    font-size: 24px;
+                    background: url("../../style/img/icons/icon-member.svg") no-repeat left 15px center;
+                    border: 1px solid $denary-color;
+                    color: $text-primary-color;
+                    font-size: 16px;
                     cursor: pointer;
                     position: relative;
+                    background-size: 16px;
+                    margin-bottom: 5px;
 
                     &:not( :last-child ) { margin-bottom: 5px; }
 
-                    span {
-                        display: block;
-                        position: absolute;
-                        width: 24px;
-                        height: 24px;
-                        border-radius: 50%;
-                        box-shadow: inset 0 0 0 2px $quinary-color;
-                        @include center( "vertical" );
-                        right: 15px;
-
-                        &::after {
-                            content: "";
-                            display: none;
-                            width: 100%;
-                            height: 100%;
-                            background: url("../img/icons/icon-checked.svg") no-repeat center / contain;
-                        }
-
-                    }
-
-                    &.active {
-
-                        color: $text-primary-color;
-
-                        span::after { display: block; }
-
+                    .remove-member-btn {
+                        float: right;
                     }
 
                 }
@@ -256,6 +272,8 @@
         }
 
     }
+
+}
 
     
 
