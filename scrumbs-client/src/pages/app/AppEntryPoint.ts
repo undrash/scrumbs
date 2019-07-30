@@ -17,18 +17,28 @@ import {Flows} from "./onboarding/Flows";
 import {View} from "../../core/View";
 
 
+import "../../style/style-sheets/screensize-not-supported.scss";
+const screenNotSupportedTemplate = require("../../templates/screensize-not-supported.html" );
+
 
 
 export class AppViewManager extends ViewManager {
     private headerView: View;
 
-
+    private alertScreenSizeNotSupported: HTMLElement;
 
 
 
 
     constructor() {
         super();
+
+        this.alertScreenSizeNotSupported = document.createElement( "div" );
+        this.alertScreenSizeNotSupported.id = "screen-not-supported-alert";
+
+        this.alertScreenSizeNotSupported.innerHTML = screenNotSupportedTemplate;
+
+        document.body.appendChild( this.alertScreenSizeNotSupported );
 
         this.headerView = new HeaderView();
 
@@ -40,6 +50,7 @@ export class AppViewManager extends ViewManager {
         } else {
             this.initView( AuthenticationView );
         }
+
     }
 
 
