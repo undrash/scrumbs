@@ -205,6 +205,8 @@ export class ScrumCreateTeam extends ViewComponent {
 
     private highlightSearchString(itemName: string, searchString:string): string {
 
+        if ( ! searchString ) return itemName;
+
         const pattern = new RegExp( '(' + searchString + ')', "gi" );
 
         return itemName.replace( pattern, "<strong>$1</strong>" );

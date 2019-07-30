@@ -235,7 +235,7 @@ export class ImpedimentsHeader extends ViewComponent {
     private addMemberToFilterDropdown(member: any): void {
 
         let memberElement           = document.createElement( "li" );
-        memberElement.innerText     = member.name;
+        memberElement.innerHTML     = this.highlightSearchString( member.name, this.filterSearch.value );
         memberElement.id            = member._id;
 
         memberElement.className     = "pointer noselect";
@@ -251,6 +251,17 @@ export class ImpedimentsHeader extends ViewComponent {
     private filterMemberClickListener(e: any): void {
         this.filterBtn.innerText = e.target.innerText;
         this.sendSignal( ImpedimentSignals.FILTER_IMPEDIMENTS, e.target.id );
+    }
+
+
+
+    private highlightSearchString(itemName: string, searchString:string): string {
+
+        if ( ! searchString ) return itemName;
+
+        const pattern = new RegExp( '(' + searchString + ')', "gi" );
+
+        return itemName.replace( pattern, "<strong>$1</strong>" );
     }
 
 
