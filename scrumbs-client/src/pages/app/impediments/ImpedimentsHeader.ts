@@ -40,7 +40,8 @@ export class ImpedimentsHeader extends ViewComponent {
 
     private filterSearchTimer: Timeout;
 
-
+    private optionsBtn: HTMLElement;
+    private optionsDropdown: HTMLElement;
 
 
     constructor(view: View, container: HTMLElement) {
@@ -58,15 +59,17 @@ export class ImpedimentsHeader extends ViewComponent {
 
         new SimpleBar( this.filterMemberListMainContainer );
 
-
         this.filterMemberListContainer = this.filterMemberListMainContainer.getElementsByClassName( "simplebar-content" )[0] as HTMLElement;
+
+        this.optionsBtn             = document.getElementById( "impediments-header-options-button" );
+        this.optionsDropdown        = document.getElementById( "impediments-header-options-dropdown" );
 
         this.filterBtnListener      = this.filterBtnListener.bind( this );
         this.documentClickListener  = this.documentClickListener.bind( this );
         this.filterSearchListener   = this.filterSearchListener.bind( this );
         this.filteredMemberSearch   = this.filteredMemberSearch.bind( this );
         this.filterResetListener    = this.filterResetListener.bind( this );
-
+        this.optionsBtnListener     = this.optionsBtnListener.bind( this );
 
         this.enterScene();
     }
@@ -77,6 +80,7 @@ export class ImpedimentsHeader extends ViewComponent {
         this.filterBtn.addEventListener( "click", this.filterBtnListener );
         this.filterSearch.addEventListener( "keyup", this.filterSearchListener );
         this.filterReset.addEventListener( "click", this.filterResetListener );
+        this.optionsBtn.addEventListener( "click", this.optionsBtnListener );
 
         document.addEventListener( "click", this.documentClickListener );
     }
@@ -87,6 +91,7 @@ export class ImpedimentsHeader extends ViewComponent {
         this.filterBtn.removeEventListener( "click", this.filterBtnListener );
         this.filterSearch.removeEventListener( "keyup", this.filterSearchListener );
         this.filterReset.removeEventListener( "click", this.filterResetListener );
+        this.optionsBtn.removeEventListener( "click", this.optionsBtnListener );
 
         document.removeEventListener( "click", this.documentClickListener );
     }
@@ -152,11 +157,19 @@ export class ImpedimentsHeader extends ViewComponent {
 
     private documentClickListener(e: any): void {
 
+        /** Handle filter dropdown */
+
         if ( e.target.id !== this.filterBtn.id &&
             e.target.id !== this.filterSearch.id &&
             e.target.id !== this.filterDropdownHeader.id
         ) {
             this.filterDropdown.style.display = "none";
+        }
+
+        /** Handle options dropdown */
+
+        if ( e.target.id !== this.optionsBtn.id ) {
+            this.optionsDropdown.style.display = "none";
         }
 
     }
@@ -169,6 +182,12 @@ export class ImpedimentsHeader extends ViewComponent {
         this.sendSignal( ImpedimentSignals.LOAD_ALL_IMPEDIMENTS );
 
         this.populate();
+    }
+
+
+
+    private optionsBtnListener(): void {
+        this.optionsDropdown.style.display = "block";
     }
 
 
