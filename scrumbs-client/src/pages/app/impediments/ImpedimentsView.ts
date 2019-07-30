@@ -125,7 +125,9 @@ export class ImpedimentsView extends View {
 
 
     private hideEmptyState(): void {
-        this.impedimentsEmptyState.style.display = "none";
+        this.impedimentsEmptyState.style.display    = "none";
+        this.isImpedimensSolvedEmpty                = false;
+        this.isImpedimentsUnsolvedEmpty             = false;
     }
 
 
@@ -148,6 +150,8 @@ export class ImpedimentsView extends View {
                 break;
 
             case ImpedimentSignals.FILTER_IMPEDIMENTS :
+
+                this.hideEmptyState();
 
                 ( this.impedimentsSolved as ImpedimentsSolved ).populateFiltered( signal.data );
                 ( this.impedimentsUnsolved as ImpedimentsUnsolved ).populateFiltered( signal.data );
