@@ -21,10 +21,12 @@ yarn-error.log
 .vscode
 
 # Project generated
-/build
+build
 public/css
 public/js
 
 
 # Sourcemaps
-client/src/**/*.js
+scrumbs-client/src/**/*.js
+scrumbs-app/src/**/*.js
+scrumbs-website/src/**/*.js
