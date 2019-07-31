@@ -225,6 +225,21 @@ input, textarea {
 
 }
 
+.find-members-search-input {
+    border-bottom: 1px solid $denary-color;
+    padding: 10px 40px;
+    background: url("../../style/img/icons/search-icon.svg") no-repeat left 15px center;
+    transition: border-bottom-color 0.3s ease-in-out;
+
+    &:hover {
+        border-bottom: 1px solid $accent-color;
+    }
+
+    &:focus {
+        border-bottom: 1px solid $accent-color;
+
+    }
+}
 
 
 
@@ -378,8 +393,8 @@ input, textarea {
         @include center( "vertical" );
       }
     }
-
   }
+
 
 .add-object-button {
     height: 60px;
@@ -389,7 +404,6 @@ input, textarea {
     border-radius: 45px;
     transition: transform 0.3s ease-in-out;
     cursor: pointer;
-    //position: absolute;
 
     &::after {
         content: "";
@@ -427,6 +441,53 @@ input, textarea {
       background: url( "../img/icons/icon-close.svg" ) no-repeat center / contain;
     }
 
+}
+
+.filter-btn {
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 10px;
+    padding-right: 26px;
+    border-radius: 3px;
+    background-color: transparent;
+    position: relative;
+    transition: background-color 0.3s ease-in-out;
+    cursor: pointer;
+
+    &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 10px;
+        height: 6px;
+        top: 17px;
+        right: 10px;
+        background: url("../../style/img/icons/icon-dropdown-accent.svg") no-repeat center/contain;
+    }
+
+    &:hover {
+        background-color: #ececf2;
+    }
+
+}
+
+.options-btn {
+    width: 40px;
+    height: 40px;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    border-radius: 3px;
+    background: url("../../style/img/icons/icon-options.svg") no-repeat center/20px 5px;
+    transition: background-color 0.3s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #ececf2;
+    }
 }
 
 

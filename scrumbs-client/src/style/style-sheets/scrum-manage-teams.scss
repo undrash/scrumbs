@@ -67,6 +67,7 @@
         max-width: 870px;
         height: calc( 100% - 100px );
         margin: 0 auto;
+        display: none;
     }
 
     .manage-teams-list-container {
@@ -79,7 +80,7 @@
         h1 {
             font-size: 16px;
             font-weight: bold;
-            margin: 0 20px 15px;
+            margin: 0 20px 15px 15px;
         }
 
         .teams-list-container {
@@ -286,7 +287,93 @@
 
     }
 
+
+    .manage-members-body {
+        max-width: 870px;
+        height: calc( 100% - 100px);
+        margin: 0 auto;
+        padding: 30px 25px 0;
+
+        .manage-members-setting-header {
+            overflow: hidden;
+        }
+
+        .find-members-search-input {
+            display: inline-block;
+            float: left;
+        }
+
+        .filter-btn {
+            display: inline-block;
+            float: right;
+        }
+
+        .manage-members-members-list-container {
+            clear: both;
+            margin-top: 30px;
+            overflow: scroll;
+            height: 80%;
+        }
+
+        .manage-members-members-list-item {
+            padding: 15px;
+            border-bottom: 1px solid $denary-color;
+            transition: background-color 0.3s ease-in-out;
+            position: relative;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            &:hover {
+                background-color: $nonary-color;
+
+                .options-btn {
+                    opacity: 1;
+                }
+            }
+
+            .options-btn {
+                position: absolute;
+                right: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                opacity: 0;
+            }
+        }
+
+        .member-list-item {
+            padding: 0 25px 10px;
+            background: url("../../style/img/icons/icon-member.svg") no-repeat left 3px;
+            background-size: 15px;
+            font-size: 16px;
+        }
+
+        .member-category {
+            font-size: 14px;
+            color: $text-primary-color;
+            opacity: 0.5;
+            display: inline-block;
+
+            &::before {
+                content: "•";
+                margin-right: 3px;
+            }
+
+        }
+
+        p:nth-child(2) {
+            padding-left: 25px;
+
+            &::before {
+                content: "";
+            }
+        }
+
+    }
+
 }
+
 
 
 @media screen and ( max-width: 820px )  {
