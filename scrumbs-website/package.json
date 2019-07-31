@@ -7,7 +7,7 @@
   "scripts": {
     "start": "npm run buildall && npm run start-server",
     "start-server": "node ./build/Index.js",
-    "build": "tsc",
+    "build": "gulp",
     "buildall": "tsc && gulp",
     "ts": "tsc -w",
     "server": "nodemon ./build/Index.js"
