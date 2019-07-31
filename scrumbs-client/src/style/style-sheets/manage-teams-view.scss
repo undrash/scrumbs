@@ -246,32 +246,7 @@
                     overflow-y: auto;
                 }
 
-                .team-members-list-item {
-                    padding: 15px 15px 15px 40px;
-                    border-radius: 3px;
-                    background: url("../../style/img/icons/icon-member.svg") no-repeat left 15px top 18px;
-                    border: 1px solid $denary-color;
-                    color: $text-primary-color;
-                    font-size: 16px;
-                    cursor: pointer;
-                    position: relative;
-                    background-size: 16px;
-                    margin-bottom: 5px;
-                    transition: border-color 0.3s ease-in-out;
 
-                    &:not( :last-child ) { margin-bottom: 5px; }
-
-                    .remove-member-btn {
-                        position: absolute;
-                        right: 15px;
-                        top: 50%;
-                        transform: translateY(-50%);
-                    }
-
-                    &:hover {
-                        border: 1px solid $text-primary-color;
-                    }
-                }
 
                 input {
                     line-height: 50px;
