@@ -8,7 +8,6 @@ import {ViewComponent} from "../../../core/ViewComponent";
 import {ScrumWelcomeScreen} from "./ScrumWelcomeScreen";
 import {ScrumNotifications} from "./ScrumNotifications";
 import {ViewNotifications} from "../ViewNotifications";
-import {ScrumManageTeams} from "./ScrumManageTeams";
 import {ScrumCreateTeam} from "./ScrumCreateTeam";
 import {ISignal} from "../../../core/ISignal";
 import {ScrumSignals} from "./ScrumSignals";
