@@ -11,7 +11,7 @@ import TweenLite = gsap.TweenLite;
 import Power0 = gsap.Power0;
 import Back = gsap.Back;
 
-
+declare const SimpleBar: any;
 
 // CSS
 import "../../../style/style-sheets/scrum-manage-teams.scss";
@@ -26,18 +26,19 @@ const template = require( "../../../templates/scrum-manage-teams.html" );
 
 
 export class ScrumManageTeams extends ViewComponent {
-    private saveBtn: HTMLButtonElement;
-    private cancelBtn: HTMLButtonElement;
     private exitBtn: HTMLSpanElement;
 
     private teamNameInput: HTMLInputElement;
-    private deleteTeamBtn: HTMLButtonElement;
+    private deleteTeamBtn: HTMLElement;
 
     private addMemberBtn: HTMLElement;
-    private memberContainer: HTMLUListElement;
+    private mainMemberContainer: HTMLElement;
+    private memberContainer: HTMLElement;
 
-    private addTeamBtn: HTMLElement;
-    private teamContainer: HTMLUListElement;
+    private mainTeamContainer: HTMLElement;
+    private teamContainer: HTMLElement;
+
+    private createTeamBtn: HTMLElement;
 
     private localPrefix: string;
 
@@ -46,15 +47,30 @@ export class ScrumManageTeams extends ViewComponent {
     constructor(view: View, container: HTMLElement) {
         super( view, container, "ScrumManageTeams" );
 
-        this.localPrefix = "manage-teams-";
+        this.localPrefix            = "manage-teams-";
 
-        this.container.innerHTML = template;
+        this.container.innerHTML    = template;
 
-        this.exitBtn            = document.getElementById( "manage-teams-exit-button" ) as HTMLSpanElement;
+        this.exitBtn                = document.getElementById( "manage-teams-exit-button" ) as HTMLSpanElement;
+        this.teamNameInput          = document.getElementById( "manage-teams-input-edit-team-name" ) as HTMLInputElement;
+        this.deleteTeamBtn          = document.getElementById( "manage-teams-delete-team-button" );
 
+        this.addMemberBtn           = document.getElementById( "manage-teams-add-member-button" );
+        this.mainMemberContainer    = document.getElementById( "team-members-list-container" );
+
+        new SimpleBar( this.mainMemberContainer );
+
+        this.memberContainer        = this.mainMemberContainer.getElementsByClassName( "simplebar-content" )[0] as HTMLElement;
+
+        this.mainTeamContainer      = document.getElementById( "teams-list-container" );
+
+        new SimpleBar( this.mainTeamContainer );
+
+        this.teamContainer          = this.mainTeamContainer.getElementsByClassName( "simplebar-content" )[0] as HTMLElement;
+
+        this.createTeamBtn          = document.getElementById( "manage-members-add-new-member-btn" );
 
         this.exitBtnHandler         = this.exitBtnHandler.bind( this );
-
 
         this.enterScene();
     }

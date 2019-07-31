@@ -1,5 +1,5 @@
 
-
+import {CreateMemberModel} from "../../../connection/models/CreateMemberModel";
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
@@ -16,7 +16,6 @@ declare const SimpleBar: any;
 
 // CSS
 import "../../../style/style-sheets/scrum-teams.scss";
-import {CreateMemberModel} from "../../../connection/models/CreateMemberModel";
 
 
 // HTML

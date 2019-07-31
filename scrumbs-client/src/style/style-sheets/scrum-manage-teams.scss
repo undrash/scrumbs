@@ -23,6 +23,12 @@
     background-color: $tertiary-color;
     height: 100%;
 
+
+    .simplebar-track { right: 0; }
+
+    .simplebar-horizontal { display: none; }
+
+
     .manage-teams-header {
         height: 100px;
         border-bottom: 1px solid $denary-color;
@@ -67,7 +73,7 @@
         max-width: 870px;
         height: calc( 100% - 100px );
         margin: 0 auto;
-        display: none;
+        //display: none;
     }
 
     .manage-teams-list-container {
@@ -85,7 +91,7 @@
 
         .teams-list-container {
             height: 91%;
-            overflow: scroll;
+            width: 100%;
         }
 
         .teams-list-item {
@@ -229,8 +235,7 @@
         }
 
         .manage-teams-settings-member-list-body {
-            height: 74%;
-            overflow: scroll;
+            height: 85%;
 
             .team-members-list-container {
 
@@ -293,6 +298,7 @@
         height: calc( 100% - 100px);
         margin: 0 auto;
         padding: 30px 25px 0;
+        display: none;
 
         .manage-members-setting-header {
             overflow: hidden;
