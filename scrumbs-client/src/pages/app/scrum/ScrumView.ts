@@ -35,13 +35,11 @@ export class ScrumView extends View {
     private notes: ViewComponent;
     private welcomeScreen: ViewComponent;
     private createTeam: ViewComponent;
-    private manageTeams: ViewComponent;
 
     private teamsContainer: HTMLElement;
     private notesContainer: HTMLElement;
     private welcomeScreenContainer: HTMLElement;
     private createTeamContainer: HTMLElement;
-    private mangeTeamsContainer: HTMLElement;
 
 
 
@@ -61,13 +59,11 @@ export class ScrumView extends View {
         this.notesContainer             = document.getElementById( "scrum-notes-container" );
         this.welcomeScreenContainer     = document.getElementById( "scrum-welcome-screen-container" );
         this.createTeamContainer        = document.getElementById( "scrum-create-team-container" );
-        this.mangeTeamsContainer        = document.getElementById( "scrum-manage-teams-container" );
 
         this.teams                      = new ScrumTeams( this, this.teamsContainer );
         this.notes                      = new ScrumNotes( this, this.notesContainer );
         this.welcomeScreen              = new ScrumWelcomeScreen( this, this.welcomeScreenContainer );
         this.createTeam                 = new ScrumCreateTeam( this, this.createTeamContainer );
-        this.manageTeams                = new ScrumManageTeams( this, this.mangeTeamsContainer );
 
 
 
@@ -91,7 +87,6 @@ export class ScrumView extends View {
         this.notes.exitScene( exitType );
         this.welcomeScreen.exitScene( exitType );
         this.createTeam.exitScene( exitType );
-        this.manageTeams.exitScene( exitType );
     }
 
 
@@ -137,8 +132,8 @@ export class ScrumView extends View {
                 break;
 
             case ScrumSignals.TEAM_SETTINGS :
-
-                this.manageTeams.enterScene( ViewEnterTypes.REVEAL_COMPONENT );
+                
+                this.sendNotification( ViewNotifications.SWITCH_TO_MANAGE_TEAMS_VIEW );
 
                 break;
 
