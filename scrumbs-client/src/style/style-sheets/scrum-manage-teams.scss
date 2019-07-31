@@ -12,16 +12,18 @@
     border-radius: 15px;
     border: 2px solid $denary-color;
     background-size: 10px;
+    transition: border-color 0.3s ease-in-out;
 
+    &:hover {
+        border: 2px solid $accent-color;
+    }
 }
 
 #manage-teams-container {
-
     background-color: $tertiary-color;
     height: 100%;
 
     .manage-teams-header {
-
         height: 100px;
         border-bottom: 1px solid $denary-color;
         position: relative;
@@ -59,7 +61,6 @@
                 }
             }
         }
-
     }
 
     .manage-teams-body {
@@ -102,20 +103,24 @@
         }
     }
 
-
     .manage-teams-settings-container {
         width: calc( 100% - 290px );
         float: left;
-        height: 90%;
+        height: 100%;
         padding: 25px;
 
         .manage-teams-settings-header {
             overflow: hidden;
+
+            p {
+                font-size: 16px;
+                font-weight: bold;
+                display: inline-block;
+            }
         }
 
         .scrum-master-list-container {
-            width: calc(100% - 145px);
-            float: left;
+            width: 100%;
             vertical-align: middle;
             padding: 10px 0;
 
@@ -170,17 +175,21 @@
             cursor: pointer;
             float: right;
             vertical-align: middle;
-            margin: 23px 0 0 35px;
+            display: inline-block;
             color: #D00262;
             background-color: transparent;
             width: 110px;
             font-size: 14px;
             text-align: right;
             padding: 0;
+            transition: text-decoration 0.3s ease-in-out;
+
+            &:hover {
+                text-decoration: underline;
+            }
         }
 
         .manage-teams-input-edit-team-name {
-
             display: inline-block;
             width: 100%;
             border-radius: 3px;
@@ -192,7 +201,6 @@
             margin-bottom: 25px;
 
             &:focus, &:hover { border: 2px solid $accent-color; }
-
         }
 
         .manage-teams-settings-body {
@@ -217,11 +225,10 @@
             #manage-teams-add-member-button {
                 float: right;
             }
-            
         }
 
         .manage-teams-settings-member-list-body {
-            height: 90%;
+            height: 74%;
             overflow: scroll;
 
             .team-members-list-container {
@@ -234,10 +241,9 @@
                 }
 
                 .team-members-list-item {
-
                     padding: 15px 15px 15px 40px;
                     border-radius: 3px;
-                    background: url("../../style/img/icons/icon-member.svg") no-repeat left 15px center;
+                    background: url("../../style/img/icons/icon-member.svg") no-repeat left 15px top 18px;
                     border: 1px solid $denary-color;
                     color: $text-primary-color;
                     font-size: 16px;
@@ -245,13 +251,20 @@
                     position: relative;
                     background-size: 16px;
                     margin-bottom: 5px;
+                    transition: border-color 0.3s ease-in-out;
 
                     &:not( :last-child ) { margin-bottom: 5px; }
 
                     .remove-member-btn {
-                        float: right;
+                        position: absolute;
+                        right: 15px;
+                        top: 50%;
+                        transform: translateY(-50%);
                     }
 
+                    &:hover {
+                        border: 1px solid $text-primary-color;
+                    }
                 }
 
                 input {
@@ -275,7 +288,20 @@
 
 }
 
-    
 
+@media screen and ( max-width: 820px )  {
 
+    #manage-teams-container {
+
+        .manage-teams-list-container {
+            width: 250px;
+        }
+
+        .manage-teams-settings-container {
+            width: calc( 100% - 250px);
+        }
+
+    }
+
+}
 

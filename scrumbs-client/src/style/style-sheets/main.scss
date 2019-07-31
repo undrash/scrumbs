@@ -360,7 +360,7 @@ input, textarea {
     border-radius: 3px;
     transition: border 0.2s linear;
 
-    &:hover { border: 1px solid $quinary-color; }
+    &:hover { border: 1px solid $accent-color; }
 
     p {
       @include center();
