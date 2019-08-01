@@ -90,7 +90,7 @@
         }
 
         .teams-list-container {
-            height: 91%;
+            height: 70vh;
             width: 100%;
         }
 
@@ -239,7 +239,9 @@
 
             .team-members-list-container {
 
-                height: calc( 100% - 75px );
+                //height: calc( 100% - 75px );
+                height: calc( 100vh - 540px );
+
 
                 ul {
                     height: 100%;
