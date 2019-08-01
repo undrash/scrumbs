@@ -45,6 +45,9 @@ export class ManageTeams extends ViewComponent {
 
     private loadedTeamId: string;
 
+    private nameInputTimer: any;
+
+
     constructor(view: View, container: HTMLElement) {
         super( view, container, "ManageTeams" );
 
@@ -72,6 +75,7 @@ export class ManageTeams extends ViewComponent {
         this.createTeamHandler      = this.createTeamHandler.bind( this );
         this.deleteTeamHandler      = this.deleteTeamHandler.bind( this );
         this.removeMember           = this.removeMember.bind( this );
+        this.nameInputHandler       = this.nameInputHandler.bind( this );
 
         this.enterScene();
     }
@@ -81,6 +85,7 @@ export class ManageTeams extends ViewComponent {
     private registerEventListeners(): void {
         this.createTeamBtn.addEventListener( "click", this.createTeamHandler );
         this.deleteTeamBtn.addEventListener( "click", this.deleteTeamHandler );
+        this.teamNameInput.addEventListener( "keyup", this.nameInputHandler );
     }
 
 
@@ -88,6 +93,38 @@ export class ManageTeams extends ViewComponent {
     private unregisterEventListeners(): void {
         this.createTeamBtn.removeEventListener( "click", this.createTeamHandler );
         this.deleteTeamBtn.removeEventListener( "click", this.deleteTeamHandler );
+        this.teamNameInput.removeEventListener( "keyup", this.nameInputHandler );
+    }
+
+
+
+    private nameInputHandler(): void {
+
+        if ( this.nameInputTimer ) clearTimeout( this.nameInputTimer );
+
+        if ( ! this.teamNameInput.value ) {
+            return this.snackbar.show( SnackBarType.ERROR, "Please provide a name for the team!" );
+        }
+
+        const teamUpdate = new UpdateTeamModel(
+            this.loadedTeamId,
+            this.teamNameInput.value,
+            null
+        );
+
+        this.nameInputTimer = setTimeout( () => {
+
+            this.connection.updateTeam(
+                teamUpdate,
+                (response: any) => {
+                    document.getElementById( teamUpdate.id ).innerText = teamUpdate.name;
+
+                    console.log( response );
+                },
+                (err: Error) => console.error( err )
+            );
+
+        }, 250 );
     }
 
 
