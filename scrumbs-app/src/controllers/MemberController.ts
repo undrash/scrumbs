@@ -115,7 +115,7 @@ class MemberController {
 
 
 
-    public removeMemberFromTeam(req: Request, res: Response, next: NextFunction) {
+    public removeMemberFromTeam = async (req: Request, res: Response, next: NextFunction) => {
         const { member, team } = req.body;
 
         if ( ! member ) {
@@ -128,12 +128,15 @@ class MemberController {
             return;
         }
 
+        await Note.deleteMany( { member, team } )
+            .catch( next );
+
         Member.findByIdAndUpdate( member,
             { $pull: { teams: team } },
             { "new": true } )
             .then( member => res.status( 200 ).json( { success: true, member } ) )
             .catch( next );
-    }
+    };
 
 
 

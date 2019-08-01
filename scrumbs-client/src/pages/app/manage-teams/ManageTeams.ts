@@ -1,9 +1,13 @@
 
+import {AddRemoveMemberModel} from "../../../connection/models/AddRemoveMemberModel";
 import {CreateMemberModel} from "../../../connection/models/CreateMemberModel";
 import {UpdateTeamModel} from "../../../connection/models/UpdateTeamModel";
+import {ConfirmationModal} from "../../../common/ConfirmationModal";
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
+import {SnackBarType} from "../../../common/SnackBarType";
+import {ModalTypes} from "../../../common/ModalTypes";
 import {ManageTeamSignals} from "./ManageTeamSignals";
 import {View} from "../../../core/View";
 
@@ -38,14 +42,11 @@ export class ManageTeams extends ViewComponent {
 
     private createTeamBtn: HTMLElement;
 
-    private localPrefix: string;
 
     private loadedTeamId: string;
 
     constructor(view: View, container: HTMLElement) {
         super( view, container, "ManageTeams" );
-
-        this.localPrefix            = "manage-teams-";
 
         this.container.innerHTML    = template;
 
@@ -68,8 +69,8 @@ export class ManageTeams extends ViewComponent {
 
         this.createTeamBtn          = document.getElementById( "manage-teams-add-new-team-btn" );
 
-
         this.createTeamHandler      = this.createTeamHandler.bind( this );
+        this.removeMember           = this.removeMember.bind( this );
 
         this.enterScene();
     }
@@ -122,7 +123,7 @@ export class ManageTeams extends ViewComponent {
         console.info( "addteam called ", teamData );
 
         let team        = document.createElement( "div" );
-        team.id         = `${ this.localPrefix }${ teamData._id }`;
+        team.id         = teamData._id;
         team.className  = "teams-list-item";
         team.innerText  = teamData.name;
 
@@ -146,7 +147,7 @@ export class ManageTeams extends ViewComponent {
 
         team.classList.add( "active" );
 
-        // this.loadTeamData( team.id );
+        this.loadTeamData( team.id );
     }
 
 
@@ -174,7 +175,7 @@ export class ManageTeams extends ViewComponent {
     private addMember(memberData: any): void {
         let member          = document.createElement( "div" );
         member.innerText    = memberData.name;
-        member.id           = `${ this.localPrefix }${ memberData._id }`;
+        member.id           = memberData._id;
         member.className    = "team-members-list-item";
 
         let removeBtn        = document.createElement( "div" );
@@ -183,6 +184,38 @@ export class ManageTeams extends ViewComponent {
         member.appendChild( removeBtn );
 
         this.memberContainer.insertBefore( member, this.memberContainer.firstChild );
+
+        removeBtn.addEventListener( "click", () => this.removeMember( member ) );
+    }
+
+
+
+    private removeMember(member: HTMLElement): void {
+
+        const removeMemberData = new AddRemoveMemberModel( member.id, this.loadedTeamId );
+
+        new ConfirmationModal(
+            ModalTypes.DELETE,
+            "Yes, Remove Member",
+            "Cancel, Keep Member",
+            "Remove member",
+            [
+                `Are you sure you want to remove <strong>${ member.innerText }</strong> from the team <strong>${ this.teamNameInput.value }</strong>?`,
+                "<br> All their notes and impediments will be deleted, and the operation cannot be undone."
+            ]
+        )
+            .onSubmit( () => {
+
+                this.connection.removeMemberFromTeam(
+                    removeMemberData,
+                    () => {
+                        member.parentNode.removeChild( member );
+                        this.snackbar.show( SnackBarType.SUCCESS, `Removed member <strong>${ member.innerText }</strong>` );
+                    },
+                    (err: string) => console.error( err )
+                );
+            })
+            .onDismiss( () => console.info( "Modal dismissed." ) );
     }
 
 
@@ -190,7 +223,6 @@ export class ManageTeams extends ViewComponent {
     private loadTeamData(id?: string): void {
 
         let team: Element;
-        let teamId: string;
 
         if ( ! id ) {
             /** If there is no id specified, we default to the first team in the list */
@@ -204,30 +236,14 @@ export class ManageTeams extends ViewComponent {
         /** If there is no valid team, we return */
         if ( ! team ) return;
 
-        /** Parse the real id, without the local prefix */
-        teamId = team.id.replace( this.localPrefix, "" );
-
         /** We save the currently loaded team Id (will be used for further operations, e.g. updating the team on save) */
-        this.loadedTeamId = teamId;
+        this.loadedTeamId = team.id;
 
         /** Set the input value as the name of the team selected */
         this.teamNameInput.value = team.innerHTML;
 
-        /** Remove the active member mark from the previous team */
-        this.clearActiveMembers();
 
-
-        this.populateMembers( teamId );
-    }
-
-
-
-    private clearActiveMembers(): void {
-        const members = this.memberContainer.children;
-
-        for ( let i = 0; i < members.length; i++ ) {
-            members[i].classList.remove( "active" );
-        }
+        this.populateMembers( this.loadedTeamId );
     }
 
 
@@ -238,7 +254,7 @@ export class ManageTeams extends ViewComponent {
 
         for ( let i = 0; i < members.length; i++ ) {
             if ( members[i].classList.contains( "active" ) ) {
-                memberIds.push( members[i].id.replace( this.localPrefix, "" ) );
+                memberIds.push( members[i].id );
             }
         }
 

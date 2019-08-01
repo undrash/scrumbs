@@ -1,4 +1,5 @@
 
+import {AddRemoveMemberModel} from "../../../connection/models/AddRemoveMemberModel";
 import {CreateNoteModel} from "../../../connection/models/CreateNoteModel";
 import {EditMemberModel} from "../../../connection/models/EditMemberModel";
 import {EditNoteModel} from "../../../connection/models/EditNoteModel";
@@ -233,25 +234,27 @@ export class ScrumNotes extends ViewComponent {
 
     private removeMemberListener(): void {
 
-        const memberName    = this.memberName.innerText;
-        const memberId      = this.memberId;
+        const memberName        = this.memberName.innerText;
+        const memberTeamName    = document.getElementById( `${ this.memberTeamId }@name` ).innerText;
+
+        const removeMemberData  = new AddRemoveMemberModel( this.memberId, this.memberTeamId );
 
         new ConfirmationModal(
             ModalTypes.DELETE,
-            "Yes, Delete Member",
+            "Yes, Remove Member",
             "Cancel, Keep Member",
-            "Delete member",
+            "Remove member",
             [
-                `Are you sure you want to delete <strong>${ memberName }</strong>?`,
-                "All the notes and impediments will be deleted, and the operation cannot be undone."
+                `Are you sure you want to remove <strong>${ memberName }</strong> from <strong>${ memberTeamName }</strong>?`,
+                "<br> All their notes and impediments will be deleted, and the operation cannot be undone."
             ]
         )
             .onSubmit( () => {
 
-                this.connection.deleteMember(
-                    this.memberId,
+                this.connection.removeMemberFromTeam(
+                    removeMemberData,
                     () => {
-                        this.sendSignal( ScrumSignals.MEMBER_DELETED, memberId );
+                        this.sendSignal( ScrumSignals.MEMBER_DELETED, this.memberId );
                         this.snackbar.show( SnackBarType.SUCCESS, `Deleted member <strong>${ memberName }</strong>` );
                     },
                     (err: string) => console.error( err )

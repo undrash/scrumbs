@@ -241,7 +241,7 @@ export class ConnectionProxy extends Proxy {
 
         this.httpRequest(
             HTTPMethods.PUT,
-            "api/v1/members/remove",
+            "/api/v1/members/remove",
             data,
             success,
             failure
