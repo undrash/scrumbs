@@ -3,7 +3,7 @@ import {CreateTeamModel} from "../../../connection/models/CreateTeamModel";
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
-import {ScrumSignals} from "./ScrumSignals";
+import {CreateTeamSignals} from "./CreateTeamSignals";
 import {View} from "../../../core/View";
 
 
@@ -15,8 +15,7 @@ import Back = gsap.Back;
 declare const SimpleBar: any;
 
 // CSS
-import "../../../style/style-sheets/scrum-create-team.scss";
-import {CreateMemberModel} from "../../../connection/models/CreateMemberModel";
+import "../../../style/style-sheets/create-team.scss";
 
 
 // HTML
@@ -27,7 +26,7 @@ const template = require( "../../../templates/scrum-create-team.html" );
 
 
 
-export class ScrumCreateTeam extends ViewComponent {
+export class CreateTeam extends ViewComponent {
     private saveBtn: HTMLButtonElement;
     private exitBtn: HTMLSpanElement;
     private teamNameInput: HTMLInputElement;
@@ -46,7 +45,7 @@ export class ScrumCreateTeam extends ViewComponent {
 
 
     constructor(view: View, container: HTMLElement) {
-        super( view, container, "ScrumCreateTeam" );
+        super( view, container, "CreateTeam" );
 
         this.container.innerHTML = template;
 
@@ -97,7 +96,7 @@ export class ScrumCreateTeam extends ViewComponent {
 
 
     private exitBtnHandler() {
-        this.exitScene( ViewExitTypes.HIDE_COMPONENT );
+        this.sendSignal( CreateTeamSignals.EXIT );
     }
 
 
@@ -113,8 +112,8 @@ export class ScrumCreateTeam extends ViewComponent {
             createTeamModel,
             (response: any) => {
                 console.log( response );
-                this.sendSignal( ScrumSignals.TEAM_CREATED, response.team );
-                this.exitScene( ViewExitTypes.HIDE_COMPONENT );
+
+                this.sendSignal( CreateTeamSignals.EXIT );
             },
             (err: string) => console.error( err )
         );
@@ -159,15 +158,6 @@ export class ScrumCreateTeam extends ViewComponent {
         this.searchMembers.value = null;
         this.clearSearch.style.display = "none";
         this.populate();
-    }
-
-
-
-    private resetView(): void {
-        this.teamNameInput.value            = '';
-        this.memberContainer.innerHTML      = '';
-        this.searchMembers.value            = '';
-        this.teamNameError.style.display    = "none";
     }
 
 
@@ -279,21 +269,8 @@ export class ScrumCreateTeam extends ViewComponent {
     public enterScene(enterType?: string): void {
         console.info( "Enter being called in scrum create team view component" );
 
-        switch ( enterType ) {
-
-            case ViewEnterTypes.REVEAL_COMPONENT :
-
-                this.container.style.display = "block";
-                this.populate();
-
-                break;
-
-
-            default :
-                this.registerEventListeners();
-                break;
-        }
-
+        this.registerEventListeners();
+        this.populate();
     }
 
 
@@ -301,22 +278,9 @@ export class ScrumCreateTeam extends ViewComponent {
     public exitScene(exitType?: string): void {
         console.info( "Exit being called in scrum create team view component" );
 
-        this.selectedMembers = [];
-
-        switch ( exitType ) {
-
-            case ViewExitTypes.HIDE_COMPONENT :
-
-                this.container.style.display = "none";
-                this.resetView();
-
-                break;
-
-            default :
-                super.exitScene( exitType );
-                this.unregisterEventListeners();
-                this.view.componentExited( this.name );
-                break;
-        }
+        super.exitScene( exitType );
+        this.unregisterEventListeners();
+        this.view.componentExited( this.name );
     }
+
 }

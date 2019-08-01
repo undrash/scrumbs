@@ -4,7 +4,9 @@ import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {INotification} from "../../../core/INotification";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
+import {ViewNotifications} from "../ViewNotifications";
 import {ManageTeamsHeader} from "./ManageTeamsHeader";
+import {ManageTeamSignals} from "./ManageTeamSignals";
 import {ISignal} from "../../../core/ISignal";
 import {ManageMembers} from "./ManageMembers";
 import {ManageTeams} from "./ManageTeams";
@@ -13,8 +15,6 @@ import {View} from "../../../core/View";
 
 // CSS
 import "../../../style/style-sheets/manage-teams-view.scss";
-import {ManageTeamSignals} from "./ManageTeamSignals";
-import {ViewNotifications} from "../ViewNotifications";
 
 
 // HTML

@@ -8,7 +8,6 @@ import {ViewComponent} from "../../../core/ViewComponent";
 import {ScrumWelcomeScreen} from "./ScrumWelcomeScreen";
 import {ScrumNotifications} from "./ScrumNotifications";
 import {ViewNotifications} from "../ViewNotifications";
-import {ScrumCreateTeam} from "./ScrumCreateTeam";
 import {ISignal} from "../../../core/ISignal";
 import {ScrumSignals} from "./ScrumSignals";
 import {ScrumTeams} from "./ScrumTeams";
@@ -33,12 +32,10 @@ export class ScrumView extends View {
     private teams: ViewComponent;
     private notes: ViewComponent;
     private welcomeScreen: ViewComponent;
-    private createTeam: ViewComponent;
 
     private teamsContainer: HTMLElement;
     private notesContainer: HTMLElement;
     private welcomeScreenContainer: HTMLElement;
-    private createTeamContainer: HTMLElement;
 
 
 
@@ -57,12 +54,10 @@ export class ScrumView extends View {
         this.teamsContainer             = document.getElementById( "scrum-teams-container" );
         this.notesContainer             = document.getElementById( "scrum-notes-container" );
         this.welcomeScreenContainer     = document.getElementById( "scrum-welcome-screen-container" );
-        this.createTeamContainer        = document.getElementById( "scrum-create-team-container" );
 
         this.teams                      = new ScrumTeams( this, this.teamsContainer );
         this.notes                      = new ScrumNotes( this, this.notesContainer );
         this.welcomeScreen              = new ScrumWelcomeScreen( this, this.welcomeScreenContainer );
-        this.createTeam                 = new ScrumCreateTeam( this, this.createTeamContainer );
 
 
 
@@ -85,7 +80,6 @@ export class ScrumView extends View {
         this.teams.exitScene( exitType );
         this.notes.exitScene( exitType );
         this.welcomeScreen.exitScene( exitType );
-        this.createTeam.exitScene( exitType );
     }
 
 
@@ -126,7 +120,7 @@ export class ScrumView extends View {
 
             case ScrumSignals.CREATE_TEAM :
 
-                this.createTeam.enterScene( ViewEnterTypes.REVEAL_COMPONENT );
+                this.sendNotification( ViewNotifications.SWITCH_TO_CREATE_TEAM_VIEW );
 
                 break;
 
@@ -149,7 +143,6 @@ export class ScrumView extends View {
                 ( this.welcomeScreen as ScrumWelcomeScreen ).exitScene( ViewExitTypes.SWITCH_COMPONENT );
 
                 break;
-
 
             case ScrumSignals.MEMBER_NOTES_LOADED :
                 this.sendNotification( ViewNotifications.INIT_ONBOARDING_MEMBER_EDIT_FLOW );

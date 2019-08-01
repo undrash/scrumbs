@@ -2,13 +2,13 @@
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
+import {ManageTeamSignals} from "./ManageTeamSignals";
 import {View} from "../../../core/View";
 
 
 import TweenLite = gsap.TweenLite;
 import Power0 = gsap.Power0;
 import Back = gsap.Back;
-import {ManageTeamSignals} from "./ManageTeamSignals";
 
 
 

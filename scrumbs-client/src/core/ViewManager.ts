@@ -14,10 +14,13 @@ import "../style/style-sheets/main.scss";
 export class ViewManager extends CoreEntity {
 
     protected currentView: View;
+    protected currentViewCtor: any;
+    protected previousViewCtor: any;
 
     protected onboarding: Onboarding;
 
     protected connection: ConnectionProxy;
+
 
 
     constructor() {
@@ -40,16 +43,23 @@ export class ViewManager extends CoreEntity {
 
 
     protected initView(view: any): void {
-        this.currentView = new view();
+        this.currentView        = new view();
+        this.currentViewCtor    = view;
     }
 
 
 
     protected switchView(view: any, exitType?: string, callback?: Function): void {
 
+        if ( ! view ) return console.error( "Invalid view provided, cannot perform switch." );
+
         this.onboarding.clearGuides();
 
         if ( ! exitType ) exitType = ViewExitTypes.DEFAULT;
+
+        this.previousViewCtor = this.currentViewCtor;
+
+        this.currentViewCtor = view;
 
         this.currentView.exitScene( exitType, () => {
 
