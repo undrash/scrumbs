@@ -230,21 +230,39 @@ input, textarea {
 
 }
 
-.find-members-search-input {
-    border-bottom: 1px solid $denary-color;
-    padding: 10px 40px;
-    background: url("../../style/img/icons/search-icon.svg") no-repeat left 15px center;
-    transition: border-bottom-color 0.3s ease-in-out;
+.find-members-search-input-container {
+    position: relative;
 
-    &:hover {
-        border-bottom: 1px solid $accent-color;
+    .find-members-search-input {
+        border-bottom: 1px solid $denary-color;
+        padding: 10px 35px;
+        background: url("../../style/img/icons/search-icon.svg") no-repeat left center;
+        font-size: 16px;
+        transition: border-bottom-color 0.3s ease-in-out;
+        background-size: 23px;
+
+        &:hover {
+            border-bottom: 1px solid $accent-color;
+        }
+
+        &:focus {
+            border-bottom: 1px solid $accent-color;
+
+        }
     }
 
-    &:focus {
-        border-bottom: 1px solid $accent-color;
-
+    .clear-search {
+        position: absolute;
+        right: 5px;
+        width: 13px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
     }
+
 }
+
+
 
 
 .bold-input {
@@ -627,6 +645,26 @@ input, textarea {
         border: 1px solid $text-primary-color;
     }
 }
+
+/** ==================================== Empty state ==================================== */
+
+
+//NO MEMBER FOUND
+
+.member-search-empty {
+    text-align: center;
+    display: none;
+
+    img {
+        margin-bottom: 15px;
+    }
+
+    p {
+        max-width: 250px;
+        margin: 0 auto 15px;
+    }
+}
+
 
 
 
