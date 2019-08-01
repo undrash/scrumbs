@@ -24,6 +24,11 @@
 
 .underline, a.underline { text-decoration: underline; }
 
+.error-message {
+    font-size: 14px;
+    color: $senary-color;
+}
+
 .noselect {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -253,7 +258,7 @@ input, textarea {
     line-height: 70px;
     transition: border 0.3s ease-in-out;
 
-    &:hover, &:active {
+    &:hover, &:focus {
         border: 2px solid $accent-color;
     }
 }
@@ -359,6 +364,7 @@ input, textarea {
     background: -webkit-linear-gradient( left, $primary-color 0%, $secondary-color 100% );
     background: linear-gradient( to right,     $primary-color 0%, $secondary-color 100% );
     transition: all 0.2s ease-in-out;
+    cursor: pointer;
 
 
     &:hover {
@@ -614,6 +620,10 @@ input, textarea {
     }
 
     &:hover {
+        border: 1px solid $text-primary-color;
+    }
+
+    &.active {
         border: 1px solid $text-primary-color;
     }
 }
