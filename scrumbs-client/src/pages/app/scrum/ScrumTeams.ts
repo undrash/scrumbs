@@ -120,8 +120,8 @@ export class ScrumTeams extends ViewComponent {
 
                 console.log( "Selected member: ", selectedMember );
 
-                /** If we have recollection of a selected member, we load it */
-                if ( selectedMember ) {
+                /** If we have recollection of a selected member, and it still exists we load it */
+                if ( selectedMember && teams.indexOf( selectedMember ) !== -1 ) {
 
                     this.connection.getMembersOfTeam(
                         selectedMember.team,

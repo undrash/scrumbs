@@ -70,6 +70,7 @@ export class ManageTeams extends ViewComponent {
         this.createTeamBtn          = document.getElementById( "manage-teams-add-new-team-btn" );
 
         this.createTeamHandler      = this.createTeamHandler.bind( this );
+        this.deleteTeamHandler      = this.deleteTeamHandler.bind( this );
         this.removeMember           = this.removeMember.bind( this );
 
         this.enterScene();
@@ -79,12 +80,54 @@ export class ManageTeams extends ViewComponent {
 
     private registerEventListeners(): void {
         this.createTeamBtn.addEventListener( "click", this.createTeamHandler );
+        this.deleteTeamBtn.addEventListener( "click", this.deleteTeamHandler );
     }
 
 
 
     private unregisterEventListeners(): void {
         this.createTeamBtn.removeEventListener( "click", this.createTeamHandler );
+        this.deleteTeamBtn.removeEventListener( "click", this.deleteTeamHandler );
+    }
+
+
+
+    private deleteTeamHandler(): void {
+
+        const teamName = this.teamNameInput.value;
+
+        new ConfirmationModal(
+            ModalTypes.DELETE,
+            "Yes, Delete team",
+            "Cancel",
+            "Deleting team",
+            [
+                `Are you sure you want to DELETE the team <strong>${ teamName }</strong>?`,
+                "<br> All the members within the team will be deleted, and all their notes and impediments will be lost forever. This operation cannot be undone!"
+            ]
+        )
+            .onSubmit( () => {
+
+                this.connection.deleteTeam(
+                    this.loadedTeamId,
+                    () => {
+                        this.deletedTeam( this.loadedTeamId );
+                        this.snackbar.show( SnackBarType.SUCCESS, `Deleted team <strong>${ teamName }</strong>` );
+                    },
+                    (err: string) => console.error( err )
+                );
+            })
+            .onDismiss( () => console.info( "Modal dismissed." ) );
+    }
+
+
+
+    private deletedTeam(teamId: string): void {
+
+        const team = document.getElementById( teamId );
+        team.parentNode.removeChild( team );
+
+        this.loadTeamData();
     }
 
 

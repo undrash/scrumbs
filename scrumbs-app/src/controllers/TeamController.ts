@@ -4,6 +4,7 @@ import { Router, Request, Response, NextFunction } from "express";
 import RequireAuthentication from "../middlewares/RequireAuthentication";
 import Member from "../models/Member";
 import Team from "../models/Team";
+import Note from "../models/Note";
 
 
 
@@ -25,6 +26,7 @@ class TeamController {
         this.router.get( '/', RequireAuthentication, this.getTeams );
         this.router.post( '/', RequireAuthentication, this.createTeam );
         this.router.put( '/', RequireAuthentication, this.updateTeam );
+        this.router.delete( "/:id", RequireAuthentication, this.deleteTeam );
     }
 
 
@@ -106,6 +108,31 @@ class TeamController {
 
         Member.find( { _id: { $in: addedMembers } } )
             .then( added => res.status( 200 ).json( { success: true, team, members: { added, removed: removedMembers } } ) )
+            .catch( next );
+    };
+
+
+
+    public deleteTeam = async (req: Request, res: Response, next: NextFunction) => {
+        const id = req.params.id;
+
+        await Member.update(
+            { teams: id },
+            { $pull: { teams: id } },
+            { multi: true }
+        )
+            .catch( next );
+
+
+        await Note.deleteMany( { team: id } )
+            .catch( next );
+
+
+        Team.findByIdAndDelete( id )
+            .then( () => res.status( 200 ).json( {
+                success: true,
+                message: "Team deleted with all related members, notes, and impediments."
+            }))
             .catch( next );
     };
 

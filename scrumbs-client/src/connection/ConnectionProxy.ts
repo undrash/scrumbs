@@ -146,6 +146,19 @@ export class ConnectionProxy extends Proxy {
 
 
 
+    public deleteTeam(teamId: string, success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.DELETE,
+            `/api/v1/teams/${ teamId }`,
+            null,
+            success,
+            failure
+        );
+    }
+
+
+
     public getMembers(success: Function, failure: Function): void {
 
         this.httpRequest(
