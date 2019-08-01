@@ -64,11 +64,12 @@ export class CreateTeam extends ViewComponent {
         this.memberContainer        = this.mainMemberContainer.getElementsByClassName( "simplebar-content" )[0] as HTMLDivElement;
 
 
-        this.exitBtnHandler     = this.exitBtnHandler.bind( this );
-        this.saveBtnHandler     = this.saveBtnHandler.bind( this );
-        this.searchListener     = this.searchListener.bind( this );
-        this.searchForMembers   = this.searchForMembers.bind( this );
-        this.clearSearchHandler = this.clearSearchHandler.bind( this );
+        this.exitBtnHandler         = this.exitBtnHandler.bind( this );
+        this.saveBtnHandler         = this.saveBtnHandler.bind( this );
+        this.searchListener         = this.searchListener.bind( this );
+        this.searchForMembers       = this.searchForMembers.bind( this );
+        this.clearSearchHandler     = this.clearSearchHandler.bind( this );
+        this.documentKeyListener    = this.documentKeyListener.bind( this );
 
         this.selectedMembers    = [];
 
@@ -82,6 +83,7 @@ export class CreateTeam extends ViewComponent {
         this.saveBtn.addEventListener( "click", this.saveBtnHandler );
         this.searchMembers.addEventListener( "keyup", this.searchListener );
         this.clearSearch.addEventListener( "click", this.clearSearchHandler );
+        document.addEventListener( "keydown", this.documentKeyListener );
     }
 
 
@@ -91,6 +93,15 @@ export class CreateTeam extends ViewComponent {
         this.saveBtn.removeEventListener( "click", this.saveBtnHandler );
         this.searchMembers.removeEventListener( "keyup", this.searchListener );
         this.clearSearch.removeEventListener( "click", this.clearSearchHandler );
+        document.removeEventListener( "keydown", this.documentKeyListener );
+    }
+
+
+
+    private documentKeyListener(e: any): void {
+        const key = e.which || e.keyCode;
+
+        if ( key === 27 ) this.sendSignal( CreateTeamSignals.EXIT ); // ESCAPE
     }
 
 

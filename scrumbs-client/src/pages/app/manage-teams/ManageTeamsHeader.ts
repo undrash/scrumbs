@@ -33,7 +33,7 @@ export class ManageTeamsHeader extends ViewComponent {
         this.exitBtn                = document.getElementById( "manage-teams-exit-button" ) as HTMLSpanElement;
 
         this.exitBtnHandler         = this.exitBtnHandler.bind( this );
-
+        this.documentKeyListener    = this.documentKeyListener.bind( this );
 
         this.enterScene();
     }
@@ -42,17 +42,31 @@ export class ManageTeamsHeader extends ViewComponent {
 
     private registerEventListeners(): void {
         this.exitBtn.addEventListener( "click", this.exitBtnHandler );
+        document.addEventListener( "keydown", this.documentKeyListener );
     }
 
 
 
     private unregisterEventListeners(): void {
         this.exitBtn.removeEventListener( "click", this.exitBtnHandler );
+        document.removeEventListener( "keydown", this.documentKeyListener );
     }
+
+
+
+    private documentKeyListener(e: any): void {
+        const key = e.which || e.keyCode;
+
+        if ( key === 27 ) this.sendSignal( ManageTeamSignals.EXIT ); // ESCAPE
+    }
+
+
 
     private exitBtnHandler(e: any) {
         this.sendSignal( ManageTeamSignals.EXIT );
     }
+
+
 
     public enterScene(enterType?: string): void {
         console.info( "Enter being called in manage teams header" );
@@ -68,4 +82,5 @@ export class ManageTeamsHeader extends ViewComponent {
         this.unregisterEventListeners();
         this.view.componentExited( this.name );
     }
+
 }
