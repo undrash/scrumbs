@@ -4,6 +4,7 @@ import {UpdateTeamModel} from "../../../connection/models/UpdateTeamModel";
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
+import {ManageTeamSignals} from "./ManageTeamSignals";
 import {View} from "../../../core/View";
 
 import TweenLite = gsap.TweenLite;
@@ -65,9 +66,10 @@ export class ManageTeams extends ViewComponent {
 
         this.teamContainer          = this.mainTeamContainer.getElementsByClassName( "simplebar-content" )[0] as HTMLElement;
 
-        this.createTeamBtn          = document.getElementById( "manage-members-add-new-member-btn" );
+        this.createTeamBtn          = document.getElementById( "manage-teams-add-new-team-btn" );
 
 
+        this.createTeamHandler      = this.createTeamHandler.bind( this );
 
         this.enterScene();
     }
@@ -75,14 +77,19 @@ export class ManageTeams extends ViewComponent {
 
 
     private registerEventListeners(): void {
-
-
+        this.createTeamBtn.addEventListener( "click", this.createTeamHandler );
     }
 
 
 
     private unregisterEventListeners(): void {
+        this.createTeamBtn.removeEventListener( "click", this.createTeamHandler );
+    }
 
+
+
+    private createTeamHandler(): void {
+        this.sendSignal( ManageTeamSignals.CREATE_TEAM );
     }
 
 

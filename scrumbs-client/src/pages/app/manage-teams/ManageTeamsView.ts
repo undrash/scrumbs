@@ -110,6 +110,12 @@ export class ManageTeamsView extends View {
 
                 break;
 
+            case ManageTeamSignals.CREATE_TEAM :
+
+                this.sendNotification( ViewNotifications.SWITCH_TO_CREATE_TEAM_VIEW );
+
+                break;
+
             default:
                 break;
         }
