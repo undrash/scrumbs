@@ -19,7 +19,7 @@ import "../../../style/style-sheets/create-team.scss";
 
 
 // HTML
-const template = require( "../../../templates/scrum-create-team.html" );
+const template = require( "../../../templates/create-team.html" );
 
 
 
