@@ -1,4 +1,5 @@
 
+import {IAddMembersToTeamModel} from "./models/interfaces/IAddMembersToTeamModel";
 import {IAddRemoveMemberModel} from "./models/interfaces/IAddRemoveMemberModel";
 import {ICreateInquiryModel} from "./models/interfaces/ICreateInquiryModel";
 import {ICreateMemberModel} from "./models/interfaces/ICreateMemberModel";
@@ -138,6 +139,19 @@ export class ConnectionProxy extends Proxy {
         this.httpRequest(
             HTTPMethods.PUT,
             "/api/v1/teams",
+            data,
+            success,
+            failure
+        );
+    }
+
+
+
+    public addMembersToTeam(data: IAddMembersToTeamModel, success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.PUT,
+            "/api/v1/teams/members/add",
             data,
             success,
             failure

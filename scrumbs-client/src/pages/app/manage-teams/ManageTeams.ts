@@ -1,6 +1,6 @@
 
 import {AddRemoveMemberModel} from "../../../connection/models/AddRemoveMemberModel";
-import {CreateMemberModel} from "../../../connection/models/CreateMemberModel";
+import {AddMembersToTeamModel} from "../../../connection/AddMembersToTeamModel";
 import {UpdateTeamModel} from "../../../connection/models/UpdateTeamModel";
 import {ConfirmationModal} from "../../../common/ConfirmationModal";
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
@@ -9,6 +9,7 @@ import {ViewExitTypes} from "../../../core/ViewExitTypes";
 import {SnackBarType} from "../../../common/SnackBarType";
 import {ModalTypes} from "../../../common/ModalTypes";
 import {ManageTeamSignals} from "./ManageTeamSignals";
+import {AddMemberModal} from "./AddMemberModal";
 import {View} from "../../../core/View";
 
 import TweenLite = gsap.TweenLite;
@@ -29,7 +30,7 @@ const template = require( "../../../templates/manage-teams.html" );
 
 export class ManageTeams extends ViewComponent {
 
-
+    private avatar: HTMLElement;
     private teamNameInput: HTMLInputElement;
     private deleteTeamBtn: HTMLElement;
 
@@ -42,10 +43,12 @@ export class ManageTeams extends ViewComponent {
 
     private createTeamBtn: HTMLElement;
 
-
     private loadedTeamId: string;
 
     private nameInputTimer: any;
+
+    private addMemberModal: AddMemberModal;
+
 
 
     constructor(view: View, container: HTMLElement) {
@@ -53,7 +56,7 @@ export class ManageTeams extends ViewComponent {
 
         this.container.innerHTML    = template;
 
-
+        this.avatar                 = document.getElementById( "main-scrum-master-avatar" );
         this.teamNameInput          = document.getElementById( "manage-teams-input-edit-team-name" ) as HTMLInputElement;
         this.deleteTeamBtn          = document.getElementById( "manage-teams-delete-team-button" );
 
@@ -71,6 +74,8 @@ export class ManageTeams extends ViewComponent {
         this.teamContainer          = this.mainTeamContainer.getElementsByClassName( "simplebar-content" )[0] as HTMLElement;
 
         this.createTeamBtn          = document.getElementById( "manage-teams-add-new-team-btn" );
+
+        this.addMemberModal         = new AddMemberModal( this );
 
         this.createTeamHandler      = this.createTeamHandler.bind( this );
         this.deleteTeamHandler      = this.deleteTeamHandler.bind( this );
@@ -102,7 +107,8 @@ export class ManageTeams extends ViewComponent {
 
 
     private addMemberHandler(): void {
-        this.sendSignal( ManageTeamSignals.INIT_ADD_MEMBER_MODAL );
+        this.addMemberModal.enterScene();
+        this.sendSignal( ManageTeamSignals.MODAL_ACTIVE );
     }
 
 
@@ -337,59 +343,63 @@ export class ManageTeams extends ViewComponent {
 
 
 
-    private getActiveMemberIds(): string[] {
-        const members = this.memberContainer.children;
-        let memberIds  = [];
-
-        for ( let i = 0; i < members.length; i++ ) {
-            if ( members[i].classList.contains( "active" ) ) {
-                memberIds.push( members[i].id );
-            }
-        }
-
-        return memberIds;
-
+    public getCurrentlyLoadedTeamName(): string {
+        return document.getElementById( this.loadedTeamId ).innerText;
     }
 
 
 
-    private cancelBtnHandler(e: any) {
-        this.exitScene( ViewExitTypes.HIDE_COMPONENT );
+    public getCurrentMembersOfTeam(): string[] {
+        let members = [];
+
+        for ( let i = 0; i < this.memberContainer.children.length; i++ ) {
+            members.push( this.memberContainer.children[ i ].id );
+        }
+
+        return members;
     }
 
 
+    public addMembersToTeam(members: string[]): void {
 
-    private saveBtnHandler(e: any) {
-        const id        = this.loadedTeamId;
-        const name      = this.teamNameInput.value;
-        const members   = this.getActiveMemberIds();
+        const addMembersModel = new AddMembersToTeamModel( this.loadedTeamId, members );
 
-
-        if ( ! name ) {
-            console.error( "Team name is required when updating a team." );
-            return;
-        }
-
-        if ( ! id ) {
-            console.error( "Team id is required when updating a team." );
-            return;
-        }
-
-        const updateTeamModel = new UpdateTeamModel( id, name, members );
-
-        this.connection.updateTeam(
-            updateTeamModel,
+        this.connection.addMembersToTeam(
+            addMembersModel,
             (response: any) => {
-                // this.sendSignal( ScrumSignals.TEAM_UPDATED, response );
+
+                console.log( response );
+                const { members } = response;
+
+                for ( let member of members ) {
+                    this.addMember( member );
+                }
             },
-            (err: string) => console.error( err )
+            (err: Error) => console.error( err )
         );
+
     }
 
 
 
-    private addMemberBtnHandler(e: any) {
+    public addMemberModalExited(): void {
+        this.sendSignal( ManageTeamSignals.MODAL_INACTIVE );
+    }
 
+
+
+    public setAvatarInitials(): void {
+        const userData = this.connection.getVO();
+
+        const names = userData.name.split( " " );
+
+        let monogram = "";
+
+        for ( let name of names ) {
+            monogram += name[0];
+        }
+
+        this.avatar.innerText = monogram;
     }
 
 
@@ -398,9 +408,10 @@ export class ManageTeams extends ViewComponent {
         console.info( "Enter being called in scrum manage teams view component" );
         this.registerEventListeners();
 
+        this.setAvatarInitials();
+
         Promise.all([
             new Promise<void>( (resolve, reject) => this.populateTeams( resolve ) ),
-            // new Promise<void>( (resolve, reject) => this.populateMembers( resolve ) )
         ])
             .then( () => this.loadTeamData() )
             .catch( (err: string) => console.error( err ) );

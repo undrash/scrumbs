@@ -15,7 +15,7 @@ import {View} from "../../../core/View";
 
 // CSS
 import "../../../style/style-sheets/manage-teams-view.scss";
-import {AddMemberModal} from "./AddMemberModal";
+
 
 
 // HTML
@@ -36,8 +36,7 @@ export class ManageTeamsView extends View {
     private teams: ViewComponent;
     private members: ViewComponent;
 
-    private addMemberModal: AddMemberModal;
-
+    private isModalActive: boolean;
 
     constructor() {
         super( "ManageTeamsView" );
@@ -57,7 +56,7 @@ export class ManageTeamsView extends View {
         this.teams                  = new ManageTeams( this, this.teamsContainer );
         this.members                = new ManageMembers( this, this.membersContainer );
 
-        this.addMemberModal         = new AddMemberModal( this );
+
 
         this.enterScene();
     }
@@ -107,21 +106,27 @@ export class ManageTeamsView extends View {
 
         switch ( signal.name ) {
 
+            case ManageTeamSignals.MODAL_ACTIVE :
+
+                this.isModalActive = true;
+
+                break;
+
+            case ManageTeamSignals.MODAL_INACTIVE :
+
+                this.isModalActive = false;
+
+                break;
+
             case ManageTeamSignals.EXIT :
 
-                this.sendNotification( ViewNotifications.SWITCH_TO_SCRUM_VIEW );
+                if ( ! this.isModalActive ) this.sendNotification( ViewNotifications.SWITCH_TO_SCRUM_VIEW );
 
                 break;
 
             case ManageTeamSignals.CREATE_TEAM :
 
                 this.sendNotification( ViewNotifications.SWITCH_TO_CREATE_TEAM_VIEW );
-
-                break;
-
-            case ManageTeamSignals.INIT_ADD_MEMBER_MODAL :
-
-                this.addMemberModal.enterScene();
 
                 break;
 

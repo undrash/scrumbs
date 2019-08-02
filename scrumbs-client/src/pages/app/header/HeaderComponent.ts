@@ -262,8 +262,6 @@ export class HeaderComponent extends ViewComponent {
     public populate(): void {
         const userData = this.connection.getVO();
 
-        this.avatar.innerText = `Welcome ${ userData.name }`;
-
         const names = userData.name.split( " " );
 
         let monogram = "";

@@ -24,6 +24,7 @@ class TeamController {
 
     public routes() {
         this.router.get( '/', RequireAuthentication, this.getTeams );
+        this.router.put( "/members/add", RequireAuthentication, this.addMembers );
         this.router.post( '/', RequireAuthentication, this.createTeam );
         this.router.put( '/', RequireAuthentication, this.updateTeam );
         this.router.delete( "/:id", RequireAuthentication, this.deleteTeam );
@@ -40,6 +41,25 @@ class TeamController {
             })
             .catch( next );
     }
+
+
+
+    public addMembers = async (req: Request, res: Response, next: NextFunction) => {
+        const { id, members } = req.body;
+
+        await Member.updateMany({ _id: { $in: members } },
+            {  $addToSet: { teams: id } }
+            )
+            .catch( next );
+
+        Member.find({ _id: { $in: members } } )
+            .then( members => res.status( 200 ).json({
+                success: true,
+                message: "Members successfully added to the team",
+                members
+            }))
+            .catch( next );
+    };
 
 
 
@@ -60,9 +80,9 @@ class TeamController {
 
         await team.save();
 
-        Member.update(
+        Member.updateMany(
             { _id: { $in: members } },
-            {  $push: { teams: team._id } },
+            {  $addToSet: { teams: team._id } },
             { multi: true }
         )
             .then( members => res.status( 200 ).json( { success: true, team, members } ) )
@@ -92,12 +112,12 @@ class TeamController {
 
 
             await Promise.all([
-                Member.update(
+                Member.updateMany(
                     { _id: { $in: addedMembers } },
-                    {  $push: { teams: id } },
+                    {  $addToSet: { teams: id } },
                     { multi: true } ),
 
-                Member.update(
+                Member.updateMany(
                     { _id: { $in: removedMembers } },
                     {  $pull: { teams: id } },
                     { multi: true } )
@@ -116,7 +136,7 @@ class TeamController {
     public deleteTeam = async (req: Request, res: Response, next: NextFunction) => {
         const id = req.params.id;
 
-        await Member.update(
+        await Member.updateMany(
             { teams: id },
             { $pull: { teams: id } },
             { multi: true }

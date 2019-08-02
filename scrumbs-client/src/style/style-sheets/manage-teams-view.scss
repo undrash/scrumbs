@@ -445,16 +445,24 @@
     position: absolute;
     top: 0;
     z-index: 555;
+    opacity: 0;
+
+    .simplebar-track { right: 0; }
+
+    .simplebar-horizontal { display: none; }
+
+    .clear-search { display: none; }
 
     .modal-bg {
         max-width: 660px;
-        margin: 90px auto 0;
+        margin: 200px auto 0;
         padding: 40px 40px 50px;
         border-radius: 5px;
         box-shadow: 0 10px 40px 0 rgba(11,40,127,0.18);
         background-color: #ffffff;
         height: auto;
         position: relative;
+        opacity: 0;
     }
 
     .primary-text {
@@ -497,7 +505,6 @@
     .members-list-container {
         margin-top: 30px;
         height: 31vh;
-        overflow: scroll;
 
         .member-search-empty {
             display: block;
@@ -508,7 +515,6 @@
             top: 50%;
             transform: translateY(-50%);
             right: 15px;
-
         }
     }
 

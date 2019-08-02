@@ -258,7 +258,7 @@ export class CreateTeam extends ViewComponent {
                 this.populateMembers( members );
             },
             (err: string) => console.error( err )
-        )
+        );
     }
 
 
