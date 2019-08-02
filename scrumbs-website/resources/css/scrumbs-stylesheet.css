@@ -1083,6 +1083,38 @@ transition: all .2s ease-in-out;
 }
 
 
+/*Email sent feedback*/
+
+#email-sent-feedback-success {
+    height: calc(100vh - 230px);
+    padding: 0 30px;
+    display: none;
+}
+
+.email-sent-feedback-success {
+    max-width: 645px;
+    margin: auto;
+    text-align: center;
+    padding-top: 10vh;
+
+}
+
+#email-sent-feedback-error {
+    height: calc(100vh - 230px);
+    padding: 0 30px;
+    display: none;
+}
+
+.email-sent-feedback-error {
+    max-width: 645px;
+    margin: auto;
+    text-align: center;
+    padding-top: 10vh;
+
+
+}
+
+
 
 
 
