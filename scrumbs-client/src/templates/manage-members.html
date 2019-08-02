@@ -5,156 +5,276 @@
 
     <div class="manage-members-setting-header">
 
-        <input class="find-members-search-input" placeholder="Find members">
+        <div class="find-members-search-input-container">
+
+            <input class="find-members-search-input" placeholder="Find members">
+
+            <img class="clear-search" src="../style/img/icons/icon-close-simple-dark.svg">
+
+        </div>
+
+        <!--<div class="manage-members-filter-container">-->
 
         <div id="manage-members-filter-btn" class="filter-btn">All members</div>
 
+
+        <div class="options-list-bg">
+
+            <div class="options-list-btn">All members</div>
+
+            <div class="options-list-btn">Uncategorized</div>
+
+            <div class="options-list-btn">Scrum team</div>
+
+            <div class="options-list-btn">Front End Development</div>
+
+            <div class="options-list-btn">Front End Development</div>
+
+            <div class="options-list-btn">Front End Development</div>
+
+            <div class="options-list-btn">Front End Development</div>
+
+            <div class="options-list-btn">Front End Development</div>
+
+            <div class="options-list-btn">Front End Development</div>
+
+        </div>
+
+
+
+        <!--</div>-->
+
+
     </div>
 
-    <ul id="manage-members-members-list-container" class="manage-members-members-list-container">
+    <div id="manage-members-members-list-container" class="manage-members-members-list-container">
 
-        <li class="manage-members-members-list-item">
+        <div class="member-search-empty">
 
-            <p class="member-list-item">Stephen Hodges</p>
+            <img src="../style/img/no-member-result.svg">
 
-            <p class="member-category">Uncategorised</p>
+            <p class="empty-state-label">No member found</p>
 
-            <div class="options-btn"></div>
+            <p>Try again with a different name, or make sure you have members created.</p>
 
-        </li>
+        </div>
 
-        <li class="manage-members-members-list-item">
+        <div class="manage-members-members-list-item">
 
-            <p class="member-list-item">Stephen Hodges</p>
+            <div class="manage-members-members-list-item-container">
 
-            <p class="member-category">Uncategorised</p>
+                <p class="member-list-item">Stephen Hodges</p>
 
-            <div class="options-btn"></div>
+                <p class="member-category">Uncategorised</p>
 
-        </li>
+                <div class="options-btn"></div>
 
-        <li class="manage-members-members-list-item">
+            </div>
 
-            <p class="member-list-item">Stephen Hodges</p>
+        </div>
 
-            <p class="member-category">Scrum team </p>
+        <div class="manage-members-members-list-item">
 
-            <p class="member-category">Front End Development</p>
+            <!--<div class="manage-members-members-list-item-container">-->
 
-            <p class="member-category">Uncategorised</p>
+                <!--<p class="member-list-item">Stephen Hodges</p>-->
 
-            <p class="member-category">Uncategorised</p>
+                <!--<p class="member-category">Uncategorised</p>-->
 
+                <!--<p class="member-category">Uncategorised</p>-->
 
-            <div class="options-btn"></div>
+                <!--<p class="member-category">Uncategorised</p>-->
 
-        </li>
+                <!--<p class="member-category">Uncategorised</p>-->
 
-        <li class="manage-members-members-list-item">
 
-            <p class="member-list-item">Stephen Hodges</p>
+                <!--<div class="options-btn"></div>-->
 
-            <p class="member-category">Uncategorised</p>
+            <!--</div>-->
 
-            <div class="options-btn"></div>
+            <div class="manage-members-members-list-item-edit-container">
 
-        </li>
+                <input class="edit-member-input" value="Stephen Hodges" type="text">
 
-        <li class="manage-members-members-list-item">
+                <div class="btn-wrapper">
 
-            <p class="member-list-item">Stephen Hodges</p>
+                    <div class="tertiary-button">Save</div>
 
-            <p class="member-category">Uncategorised</p>
+                    <div class="secondary-button">Cancel</div>
 
-            <div class="options-btn"></div>
+                </div>
 
-        </li>
+            </div>
 
-        <li class="manage-members-members-list-item">
+        </div>
 
-            <p class="member-list-item">Stephen Hodges</p>
+        <div class="manage-members-members-list-item">
 
-            <p class="member-category">Uncategorised</p>
+            <div class="manage-members-members-list-item-container">
 
-            <div class="options-btn"></div>
+                <p class="member-list-item">Stephen Hodges</p>
 
-        </li>
+                <p class="member-category">Scrum team </p>
 
-        <li class="manage-members-members-list-item">
+                <p class="member-category">Front End Development</p>
 
-            <p class="member-list-item">Stephen Hodges</p>
+                <p class="member-category">Uncategorised</p>
 
-            <p class="member-category">Scrum team </p>
+                <p class="member-category">Uncategorised</p>
 
-            <p class="member-category">Front End Development</p>
+                <div class="options-btn"></div>
 
-            <p class="member-category">Uncategorised</p>
+            </div>
 
-            <p class="member-category">Uncategorised</p>
 
+            <ul class="options-list-bg">
 
-            <div class="options-btn"></div>
+                <div class="options-list-btn edit">Edit</div>
 
-        </li>
+                <div class="options-list-btn delete">Delete</div>
 
-        <li class="manage-members-members-list-item">
+            </ul>
 
-            <p class="member-list-item">Stephen Hodges</p>
+        </div>
 
-            <p class="member-category">Uncategorised</p>
+        <div class="manage-members-members-list-item">
 
-            <div class="options-btn"></div>
+            <div class="manage-members-members-list-item-container">
 
-        </li>
+                <p class="member-list-item">Stephen Hodges</p>
 
-        <li class="manage-members-members-list-item">
+                <p class="member-category">Uncategorised</p>
 
-            <p class="member-list-item">Stephen Hodges</p>
+                <div class="options-btn"></div>
 
-            <p class="member-category">Uncategorised</p>
+            </div>
 
-            <div class="options-btn"></div>
+        </div>
 
-        </li>
+        <div class="manage-members-members-list-item">
 
-        <li class="manage-members-members-list-item">
+            <div class="manage-members-members-list-item-container">
 
-            <p class="member-list-item">Stephen Hodges</p>
+                <p class="member-list-item">Stephen Hodges</p>
 
-            <p class="member-category">Uncategorised</p>
+                <p class="member-category">Uncategorised</p>
 
-            <div class="options-btn"></div>
+                <p class="member-category">Uncategorised</p>
 
-        </li>
+                <p class="member-category">Uncategorised</p>
 
-        <li class="manage-members-members-list-item">
 
-            <p class="member-list-item">Stephen Hodges</p>
+                <div class="options-btn"></div>
 
-            <p class="member-category">Scrum team </p>
+            </div>
 
-            <p class="member-category">Front End Development</p>
+        </div>
 
-            <p class="member-category">Uncategorised</p>
+        <div class="manage-members-members-list-item">
 
-            <p class="member-category">Uncategorised</p>
+            <div class="manage-members-members-list-item-container">
 
+                <p class="member-list-item">Stephen Hodges</p>
 
-            <div class="options-btn"></div>
+                <p class="member-category">Uncategorised</p>
 
-        </li>
+                <div class="options-btn"></div>
 
-        <li class="manage-members-members-list-item">
+            </div>
 
-            <p class="member-list-item">Stephen Hodges</p>
+        </div>
 
-            <p class="member-category">Uncategorised</p>
+        <div class="manage-members-members-list-item">
 
-            <div class="options-btn"></div>
+            <div class="manage-members-members-list-item-container">
 
-        </li>
+                <p class="member-list-item">Stephen Hodges</p>
 
-    </ul>
+                <p class="member-category">Uncategorised</p>
+
+                <div class="options-btn"></div>
+
+            </div>
+
+        </div>
+
+        <div class="manage-members-members-list-item">
+
+            <div class="manage-members-members-list-item-container">
+
+                <p class="member-list-item">Stephen Hodges</p>
+
+                <p class="member-category">Uncategorised</p>
+
+                <div class="options-btn"></div>
+
+            </div>
+
+        </div>
+
+        <div class="manage-members-members-list-item">
+
+            <div class="manage-members-members-list-item-container">
+
+                <p class="member-list-item">Stephen Hodges</p>
+
+                <p class="member-category">Uncategorised</p>
+
+                <p class="member-category">Uncategorised</p>
+
+                <p class="member-category">Uncategorised</p>
+
+                <div class="options-btn"></div>
+
+            </div>
+
+        </div>
+
+        <div class="manage-members-members-list-item">
+
+            <div class="manage-members-members-list-item-container">
+
+                <p class="member-list-item">Stephen Hodges</p>
+
+                <p class="member-category">Uncategorised</p>
+
+                <div class="options-btn"></div>
+
+            </div>
+
+        </div>
+
+        <div class="manage-members-members-list-item">
+
+            <div class="manage-members-members-list-item-container">
+
+                <p class="member-list-item">Stephen Hodges</p>
+
+                <p class="member-category">Uncategorised</p>
+
+                <div class="options-btn"></div>
+
+            </div>
+
+        </div>
+
+        <div class="manage-members-members-list-item">
+
+            <div class="manage-members-members-list-item-container">
+
+                <p class="member-list-item">Stephen Hodges</p>
+
+                <p class="member-category">Uncategorised</p>
+
+                <p class="member-category">Uncategorised</p>
+
+                <div class="options-btn"></div>
+
+            </div>
+
+        </div>
+
+    </div>
 
     <div id="manage-members-add-new-member-btn" class="add-object-button"></div>
 

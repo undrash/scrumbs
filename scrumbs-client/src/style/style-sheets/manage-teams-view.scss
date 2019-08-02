@@ -23,11 +23,9 @@
     background-color: $tertiary-color;
     height: 100%;
 
-
     .simplebar-track { right: 0; }
 
     .simplebar-horizontal { display: none; }
-
 
     .manage-teams-header {
         height: 100px;
@@ -68,6 +66,10 @@
             }
         }
     }
+
+
+
+    //MANAGE TEAMS
 
     .manage-teams-body {
         max-width: 870px;
@@ -238,17 +240,12 @@
             height: 85%;
 
             .team-members-list-container {
-
-                //height: calc( 100% - 75px );
                 height: calc( 100vh - 540px );
-
 
                 ul {
                     height: 100%;
                     overflow-y: auto;
                 }
-
-
 
                 input {
                     line-height: 50px;
@@ -270,20 +267,44 @@
     }
 
 
+
+    //MANAGE MEMBERS
+
     .manage-members-body {
         max-width: 870px;
         height: calc( 100% - 100px);
         margin: 0 auto;
         padding: 30px 25px 0;
+        position: relative;
         display: none;
 
         .manage-members-setting-header {
             overflow: hidden;
+
+            .options-list-bg {
+                top: 75px;
+                right: 25px;
+                max-height: 270px;
+                overflow: scroll;
+                z-index: 5555;
+
+                .options-list-btn {
+                    padding: 0 20px;
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .find-members-search-input-container {
+            width: 50%;
+            overflow: auto;
+            display: inline-block;
         }
 
         .find-members-search-input {
             display: inline-block;
             float: left;
+            width: 100%;
         }
 
         .filter-btn {
@@ -295,18 +316,17 @@
             clear: both;
             margin-top: 30px;
             overflow: scroll;
-            height: 80%;
+            height: 65vh;
         }
 
-        .manage-members-members-list-item {
-            padding: 15px;
-            border-bottom: 1px solid $denary-color;
-            transition: background-color 0.3s ease-in-out;
-            position: relative;
+        .member-search-empty {
+            margin-top: 30px;
+            display: block;
+        }
 
-            &:last-child {
-                border-bottom: none;
-            }
+        .manage-members-members-list-item-container {
+            padding: 15px;
+            transition: background-color 0.3s ease-in-out;
 
             &:hover {
                 background-color: $nonary-color;
@@ -315,6 +335,16 @@
                     opacity: 1;
                 }
             }
+        }
+
+        .manage-members-members-list-item {
+            border-bottom: 1px solid $denary-color;
+            transition: background-color 0.3s ease-in-out;
+            position: relative;
+
+            &:last-child {
+                border-bottom: none;
+            }
 
             .options-btn {
                 position: absolute;
@@ -322,6 +352,55 @@
                 top: 50%;
                 transform: translateY(-50%);
                 opacity: 0;
+            }
+
+            .options-list-bg {
+                right: 15px;
+                top: 65px;
+                z-index: 200;
+            }
+        }
+
+        .manage-members-members-list-item-edit-container {
+
+            padding: 15px 0;
+
+            .edit-member-input {
+                width: calc(100% - 210px);
+                border: 1px solid $denary-color;
+                border-radius: 3px;
+                background: url("../../style/img/icons/icon-member.svg") no-repeat left 15px center;
+                background-size: 15px;
+                font-size: 16px;
+                padding: 10px 15px 10px 40px;
+                display: inline-block;
+                transition: border 0.3s ease-in-out;
+
+                &:hover, &:focus {
+                    border: 1px solid $accent-color;
+                }
+            }
+
+            .btn-wrapper {
+                width: 200px;
+                display: inline-block;
+                float: right;
+
+                .tertiary-button {
+                    display: inline-block;
+                    width: 95px;
+                    height: 42px;
+                    line-height: 42px;
+                    float: left;
+                }
+
+                .secondary-button {
+                    display: inline-block;
+                    width: 95px;
+                    height: 42px;
+                    line-height: 42px;
+                    float: right;
+                }
             }
         }
 

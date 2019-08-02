@@ -409,9 +409,32 @@ input, textarea {
     line-height: 49px;
     background: transparent;
     transition: color 0.3s ease-in-out, border 0.3s ease-in-out;
+    cursor: pointer;
 
     &:hover {
-        color: $text-quaternary-color;
+        color: $text-primary-color;
+        border: 1px solid $text-primary-color;
+
+    }
+}
+
+.tertiary-button {
+    display: inline-block;
+    border-radius: 5px;
+    border: 1px solid $denary-color;
+    color: $accent-color;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 13px;
+    height: 49px;
+    line-height: 49px;
+    background: transparent;
+    transition: border 0.3s ease-in-out;
+    cursor: pointer;
+
+
+    &:hover {
+        border: 1px solid $accent-color;
     }
 }
 
@@ -490,8 +513,8 @@ input, textarea {
       height: 35px;
       background: url( "../img/icons/icon-close.svg" ) no-repeat center / contain;
     }
-
 }
+
 
 .filter-btn {
     display: block;
@@ -569,6 +592,16 @@ input, textarea {
 
     &.settings {
         background-image: url("../../style/img/icons/settings-icon.svg");
+        background-position: 21px center;
+    }
+
+    &.edit {
+        background-image: url("../../style/img/icons/icon-edit.svg");
+        background-position: 21px center;
+    }
+
+    &.delete {
+        background-image: url("../../style/img/icons/icon-delete.svg");
         background-position: 21px center;
     }
 
