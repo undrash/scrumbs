@@ -483,10 +483,11 @@ transition: all .2s ease-in-out;
     opacity: 1;
 }
 
-.planeeet-logo {
+.boardme-logo {
     position: absolute;
-    top: 48px;
-    left: 100px;
+    top: 50px;
+    left: 90px;
+    width: 100px;
 }
 
 .social-btn {
@@ -713,7 +714,7 @@ transition: all .2s ease-in-out;
     font-size: 14px;
 }
 
-#unsubscribed-container .planeeet-logo {
+#unsubscribed-container .boardme-logo {
     position: initial;
     margin-bottom: -10px;
 }
@@ -1119,7 +1120,7 @@ transition: all .2s ease-in-out;
         right: 0;
     }
 
-    .planeeet-logo {
+    .boardme-logo {
         position: initial;
         margin: -10px;
     }

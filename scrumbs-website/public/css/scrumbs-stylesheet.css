@@ -36,7 +36,7 @@ ul{list-style:none}.hide-page-overflow{overflow:hidden;position:relative;height:
 .footer-navigation{display:inline-block;text-decoration:none;float:left}.source-company{display:inline-block;position:relative;left:-100px}
 .source-label{display:inline-block;margin-right:15px;opacity:.7}.social-media-buttons-container{display:inline-block;float:right;height:100px}
 .social-media-buttons-container img{margin-left:50px}.footer-menu-item{display:inline-block;margin-right:50px;opacity:.7;transition:all .2s ease-in-out}
-.footer-menu-item:hover{opacity:1}.planeeet-logo{position:absolute;top:48px;left:100px}
+.footer-menu-item:hover{opacity:1}.boardme-logo{position:absolute;top:50px;left:90px;width:100px}
 .social-btn{width:50px;height:50px;background-color:#636185;display:inline-block;margin-top:30px}
 .linked-in-btn{transition:all .2s ease-in-out;background:url("../images/linked-in.svg") center no-repeat}
 .linked-in-btn:hover{background:url("../images/linked-in-colored.svg") center no-repeat;cursor:pointer}
@@ -63,7 +63,7 @@ ul{list-style:none}.hide-page-overflow{overflow:hidden;position:relative;height:
 #unsubscribed-container .button-container .primary-button{padding:20px 80px}.unsubscribe-footer{position:relative;line-height:normal;padding:40px 20px 0 20px;text-align:center}
 #unsubscribed-container .footer-navigation{float:none;color:#9b9aa9;font-size:14px}
 #unsubscribed-container .footer-menu-item{margin:0 25px}#unsubscribed-container .source-company{position:initial;display:block;margin-bottom:50px;color:#9b9aa9;font-size:14px}
-#unsubscribed-container .planeeet-logo{position:initial;margin-bottom:-10px}.terms-container{padding:40px 50px;max-width:1000px;background-color:#fff;margin:0 auto 30px auto}
+#unsubscribed-container .boardme-logo{position:initial;margin-bottom:-10px}.terms-container{padding:40px 50px;max-width:1000px;background-color:#fff;margin:0 auto 30px auto}
 .terms-scrumbs-logo{width:160px;margin-bottom:40px}#mobile-menu{height:100vh;width:100%;position:fixed;z-index:2;text-align:center;padding:50px 0;box-sizing:border-box;background-image:linear-gradient(0,#f6f6f9 48%,#fff 100%);display:none;overflow-y:scroll}
 #close-mobile-menu-btn{position:absolute;left:0;right:0;bottom:90px}#mobile-navigation{margin-top:60px}
 .mobile-menu-item{margin-bottom:75px;display:block}.close-menu-btn{width:25px;height:25px}
@@ -98,7 +98,7 @@ ul{list-style:none}.hide-page-overflow{overflow:hidden;position:relative;height:
 .bottom-footer{height:190px;position:relative;line-height:normal;padding:40px 20px 0 20px}
 .bottom-footer-mobile-margin{margin-top:40px}.footer-navigation{float:none;display:block}
 .footer-menu-item{margin:0 30px}.social-media-buttons-container{float:none}.source-company{position:absolute;bottom:40px;left:0;right:0}
-.planeeet-logo{position:initial;margin:-10px}.subscribe-for-alpha{width:100%}.subscription-title{margin-bottom:15px}
+.boardme-logo{position:initial;margin:-10px}.subscribe-for-alpha{width:100%}.subscription-title{margin-bottom:15px}
 }@media only screen and (max-width:750px){#navbar{background-color:#fff;width:100%;padding:15px 25px;height:auto;overflow:auto;box-sizing:border-box}
 #scrumbs-logo{margin:0}.hamburger-icon{display:inline-block;top:25px}#authentication-container{display:none}
 #downloads-btn{display:none}#sign-in-option{text-align:center}#above-the-fold{padding-left:0;padding-top:30px;text-align:center}
