@@ -7,57 +7,61 @@
 
         <div class="find-members-search-input-container">
 
-            <input class="find-members-search-input" placeholder="Find members">
+            <input id="manage-members-search-input" class="find-members-search-input" placeholder="Find members">
 
-            <img class="clear-search" src="../style/img/icons/icon-close-simple-dark.svg">
+            <img id="manage-members-clear-input" class="clear-search" src="../style/img/icons/icon-close-simple-dark.svg">
 
         </div>
 
-        <!--<div class="manage-members-filter-container">-->
+
 
         <div id="manage-members-filter-btn" class="filter-btn">All members</div>
 
 
-        <div class="options-list-bg">
+        <div id="manage-members-filter-dropdown" class="options-list-bg">
 
-            <div class="options-list-btn">All members</div>
+            <div>
+                <div id="manage-members-filter-option-all-members" class="options-list-btn">All members</div>
 
-            <div class="options-list-btn">Uncategorized</div>
+                <div id="manage-members-filter-option-uncategorized" class="options-list-btn">Uncategorized</div>
+            </div>
 
-            <div class="options-list-btn">Scrum team</div>
+            <div id="manage-members-filter-team-list">
+                <div class="options-list-btn">Scrum team</div>
 
-            <div class="options-list-btn">Front End Development</div>
+                <div class="options-list-btn">Front End Development</div>
 
-            <div class="options-list-btn">Front End Development</div>
+                <div class="options-list-btn">Front End Development</div>
 
-            <div class="options-list-btn">Front End Development</div>
+                <div class="options-list-btn">Front End Development</div>
 
-            <div class="options-list-btn">Front End Development</div>
+                <div class="options-list-btn">Front End Development</div>
 
-            <div class="options-list-btn">Front End Development</div>
+                <div class="options-list-btn">Front End Development</div>
 
-            <div class="options-list-btn">Front End Development</div>
+                <div class="options-list-btn">Front End Development</div>
+            </div>
 
         </div>
 
 
 
-        <!--</div>-->
+    </div>
 
+
+    <div id="manage-member-empty-search-results" class="member-search-empty">
+
+        <img src="../style/img/no-member-result.svg">
+
+        <p class="empty-state-label">No member found</p>
+
+        <p>Try again with a different name, or make sure you have members created.</p>
 
     </div>
 
     <div id="manage-members-members-list-container" class="manage-members-members-list-container">
 
-        <div class="member-search-empty">
 
-            <img src="../style/img/no-member-result.svg">
-
-            <p class="empty-state-label">No member found</p>
-
-            <p>Try again with a different name, or make sure you have members created.</p>
-
-        </div>
 
         <div class="manage-members-members-list-item">
 
@@ -114,26 +118,30 @@
 
                 <p class="member-list-item">Stephen Hodges</p>
 
-                <p class="member-category">Scrum team </p>
+                <div class="member-item-category-container">
 
-                <p class="member-category">Front End Development</p>
+                    <p class="member-category">Scrum team </p>
 
-                <p class="member-category">Uncategorised</p>
+                    <p class="member-category">Front End Development</p>
 
-                <p class="member-category">Uncategorised</p>
+                    <p class="member-category">Uncategorised</p>
+
+                    <p class="member-category">Uncategorised</p>
+
+                </div>
 
                 <div class="options-btn"></div>
 
             </div>
 
 
-            <ul class="options-list-bg">
+            <div class="options-list-bg">
 
                 <div class="options-list-btn edit">Edit</div>
 
                 <div class="options-list-btn delete">Delete</div>
 
-            </ul>
+            </div>
 
         </div>
 

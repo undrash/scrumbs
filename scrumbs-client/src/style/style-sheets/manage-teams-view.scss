@@ -284,7 +284,6 @@
                 top: 75px;
                 right: 25px;
                 max-height: 270px;
-                overflow: scroll;
                 z-index: 5555;
 
                 .options-list-btn {
@@ -314,13 +313,12 @@
         .manage-members-members-list-container {
             clear: both;
             margin-top: 30px;
-            overflow: scroll;
             height: 65vh;
         }
 
         .member-search-empty {
             margin-top: 30px;
-            display: block;
+            display: none;
         }
 
         .manage-members-members-list-item-container {
@@ -357,6 +355,7 @@
                 right: 15px;
                 top: 65px;
                 z-index: 200;
+                display: none;
             }
         }
 
