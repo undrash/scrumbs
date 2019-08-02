@@ -408,6 +408,14 @@ export class ManageTeams extends ViewComponent {
         console.info( "Enter being called in scrum manage teams view component" );
         this.registerEventListeners();
 
+        this.setAvatarInitials();
+
+        Promise.all([
+            new Promise<void>( (resolve, reject) => this.populateTeams( resolve ) ),
+        ])
+            .then( () => this.loadTeamData() )
+            .catch( (err: string) => console.error( err ) );
+
         switch ( enterType ) {
 
             case ViewEnterTypes.SWITCH_COMPONENT :
@@ -415,13 +423,7 @@ export class ManageTeams extends ViewComponent {
                 break;
 
             default :
-                this.setAvatarInitials();
 
-                Promise.all([
-                    new Promise<void>( (resolve, reject) => this.populateTeams( resolve ) ),
-                ])
-                    .then( () => this.loadTeamData() )
-                    .catch( (err: string) => console.error( err ) );
                 break;
         }
     }

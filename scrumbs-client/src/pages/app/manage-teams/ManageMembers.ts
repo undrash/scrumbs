@@ -34,6 +34,8 @@ export class ManageMembers extends ViewComponent {
     private mainMemberList: HTMLElement;
     private memberList: HTMLElement;
 
+
+
     constructor(view: View, container: HTMLElement) {
         super( view, container, "ManageMembers" );
 
@@ -88,7 +90,19 @@ export class ManageMembers extends ViewComponent {
 
 
 
+    private addTeamToFilter(team: any): void {
+        const filter        = document.createElement( "div" );
+        filter.className    = "options-list-btn";
+        filter.innerText    = team.name;
+
+        this.filterTeamsList.appendChild( filter );
+    }
+
+
+
     private populate(): void {
+
+        /** Populate members */
 
         this.connection.getMembers(
             (response: any) => {
@@ -100,6 +114,21 @@ export class ManageMembers extends ViewComponent {
 
                 for ( let member of members ) {
                     this.addMember( member );
+                }
+            },
+            (err: Error) => console.error( err )
+        );
+
+        /** Populate filters */
+
+        this.connection.getTeams(
+            (response: any) => {
+                const { teams } = response;
+
+                if ( teams.length ) this.filterTeamsList.innerHTML = '';
+
+                for ( let team of teams ) {
+                    this.addTeamToFilter( team );
                 }
             },
             (err: Error) => console.error( err )
