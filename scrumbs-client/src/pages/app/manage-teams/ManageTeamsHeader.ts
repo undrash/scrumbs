@@ -24,15 +24,20 @@ const template = require( "../../../templates/manage-teams-header.html" );
 export class ManageTeamsHeader extends ViewComponent {
     private exitBtn: HTMLSpanElement;
 
-
+    private teamsBtn: HTMLElement;
+    private membersBtn: HTMLElement;
 
     constructor(view: View, container: HTMLElement) {
         super( view, container, "ManageTeamsHeader" );
 
         this.container.innerHTML = template;
-        this.exitBtn                = document.getElementById( "manage-teams-exit-button" ) as HTMLSpanElement;
 
-        this.exitBtnHandler         = this.exitBtnHandler.bind( this );
+        this.exitBtn                = document.getElementById( "manage-teams-exit-button" ) as HTMLSpanElement;
+        this.teamsBtn               = document.getElementById( "manage-teams-teams-btn" );
+        this.membersBtn             = document.getElementById( "manage-teams-members-btn" );
+
+
+        this.headerClickHandler     = this.headerClickHandler.bind( this );
         this.documentKeyListener    = this.documentKeyListener.bind( this );
 
         this.enterScene();
@@ -41,14 +46,18 @@ export class ManageTeamsHeader extends ViewComponent {
 
 
     private registerEventListeners(): void {
-        this.exitBtn.addEventListener( "click", this.exitBtnHandler );
+        this.exitBtn.addEventListener( "click", this.headerClickHandler );
+        this.teamsBtn.addEventListener( "click", this.headerClickHandler );
+        this.membersBtn.addEventListener( "click", this.headerClickHandler );
         document.addEventListener( "keydown", this.documentKeyListener );
     }
 
 
 
     private unregisterEventListeners(): void {
-        this.exitBtn.removeEventListener( "click", this.exitBtnHandler );
+        this.exitBtn.removeEventListener( "click", this.headerClickHandler );
+        this.teamsBtn.removeEventListener( "click", this.headerClickHandler );
+        this.membersBtn.removeEventListener( "click", this.headerClickHandler );
         document.removeEventListener( "keydown", this.documentKeyListener );
     }
 
@@ -62,8 +71,26 @@ export class ManageTeamsHeader extends ViewComponent {
 
 
 
-    private exitBtnHandler(e: any) {
-        this.sendSignal( ManageTeamSignals.EXIT );
+    private headerClickHandler(e: any) {
+
+        switch ( e.target.id ) {
+
+            case this.exitBtn.id :
+                this.sendSignal( ManageTeamSignals.EXIT );
+                break;
+
+            case this.teamsBtn.id :
+                this.sendSignal( ManageTeamSignals.SWITCH_TO_TEAMS );
+                break;
+
+            case this.membersBtn.id:
+                this.sendSignal( ManageTeamSignals.SWITCH_TO_MEMBERS );
+                break;
+
+            default :
+                break;
+        }
+
     }
 
 

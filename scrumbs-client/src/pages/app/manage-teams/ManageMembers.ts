@@ -28,9 +28,10 @@ export class ManageMembers extends ViewComponent {
     constructor(view: View, container: HTMLElement) {
         super( view, container, "ManageMembers" );
 
+        this.container.parentNode.removeChild( this.container );
+
         this.container.innerHTML = template;
 
-        this.enterScene();
     }
 
 
@@ -50,6 +51,17 @@ export class ManageMembers extends ViewComponent {
     public enterScene(enterType?: string): void {
         console.info( "Enter being called in manage members" );
         this.registerEventListeners();
+
+        switch ( enterType ) {
+
+            case ViewEnterTypes.SWITCH_COMPONENT :
+                this.view.container.appendChild( this.container );
+                break;
+
+            default :
+                break;
+        }
+
     }
 
 
@@ -57,8 +69,21 @@ export class ManageMembers extends ViewComponent {
     public exitScene(exitType?: string): void {
         console.info( "Exit being called in manage members" );
 
-        super.exitScene( exitType );
         this.unregisterEventListeners();
-        this.view.componentExited( this.name );
+
+        switch ( exitType ) {
+            case ViewExitTypes.SWITCH_COMPONENT :
+
+                if ( this.container.parentNode ) {
+                    this.container.parentNode.removeChild( this.container );
+                }
+
+                break;
+
+            default :
+                super.exitScene( exitType );
+                this.view.componentExited( this.name );
+                break;
+        }
     }
 }

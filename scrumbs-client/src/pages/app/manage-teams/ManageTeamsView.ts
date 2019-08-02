@@ -106,6 +106,22 @@ export class ManageTeamsView extends View {
 
         switch ( signal.name ) {
 
+            case ManageTeamSignals.SWITCH_TO_TEAMS :
+
+                this.members.exitScene( ViewExitTypes.SWITCH_COMPONENT );
+                this.teams.enterScene( ViewExitTypes.SWITCH_COMPONENT );
+
+
+                break;
+
+            case ManageTeamSignals.SWITCH_TO_MEMBERS :
+
+                this.teams.exitScene( ViewExitTypes.SWITCH_COMPONENT );
+                this.members.enterScene( ViewExitTypes.SWITCH_COMPONENT );
+
+                break;
+
+
             case ManageTeamSignals.MODAL_ACTIVE :
 
                 this.isModalActive = true;

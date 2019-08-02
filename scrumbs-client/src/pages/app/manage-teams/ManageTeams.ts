@@ -408,13 +408,22 @@ export class ManageTeams extends ViewComponent {
         console.info( "Enter being called in scrum manage teams view component" );
         this.registerEventListeners();
 
-        this.setAvatarInitials();
+        switch ( enterType ) {
 
-        Promise.all([
-            new Promise<void>( (resolve, reject) => this.populateTeams( resolve ) ),
-        ])
-            .then( () => this.loadTeamData() )
-            .catch( (err: string) => console.error( err ) );
+            case ViewEnterTypes.SWITCH_COMPONENT :
+                this.view.container.appendChild( this.container );
+                break;
+
+            default :
+                this.setAvatarInitials();
+
+                Promise.all([
+                    new Promise<void>( (resolve, reject) => this.populateTeams( resolve ) ),
+                ])
+                    .then( () => this.loadTeamData() )
+                    .catch( (err: string) => console.error( err ) );
+                break;
+        }
     }
 
 
@@ -422,8 +431,21 @@ export class ManageTeams extends ViewComponent {
     public exitScene(exitType?: string): void {
         console.info( "Exit being called in scrum manage teams view component" );
 
-        super.exitScene( exitType );
         this.unregisterEventListeners();
-        this.view.componentExited( this.name );
+
+        switch ( exitType ) {
+            case ViewExitTypes.SWITCH_COMPONENT :
+
+                if ( this.container.parentNode ) {
+                    this.container.parentNode.removeChild( this.container );
+                }
+
+                break;
+
+            default :
+                super.exitScene( exitType );
+                this.view.componentExited( this.name );
+                break;
+        }
     }
 }
