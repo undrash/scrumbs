@@ -85,11 +85,17 @@ ul{list-style:none}.hide-page-overflow{overflow:hidden;position:relative;height:
 .error-card{max-width:570px}.scrumbs-logo{width:160px}.error-type-style{color:#d3d5e6;font-size:180px;font-family:'Montserrat',sans-serif;font-weight:700}
 .error-message{font-size:20px;font-weight:700;color:#636185}#error-footer{margin:auto}
 #error-footer>.secondary-text{max-width:430px;padding-top:30px;margin:auto}#error-footer>.button-container{float:none;display:block;text-align:center;margin-top:50px;color:#9b9aa9}
-#error-footer>.secondary-btn{color:#9b9aa9}/**max-width: 1366px;*!*/@media only screen and (min-width:1366px){#above-the-fold{max-width:1306px;padding-left:0}
+#error-footer>.secondary-btn{color:#9b9aa9}@media only screen and (min-width:1366px){#above-the-fold{max-width:1306px;padding-left:0}
 .cover-image{position:absolute}#features{padding:140px 60px 190px 60px}#section-1{max-width:1366px}
 .left-ui{position:absolute;background:url("../images/left-ui.svg") no-repeat left;background-size:700px}
 .right-description{float:right;padding-left:150px;padding-right:0}#section-2{max-width:1366px;margin:auto;height:875px}
-.right-ui{position:absolute;background-size:700px}}@media only screen and (max-width:1130px){.download-btn{width:44%}
+.right-ui{position:absolute;background-size:700px}}.contact-container{background:url("../images/downloads-bubble.svg") no-repeat center;padding:50px 30px 100px}
+.contact-body{max-width:910px;border-radius:5px;box-shadow:0 2px 15px 0 rgba(221,220,234,0.7);background-color:#fff;margin:auto;padding:50px 30px 100px}
+.contact-body .input-container{margin-bottom:15px}.contact-body .primary-text{text-align:center}
+.contact-form{max-width:335px;margin:35px auto 0}.input-basic{height:50px;border:1px solid #e1e0e9;border-radius:5px;padding:0 15px;box-sizing:border-box;font-size:16px;color:#242246;width:100%;transition:border .3s ease-in-out}
+.input-basic:hover,.input-basic:focus,.input-textarea:hover,.input-textarea:focus{border:1px solid #6e7bff}
+.input-textarea{height:175px;border:1px solid #e1e0e9;border-radius:5px;padding:15px 15px;box-sizing:border-box;font-size:16px;color:#242246;width:100%;transition:border .3s ease-in-out}
+.input-error-message{opacity:1}@media only screen and (max-width:1130px){.download-btn{width:44%}
 .download-btn-disabled{width:44%}#footer-description{width:520px}#downloads-container{padding:0 30px}
 }@media only screen and (max-width:950px){#above-the-fold{padding-left:40px;padding-top:50px}
 .cover-image{transform:translateY(-45px)}#features{padding:50px 40px 50px 40px}.feature-card{width:48%;margin:0 1% 15px}
@@ -98,7 +104,7 @@ ul{list-style:none}.hide-page-overflow{overflow:hidden;position:relative;height:
 .bottom-footer{height:190px;position:relative;line-height:normal;padding:40px 20px 0 20px}
 .bottom-footer-mobile-margin{margin-top:40px}.footer-navigation{float:none;display:block}
 .footer-menu-item{margin:0 30px}.social-media-buttons-container{float:none}.source-company{position:absolute;bottom:40px;left:0;right:0}
-.boardme-logo{position:initial;margin:-10px}.subscribe-for-alpha{width:100%}.subscription-title{margin-bottom:15px}
+.boardme-logo{position:initial;margin:-7px}.subscribe-for-alpha{width:100%}.subscription-title{margin-bottom:15px}
 }@media only screen and (max-width:750px){#navbar{background-color:#fff;width:100%;padding:15px 25px;height:auto;overflow:auto;box-sizing:border-box}
 #scrumbs-logo{margin:0}.hamburger-icon{display:inline-block;top:25px}#authentication-container{display:none}
 #downloads-btn{display:none}#sign-in-option{text-align:center}#above-the-fold{padding-left:0;padding-top:30px;text-align:center}
@@ -116,7 +122,7 @@ ul{list-style:none}.hide-page-overflow{overflow:hidden;position:relative;height:
 .tertiary-button,.tertiary-button-disabled,#get-started-downloads{float:none;display:inline-block;margin:auto;text-align:center;margin-top:20px}
 .tertiary-button{background:url("../images/download-icon.svg") 15px center no-repeat;font-weight:bold;background-color:#fff;box-shadow:0 15px 15px -10px rgba(99,97,133,0.3)}
 .button-container{text-align:center;float:none}.top-image,.bottom-image{display:initial}
-}@media only screen and (max-width:650px){#subscribe-form-inner-container{width:100%}
+.contact-container{padding:50px 30px 50px}.contact-body{padding:50px 30px 50px}}@media only screen and (max-width:650px){#subscribe-form-inner-container{width:100%}
 .error-container{padding:0 20px}.error-card{width:100%}}@media only screen and (max-width:600px){#section-1{height:900px}
 #footer-description{width:100%}.subscribe-form-container{background-size:880px;height:675px}
 .subscribe-info{padding:0 70px}}@media only screen and (max-width:500px){.card-bg{padding:30px 15px}
@@ -134,6 +140,7 @@ ul{list-style:none}.hide-page-overflow{overflow:hidden;position:relative;height:
 .subscription-feedback{margin-bottom:30px;box-sizing:border-box;min-height:300px;height:calc(100vh - 350px)}
 #downloads-container{padding:0 15px}.error-container{background:url(../images/downloads-bubble.svg) no-repeat center 20px;background-size:100%}
 #error-main-container{padding-top:40px}#logo-container{margin:0 auto 20px auto}#error-footer .secondary-text{padding:10px}
+.contact-container{padding:50px 15px 50px}.contact-body{padding:50px 15px 50px}.contact-form{max-width:100%}
 }@media only screen and (max-width:400px){.social-btn{margin-top:0}.subscription-feedback{min-height:250px;height:calc(100vh - 280px);display:inline-block}
 .terms-footer{height:280px}#error-footer{padding:0}.error-container{height:290px}
 .error-type-style{font-size:100px}.error-message{font-size:16px}#error-footer .secondary-text{padding:0 20px 20px 20px}

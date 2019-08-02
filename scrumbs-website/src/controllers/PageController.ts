@@ -22,6 +22,7 @@ class PageController {
         this.router.get( "/downloads", this.downloads );
         this.router.get( "/subscribe", this.subscribe );
         this.router.get( "/terms", this.terms );
+        this.router.get( "/contact", this.contact );
     }
 
 
@@ -48,6 +49,12 @@ class PageController {
 
     public terms(req: Request, res: Response, next: NextFunction) {
         res.render( "terms", { title: "Scrumbs | Terms and Conditions" } );
+    }
+
+
+
+    public contact(req: Request, res: Response, next: NextFunction) {
+        res.render( "contact", { title: "Scrumbs | Contact Us" } );
     }
 
 }

@@ -107,6 +107,6 @@ input, select {
     vertical-align:middle;
 }
 
-input:focus {
+input:focus, textarea:focus {
     outline: none;
 }
