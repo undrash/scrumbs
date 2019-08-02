@@ -360,6 +360,18 @@ input, textarea {
     display: inline-block;
 }
 
+.check-box {
+    background: url("../../style/img/icons/icon-unchecked.svg");
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+
+    &.checked {
+        background: url("../../style/img/icons/icon-checked.svg");
+
+    }
+}
+
 
 
 

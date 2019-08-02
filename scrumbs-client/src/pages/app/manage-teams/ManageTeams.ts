@@ -76,6 +76,7 @@ export class ManageTeams extends ViewComponent {
         this.deleteTeamHandler      = this.deleteTeamHandler.bind( this );
         this.removeMember           = this.removeMember.bind( this );
         this.nameInputHandler       = this.nameInputHandler.bind( this );
+        this.addMemberHandler       = this.addMemberHandler.bind( this );
 
         this.enterScene();
     }
@@ -86,6 +87,7 @@ export class ManageTeams extends ViewComponent {
         this.createTeamBtn.addEventListener( "click", this.createTeamHandler );
         this.deleteTeamBtn.addEventListener( "click", this.deleteTeamHandler );
         this.teamNameInput.addEventListener( "keyup", this.nameInputHandler );
+        this.addMemberBtn.addEventListener( "click", this.addMemberHandler );
     }
 
 
@@ -94,6 +96,13 @@ export class ManageTeams extends ViewComponent {
         this.createTeamBtn.removeEventListener( "click", this.createTeamHandler );
         this.deleteTeamBtn.removeEventListener( "click", this.deleteTeamHandler );
         this.teamNameInput.removeEventListener( "keyup", this.nameInputHandler );
+        this.addMemberBtn.removeEventListener( "click", this.addMemberHandler );
+    }
+
+
+
+    private addMemberHandler(): void {
+        this.sendSignal( ManageTeamSignals.INIT_ADD_MEMBER_MODAL );
     }
 
 

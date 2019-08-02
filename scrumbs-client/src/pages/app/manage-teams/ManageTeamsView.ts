@@ -15,6 +15,7 @@ import {View} from "../../../core/View";
 
 // CSS
 import "../../../style/style-sheets/manage-teams-view.scss";
+import {AddMemberModal} from "./AddMemberModal";
 
 
 // HTML
@@ -35,7 +36,7 @@ export class ManageTeamsView extends View {
     private teams: ViewComponent;
     private members: ViewComponent;
 
-
+    private addMemberModal: AddMemberModal;
 
 
     constructor() {
@@ -55,6 +56,8 @@ export class ManageTeamsView extends View {
         this.header                 = new ManageTeamsHeader( this, this.headerContainer  );
         this.teams                  = new ManageTeams( this, this.teamsContainer );
         this.members                = new ManageMembers( this, this.membersContainer );
+
+        this.addMemberModal         = new AddMemberModal( this );
 
         this.enterScene();
     }
@@ -113,6 +116,12 @@ export class ManageTeamsView extends View {
             case ManageTeamSignals.CREATE_TEAM :
 
                 this.sendNotification( ViewNotifications.SWITCH_TO_CREATE_TEAM_VIEW );
+
+                break;
+
+            case ManageTeamSignals.INIT_ADD_MEMBER_MODAL :
+
+                this.addMemberModal.enterScene();
 
                 break;
 
