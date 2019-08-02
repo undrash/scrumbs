@@ -1075,6 +1075,7 @@ transition: all .2s ease-in-out;
     color: #242246;
     width: 100%;
     transition: border 0.3s ease-in-out;
+    max-width: 335px;
 }
 
 .input-error-message {
@@ -1577,6 +1578,10 @@ transition: all .2s ease-in-out;
     }
 
     .contact-form {
+        max-width: 100%;
+    }
+
+    .input-textarea {
         max-width: 100%;
     }
 

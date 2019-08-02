@@ -94,7 +94,7 @@ ul{list-style:none}.hide-page-overflow{overflow:hidden;position:relative;height:
 .contact-body .input-container{margin-bottom:15px}.contact-body .primary-text{text-align:center}
 .contact-form{max-width:335px;margin:35px auto 0}.input-basic{height:50px;border:1px solid #e1e0e9;border-radius:5px;padding:0 15px;box-sizing:border-box;font-size:16px;color:#242246;width:100%;transition:border .3s ease-in-out}
 .input-basic:hover,.input-basic:focus,.input-textarea:hover,.input-textarea:focus{border:1px solid #6e7bff}
-.input-textarea{height:175px;border:1px solid #e1e0e9;border-radius:5px;padding:15px 15px;box-sizing:border-box;font-size:16px;color:#242246;width:100%;transition:border .3s ease-in-out}
+.input-textarea{height:175px;border:1px solid #e1e0e9;border-radius:5px;padding:15px 15px;box-sizing:border-box;font-size:16px;color:#242246;width:100%;transition:border .3s ease-in-out;max-width:335px}
 .input-error-message{opacity:1}@media only screen and (max-width:1130px){.download-btn{width:44%}
 .download-btn-disabled{width:44%}#footer-description{width:520px}#downloads-container{padding:0 30px}
 }@media only screen and (max-width:950px){#above-the-fold{padding-left:40px;padding-top:50px}
@@ -141,7 +141,8 @@ ul{list-style:none}.hide-page-overflow{overflow:hidden;position:relative;height:
 #downloads-container{padding:0 15px}.error-container{background:url(../images/downloads-bubble.svg) no-repeat center 20px;background-size:100%}
 #error-main-container{padding-top:40px}#logo-container{margin:0 auto 20px auto}#error-footer .secondary-text{padding:10px}
 .contact-container{padding:50px 15px 50px}.contact-body{padding:50px 15px 50px}.contact-form{max-width:100%}
-}@media only screen and (max-width:400px){.social-btn{margin-top:0}.subscription-feedback{min-height:250px;height:calc(100vh - 280px);display:inline-block}
+.input-textarea{max-width:100%}}@media only screen and (max-width:400px){.social-btn{margin-top:0}
+.subscription-feedback{min-height:250px;height:calc(100vh - 280px);display:inline-block}
 .terms-footer{height:280px}#error-footer{padding:0}.error-container{height:290px}
 .error-type-style{font-size:100px}.error-message{font-size:16px}#error-footer .secondary-text{padding:0 20px 20px 20px}
 #error-footer .button-container{margin-top:0}.downloads-headline{margin:30px auto 0 auto;padding:0 30px}
