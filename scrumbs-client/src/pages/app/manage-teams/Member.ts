@@ -77,7 +77,7 @@ export class Member {
         this.editSaveBtn            = this.container.querySelector( ".edit-member-save" ) as HTMLElement;
         this.editCancelBtn          = this.container.querySelector( ".edit-member-cancel" ) as HTMLElement;
 
-        this.parent.appendChild( this.container );
+        this.parent.insertBefore( this.container, this.parent.firstElementChild );
 
         this.optionsBtnListener     = this.optionsBtnListener.bind( this );
         this.documentClickListener  = this.documentClickListener.bind( this );

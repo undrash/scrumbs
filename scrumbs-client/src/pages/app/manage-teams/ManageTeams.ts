@@ -364,6 +364,7 @@ export class ManageTeams extends ViewComponent {
     }
 
 
+
     public addMembersToTeam(members: string[]): void {
 
         const addMembersModel = new AddMembersToTeamModel( this.loadedTeamId, members );

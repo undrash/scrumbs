@@ -186,6 +186,19 @@ export class ConnectionProxy extends Proxy {
 
 
 
+    public getUncategorizedMembers(success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.GET,
+            "/api/v1/members/uncategorized",
+            null,
+            success,
+            failure
+        );
+    }
+
+
+
     public searchMembers(string: string,success: Function, failure: Function): void {
 
         this.httpRequest(

@@ -21,6 +21,7 @@ class MemberController {
 
     public routes() {
         this.router.get( '/', RequireAuthentication, this.getMembers );
+        this.router.get( "/uncategorized", RequireAuthentication, this.getUncategorizedMembers );
         this.router.get( "/search/:string", RequireAuthentication, this.searchMembers );
         this.router.post( '/', RequireAuthentication, this.createMember );
         this.router.get( "/:team", RequireAuthentication, this.getMembersOfTeam );
@@ -36,6 +37,17 @@ class MemberController {
         const userId = ( req as any ).user._id;
 
         Member.find( { owner: userId } )
+            .populate( "teams", "name isDefault _id" )
+            .then( members => res.status( 200 ).json( { success: true, members } ) )
+            .catch( next );
+    }
+
+
+
+    public getUncategorizedMembers(req: Request, res: Response, next: NextFunction) {
+        const userId = ( req as any ).user._id;
+
+        Member.find( { owner: userId, teams: [] } )
             .populate( "teams", "name isDefault _id" )
             .then( members => res.status( 200 ).json( { success: true, members } ) )
             .catch( next );
@@ -64,17 +76,12 @@ class MemberController {
             return;
         }
 
-        if ( ! team ) {
-            res.status( 422 ).json( { success: false, message: "Team property is required at member creation." } );
-            return;
-        }
-
         const member = new Member({
             name,
             owner: userId
         });
 
-        member.teams.push( team );
+        if ( team ) member.teams.push( team );
 
         member.save()
             .then( member => res.status( 200 ).json( { success: true, member } ) )
@@ -88,6 +95,7 @@ class MemberController {
         const teamId = req.params.team;
 
         Member.find( { owner: userId, teams: teamId } )
+            .populate( "teams", "name isDefault _id" )
             .then( members => res.status( 200 ).json( { success: true, members } ) )
             .catch( next );
     }

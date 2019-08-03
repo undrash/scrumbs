@@ -382,7 +382,7 @@ export class ScrumTeams extends ViewComponent {
 
             },
             (err: string) => console.error( err )
-        )
+        );
     }
 
 

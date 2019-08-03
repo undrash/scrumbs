@@ -2,6 +2,7 @@
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
+import {ManageTeamSignals} from "./ManageTeamSignals";
 import {View} from "../../../core/View";
 import {Member} from "./Member";
 
@@ -9,12 +10,14 @@ import {Member} from "./Member";
 import TweenLite = gsap.TweenLite;
 import Power0 = gsap.Power0;
 import Back = gsap.Back;
+import {CreateMemberModel} from "../../../connection/models/CreateMemberModel";
 
 declare const SimpleBar: any;
 
 
 // HTML
-const template = require( "../../../templates/manage-members.html" );
+const template          = require( "../../../templates/manage-members.html" );
+const templateAddMember = require( "../../../templates/manage-members-member-add.html" );
 
 
 
@@ -38,7 +41,12 @@ export class ManageMembers extends ViewComponent {
 
     private searchTimer: any;
 
+    private addMemberBtn: HTMLElement;
 
+    private memberAdd: HTMLElement;
+    private memberAddInput: HTMLInputElement;
+    private memberAddSaveBtn: HTMLElement;
+    private memberAddCancelBtn: HTMLElement;
 
 
     constructor(view: View, container: HTMLElement) {
@@ -66,12 +74,26 @@ export class ManageMembers extends ViewComponent {
 
         this.memberList                     = this.mainMemberList.getElementsByClassName( "simplebar-content" )[0] as HTMLElement;
 
+        this.addMemberBtn                   = this.container.querySelector( "#manage-members-add-new-member-btn" ) as HTMLElement;
+
+        this.memberAdd                      = document.createElement( "div" );
+        this.memberAdd.id                   = "manage-members-members-list-item";
+        this.memberAdd.innerHTML            = templateAddMember;
+
+        this.memberAddInput                 = this.memberAdd.querySelector( ".edit-member-input" ) as HTMLInputElement;
+        this.memberAddSaveBtn               = this.memberAdd.querySelector( ".member-add-save" ) as HTMLElement;
+        this.memberAddCancelBtn             = this.memberAdd.querySelector( ".member-add-cancel" ) as HTMLElement;
+
         this.searchForMembers               = this.searchForMembers.bind( this );
         this.searchListener                 = this.searchListener.bind( this );
         this.clearSearchHandler             = this.clearSearchHandler.bind( this );
         this.filterClickHandler             = this.filterClickHandler.bind( this );
         this.documentClickHandler           = this.documentClickHandler.bind( this );
         this.filterDropdownClickHandler     = this.filterDropdownClickHandler.bind( this );
+        this.addMemberListener              = this.addMemberListener.bind( this );
+        this.addMemberKeyListener           = this.addMemberKeyListener.bind( this );
+        this.addMemberSaveListener          = this.addMemberSaveListener.bind( this );
+        this.addMemberCancelListener        = this.addMemberCancelListener.bind( this );
 
     }
 
@@ -82,6 +104,10 @@ export class ManageMembers extends ViewComponent {
         this.clearSearch.addEventListener( "click", this.clearSearchHandler );
         this.filterBtn.addEventListener( "click", this.filterClickHandler );
         this.filterDropdown.addEventListener( "click", this.filterDropdownClickHandler );
+        this.addMemberBtn.addEventListener( "click", this.addMemberListener );
+        this.memberAdd.addEventListener( "keydown", this.addMemberKeyListener );
+        this.memberAddSaveBtn.addEventListener( "click", this.addMemberSaveListener );
+        this.memberAddCancelBtn.addEventListener( "click", this.addMemberCancelListener );
         document.addEventListener( "click", this.documentClickHandler );
     }
 
@@ -92,7 +118,47 @@ export class ManageMembers extends ViewComponent {
         this.clearSearch.removeEventListener( "click", this.clearSearchHandler );
         this.filterBtn.removeEventListener( "click", this.filterClickHandler );
         this.filterDropdown.removeEventListener( "click", this.filterDropdownClickHandler );
+        this.addMemberBtn.removeEventListener( "click", this.addMemberListener );
+        this.memberAdd.removeEventListener( "keydown", this.addMemberKeyListener );
+        this.memberAddSaveBtn.removeEventListener( "click", this.addMemberSaveListener );
+        this.memberAddCancelBtn.removeEventListener( "click", this.addMemberCancelListener );
         document.removeEventListener( "click", this.documentClickHandler );
+    }
+
+
+
+    private addMemberListener(): void {
+        this.enterAddMember();
+    }
+
+
+
+    private addMemberSaveListener(): void {
+        this.createMember( this.memberAddInput.value );
+        this.exitAddMember();
+    }
+
+
+
+    private addMemberCancelListener(): void {
+        this.exitAddMember();
+    }
+
+
+
+    private addMemberKeyListener(e: any): void {
+
+        const key = e.which || e.keyCode;
+
+        if ( key === 27 ) { // ESC
+
+            this.exitAddMember();
+
+        } else if ( key === 13 ) { // ENTER
+
+            this.createMember( this.memberAddInput.value );
+            this.exitAddMember();
+        }
     }
 
 
@@ -105,18 +171,36 @@ export class ManageMembers extends ViewComponent {
 
     private filterDropdownClickHandler(e: any): void {
 
+        this.filterBtn.innerText = e.target.innerText;
+
         switch ( e.target.id ) {
 
             case this.filterOptionAllMembers.id :
-                console.log( "FILTER ALL MEMBERS" );
+                this.populateMembers();
                 break;
 
             case this.filterOptionUncategorized.id :
-                console.log( "FILTER UNCATEGORIZED" );
+
+                this.connection.getUncategorizedMembers(
+                    (response: any) => {
+                        const { members } = response;
+                        this.addMembers( members );
+                    },
+                    (err: Error) => console.error( err )
+                );
+
                 break;
 
             default :
-                console.log( "TEAMID: " + e.target.id );
+
+                this.connection.getMembersOfTeam(
+                    e.target.id,
+                    (response: any) => {
+                        const { members } = response;
+                        this.addMembers( members );
+                    },
+                    (err: Error) => console.error( err )
+                );
                 break;
         }
     }
@@ -134,6 +218,7 @@ export class ManageMembers extends ViewComponent {
         this.clearSearch.style.display  = "none";
         this.populateMembers();
     }
+
 
 
     private searchListener(e: any): void {
@@ -164,6 +249,41 @@ export class ManageMembers extends ViewComponent {
                 this.memberSearch.value
             );
         }
+    }
+
+
+
+    private enterAddMember(): void {
+        this.sendSignal( ManageTeamSignals.FOREGROUND_ACTIVE );
+        this.memberList.insertBefore( this.memberAdd, this.memberList.firstElementChild );
+        this.memberAddInput.focus();
+    }
+
+
+
+    private exitAddMember(): void {
+        this.memberList.removeChild( this.memberAdd );
+        this.memberAddInput.value = '';
+        setTimeout( () => this.sendSignal( ManageTeamSignals.FOREGROUND_INACTIVE ) , 0 );
+    }
+
+
+    private createMember(name: string): void {
+
+        const createMemberModel = new CreateMemberModel( name, null );
+
+        this.connection.createMember(
+            createMemberModel,
+            (response: any) => {
+                console.log( response );
+
+                const { member } = response;
+
+                this.addMember( member );
+
+            },
+            (err: string) => console.error( err )
+        );
     }
 
 
