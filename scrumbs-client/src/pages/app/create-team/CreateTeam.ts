@@ -101,6 +101,7 @@ export class CreateTeam extends ViewComponent {
     private documentKeyListener(e: any): void {
         const key = e.which || e.keyCode;
 
+        if ( key === 13 ) this.saveBtnHandler(); // ENTER
         if ( key === 27 ) this.sendSignal( CreateTeamSignals.EXIT ); // ESCAPE
     }
 

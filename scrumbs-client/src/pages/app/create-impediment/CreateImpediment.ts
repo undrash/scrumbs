@@ -45,20 +45,20 @@ export class CreateImpediment extends ViewComponent {
     constructor(view: View, container: HTMLElement) {
         super( view, container, "CreateImpediment" );
 
-        this.container.innerHTML = template;
+        this.container.innerHTML    = template;
 
-        this.exitBtn = document.getElementById( "create-impediment-exit-button" );
-        this.saveBtn = document.getElementById( "create-impediment-save-button" );
-        this.input  = document.getElementById( "create-impediment-input" ) as HTMLInputElement;
-        this.inputError = document.getElementById( "new-impediment-error-message" );
-        this.searchMembers = document.getElementById( "create-impediment-member-search-input" ) as HTMLInputElement;
-        this.clearSearch = document.getElementById( "create-impediment-clear-search" );
-        this.emptyState = document.getElementById( "add-impediment-search-empty-state" );
-        this.mainMemberList = document.getElementById( "add-impediment-members-list" );
+        this.exitBtn                = document.getElementById( "create-impediment-exit-button" );
+        this.saveBtn                = document.getElementById( "create-impediment-save-button" );
+        this.input                  = document.getElementById( "create-impediment-input" ) as HTMLInputElement;
+        this.inputError             = document.getElementById( "new-impediment-error-message" );
+        this.searchMembers          = document.getElementById( "create-impediment-member-search-input" ) as HTMLInputElement;
+        this.clearSearch            = document.getElementById( "create-impediment-clear-search" );
+        this.emptyState             = document.getElementById( "add-impediment-search-empty-state" );
+        this.mainMemberList         = document.getElementById( "add-impediment-members-list" );
 
         new SimpleBar( this.mainMemberList );
 
-        this.memberList        = this.mainMemberList.getElementsByClassName( "simplebar-content" )[0] as HTMLDivElement;
+        this.memberList             = this.mainMemberList.getElementsByClassName( "simplebar-content" )[0] as HTMLDivElement;
 
 
         this.exitBtnHandler         = this.exitBtnHandler.bind( this );
