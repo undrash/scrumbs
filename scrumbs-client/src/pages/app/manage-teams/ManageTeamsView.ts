@@ -36,7 +36,7 @@ export class ManageTeamsView extends View {
     private teams: ViewComponent;
     private members: ViewComponent;
 
-    private isModalActive: boolean;
+    private isForegroundActive: boolean;
 
     constructor() {
         super( "ManageTeamsView" );
@@ -122,21 +122,23 @@ export class ManageTeamsView extends View {
                 break;
 
 
-            case ManageTeamSignals.MODAL_ACTIVE :
+            case ManageTeamSignals.FOREGROUND_ACTIVE :
 
-                this.isModalActive = true;
+                this.isForegroundActive = true;
 
                 break;
 
-            case ManageTeamSignals.MODAL_INACTIVE :
+            case ManageTeamSignals.FOREGROUND_INACTIVE :
 
-                this.isModalActive = false;
+                this.isForegroundActive = false;
 
                 break;
 
             case ManageTeamSignals.EXIT :
 
-                if ( ! this.isModalActive ) this.sendNotification( ViewNotifications.SWITCH_TO_SCRUM_VIEW );
+                console.log( "IS FOREGROUND ACTIVE", this.isForegroundActive );
+
+                if ( ! this.isForegroundActive ) this.sendNotification( ViewNotifications.SWITCH_TO_SCRUM_VIEW );
 
                 break;
 

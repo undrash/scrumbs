@@ -108,7 +108,7 @@ export class ManageTeams extends ViewComponent {
 
     private addMemberHandler(): void {
         this.addMemberModal.enterScene();
-        this.sendSignal( ManageTeamSignals.MODAL_ACTIVE );
+        this.sendSignal( ManageTeamSignals.FOREGROUND_ACTIVE );
     }
 
 
@@ -146,6 +146,8 @@ export class ManageTeams extends ViewComponent {
 
     private deleteTeamHandler(): void {
 
+        this.sendSignal( ManageTeamSignals.FOREGROUND_ACTIVE );
+
         const teamName = this.teamNameInput.value;
 
         new ConfirmationModal(
@@ -160,6 +162,8 @@ export class ManageTeams extends ViewComponent {
         )
             .onSubmit( () => {
 
+                this.sendSignal( ManageTeamSignals.FOREGROUND_INACTIVE );
+
                 this.connection.deleteTeam(
                     this.loadedTeamId,
                     () => {
@@ -169,7 +173,7 @@ export class ManageTeams extends ViewComponent {
                     (err: string) => console.error( err )
                 );
             })
-            .onDismiss( () => console.info( "Modal dismissed." ) );
+            .onDismiss( () => this.sendSignal( ManageTeamSignals.FOREGROUND_INACTIVE ) );
     }
 
 
@@ -383,7 +387,7 @@ export class ManageTeams extends ViewComponent {
 
 
     public addMemberModalExited(): void {
-        this.sendSignal( ManageTeamSignals.MODAL_INACTIVE );
+        this.sendSignal( ManageTeamSignals.FOREGROUND_INACTIVE );
     }
 
 

@@ -81,10 +81,14 @@ export class ManageTeamsHeader extends ViewComponent {
 
             case this.teamsBtn.id :
                 this.sendSignal( ManageTeamSignals.SWITCH_TO_TEAMS );
+                this.membersBtn.classList.remove( "active" );
+                this.teamsBtn.classList.add( "active" );
                 break;
 
             case this.membersBtn.id:
                 this.sendSignal( ManageTeamSignals.SWITCH_TO_MEMBERS );
+                this.teamsBtn.classList.remove( "active" );
+                this.membersBtn.classList.add( "active" );
                 break;
 
             default :

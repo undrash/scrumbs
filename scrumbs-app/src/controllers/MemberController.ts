@@ -48,6 +48,7 @@ class MemberController {
         const string = req.params.string || "";
 
         Member.find( { owner: userId, name: { $regex: string, $options: 'i' } } )
+            .populate( "teams", "name isDefault _id" )
             .then( members => res.status( 200 ).json( { success: true, members } ) )
             .catch( next );
     }

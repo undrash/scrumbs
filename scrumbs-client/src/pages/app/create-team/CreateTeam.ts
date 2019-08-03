@@ -235,13 +235,11 @@ export class CreateTeam extends ViewComponent {
 
     private populateMembers(members: any): void {
 
-        if ( ! members.length ) {
-            return this.showEmptyState();
-        }
+        this.memberContainer.innerHTML = '';
+
+        if ( ! members.length ) return this.showEmptyState();
 
         this.hideEmptyState();
-
-        this.memberContainer.innerHTML = null;
 
         for ( let member of members ) {
             this.addMember( member );
