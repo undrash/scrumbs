@@ -11,8 +11,12 @@
   height: 100%;
   padding-top: 40px;
   position: relative;
+  border-radius: 5px 5px 0 0;
 
-  #create-team-exit-button { right: 36px; }
+  #create-team-exit-button {
+    right: 25px;
+    top: 25px;
+  }
 
   .create-team-inner-container {
     width: 565px;
