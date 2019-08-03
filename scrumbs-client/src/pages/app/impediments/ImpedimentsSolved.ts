@@ -126,13 +126,13 @@ export class ImpedimentsSolved extends ViewComponent {
         if ( ! this.solvedImpedimentsContainer.children.length ) this.header.style.display = "block";
 
 
-        const impediment          = document.createElement( "li" );
+        const impediment        = document.createElement( "li" );
         impediment.className    = "impediments-solved-member-impediment pointer active";
         impediment.id           = impedimentData._id;
         impediment.innerText    = impedimentData.content;
 
-        const checkbox            = document.createElement( "span" );
-        checkbox.className          = "impediments-solved-member-impediment-checkbox";
+        const checkbox          = document.createElement( "span" );
+        checkbox.className      = "impediments-solved-member-impediment-checkbox";
 
         impediment.appendChild( checkbox );
 
@@ -161,7 +161,12 @@ export class ImpedimentsSolved extends ViewComponent {
             memberContainer.appendChild( memberName );
             memberContainer.appendChild( impedimentsContainer );
 
-            this.solvedImpedimentsContainer.appendChild( memberContainer );
+
+            if ( impedimentData.member ) {
+                this.solvedImpedimentsContainer.appendChild( memberContainer );
+            } else {
+                this.solvedImpedimentsContainer.insertBefore( memberContainer, this.solvedImpedimentsContainer.firstElementChild );
+            }
         }
 
 

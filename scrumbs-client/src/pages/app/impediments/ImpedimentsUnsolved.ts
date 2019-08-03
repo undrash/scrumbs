@@ -100,12 +100,12 @@ export class ImpedimentsUnsolved extends ViewComponent {
     public addImpediment(impedimentData: any): void {
 
 
-        const impediment          = document.createElement( "li" );
+        const impediment        = document.createElement( "li" );
         impediment.className    = "impediments-unsolved-member-impediment pointer";
         impediment.id           = impedimentData._id;
         impediment.innerText    = impedimentData.content;
 
-        const checkbox            = document.createElement( "span" );
+        const checkbox          = document.createElement( "span" );
         checkbox.className      = "impediments-unsolved-member-impediment-checkbox";
 
         impediment.appendChild( checkbox );
@@ -136,7 +136,12 @@ export class ImpedimentsUnsolved extends ViewComponent {
             memberContainer.appendChild( memberName );
             memberContainer.appendChild( impedimentsContainer );
 
-            this.container.appendChild( memberContainer );
+
+            if ( impedimentData.member ) {
+                this.container.appendChild( memberContainer );
+            } else {
+                this.container.insertBefore( memberContainer, this.container.firstElementChild );
+            }
         }
 
 
