@@ -56,9 +56,10 @@
         content: "";
         display: block;
         position: absolute;
-        width: 100%;
+        width: 90%;
         height: 1px;
         @include center( "vertical" );
+        @include center( "horizontal" );
         background-color: $denary-color;
       }
 
