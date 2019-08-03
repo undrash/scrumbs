@@ -156,6 +156,14 @@
             top: 10px;
             position: absolute;
             background: url("../img/icons/bug-icon.svg") no-repeat center/18px;
+            opacity: 0.5;
+            transition: opacity 0.3s ease-in-out;
+
+            &:hover, &.active {
+                opacity: 1;
+            }
+
+
 
             .profile-inquiry-dot {
                 position: absolute;
@@ -232,7 +240,13 @@
             right: 110px;
             top: 10px;
             position: absolute;
+            opacity: 0.5;
             background: url("../img/icons/notification.svg") no-repeat center/contain;
+            transition: opacity 0.3s ease-in-out;
+
+            &:hover, &.active {
+                opacity: 1;
+            }
         }
 
 
