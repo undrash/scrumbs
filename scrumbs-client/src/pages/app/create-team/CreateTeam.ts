@@ -175,7 +175,7 @@ export class CreateTeam extends ViewComponent {
 
     private addMember(memberData: any): void {
 
-        const member          = document.createElement( "div" );
+        const member          = document.createElement( "li" );
         member.innerHTML    = this.highlightSearchString( memberData.name, this.searchMembers.value );
         member.id           = memberData._id;
 
