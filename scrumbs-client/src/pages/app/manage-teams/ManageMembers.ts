@@ -24,15 +24,20 @@ const template = require( "../../../templates/manage-members.html" );
 export class ManageMembers extends ViewComponent {
     private memberSearch: HTMLInputElement;
     private clearSearch: HTMLElement;
+
     private filterBtn: HTMLElement;
     private filterDropdown: HTMLElement;
     private filterOptionAllMembers: HTMLElement;
     private filterOptionUncategorized: HTMLElement;
     private filterTeamsList: HTMLElement;
+
     private emptySearch: HTMLElement;
 
     private mainMemberList: HTMLElement;
     private memberList: HTMLElement;
+
+    private searchTimer: any;
+
 
 
 
@@ -55,25 +60,126 @@ export class ManageMembers extends ViewComponent {
         this.filterTeamsList                = this.container.querySelector( "#manage-members-filter-team-list" ) as HTMLElement;
         this.emptySearch                    = this.container.querySelector( "#manage-member-empty-search-results" ) as HTMLElement;
 
-        this.emptySearch                    = this.container.querySelector( "#manage-members-members-list-container" ) as HTMLElement;
         this.mainMemberList                 = this.container.querySelector( "#manage-members-members-list-container" ) as HTMLElement;
 
         new SimpleBar( this.mainMemberList );
 
         this.memberList                     = this.mainMemberList.getElementsByClassName( "simplebar-content" )[0] as HTMLElement;
 
+        this.searchForMembers               = this.searchForMembers.bind( this );
+        this.searchListener                 = this.searchListener.bind( this );
+        this.clearSearchHandler             = this.clearSearchHandler.bind( this );
+        this.filterClickHandler             = this.filterClickHandler.bind( this );
+        this.documentClickHandler           = this.documentClickHandler.bind( this );
+        this.filterDropdownClickHandler     = this.filterDropdownClickHandler.bind( this );
+
     }
 
 
 
     private registerEventListeners(): void {
-
+        this.memberSearch.addEventListener( "keyup", this.searchListener );
+        this.clearSearch.addEventListener( "click", this.clearSearchHandler );
+        this.filterBtn.addEventListener( "click", this.filterClickHandler );
+        this.filterDropdown.addEventListener( "click", this.filterDropdownClickHandler );
+        document.addEventListener( "click", this.documentClickHandler );
     }
 
 
 
     private unregisterEventListeners(): void {
+        this.memberSearch.removeEventListener( "keyup", this.searchListener );
+        this.clearSearch.removeEventListener( "click", this.clearSearchHandler );
+        this.filterBtn.removeEventListener( "click", this.filterClickHandler );
+        this.filterDropdown.removeEventListener( "click", this.filterDropdownClickHandler );
+        document.removeEventListener( "click", this.documentClickHandler );
+    }
 
+
+
+    private filterClickHandler(): void {
+        this.filterDropdown.style.display = "block";
+    }
+
+
+
+    private filterDropdownClickHandler(e: any): void {
+
+        switch ( e.target.id ) {
+
+            case this.filterOptionAllMembers.id :
+                console.log( "FILTER ALL MEMBERS" );
+                break;
+
+            case this.filterOptionUncategorized.id :
+                console.log( "FILTER UNCATEGORIZED" );
+                break;
+
+            default :
+                console.log( "TEAMID: " + e.target.id );
+                break;
+        }
+    }
+
+
+
+    private documentClickHandler(e: any): void {
+        if ( e.target.id !== this.filterBtn.id ) this.filterDropdown.style.display = "none";
+    }
+
+
+
+    private clearSearchHandler(): void {
+        this.memberSearch.value         = '';
+        this.clearSearch.style.display  = "none";
+        this.populateMembers();
+    }
+
+
+    private searchListener(e: any): void {
+        const key = e.which || e.keyCode;
+
+        if ( this.searchTimer ) clearTimeout( this.searchTimer );
+
+        if ( ! this.memberSearch.value ) {
+            this.clearSearch.style.display = "none";
+            return this.populateMembers();
+
+        } else {
+            this.clearSearch.style.display = "block";
+        }
+
+
+        if ( key === 13 ) { // ENTER
+
+            this.searchForMembers( this.memberSearch.value  )
+
+        } else {
+
+            if ( this.memberSearch.value.length < 2 ) return;
+
+            this.searchTimer = setTimeout(
+                this.searchForMembers,
+                250,
+                this.memberSearch.value
+            );
+        }
+    }
+
+
+
+    private searchForMembers(value: string): void {
+
+        this.connection.searchMembers(
+            value,
+            (response: any) => {
+                const { members } = response;
+
+                this.addMembers( members );
+
+            },
+            (err: string) => console.error( err )
+        );
     }
 
 
@@ -85,7 +191,7 @@ export class ManageMembers extends ViewComponent {
 
 
     private addMember(memberData: any): void {
-        new Member( memberData, this.memberList );
+        new Member( this, memberData, this.memberList );
     }
 
 
@@ -94,32 +200,56 @@ export class ManageMembers extends ViewComponent {
         const filter        = document.createElement( "div" );
         filter.className    = "options-list-btn";
         filter.innerText    = team.name;
+        filter.id           = team._id;
 
         this.filterTeamsList.appendChild( filter );
     }
 
 
 
-    private populate(): void {
+    private addMembers(members: any[]): void {
 
-        /** Populate members */
+        this.memberList.innerHTML = '';
+
+        if ( ! members.length ) return this.showEmptyState();
+
+        this.hideEmptyState();
+
+        for ( let member of members ) {
+            this.addMember( member );
+        }
+    }
+
+
+
+    private showEmptyState(): void {
+        this.mainMemberList.style.display   = "none";
+        this.emptySearch.style.display      = "block";
+    }
+
+
+
+    private hideEmptyState(): void {
+        this.emptySearch.style.display      = "none";
+        this.mainMemberList.style.display   = "block";
+    }
+
+
+    private populateMembers(): void {
 
         this.connection.getMembers(
             (response: any) => {
                 const { members } = response;
 
-                console.log( members );
-
-                if ( members.length ) this.memberList.innerHTML = '';
-
-                for ( let member of members ) {
-                    this.addMember( member );
-                }
+                this.addMembers( members );
             },
             (err: Error) => console.error( err )
         );
+    }
 
-        /** Populate filters */
+
+
+    private populateFilters(): void {
 
         this.connection.getTeams(
             (response: any) => {
@@ -140,7 +270,8 @@ export class ManageMembers extends ViewComponent {
     public enterScene(enterType?: string): void {
         console.info( "Enter being called in manage members" );
         this.registerEventListeners();
-        this.populate();
+        this.populateMembers();
+        this.populateFilters();
 
 
         switch ( enterType ) {
