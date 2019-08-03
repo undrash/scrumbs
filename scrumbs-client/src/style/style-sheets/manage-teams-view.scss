@@ -267,6 +267,36 @@
 
     }
 
+    //MANAGE TEAMS/MEMBERS EMPTY STATE
+
+    #manage-members-empty-state-container {
+        display: none;
+    }
+
+    #manage-teams-empty-state-container {
+        display: none;
+    }
+
+    .manage-teams-empty-state-container {
+        padding-bottom: 75px;
+        padding-top: 55px;
+        text-align: center;
+        max-width: 250px;
+        margin: auto;
+        position: relative;
+        //display: none;
+
+        .empty-state-title {
+            margin: 30px 0 15px;
+        }
+
+        .add-object-button {
+            position: absolute;
+            left: 37%;
+            bottom: 0;
+        }
+    }
+
 
 
     //MANAGE MEMBERS
@@ -277,6 +307,7 @@
         margin: 0 auto;
         padding: 30px 25px 0;
         position: relative;
+        //display: none;
 
         .clear-search { display: none; }
 
@@ -284,7 +315,7 @@
             overflow: hidden;
 
             .options-list-bg {
-                top: 75px;
+                top: 85px;
                 right: 25px;
                 max-height: 270px;
                 z-index: 5555;
