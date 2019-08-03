@@ -26,12 +26,12 @@
   
   <h1>License</h1>
   
-  <p>Copyright (c) Planeeet. All rights reserved.</p>
+  <p>Copyright (c) boardme. All rights reserved.</p>
   
   
-  <a href="http://planeeet.com/">
+  <a href="https://www.boardme.app/">
     <img width="100px"
-      src="http://www.planeeet.com/wp-content/themes/planeeet/frontend/img/logo.svg">
+      src="https://www.boardme.app/public/img/boardme-blue.svg">
   </a>
 
 
