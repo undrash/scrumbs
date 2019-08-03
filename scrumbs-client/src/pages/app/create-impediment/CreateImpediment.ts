@@ -1,9 +1,9 @@
 
 import {CreateTeamModel} from "../../../connection/models/CreateTeamModel";
+import {CreateImpedimentSignals} from "./CreateImpedimentSignals";
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
-import {CreateTeamSignals} from "./CreateTeamSignals";
 import {View} from "../../../core/View";
 
 
@@ -15,53 +15,50 @@ import Back = gsap.Back;
 declare const SimpleBar: any;
 
 // CSS
-import "../../../style/style-sheets/create-team.scss";
+import "../../../style/style-sheets/create-impediment.scss";
+import {CreateNoteModel} from "../../../connection/models/CreateNoteModel";
 
 
 // HTML
-const template = require( "../../../templates/create-team.html" );
+const template = require( "../../../templates/create-impediment.html" );
 
 
 
 
 
 
-export class CreateTeam extends ViewComponent {
-    private saveBtn: HTMLButtonElement;
-    private exitBtn: HTMLSpanElement;
-    private teamNameInput: HTMLInputElement;
-    private mainMemberContainer: HTMLUListElement;
-    private memberContainer: HTMLDivElement;
+export class CreateImpediment extends ViewComponent {
+    private exitBtn: HTMLElement;
+    private saveBtn: HTMLElement;
+    private input: HTMLInputElement;
+    private inputError: HTMLElement;
     private searchMembers: HTMLInputElement;
-    private clearSearch: HTMLImageElement;
+    private clearSearch: HTMLElement;
+    private emptyState: HTMLElement;
+    private mainMemberList: HTMLElement;
+    private memberList: HTMLElement;
 
-    private teamNameError: HTMLElement;
-
-    private emptySearchResults: HTMLElement;
-
-    private selectedMembers: string[];
+    private selectedMember: string;
 
     private searchTimer: any;
 
-
     constructor(view: View, container: HTMLElement) {
-        super( view, container, "CreateTeam" );
+        super( view, container, "CreateImpediment" );
 
         this.container.innerHTML = template;
 
-        this.saveBtn                = document.getElementById( "create-team-save-button" ) as HTMLButtonElement;
-        this.exitBtn                = document.getElementById( "create-team-exit-button" ) as HTMLSpanElement;
-        this.teamNameInput          = document.getElementById( "create-team-name-input" ) as HTMLInputElement;
-        this.mainMemberContainer    = document.getElementById( "create-team-members-container" ) as HTMLUListElement;
-        this.searchMembers          = document.getElementById( "create-team-member-search-input" ) as HTMLInputElement;
-        this.clearSearch            = document.getElementById( "create-team-member-search-clear" ) as HTMLImageElement;
-        this.emptySearchResults     = document.getElementById( "member-search-empty" );
+        this.exitBtn = document.getElementById( "create-impediment-exit-button" );
+        this.saveBtn = document.getElementById( "create-impediment-save-button" );
+        this.input  = document.getElementById( "create-impediment-input" ) as HTMLInputElement;
+        this.inputError = document.getElementById( "new-impediment-error-message" );
+        this.searchMembers = document.getElementById( "create-impediment-member-search-input" ) as HTMLInputElement;
+        this.clearSearch = document.getElementById( "create-impediment-clear-search" );
+        this.emptyState = document.getElementById( "add-impediment-search-empty-state" );
+        this.mainMemberList = document.getElementById( "add-impediment-members-list" );
 
-        this.teamNameError          = document.getElementById( "scrum-create-team-name-error" );
+        new SimpleBar( this.mainMemberList );
 
-        new SimpleBar( this.mainMemberContainer );
-
-        this.memberContainer        = this.mainMemberContainer.getElementsByClassName( "simplebar-content" )[0] as HTMLDivElement;
+        this.memberList        = this.mainMemberList.getElementsByClassName( "simplebar-content" )[0] as HTMLDivElement;
 
 
         this.exitBtnHandler         = this.exitBtnHandler.bind( this );
@@ -71,7 +68,7 @@ export class CreateTeam extends ViewComponent {
         this.clearSearchHandler     = this.clearSearchHandler.bind( this );
         this.documentKeyListener    = this.documentKeyListener.bind( this );
 
-        this.selectedMembers    = [];
+        this.selectedMember         = null;
 
         this.enterScene();
     }
@@ -101,32 +98,38 @@ export class CreateTeam extends ViewComponent {
     private documentKeyListener(e: any): void {
         const key = e.which || e.keyCode;
 
-        if ( key === 27 ) this.sendSignal( CreateTeamSignals.EXIT ); // ESCAPE
+        if ( key === 13 ) this.saveBtnHandler(); // ENTER
+        if ( key === 27 ) this.sendSignal( CreateImpedimentSignals.EXIT ); // ESCAPE
+
     }
 
 
 
     private exitBtnHandler() {
-        this.sendSignal( CreateTeamSignals.EXIT );
+        this.sendSignal( CreateImpedimentSignals.EXIT );
     }
 
 
 
     private saveBtnHandler() {
-        const name = this.teamNameInput.value;
+        const name = this.input.value;
 
-        if ( ! name ) return this.teamNameError.style.display = "block";
+        if ( ! name ) return this.inputError.style.opacity = "1";
 
-        const createTeamModel = new CreateTeamModel( name, this.selectedMembers );
+        const createNoteModel = new CreateNoteModel(
+            this.selectedMember,
+            null,
+            this.input.value,
+            true
+        );
 
-        this.connection.createTeam(
-            createTeamModel,
+        this.connection.createNote(
+            createNoteModel,
             (response: any) => {
                 console.log( response );
-
-                this.sendSignal( CreateTeamSignals.EXIT );
+                this.sendSignal( CreateImpedimentSignals.EXIT );
             },
-            (err: string) => console.error( err )
+            (err: Error) => console.error( err )
         );
 
     }
@@ -161,6 +164,7 @@ export class CreateTeam extends ViewComponent {
                 this.searchMembers.value
             );
         }
+
     }
 
 
@@ -175,32 +179,42 @@ export class CreateTeam extends ViewComponent {
 
     private addMember(memberData: any): void {
 
-        const member          = document.createElement( "div" );
-        member.innerHTML    = this.highlightSearchString( memberData.name, this.searchMembers.value );
+        const member        = document.createElement( "div" );
         member.id           = memberData._id;
+        member.className    = "team-members-list-item";
 
-        const checkbox        = document.createElement( "span" );
-        checkbox.className  = "create-team-member-checkbox";
+        const name          = document.createElement( "p" );
+        name.innerHTML      = this.highlightSearchString( memberData.name, this.searchMembers.value );
 
+        const checkbox      = document.createElement( "div" );
+        checkbox.className  = "checked-box";
+
+        member.appendChild( name );
         member.appendChild( checkbox );
 
-        this.memberContainer.insertBefore( member, this.memberContainer.firstChild );
+        this.memberList.insertBefore( member, this.memberList.firstChild );
 
-        if ( this.selectedMembers.indexOf( member.id ) !== -1 ) member.classList.add( "active" );
+        if ( this.selectedMember === member.id ) member.classList.add( "selected" );
 
         member.addEventListener( "click", () => {
-            const memberId = member.id;
 
-            if ( member.classList.contains( "active" ) ) {
-                member.classList.remove( "active" );
-                this.selectedMembers = this.selectedMembers.filter( id => id !== memberId );
-            } else {
-                member.classList.add( "active" );
-                this.selectedMembers.push( memberId );
+            /** If the current member is selected */
+
+            if ( member.classList.contains( "selected" ) ) {
+                member.classList.remove( "selected" );
+                return this.selectedMember = null;
             }
 
-        });
+            /** If the current member was not selected */
 
+            this.selectedMember = member.id;
+
+            if ( this.memberList.querySelector( ".selected" ) ) {
+                this.memberList.querySelector( ".selected" ).classList.remove( "selected" );
+            }
+
+            member.classList.add( "selected" );
+        });
     }
 
 
@@ -217,7 +231,6 @@ export class CreateTeam extends ViewComponent {
 
 
     private searchForMembers(value: string): void {
-        console.log( value );
 
         this.connection.searchMembers(
             value,
@@ -235,8 +248,7 @@ export class CreateTeam extends ViewComponent {
 
 
     private populateMembers(members: any): void {
-
-        this.memberContainer.innerHTML = '';
+        this.memberList.innerHTML = '';
 
         if ( ! members.length ) return this.showEmptyState();
 
@@ -263,15 +275,15 @@ export class CreateTeam extends ViewComponent {
 
 
     private showEmptyState(): void {
-        this.mainMemberContainer.style.display  = "none";
-        this.emptySearchResults.style.display   = "block";
+        this.mainMemberList.style.display  = "none";
+        this.emptyState.style.display   = "block";
     }
 
 
 
     private hideEmptyState(): void {
-        this.emptySearchResults.style.display   = "none";
-        this.mainMemberContainer.style.display  = "block";
+        this.emptyState.style.display   = "none";
+        this.mainMemberList.style.display  = "block";
     }
 
 

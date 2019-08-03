@@ -1,14 +1,14 @@
 
-
-import {ImpedimentsUnsolved} from "./ImpedimentsUnsolved";
 import {SystemConstants} from "../../../core/SystemConstants";
+import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
+import {ImpedimentsUnsolved} from "./ImpedimentsUnsolved";
+import {ViewExitTypes} from "../../../core/ViewExitTypes";
+import {ViewComponent} from "../../../core/ViewComponent";
+import {INotification} from "../../../core/INotification";
+import {ViewNotifications} from "../ViewNotifications";
 import {ImpedimentsSolved} from "./ImpedimentsSolved";
 import {ImpedimentsHeader} from "./ImpedimentsHeader";
 import {ImpedimentSignals} from "./ImpedimentSignals";
-import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
-import {ViewComponent} from "../../../core/ViewComponent";
-import {INotification} from "../../../core/INotification";
-import {ViewExitTypes} from "../../../core/ViewExitTypes";
 import {ISignal} from "../../../core/ISignal";
 import {View} from "../../../core/View";
 
@@ -43,6 +43,8 @@ export class ImpedimentsView extends View {
     private isImpedimensSolvedEmpty: boolean;
     private isImpedimentsUnsolvedEmpty: boolean;
 
+    private createImpedimentBtn: HTMLElement;
+
 
     constructor() {
         super( "ImpedimentsView" );
@@ -68,17 +70,41 @@ export class ImpedimentsView extends View {
         this.impedimentsUnsolved                    = new ImpedimentsUnsolved( this, this.impedimentsUnsolvedContainer );
         this.impedimentsSolved                      = new ImpedimentsSolved( this, this.impedimentsSolvedContainer );
 
+        this.createImpedimentBtn                    = document.getElementById( "create-impediment-btn" );
+
+        this.createImpedimentListener               = this.createImpedimentListener.bind( this );
 
         this.enterScene();
     }
 
 
 
-    public enterScene(): void {}
+    private registerEventListeners(): void {
+        this.createImpedimentBtn.addEventListener( "click", this.createImpedimentListener );
+    }
+
+
+
+    private unregisterEventListeners(): void {
+        this.createImpedimentBtn.removeEventListener( "click", this.createImpedimentListener );
+    }
+
+
+
+    private createImpedimentListener(): void {
+        this.sendNotification( ViewNotifications.SWITCH_TO_CREATE_IMPEDIMENT_VIEW );
+    }
+
+
+
+    public enterScene(): void {
+        this.registerEventListeners();
+    }
 
 
 
     public exitScene( exitType: string, callback: Function ): void {
+        this.unregisterEventListeners();
 
         this.exitCallback = callback;
 

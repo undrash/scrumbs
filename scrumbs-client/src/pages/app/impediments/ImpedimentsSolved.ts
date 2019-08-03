@@ -125,54 +125,47 @@ export class ImpedimentsSolved extends ViewComponent {
 
         if ( ! this.solvedImpedimentsContainer.children.length ) this.header.style.display = "block";
 
+
+        const impediment          = document.createElement( "li" );
+        impediment.className    = "impediments-solved-member-impediment pointer active";
+        impediment.id           = impedimentData._id;
+        impediment.innerText    = impedimentData.content;
+
+        const checkbox            = document.createElement( "span" );
+        checkbox.className          = "impediments-solved-member-impediment-checkbox";
+
+        impediment.appendChild( checkbox );
+
         /** Check if member is already rendered, if so - we append */
-        let memberContainer = document.getElementById( `solved-${ impedimentData.member._id }` );
+        let memberContainer = document.getElementById( `solved-${ impedimentData.member ? impedimentData.member._id : "user-impediments" }` );
 
         if ( memberContainer ) {
-            let impediment          = document.createElement( "li" );
-            impediment.className    = "impediments-solved-member-impediment pointer active";
-            impediment.id           = impedimentData._id;
-            impediment.innerText    = impedimentData.content;
-
-            let checkbox            = document.createElement( "span" );
-            checkbox.className      = "impediments-solved-member-impediment-checkbox";
-
-            impediment.appendChild( checkbox );
 
             memberContainer.lastElementChild.appendChild( impediment );
 
-            this.addListenerToImpediment( impediment );
         } else {
             /** If the member has no container on the page, we create it now */
             memberContainer                 = document.createElement( "li" );
-            memberContainer.id              = `solved-${impedimentData.member._id}`;
+            memberContainer.id              = `solved-${ impedimentData.member ? impedimentData.member._id : "user-impediments" }`;
             memberContainer.className       = "impediments-solved-member-container";
 
             let memberName                  = document.createElement( "h3" );
-            memberName.innerText            = impedimentData.member.name;
+            memberName.innerText            = impedimentData.member ? impedimentData.member.name : "Your Impediments";
             memberName.className            = "impediments-solved-member-name bold";
 
             let impedimentsContainer        = document.createElement( "ul" );
             impedimentsContainer.className  = "impediments-solved-member-impediments";
 
-            let impediment                  = document.createElement( "li" );
-            impediment.className            = "impediments-solved-member-impediment pointer active";
-            impediment.innerText            = impedimentData.content;
-            impediment.id                   = impedimentData._id;
-
-            let checkbox                    = document.createElement( "span" );
-            checkbox.className              = "impediments-solved-member-impediment-checkbox";
-
-            impediment.appendChild( checkbox );
             impedimentsContainer.appendChild( impediment );
 
             memberContainer.appendChild( memberName );
             memberContainer.appendChild( impedimentsContainer );
 
             this.solvedImpedimentsContainer.appendChild( memberContainer );
-
-            this.addListenerToImpediment( impediment );
         }
+
+
+        this.addListenerToImpediment( impediment );
     }
 
 

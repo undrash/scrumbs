@@ -1,5 +1,6 @@
 
 import {AuthenticationNotifications} from "./authentication/AuthenticationNotifications";
+import {CreateImpedimentView} from "./create-impediment/CreateImpedimentView";
 import {AuthenticationView} from "./authentication/AuthenticationView";
 import {ConnectionProxy} from "../../connection/ConnectionProxy";
 import {ManageTeamsView} from "./manage-teams/ManageTeamsView";
@@ -67,9 +68,11 @@ export class AppViewManager extends ViewManager {
 
         notifications.push( ViewNotifications.SWITCH_TO_SCRUM_VIEW );
         notifications.push( ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW );
-        notifications.push( ViewNotifications.SWITCH_TO_REPORTS_VIEW );
+        notifications.push( ViewNotifications.SWITCH_TO_CREATE_IMPEDIMENT_VIEW );
         notifications.push( ViewNotifications.SWITCH_TO_MANAGE_TEAMS_VIEW );
         notifications.push( ViewNotifications.SWITCH_TO_CREATE_TEAM_VIEW );
+        notifications.push( ViewNotifications.SWITCH_TO_REPORTS_VIEW );
+
         notifications.push( ViewNotifications.SWITCH_TO_PREVIOUS_VIEW );
 
         notifications.push( ViewNotifications.INIT_ONBOARDING_MEMBER_EDIT_FLOW );
@@ -101,6 +104,13 @@ export class AppViewManager extends ViewManager {
             case ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW :
 
                 this.switchView( ImpedimentsView, null );
+
+                break;
+
+
+            case ViewNotifications.SWITCH_TO_CREATE_IMPEDIMENT_VIEW :
+
+                this.switchView( CreateImpedimentView, null );
 
                 break;
 

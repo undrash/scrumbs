@@ -16,14 +16,12 @@ const NoteSchema = new Schema({
 
     member: {
         type: Schema.Types.ObjectId,
-        ref: "Member",
-        required: true
+        ref: "Member"
     },
 
     team: {
         type: Schema.Types.ObjectId,
-        ref: "Team",
-        required: true
+        ref: "Team"
     },
 
     content: {
