@@ -67,6 +67,35 @@
             display: none;
         }
 
+        .profile-notification-container {
+            position: absolute;
+            width: 275px;
+            height: 275px;
+            box-shadow: 0 2px 15px 0 rgba(221,220,234,0.7);
+            border-radius: 3px;
+            background-color: #ffffff;
+            top: 34px;
+            right: 0;
+            padding: 40px;
+            text-align: center;
+            display: none;
+
+            .notification-empty-state-img {
+                margin: auto;
+            }
+
+            .main-title {
+                margin: 20px 0 10px;
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+            .secondary-text {
+                font-size: 14px;
+            }
+        }
+
+
         #user-options-panel {
             height: auto;
             width: 275px;
@@ -98,8 +127,9 @@
 
         .user-summary {
 
-            height: 65px;
+            //height: 65px;
             border-bottom: 1px solid $quaternary-color;
+            padding-bottom: 15px;
 
             .profile-avatar {
                 display: inline-block;
@@ -112,6 +142,8 @@
                 font-size: 18px;
                 vertical-align: middle;
                 margin-left: 10px;
+                white-space: initial;
+                width: calc(100% - 55px);
             }
         }
 
