@@ -315,7 +315,7 @@
             overflow: hidden;
 
             .options-list-bg {
-                top: 85px;
+                top: 75px;
                 right: 25px;
                 max-height: 270px;
                 z-index: 5555;
@@ -363,7 +363,7 @@
 
         .manage-members-members-list-item-container {
             padding: 15px;
-            transition: background-color 0.3s ease-in-out;
+            transition: background-color 0.3s ease-in-out, opacity 0.3s ease-in-out;
 
             &:hover {
                 background-color: $nonary-color;
