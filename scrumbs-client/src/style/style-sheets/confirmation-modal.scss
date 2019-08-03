@@ -69,6 +69,11 @@
     line-height: 22px;
     color: $text-secondary-color;
     text-align: center;
+
+    p:nth-child(2) {
+      color: $senary-color;
+      padding: 15px;
+    }
   }
 
   #confirmation-modal-buttons-container {
