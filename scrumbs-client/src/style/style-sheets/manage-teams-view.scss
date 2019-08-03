@@ -325,6 +325,9 @@
                 .options-list-btn {
                     padding: 0 20px;
                     font-size: 14px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
                 }
             }
         }
