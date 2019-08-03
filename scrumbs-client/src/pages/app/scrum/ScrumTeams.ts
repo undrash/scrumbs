@@ -119,20 +119,36 @@ export class ScrumTeams extends ViewComponent {
                 const { selectedMember } = this.getMemory();
 
                 console.log( "Selected member: ", selectedMember );
+                console.log( teams );
 
-                /** If we have recollection of a selected member, and it still exists we load it */
-                if ( selectedMember && teams.indexOf( selectedMember ) !== -1 ) {
 
-                    this.connection.getMembersOfTeam(
-                        selectedMember.team,
-                        (response: any) => {
-                            this.populateMembers( selectedMember.team, response.members );
-                            this.sendSignal( ScrumSignals.LOAD_MEMBER_NOTES, selectedMember );
-                            this.applySelectionToMember( `${ selectedMember.team }@${ selectedMember.id }` );
+                /** If we have recollection of a selected member */
+                if ( selectedMember ) {
 
-                        },
-                        (err: any) => console.error( err )
-                    );
+                    /** If the team still exists */
+                    if ( teams.map( (t: any) => t._id ).indexOf( selectedMember.team ) !== -1 ) {
+
+                        this.connection.getMembersOfTeam(
+                            selectedMember.team,
+                            (response: any) => {
+
+                                /** If the member still exists */
+                                if ( response.members.map( (m: any) => m._id ).indexOf( selectedMember.id ) !== -1 ) {
+                                    this.populateMembers( selectedMember.team, response.members );
+                                    this.sendSignal( ScrumSignals.LOAD_MEMBER_NOTES, selectedMember );
+                                    this.applySelectionToMember( `${ selectedMember.team }@${ selectedMember.id }` );
+                                } else {
+                                    //TODO if member was deleted? Default to welcome screen?
+                                }
+
+                            },
+                            (err: any) => console.error( err )
+                        );
+                    } else {
+
+                        //TODO if team was deleted? Default to welcome screen?
+
+                    }
 
                 } else {
                 /** If we don't have memory data, we load the default team */

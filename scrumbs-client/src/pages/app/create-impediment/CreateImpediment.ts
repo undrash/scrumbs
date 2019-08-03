@@ -1,5 +1,5 @@
 
-import {CreateTeamModel} from "../../../connection/models/CreateTeamModel";
+import {CreateNoteModel} from "../../../connection/models/CreateNoteModel";
 import {CreateImpedimentSignals} from "./CreateImpedimentSignals";
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
@@ -16,7 +16,6 @@ declare const SimpleBar: any;
 
 // CSS
 import "../../../style/style-sheets/create-impediment.scss";
-import {CreateNoteModel} from "../../../connection/models/CreateNoteModel";
 
 
 // HTML
@@ -275,15 +274,15 @@ export class CreateImpediment extends ViewComponent {
 
 
     private showEmptyState(): void {
-        this.mainMemberList.style.display  = "none";
-        this.emptyState.style.display   = "block";
+        this.mainMemberList.style.display   = "none";
+        this.emptyState.style.display       = "block";
     }
 
 
 
     private hideEmptyState(): void {
-        this.emptyState.style.display   = "none";
-        this.mainMemberList.style.display  = "block";
+        this.emptyState.style.display       = "none";
+        this.mainMemberList.style.display   = "block";
     }
 
 
