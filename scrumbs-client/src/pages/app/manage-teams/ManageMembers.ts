@@ -254,6 +254,7 @@ export class ManageMembers extends ViewComponent {
 
 
     private enterAddMember(): void {
+        this.hideEmptyState();
         this.sendSignal( ManageTeamSignals.FOREGROUND_ACTIVE );
         this.memberList.insertBefore( this.memberAdd, this.memberList.firstElementChild );
         this.memberAddInput.focus();
@@ -266,6 +267,7 @@ export class ManageMembers extends ViewComponent {
         this.memberAddInput.value = '';
         setTimeout( () => this.sendSignal( ManageTeamSignals.FOREGROUND_INACTIVE ) , 0 );
     }
+
 
 
     private createMember(name: string): void {
