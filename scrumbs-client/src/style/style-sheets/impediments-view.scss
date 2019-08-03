@@ -146,7 +146,8 @@
             width: 275px;
             //max-height: 355px;
             @include center( "horizontal" );
-            top: 40px;
+            top: 45px;
+            right: -139px;
             padding: 15px 20px 0;
             background-color: $tertiary-color;
             border-radius: 3px;
@@ -154,19 +155,7 @@
             display: none;
             // Blurry text bug fix
             transform: translateX(calc(-50% - .5px));
-
-
-            &::before {
-                content: "";
-                position: absolute;
-                display: block;
-                width: 20px;
-                height: 20px;
-                top: -7px;
-                left: calc( 50% - 10px );
-                transform: rotate( 45deg );
-                background-color: $tertiary-color;
-            }
+            left: unset;
 
             .simplebar-track {
                 right: 0;
