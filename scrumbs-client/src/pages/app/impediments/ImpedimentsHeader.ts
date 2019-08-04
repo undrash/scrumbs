@@ -46,6 +46,7 @@ export class ImpedimentsHeader extends ViewComponent {
 
     private optionExport: HTMLElement;
     private optionSolveAll: HTMLElement;
+    private optionClearSolved: HTMLElement;
 
 
     constructor(view: View, container: HTMLElement) {
@@ -69,6 +70,7 @@ export class ImpedimentsHeader extends ViewComponent {
         this.optionsDropdown        = document.getElementById( "impediments-header-options-dropdown" );
         this.optionExport           = document.getElementById( "impediment-option-export" );
         this.optionSolveAll         = document.getElementById( "impediment-option-solve-all" );
+        this.optionClearSolved      = document.getElementById( "impediment-option-clear-solved" );
 
 
         this.filterBtnListener          = this.filterBtnListener.bind( this );
@@ -211,9 +213,11 @@ export class ImpedimentsHeader extends ViewComponent {
                 break;
 
             case this.optionSolveAll.id :
-
                 this.sendSignal( ImpedimentSignals.SOLVE_ALL_IMPEDIMENTS );
+                break;
 
+            case this.optionClearSolved.id :
+                this.sendSignal( ImpedimentSignals.CLEAR_SOLVED_IMPEDIMENTS );
                 break;
 
             default :

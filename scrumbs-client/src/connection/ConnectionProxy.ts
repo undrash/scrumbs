@@ -420,6 +420,19 @@ export class ConnectionProxy extends Proxy {
 
 
 
+    public clearSolvedImpediments(success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.PUT,
+            "/api/v1/notes/clear",
+            null,
+            success,
+            failure
+        );
+    }
+
+
+
     public solveImpediment(impedimentId: string, success: Function, failure: Function): void {
 
         this.httpRequest(

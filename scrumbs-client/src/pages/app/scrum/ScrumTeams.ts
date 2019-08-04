@@ -36,6 +36,7 @@ export class ScrumTeams extends ViewComponent {
     private teamsContainer: HTMLDivElement;
 
 
+
     constructor(view: View, container: HTMLElement) {
         super( view, container, "ScrumTeams" );
 

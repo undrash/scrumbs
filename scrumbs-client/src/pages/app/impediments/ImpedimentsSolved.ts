@@ -214,6 +214,24 @@ export class ImpedimentsSolved extends ViewComponent {
 
 
 
+    public clearImpediments(): void {
+
+        this.connection.clearSolvedImpediments(
+            (response: any) => {
+                console.log( response );
+
+                this.solvedImpedimentsContainer.style.display   = "none";
+                this.header.style.display                       = "none";
+                this.toggleVisibilityBtn.innerText              = "Show Completed";
+
+                this.solvedImpedimentsContainer.innerHTML       = '';
+            },
+            (err: Error) => console.error( err )
+        );
+    }
+
+
+
     public enterScene(enterType?: string): void {
         console.info( "Enter being called in impediments solved view component" );
         this.registerEventListeners();

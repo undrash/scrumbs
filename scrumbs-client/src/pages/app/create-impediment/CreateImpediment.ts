@@ -41,6 +41,8 @@ export class CreateImpediment extends ViewComponent {
 
     private searchTimer: any;
 
+
+
     constructor(view: View, container: HTMLElement) {
         super( view, container, "CreateImpediment" );
 

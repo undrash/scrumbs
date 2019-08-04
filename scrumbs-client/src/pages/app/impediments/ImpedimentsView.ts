@@ -212,6 +212,12 @@ export class ImpedimentsView extends View {
 
                 break;
 
+            case ImpedimentSignals.CLEAR_SOLVED_IMPEDIMENTS :
+
+                ( this.impedimentsSolved as ImpedimentsSolved ).clearImpediments();
+
+                break;
+
             default:
                 break;
         }

@@ -32,6 +32,7 @@ class NoteController {
         this.router.put( "/unsolve/:id", RequireAuthentication, this.unsolve );
         this.router.delete( "/member/:id&:team", RequireAuthentication, this.deleteMemberNotes );
         this.router.put( "/convert", RequireAuthentication, this.convert );
+        this.router.put( "/clear", RequireAuthentication, this.clearImpediments );
     }
 
 
@@ -209,6 +210,23 @@ class NoteController {
             }))
             .catch( next )
     }
+
+
+
+    public clearImpediments = async (req: Request, res: Response, next: NextFunction) => {
+        const userId = ( req as any ).user._id;
+
+        await Note.deleteMany( { owner: userId, member: null, isSolved: true } )
+            .catch( next );
+
+        Note.updateMany( { owner: userId, isImpediment: true, isSolved: true },
+            { isImpediment: false } )
+            .then( () => res.status( 200 ).json({
+               success: true,
+               message: "Cleared all solved impediments."
+            }))
+            .catch( next );
+    };
 
 }
 
