@@ -25,6 +25,9 @@ const templateAddMember = require( "../../../templates/manage-members-member-add
 
 
 export class ManageMembers extends ViewComponent {
+
+    private contentContainer: HTMLElement;
+
     private memberSearch: HTMLInputElement;
     private clearSearch: HTMLElement;
 
@@ -48,6 +51,9 @@ export class ManageMembers extends ViewComponent {
     private memberAddSaveBtn: HTMLElement;
     private memberAddCancelBtn: HTMLElement;
 
+    private emptyState: HTMLElement;
+    private emptyStateCreateMemberBtn: HTMLElement;
+
 
     constructor(view: View, container: HTMLElement) {
         super( view, container, "ManageMembers" );
@@ -55,6 +61,8 @@ export class ManageMembers extends ViewComponent {
         this.container.parentNode.removeChild( this.container );
 
         this.container.innerHTML            = template;
+
+        this.contentContainer               = this.container.querySelector( "#manage-members-content-container" ) as HTMLElement;
 
         this.memberSearch                   = this.container.querySelector( "#manage-members-search-input" ) as HTMLInputElement;
         this.clearSearch                    = this.container.querySelector( "#manage-members-clear-input" ) as HTMLElement;
@@ -84,6 +92,9 @@ export class ManageMembers extends ViewComponent {
         this.memberAddSaveBtn               = this.memberAdd.querySelector( ".member-add-save" ) as HTMLElement;
         this.memberAddCancelBtn             = this.memberAdd.querySelector( ".member-add-cancel" ) as HTMLElement;
 
+        this.emptyState                     = this.container.querySelector( "#manage-members-empty-state-container" ) as HTMLElement;
+        this.emptyStateCreateMemberBtn      = this.container.querySelector( "#manage-members-empty-state-add-new-team-btn" ) as HTMLElement;
+
         this.searchForMembers               = this.searchForMembers.bind( this );
         this.searchListener                 = this.searchListener.bind( this );
         this.clearSearchHandler             = this.clearSearchHandler.bind( this );
@@ -105,6 +116,7 @@ export class ManageMembers extends ViewComponent {
         this.filterBtn.addEventListener( "click", this.filterClickHandler );
         this.filterDropdown.addEventListener( "click", this.filterDropdownClickHandler );
         this.addMemberBtn.addEventListener( "click", this.addMemberListener );
+        this.emptyStateCreateMemberBtn.addEventListener( "click", this.addMemberListener );
         this.memberAdd.addEventListener( "keydown", this.addMemberKeyListener );
         this.memberAddSaveBtn.addEventListener( "click", this.addMemberSaveListener );
         this.memberAddCancelBtn.addEventListener( "click", this.addMemberCancelListener );
@@ -119,6 +131,7 @@ export class ManageMembers extends ViewComponent {
         this.filterBtn.removeEventListener( "click", this.filterClickHandler );
         this.filterDropdown.removeEventListener( "click", this.filterDropdownClickHandler );
         this.addMemberBtn.removeEventListener( "click", this.addMemberListener );
+        this.emptyStateCreateMemberBtn.removeEventListener( "click", this.addMemberListener );
         this.memberAdd.removeEventListener( "keydown", this.addMemberKeyListener );
         this.memberAddSaveBtn.removeEventListener( "click", this.addMemberSaveListener );
         this.memberAddCancelBtn.removeEventListener( "click", this.addMemberCancelListener );
@@ -255,6 +268,7 @@ export class ManageMembers extends ViewComponent {
 
     private enterAddMember(): void {
         this.hideEmptyState();
+        this.hideEmptySearchResults();
         this.sendSignal( ManageTeamSignals.FOREGROUND_ACTIVE );
         this.memberList.insertBefore( this.memberAdd, this.memberList.firstElementChild );
         this.memberAddInput.focus();
@@ -297,6 +311,10 @@ export class ManageMembers extends ViewComponent {
             (response: any) => {
                 const { members } = response;
 
+                if ( ! members.length ) return this.showEmptySearchResults();
+
+                this.hideEmptySearchResults();
+
                 this.addMembers( members );
 
             },
@@ -333,10 +351,6 @@ export class ManageMembers extends ViewComponent {
 
         this.memberList.innerHTML = '';
 
-        if ( ! members.length ) return this.showEmptyState();
-
-        this.hideEmptyState();
-
         for ( let member of members ) {
             this.addMember( member );
         }
@@ -344,17 +358,18 @@ export class ManageMembers extends ViewComponent {
 
 
 
-    private showEmptyState(): void {
+    private showEmptySearchResults(): void {
         this.mainMemberList.style.display   = "none";
         this.emptySearch.style.display      = "block";
     }
 
 
 
-    private hideEmptyState(): void {
+    private hideEmptySearchResults(): void {
         this.emptySearch.style.display      = "none";
         this.mainMemberList.style.display   = "block";
     }
+
 
 
     private populateMembers(): void {
@@ -362,6 +377,11 @@ export class ManageMembers extends ViewComponent {
         this.connection.getMembers(
             (response: any) => {
                 const { members } = response;
+
+                if ( ! members.length ) return this.showEmptyState();
+
+                this.hideEmptyState();
+                this.hideEmptySearchResults();
 
                 this.addMembers( members );
             },
@@ -385,6 +405,20 @@ export class ManageMembers extends ViewComponent {
             },
             (err: Error) => console.error( err )
         );
+    }
+
+
+
+    private showEmptyState(): void {
+        this.contentContainer.style.display     = "none";
+        this.emptyState.style.display           = "block";
+    }
+
+
+
+    private hideEmptyState(): void {
+        this.emptyState.style.display           = "none";
+        this.contentContainer.style.display     = "block";
     }
 
 

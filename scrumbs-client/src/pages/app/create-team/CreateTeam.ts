@@ -282,6 +282,7 @@ export class CreateTeam extends ViewComponent {
 
         this.registerEventListeners();
         this.populate();
+        this.teamNameInput.focus();
     }
 
 

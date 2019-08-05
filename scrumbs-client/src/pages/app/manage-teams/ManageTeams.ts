@@ -30,6 +30,8 @@ const template = require( "../../../templates/manage-teams.html" );
 
 export class ManageTeams extends ViewComponent {
 
+    private contentContainer: HTMLElement;
+
     private avatar: HTMLElement;
     private teamNameInput: HTMLInputElement;
     private deleteTeamBtn: HTMLElement;
@@ -50,38 +52,47 @@ export class ManageTeams extends ViewComponent {
     private addMemberModal: AddMemberModal;
 
 
+    private emptyState: HTMLElement;
+    private emptyStateCreateTeamBtn: HTMLElement;
+
 
     constructor(view: View, container: HTMLElement) {
         super( view, container, "ManageTeams" );
 
-        this.container.innerHTML    = template;
+        this.container.innerHTML        = template;
 
-        this.avatar                 = document.getElementById( "main-scrum-master-avatar" );
-        this.teamNameInput          = document.getElementById( "manage-teams-input-edit-team-name" ) as HTMLInputElement;
-        this.deleteTeamBtn          = document.getElementById( "manage-teams-delete-team-button" );
+        this.contentContainer           = document.getElementById( "manage-teams-content-container" );
 
-        this.addMemberBtn           = document.getElementById( "manage-teams-add-member-button" );
-        this.mainMemberContainer    = document.getElementById( "team-members-list-container" );
+        this.avatar                     = document.getElementById( "main-scrum-master-avatar" );
+        this.teamNameInput              = document.getElementById( "manage-teams-input-edit-team-name" ) as HTMLInputElement;
+        this.deleteTeamBtn              = document.getElementById( "manage-teams-delete-team-button" );
+
+        this.addMemberBtn               = document.getElementById( "manage-teams-add-member-button" );
+        this.mainMemberContainer        = document.getElementById( "team-members-list-container" );
 
         new SimpleBar( this.mainMemberContainer );
 
-        this.memberContainer        = this.mainMemberContainer.getElementsByClassName( "simplebar-content" )[0] as HTMLElement;
+        this.memberContainer            = this.mainMemberContainer.getElementsByClassName( "simplebar-content" )[0] as HTMLElement;
 
-        this.mainTeamContainer      = document.getElementById( "teams-list-container" );
+        this.mainTeamContainer          = document.getElementById( "teams-list-container" );
 
         new SimpleBar( this.mainTeamContainer );
 
-        this.teamContainer          = this.mainTeamContainer.getElementsByClassName( "simplebar-content" )[0] as HTMLElement;
+        this.teamContainer              = this.mainTeamContainer.getElementsByClassName( "simplebar-content" )[0] as HTMLElement;
 
-        this.createTeamBtn          = document.getElementById( "manage-teams-add-new-team-btn" );
+        this.createTeamBtn              = document.getElementById( "manage-teams-add-new-team-btn" );
 
-        this.addMemberModal         = new AddMemberModal( this );
+        this.emptyState                 = document.getElementById( "manage-teams-empty-state-container" );
+        this.emptyStateCreateTeamBtn    = document.getElementById( "manage-teams-empty-state-add-new-team-btn" );
 
-        this.createTeamHandler      = this.createTeamHandler.bind( this );
-        this.deleteTeamHandler      = this.deleteTeamHandler.bind( this );
-        this.removeMember           = this.removeMember.bind( this );
-        this.nameInputHandler       = this.nameInputHandler.bind( this );
-        this.addMemberHandler       = this.addMemberHandler.bind( this );
+        this.addMemberModal             = new AddMemberModal( this );
+
+
+        this.createTeamHandler          = this.createTeamHandler.bind( this );
+        this.deleteTeamHandler          = this.deleteTeamHandler.bind( this );
+        this.removeMember               = this.removeMember.bind( this );
+        this.nameInputHandler           = this.nameInputHandler.bind( this );
+        this.addMemberHandler           = this.addMemberHandler.bind( this );
 
         this.enterScene();
     }
@@ -90,6 +101,7 @@ export class ManageTeams extends ViewComponent {
 
     private registerEventListeners(): void {
         this.createTeamBtn.addEventListener( "click", this.createTeamHandler );
+        this.emptyStateCreateTeamBtn.addEventListener( "click", this.createTeamHandler );
         this.deleteTeamBtn.addEventListener( "click", this.deleteTeamHandler );
         this.teamNameInput.addEventListener( "keyup", this.nameInputHandler );
         this.addMemberBtn.addEventListener( "click", this.addMemberHandler );
@@ -99,6 +111,7 @@ export class ManageTeams extends ViewComponent {
 
     private unregisterEventListeners(): void {
         this.createTeamBtn.removeEventListener( "click", this.createTeamHandler );
+        this.emptyStateCreateTeamBtn.removeEventListener( "click", this.createTeamHandler );
         this.deleteTeamBtn.removeEventListener( "click", this.deleteTeamHandler );
         this.teamNameInput.removeEventListener( "keyup", this.nameInputHandler );
         this.addMemberBtn.removeEventListener( "click", this.addMemberHandler );
@@ -203,6 +216,12 @@ export class ManageTeams extends ViewComponent {
                 console.log( response );
 
                 const { teams } = response;
+
+                if ( ! teams.length ) {
+                    this.showEmptyState();
+                } else {
+                    this.hideEmptyState();
+                }
 
                 for ( let team of teams ) {
                     this.addTeam( team );
@@ -326,14 +345,15 @@ export class ManageTeams extends ViewComponent {
         if ( ! id ) {
             /** If there is no id specified, we default to the first team in the list */
             team = this.teamContainer.firstElementChild;
-            team.classList.add( "active" );
         } else {
             /** If we got the team id as an argument, we isolate the element and extract the id later  */
             team = document.getElementById( id );
         }
 
         /** If there is no valid team, we return */
-        if ( ! team ) return;
+        if ( ! team ) return this.showEmptyState();
+
+        team.classList.add( "active" );
 
         /** We save the currently loaded team Id (will be used for further operations, e.g. updating the team on save) */
         this.loadedTeamId = team.id;
@@ -405,6 +425,20 @@ export class ManageTeams extends ViewComponent {
         }
 
         this.avatar.innerText = monogram;
+    }
+
+
+
+    private showEmptyState(): void {
+        this.contentContainer.style.display     = "none";
+        this.emptyState.style.display           = "block";
+    }
+
+
+
+    private hideEmptyState(): void {
+        this.emptyState.style.display           = "none";
+        this.contentContainer.style.display     = "block";
     }
 
 
