@@ -67,15 +67,31 @@
             display: none;
         }
 
-        .profile-notification-container {
+        #profile-notifications {
+            width: 25px;
+            height: 25px;
+            display: block;
+            right: 110px;
+            top: 10px;
+            position: absolute;
+            opacity: 0.5;
+            background: url("../img/icons/notification.svg") no-repeat center/contain;
+            transition: opacity 0.3s ease-in-out;
+
+            &:hover, &.active {
+                opacity: 1;
+            }
+        }
+
+        .profile-notification-empty-state {
             position: absolute;
             width: 275px;
             height: 275px;
             box-shadow: 0 2px 15px 0 rgba(221,220,234,0.7);
             border-radius: 3px;
             background-color: #ffffff;
-            top: 34px;
-            right: 0;
+            top: 45px;
+            right: 100px;
             padding: 40px;
             text-align: center;
             display: none;
@@ -233,21 +249,7 @@
         }
 
 
-        #profile-notifications {
-            width: 25px;
-            height: 25px;
-            display: block;
-            right: 110px;
-            top: 10px;
-            position: absolute;
-            opacity: 0.5;
-            background: url("../img/icons/notification.svg") no-repeat center/contain;
-            transition: opacity 0.3s ease-in-out;
 
-            &:hover, &.active {
-                opacity: 1;
-            }
-        }
 
 
         #profile-avatar {
