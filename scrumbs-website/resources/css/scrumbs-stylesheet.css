@@ -1079,7 +1079,12 @@ transition: all .2s ease-in-out;
 }
 
 .input-error-message {
-    opacity: 1;
+    opacity: 0;
+}
+
+#contact-name-input-error, #contact-email-input-error, #contact-message-input-error {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
 }
 
 
