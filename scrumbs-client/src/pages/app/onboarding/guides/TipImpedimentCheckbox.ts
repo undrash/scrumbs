@@ -39,6 +39,7 @@ export class TipImpedimentCheckbox extends Guide {
         this.skipBtn            = this.container.querySelector( ".skip-link-btn" ) as HTMLElement;
 
         this.actionListener     = this.actionListener.bind( this );
+        this.targetListener     = this.targetListener.bind( this );
 
 
         this.enterScene();
@@ -48,12 +49,20 @@ export class TipImpedimentCheckbox extends Guide {
 
     private registerEventListeners(): void {
         this.container.addEventListener( "click", this.actionListener );
+        this.target.addEventListener( "click", this.targetListener );
     }
 
 
 
     private unregisterEventListeners(): void {
         this.container.removeEventListener( "click", this.actionListener );
+        this.target.addEventListener( "click", this.targetListener );
+    }
+
+
+
+    private targetListener(): void {
+        this.exitScene();
     }
 
 

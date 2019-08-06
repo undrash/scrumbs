@@ -38,6 +38,7 @@ export class TipMemberOptions extends Guide {
         this.previousBtn        = this.container.querySelector( ".guide-secondary-btn" ) as HTMLElement;
 
         this.actionListener     = this.actionListener.bind( this );
+        this.targetListener     = this.targetListener.bind( this );
 
 
         this.enterScene();
@@ -47,12 +48,20 @@ export class TipMemberOptions extends Guide {
 
     private registerEventListeners(): void {
         this.container.addEventListener( "click", this.actionListener );
+        this.target.addEventListener( "click", this.targetListener );
     }
 
 
 
     private unregisterEventListeners(): void {
         this.container.removeEventListener( "click", this.actionListener );
+        this.target.addEventListener( "click", this.targetListener );
+    }
+
+
+
+    private targetListener(): void {
+        this.exitScene();
     }
 
 

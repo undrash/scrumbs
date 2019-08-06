@@ -126,6 +126,8 @@ export class Onboarding {
 
     public clearGuides(): void {
 
+        if ( this.timeout ) clearTimeout( this.timeout );
+
         for ( let guide of this.activeGuides ) {
             guide.exitScene();
         }
