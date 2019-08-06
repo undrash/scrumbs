@@ -140,6 +140,7 @@ export class ScrumTeams extends ViewComponent {
                                     this.applySelectionToMember( `${ selectedMember.team }@${ selectedMember.id }` );
                                 } else {
                                     //TODO if member was deleted? Default to welcome screen?
+                                    this.sendSignal( ScrumSignals.SWITCH_TO_WELCOME_SCREEN );
                                 }
 
                             },
@@ -148,7 +149,7 @@ export class ScrumTeams extends ViewComponent {
                     } else {
 
                         //TODO if team was deleted? Default to welcome screen?
-
+                        this.sendSignal( ScrumSignals.SWITCH_TO_WELCOME_SCREEN );
                     }
 
                 } else {

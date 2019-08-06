@@ -138,9 +138,11 @@ export class ScrumView extends View {
 
             case ScrumSignals.LOAD_MEMBER_NOTES :
 
-                ( this.notes as ScrumNotes ).loadMemberNotes( signal.data );
-
                 ( this.welcomeScreen as ScrumWelcomeScreen ).exitScene( ViewExitTypes.SWITCH_COMPONENT );
+
+                ( this.notes as ScrumNotes ).enterScene( ViewEnterTypes.REVEAL_COMPONENT );
+
+                ( this.notes as ScrumNotes ).loadMemberNotes( signal.data );
 
                 break;
 
@@ -192,6 +194,13 @@ export class ScrumView extends View {
             case ScrumSignals.FIRST_NOTE_CREATED :
 
                 this.sendNotification( ViewNotifications.INIT_ONBOARDING_IMPEDIMENT_FEATURE_FLOW );
+
+                break;
+
+            case ScrumSignals.SWITCH_TO_WELCOME_SCREEN :
+
+                this.notes.exitScene( ViewExitTypes.HIDE_COMPONENT );
+                this.welcomeScreen.enterScene( ViewEnterTypes.REVEAL_COMPONENT );
 
                 break;
 

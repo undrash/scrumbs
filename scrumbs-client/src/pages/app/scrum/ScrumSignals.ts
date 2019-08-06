@@ -14,4 +14,5 @@ export class ScrumSignals {
     public static readonly SWITCH_TO_IMPEDIMENTS_VIEW: string       = "SWITCH_TO_IMPEDIMENTS_VIEW";
     public static readonly MEMBER_NOTES_LOADED: string              = "MEMBER_NOTES_LOADED";
     public static readonly FIRST_NOTE_CREATED: string               = "FIRST_NOTE_CREATED";
+    public static readonly SWITCH_TO_WELCOME_SCREEN: string         = "SWITCH_TO_WELCOME_SCREEN";
 }

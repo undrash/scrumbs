@@ -96,6 +96,13 @@ export class ScrumWelcomeScreen extends ViewComponent {
 
         switch ( enterType ) {
 
+            case ViewEnterTypes.REVEAL_COMPONENT :
+
+                this.container.style.display = "block";
+                this.saveToMemory( { hidden: false } );
+
+                break;
+
             default :
                 this.registerEventListeners();
                 break;

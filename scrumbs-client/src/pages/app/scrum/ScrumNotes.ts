@@ -341,6 +341,8 @@ export class ScrumNotes extends ViewComponent {
 
         this.resetNotesContainer();
 
+        this.sendSignal( ScrumSignals.SWITCH_WELCOME_SCREEN_TO_NOTES );
+
         this.connection.getNotesOfMember(
             id,
             team,
@@ -646,8 +648,22 @@ export class ScrumNotes extends ViewComponent {
     public exitScene(exitType?: string): void {
         console.info( "Exit being called in scrum notes view component" );
 
-        super.exitScene( exitType );
-        this.unregisterEventListeners();
-        this.view.componentExited( this.name );
+
+        switch ( exitType ) {
+
+            case ViewExitTypes.HIDE_COMPONENT :
+
+                this.container.style.display = "none";
+
+                break;
+
+            default :
+                super.exitScene( exitType );
+                this.unregisterEventListeners();
+                this.view.componentExited( this.name );
+                break;
+        }
+
+
     }
 }
