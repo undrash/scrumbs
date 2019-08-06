@@ -70,6 +70,7 @@ export class AddMemberModal {
         this.saveListener           = this.saveListener.bind( this );
         this.clearSearchHandler     = this.clearSearchHandler.bind( this );
         this.documentKeyListener    = this.documentKeyListener.bind( this );
+        this.overlayClickListener   = this.overlayClickListener.bind( this );
 
         this.selectedMembers        = [];
     }
@@ -82,6 +83,7 @@ export class AddMemberModal {
         this.cancelBtn.addEventListener( "click", this.resetAndExit );
         this.searchInput.addEventListener( "keyup", this.searchListener );
         this.clearSearch.addEventListener( "click", this.clearSearchHandler );
+        this.overlay.addEventListener( "click", this.overlayClickListener );
         document.addEventListener( "keydown", this.documentKeyListener );
     }
 
@@ -93,7 +95,14 @@ export class AddMemberModal {
         this.cancelBtn.removeEventListener( "click", this.resetAndExit );
         this.searchInput.removeEventListener( "keyup", this.searchListener );
         this.clearSearch.removeEventListener( "click", this.clearSearchHandler );
+        this.overlay.removeEventListener( "click", this.overlayClickListener );
         document.removeEventListener( "keydown", this.documentKeyListener );
+    }
+
+
+
+    private overlayClickListener(e: any): void {
+        if ( e.target.id === this.overlay.id ) this.resetAndExit();
     }
 
 
