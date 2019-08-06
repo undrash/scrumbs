@@ -42,6 +42,7 @@ export class HeaderComponent extends ViewComponent {
     private authenticationFragment: HTMLElement;
 
     private notifications: HTMLElement;
+    private notificationDropdown: HTMLElement;
     private inquiry: HTMLElement;
     private inquiryNotification: HTMLElement;
     private inquiryToolTip: HTMLElement;
@@ -78,6 +79,7 @@ export class HeaderComponent extends ViewComponent {
 
 
         this.notifications              = document.getElementById( "profile-notifications" );
+        this.notificationDropdown       = document.getElementById( "header-notifications-dropdown" );
         this.inquiry                    = document.getElementById( "profile-inquiry" );
 
         this.inquiryNotification        = document.getElementById( "profile-inquiry-notification" );
@@ -103,6 +105,7 @@ export class HeaderComponent extends ViewComponent {
         this.profileListener            = this.profileListener.bind( this );
         this.documentClickListener      = this.documentClickListener.bind( this );
         this.settingsBtnListener        = this.settingsBtnListener.bind( this );
+        this.notificationHandler        = this.notificationHandler.bind( this );
 
         this.enterScene();
     }
@@ -119,6 +122,7 @@ export class HeaderComponent extends ViewComponent {
         this.inquiry.addEventListener( "click", this.inquiryBtnClickListener );
         this.headerProfile.addEventListener( "click", this.profileListener );
         this.panelOptionSettings.addEventListener( "click", this.settingsBtnListener );
+        this.notifications.addEventListener( "click", this.notificationHandler );
         document.addEventListener( "click", this.documentClickListener );
     }
 
@@ -134,16 +138,30 @@ export class HeaderComponent extends ViewComponent {
         this.inquiry.removeEventListener( "click", this.inquiryBtnClickListener );
         this.headerProfile.removeEventListener( "click", this.profileListener );
         this.panelOptionSettings.removeEventListener( "click", this.settingsBtnListener );
+        this.notifications.removeEventListener( "click", this.notificationHandler );
         document.removeEventListener( "click", this.documentClickListener );
     }
 
 
 
-    private documentClickListener(e: any): void {
-        if ( e.target.id === this.headerProfile.id ) return;
+    private notificationHandler(): void {
+        this.notificationDropdown.style.display = "block";
+    }
 
-        this.profileDropdownBtn.classList.remove( "active" );
-        this.userOptionsPanel.style.display = "none";
+
+
+    private documentClickListener(e: any): void {
+
+        if ( e.target.id !== this.headerProfile.id ) {
+            this.profileDropdownBtn.classList.remove( "active" );
+            this.userOptionsPanel.style.display = "none";
+        }
+
+
+        if ( e.target.id !== this.notifications.id ) {
+            this.notificationDropdown.style.display = "none";
+        }
+
     }
 
 
