@@ -1,47 +1,127 @@
 @import "color-variables";
 
-#account-settings-header-container {
-  margin-bottom: 0;
+#account-settings-view-container {
 
-  .main-title {
-    line-height: 80px;
+  #account-settings-header-container {
+    margin-bottom: 0;
+
+    .main-title {
+      line-height: 80px;
+    }
+
+    .exit-overlay-button {
+      right: 20px;
+      top: 15px;
+    }
   }
 
-  .exit-overlay-button {
-    right: 20px;
-    top: 15px;
+  #account-settings-body-container {
+    max-width: 335px;
+    padding: 50px 30px 0;
+    margin: auto;
+    height: calc(100vh - 200px);
+    overflow: scroll;
+
+    .input-group {
+
+      .link {
+        margin-top: 5px;
+      }
+    }
+
+    .account-settings-delete-account-container {
+      border-radius: 3px;
+      width: 100%;
+      background-color: $nonary-color;
+      padding: 15px;
+
+      .link {
+        margin-bottom: 15px;
+      }
+
+      .grey-text {
+        font-size: 14px;
+        color: $text-quaternary-color;
+      }
+    }
+
   }
-}
 
-#account-settings-body-container {
-  max-width: 335px;
-  padding: 50px 30px 0;
-  margin: auto;
-  height: calc(100vh - 200px);
-  overflow: scroll;
+  .modal-bg {
+    max-width: 660px;
+    margin: 60px auto 0;
+    overflow: auto;
+    padding: 35px 40px 80px;
 
-  .input-group {
 
-    .link {
+    .modal-title {
+      text-align: left;
+      font-size: 20px;
+    }
+
+    .exit-overlay-button {
+      top: 15px;
+      right: 15px;
+    }
+
+    .basic-description {
+      text-align: center;
+      max-width: 260px;
+      margin: 60px auto 40px;
+    }
+
+    .input-group {
+      max-width: 330px;
+      margin: 0 auto 20px;
+    }
+
+    .error-message {
       margin-top: 5px;
     }
-  }
 
-  .account-settings-delete-account-container {
-    border-radius: 3px;
-    width: 100%;
-    background-color: $nonary-color;
-    padding: 15px;
+    .button-container {
+      max-width: 330px;
+      padding: 5px 5px 10px;
+      margin: auto;
+      overflow: auto;
 
-    .link {
-      margin-bottom: 15px;
+      .primary-button {
+        float: right;
+        width: 48%;
+      }
+
+      .secondary-button {
+        float: left;
+        width: 48%;
+      }
     }
 
-    .grey-text {
-      font-size: 14px;
-      color: $text-quaternary-color;
+  }
+
+  #account-settings-change-email-modal {
+    //display: block;
+    display: none;
+  }
+
+  #account-settings-change-email-modal-email-input-error-msg {
+    opacity: 1;
+  }
+
+
+  #account-settings-change-password-modal {
+    display: block;
+    //display: none;
+
+    .modal-title {
+      margin-bottom: 80px;
     }
   }
+
+  #account-settings-change-email-modal-password-input-error-msg {
+    opacity: 1;
+  }
+
 
 
 }
+
