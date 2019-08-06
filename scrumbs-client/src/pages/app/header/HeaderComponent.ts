@@ -103,6 +103,7 @@ export class HeaderComponent extends ViewComponent {
         this.inquiryBtnClickListener    = this.inquiryBtnClickListener.bind( this );
         this.profileListener            = this.profileListener.bind( this );
         this.documentClickListener      = this.documentClickListener.bind( this );
+        this.settingsBtnListener        = this.settingsBtnListener.bind( this );
 
         this.enterScene();
     }
@@ -118,6 +119,7 @@ export class HeaderComponent extends ViewComponent {
         this.inquiry.addEventListener( "mouseleave", this.hideInquiryToolTip );
         this.inquiry.addEventListener( "click", this.inquiryBtnClickListener );
         this.headerProfile.addEventListener( "click", this.profileListener );
+        this.panelOptionSettings.addEventListener( "click", this.settingsBtnListener );
         document.addEventListener( "click", this.documentClickListener );
     }
 
@@ -132,6 +134,7 @@ export class HeaderComponent extends ViewComponent {
         this.inquiry.removeEventListener( "mouseleave", this.hideInquiryToolTip );
         this.inquiry.removeEventListener( "click", this.inquiryBtnClickListener );
         this.headerProfile.removeEventListener( "click", this.profileListener );
+        this.panelOptionSettings.removeEventListener( "click", this.settingsBtnListener );
         document.removeEventListener( "click", this.documentClickListener );
     }
 
@@ -186,6 +189,12 @@ export class HeaderComponent extends ViewComponent {
 
     private inquiryBtnClickListener(): void {
         this.sendSignal( HeaderSignals.DISPLAY_INQUIRY );
+    }
+
+
+
+    private settingsBtnListener(): void {
+        this.sendSignal( HeaderSignals.SWITCH_TO_ACCOUNT_SETTINGS_VIEW );
     }
 
 

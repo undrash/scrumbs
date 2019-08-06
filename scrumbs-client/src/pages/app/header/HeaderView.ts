@@ -172,6 +172,12 @@ export class HeaderView extends View {
 
                 break;
 
+            case HeaderSignals.SWITCH_TO_ACCOUNT_SETTINGS_VIEW :
+
+                this.sendNotification( ViewNotifications.SWITCH_TO_ACCOUNT_SETTINGS_VIEW );
+
+                break;
+
             case HeaderSignals.DISPLAY_INQUIRY :
 
                 this.inquiry.enterScene( ViewEnterTypes.REVEAL_COMPONENT );

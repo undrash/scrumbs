@@ -1,6 +1,7 @@
 
 import {AuthenticationNotifications} from "./authentication/AuthenticationNotifications";
 import {CreateImpedimentView} from "./create-impediment/CreateImpedimentView";
+import {AccountSettingsView} from "./account-settings/AccountSettingsView";
 import {AuthenticationView} from "./authentication/AuthenticationView";
 import {ConnectionProxy} from "../../connection/ConnectionProxy";
 import {ManageTeamsView} from "./manage-teams/ManageTeamsView";
@@ -20,6 +21,7 @@ import {View} from "../../core/View";
 
 
 import "../../style/style-sheets/screensize-not-supported.scss";
+
 
 const screenNotSupportedTemplate = require("../../templates/screensize-not-supported.html" );
 
@@ -72,6 +74,7 @@ export class AppViewManager extends ViewManager {
         notifications.push( ViewNotifications.SWITCH_TO_MANAGE_TEAMS_VIEW );
         notifications.push( ViewNotifications.SWITCH_TO_CREATE_TEAM_VIEW );
         notifications.push( ViewNotifications.SWITCH_TO_REPORTS_VIEW );
+        notifications.push( ViewNotifications.SWITCH_TO_ACCOUNT_SETTINGS_VIEW );
 
         notifications.push( ViewNotifications.SWITCH_TO_PREVIOUS_VIEW );
 
@@ -129,6 +132,12 @@ export class AppViewManager extends ViewManager {
             case ViewNotifications.SWITCH_TO_CREATE_TEAM_VIEW :
 
                 this.switchView( CreateTeamView, null );
+
+                break;
+
+            case ViewNotifications.SWITCH_TO_ACCOUNT_SETTINGS_VIEW :
+
+                this.switchView( AccountSettingsView, null );
 
                 break;
 

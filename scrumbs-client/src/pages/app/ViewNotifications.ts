@@ -8,6 +8,7 @@ export class ViewNotifications {
     public static readonly SWITCH_TO_MANAGE_TEAMS_VIEW: string      = "SWITCH_TO_MANAGE_TEAMS_VIEW";
     public static readonly SWITCH_TO_CREATE_TEAM_VIEW: string       = "SWITCH_TO_CREATE_TEAM_VIEW";
     public static readonly SWITCH_TO_CREATE_IMPEDIMENT_VIEW: string = "SWITCH_TO_CREATE_IMPEDIMENT_VIEW";
+    public static readonly SWITCH_TO_ACCOUNT_SETTINGS_VIEW: string  = "SWITCH_TO_ACCOUNT_SETTINGS_VIEW";
 
     public static readonly SWITCH_TO_PREVIOUS_VIEW: string          = "SWITCH_TO_PREVIOUS_VIEW";
 
