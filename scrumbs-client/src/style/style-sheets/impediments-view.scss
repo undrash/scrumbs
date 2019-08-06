@@ -201,6 +201,18 @@
 
             }
 
+            .your-impediments-btn {
+                line-height: 42px;
+                border-radius: 3px;
+                padding: 0 20px 0 40px;
+                background: url("../img/icons/icon-member.svg") no-repeat center left 18px;
+                background-size: 11px;
+                transition: background 0.3s ease-in-out;
+                cursor: pointer;
+
+                &:hover { background-color: $nonary-color; }
+            }
+
             ul {
                 margin: 0 0 10px 0;
                 max-height: 250px;

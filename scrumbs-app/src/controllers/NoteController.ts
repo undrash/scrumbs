@@ -71,7 +71,7 @@ class NoteController {
     public getSolvedOfMember(req: Request, res: Response, next: NextFunction) {
         const userId = ( req as any ).user._id;
 
-        const memberId = req.params.id;
+        const memberId = req.params.id === "user" ? null : req.params.id ;
 
         Note.find( { owner: userId, member: memberId, isImpediment: true, isSolved: true } )
             .populate( "member", "name _id" )
@@ -94,7 +94,7 @@ class NoteController {
     public getUnsolvedOfMember(req: Request, res: Response, next: NextFunction) {
         const userId = ( req as any ).user._id;
 
-        const memberId = req.params.id;
+        const memberId = req.params.id === "user" ? null : req.params.id ;
 
         Note.find( { owner: userId, member: memberId, isImpediment: true, isSolved: false } )
             .populate( "member", "name _id" )
