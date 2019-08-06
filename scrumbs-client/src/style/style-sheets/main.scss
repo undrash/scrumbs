@@ -55,7 +55,7 @@
 }
 
 
-.empty-state-title {
+.empty-state-title, .main-title {
     font-size: 20px;
     font-weight: bold;
 }
@@ -64,6 +64,12 @@
     font-size: 16px;
 }
 
+.link {
+    font-size: 14px;
+    text-decoration: underline;
+    color: $secondary-color;
+    cursor: pointer;
+}
 
 
 /** ==================================== Body ==================================== */
@@ -290,6 +296,25 @@ input, textarea {
         border: 2px solid $accent-color;
     }
 }
+
+.basic-input {
+    height: 50px;
+    width: 100%;
+    border: 1px solid $denary-color;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    padding: 0 15px;
+    transition: border 0.3s ease-in-out;
+
+    &.disabled {
+        opacity: 0.5;
+    }
+
+    &:hover, &:focus {
+        border: 1px solid $accent-color;
+    }
+}
+
 
 
 
@@ -722,6 +747,13 @@ input, textarea {
 
 
 
+/** ==================================== Header ==================================== */
 
-
-
+.header-container {
+    position: relative;
+    height: 80px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ececf2;
+    z-index: 1;
+    padding: 0 25px;
+}
