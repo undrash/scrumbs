@@ -51,6 +51,7 @@ export class ManageTeams extends ViewComponent {
 
     private addMemberModal: AddMemberModal;
 
+    private inviteBtn: HTMLElement;
 
     private emptyState: HTMLElement;
     private emptyStateCreateTeamBtn: HTMLElement;
@@ -64,10 +65,12 @@ export class ManageTeams extends ViewComponent {
         this.contentContainer           = document.getElementById( "manage-teams-content-container" );
 
         this.avatar                     = document.getElementById( "main-scrum-master-avatar" );
+        this.inviteBtn                  = document.getElementById( "manage-team-invite-scrum-master-btn" );
         this.teamNameInput              = document.getElementById( "manage-teams-input-edit-team-name" ) as HTMLInputElement;
-        this.deleteTeamBtn              = document.getElementById( "manage-teams-delete-team-button" );
 
+        this.deleteTeamBtn              = document.getElementById( "manage-teams-delete-team-button" );
         this.addMemberBtn               = document.getElementById( "manage-teams-add-member-button" );
+
         this.mainMemberContainer        = document.getElementById( "team-members-list-container" );
 
         new SimpleBar( this.mainMemberContainer );
@@ -93,6 +96,7 @@ export class ManageTeams extends ViewComponent {
         this.removeMember               = this.removeMember.bind( this );
         this.nameInputHandler           = this.nameInputHandler.bind( this );
         this.addMemberHandler           = this.addMemberHandler.bind( this );
+        this.inviteBtnHandler           = this.inviteBtnHandler.bind( this );
 
         this.enterScene();
     }
@@ -105,6 +109,7 @@ export class ManageTeams extends ViewComponent {
         this.deleteTeamBtn.addEventListener( "click", this.deleteTeamHandler );
         this.teamNameInput.addEventListener( "keyup", this.nameInputHandler );
         this.addMemberBtn.addEventListener( "click", this.addMemberHandler );
+        this.inviteBtn.addEventListener( "click", this.inviteBtnHandler );
     }
 
 
@@ -115,8 +120,14 @@ export class ManageTeams extends ViewComponent {
         this.deleteTeamBtn.removeEventListener( "click", this.deleteTeamHandler );
         this.teamNameInput.removeEventListener( "keyup", this.nameInputHandler );
         this.addMemberBtn.removeEventListener( "click", this.addMemberHandler );
+        this.inviteBtn.removeEventListener( "click", this.inviteBtnHandler );
     }
 
+
+
+    private inviteBtnHandler(): void {
+        this.snackbar.show( SnackBarType.WARNING, "Invite <strong>scrum master</strong> feature coming soon!" );
+    }
 
 
     private addMemberHandler(): void {
