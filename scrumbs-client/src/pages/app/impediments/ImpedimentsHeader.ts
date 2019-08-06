@@ -126,20 +126,13 @@ export class ImpedimentsHeader extends ViewComponent {
 
         if ( this.filterSearchTimer ) clearTimeout( this.filterSearchTimer );
 
+        if ( ! this.filterSearch.value ) return this.populate();
 
         if ( key === 13 ) { // ENTER
-
-            if ( ! this.filterSearch.value ) {
-
-                return this.populate();
-
-            }
 
             this.filteredMemberSearch( { value: this.filterSearch.value } )
 
         } else {
-
-            if ( this.filterSearch.value.length < 2 ) return;
 
             this.filterSearchTimer = setTimeout(
                 this.filteredMemberSearch,
