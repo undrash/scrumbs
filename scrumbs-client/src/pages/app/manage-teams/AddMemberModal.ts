@@ -2,10 +2,9 @@
 import {ConnectionProxy} from "../../../connection/ConnectionProxy";
 import {ManageTeams} from "./ManageTeams";
 
-import TweenLite = gsap.TweenLite;
-import Power0 = gsap.Power0;
-import Back = gsap.Back;
-
+declare const TweenLite: any;
+declare const Power0: any;
+declare const Back: any;
 
 const template = require("../../../templates/manage-teams-add-member-modal.html" );
 

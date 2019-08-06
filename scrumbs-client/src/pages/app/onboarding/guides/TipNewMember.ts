@@ -6,7 +6,9 @@ import {Onboarding} from "../Onboarding";
 import {Guides} from "../Guides";
 import {Guide} from "./Guide";
 
-import TweenLite = gsap.TweenLite;
+declare const TweenLite: any;
+declare const Power0: any;
+declare const Back: any;
 
 const template = require( "../../../../templates/onboarding-tip-new-member.html" );
 

@@ -1,4 +1,5 @@
 
+import {CreateMemberModel} from "../../../connection/models/CreateMemberModel";
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
@@ -7,10 +8,9 @@ import {View} from "../../../core/View";
 import {Member} from "./Member";
 
 
-import TweenLite = gsap.TweenLite;
-import Power0 = gsap.Power0;
-import Back = gsap.Back;
-import {CreateMemberModel} from "../../../connection/models/CreateMemberModel";
+declare const TweenLite: any;
+declare const Power0: any;
+declare const Back: any;
 
 declare const SimpleBar: any;
 

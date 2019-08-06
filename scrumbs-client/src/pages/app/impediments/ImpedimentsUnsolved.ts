@@ -6,9 +6,9 @@ import {ViewExitTypes} from "../../../core/ViewExitTypes";
 import {View} from "../../../core/View";
 
 
-import TweenLite = gsap.TweenLite;
-import Power0 = gsap.Power0;
-import Back = gsap.Back;
+declare const TweenLite: any;
+declare const Power0: any;
+declare const Back: any;
 
 
 

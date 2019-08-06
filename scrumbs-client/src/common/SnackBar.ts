@@ -3,10 +3,9 @@ import {SnackBarType} from "./SnackBarType";
 import {ISnackBar} from "./ISnackBar";
 
 
-import TweenLite = gsap.TweenLite;
-import Power0 = gsap.Power0;
-import Back = gsap.Back;
-
+declare const TweenLite: any;
+declare const Power0: any;
+declare const Back: any;
 
 // CSS
 import "../style/style-sheets/snackbar.scss";

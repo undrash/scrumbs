@@ -1,7 +1,7 @@
 
-import TweenLite = gsap.TweenLite;
-import Power0 = gsap.Power0;
-import Back = gsap.Back;
+declare const TweenLite: any;
+declare const Power0: any;
+declare const Back: any;
 
 
 import "../style/style-sheets/confirmation-modal.scss";

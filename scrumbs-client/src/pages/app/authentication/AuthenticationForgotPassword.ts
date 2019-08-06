@@ -6,7 +6,9 @@ import {ViewExitTypes} from "../../../core/ViewExitTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {View} from "../../../core/View";
 
-import TweenLite = gsap.TweenLite;
+declare const TweenLite: any;
+declare const Power0: any;
+declare const Back: any;
 
 
 // CSS

@@ -5,10 +5,10 @@ import {ViewComponent} from "../../../core/ViewComponent";
 import {INotification} from "../../../core/INotification";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
 import {ViewNotifications} from "../ViewNotifications";
+import {CreateTeamSignals} from "./CreateTeamSignals";
 import {ISignal} from "../../../core/ISignal";
 import {View} from "../../../core/View";
 import {CreateTeam} from "./CreateTeam";
-import {CreateTeamSignals} from "./CreateTeamSignals";
 
 
 
