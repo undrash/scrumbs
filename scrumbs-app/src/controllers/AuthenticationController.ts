@@ -12,7 +12,7 @@ import Team from "../models/Team";
 
 const GoogleStrategy    = require("passport-google-oauth20").Strategy;
 const TwitterStrategy   = require("passport-twitter").Strategy;
-const LinkedInStrategy  = require("passport-linkedin-oauth2").Strategy;
+const LinkedInStrategy  = require("@sokratis/passport-linkedin-oauth2").Strategy;
 const LocalStrategy     = require("passport-local").Strategy;
 
 
@@ -404,7 +404,11 @@ class AuthenticationController {
             const confirmed     = profile.emails[0].verified;
             const googleId      = profile.id;
 
-            let user = await User.findOne({ email } );
+            let user = await User.findOne({ googleId } );
+
+            if ( ! user ) {
+                user = await User.findOne({ email } );
+            }
 
             if ( ! user ) {
 
@@ -439,7 +443,12 @@ class AuthenticationController {
             consumerSecret: process.env.TWITTER_SECRET,
             userProfileURL: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
             callbackURL: process.env.APP_DOMAIN + "/api/v1/authentication/twitter/callback",
-            profileFields: [ "id", "emails", "name" ]
+            profileFields: [
+                "id",
+                "first-name",
+                "last-name",
+                "email-address"
+            ]
         }, async (token: string, tokenSecret: string, profile: any, done: Function) => {
 
             const names = profile._json.name.split( ' ' );
@@ -450,7 +459,11 @@ class AuthenticationController {
             const email         = profile.emails[0].value;
             const twitterId     = profile.id;
 
-            let user = await User.findOne({ email } );
+            let user = await User.findOne({ twitterId } );
+
+            if ( ! user ) {
+                user = await User.findOne({ email } );
+            }
 
             if ( ! user ) {
                 user = new User({
@@ -483,14 +496,7 @@ class AuthenticationController {
             clientID: process.env.LINKEDIN_KEY,
             clientSecret: process.env.LINKEDIN_SECRET,
             callbackURL: process.env.APP_DOMAIN + "/api/v1/authentication/linkedin/callback",
-            profileFields: [
-                "first-name",
-                "last-name",
-                "email-address",
-                "summary",
-                "picture-url"
-            ],
-            scope: [ "r_emailaddress", "r_basicprofile" ],
+            scope: ["r_emailaddress", "r_liteprofile"],
             state: true
         }, async (accessToken: string, refreshToken: string, profile: any, done: Function) => {
 
@@ -499,8 +505,14 @@ class AuthenticationController {
             const profileImage  = profile.photos.length ? profile.photos[0].value : "";
             const email         = profile.emails[0].value;
             const confirmed     = true;
+            const linkedInId    = profile.id;
 
-            let user = await User.findOne({ email } );
+
+            let user = await User.findOne({ linkedInId } );
+
+            if ( ! user ) {
+                user = await User.findOne({ email } );
+            }
 
             if ( ! user ) {
 
@@ -508,7 +520,8 @@ class AuthenticationController {
                     name: `${ firstName } ${ lastName }`,
                     email,
                     profileImage,
-                    confirmed
+                    confirmed,
+                    linkedInId
                 });
 
                 const defaultTeam = new Team({

@@ -64,6 +64,8 @@ const UserSchema = new Schema({
 
     twitterId: String,
 
+    linkedInId: String,
+
     onboardingGuidesDisplayed: {
         type: [ Number ],
         default: []
