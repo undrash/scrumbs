@@ -331,6 +331,8 @@
   left: 500px;
   top: 200px;
 
+  display: none;
+
   &::after {
     left: 25px;
     top: -5px;
@@ -344,6 +346,8 @@
   left: 800px;
   top: 50px;
 
+  display: none;
+
   &::after {
     left: unset;
     right: -5px;
@@ -356,6 +360,8 @@
 #onboarding-manage-teams-tip-add-new-team {
   bottom: 50px;
   right: 100px;
+
+  display: none;
 
   &::after {
     left: unset;
@@ -380,6 +386,8 @@
 #onboarding-manage-teams-tip-delete-team {
   right: 50px;
   top: 600px;
+
+  display: none;
 
   &::after {
     left: unset;
