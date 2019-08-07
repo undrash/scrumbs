@@ -11,6 +11,7 @@ export interface IUser extends Document {
     confirmed: boolean,
     googleId: string,
     twitterId: string,
+    linkedInId: string,
     onboardingGuidesDisplayed: number[],
     comparePassword(password: string): Promise<boolean>
 }

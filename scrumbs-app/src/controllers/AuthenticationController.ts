@@ -435,6 +435,10 @@ class AuthenticationController {
 
                 await user.save();
                 await defaultTeam.save();
+            } else {
+                user.googleId = googleId;
+
+                await user.save();
             }
 
             return done( null, user );
@@ -489,6 +493,10 @@ class AuthenticationController {
 
                 await user.save();
                 await defaultTeam.save();
+            } else {
+                user.twitterId = twitterId;
+
+                await user.save();
             }
 
             return done( null, user );
@@ -539,6 +547,10 @@ class AuthenticationController {
 
                 await user.save();
                 await defaultTeam.save();
+            } else {
+                user.linkedInId = linkedInId;
+
+                await user.save();
             }
 
             return done( null, user );
