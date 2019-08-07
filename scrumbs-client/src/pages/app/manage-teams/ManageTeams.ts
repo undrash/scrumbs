@@ -56,6 +56,8 @@ export class ManageTeams extends ViewComponent {
     private emptyState: HTMLElement;
     private emptyStateCreateTeamBtn: HTMLElement;
 
+    private membersEmptyState: HTMLElement;
+
 
     constructor(view: View, container: HTMLElement) {
         super( view, container, "ManageTeams" );
@@ -87,6 +89,8 @@ export class ManageTeams extends ViewComponent {
 
         this.emptyState                 = document.getElementById( "manage-teams-empty-state-container" );
         this.emptyStateCreateTeamBtn    = document.getElementById( "manage-teams-empty-state-add-new-team-btn" );
+
+        this.membersEmptyState          = document.getElementById( "manage-teams-list-empty-state" );
 
         this.addMemberModal             = new AddMemberModal( this );
 
@@ -291,6 +295,12 @@ export class ManageTeams extends ViewComponent {
             (response: any) => {
                 const { members } = response;
 
+                if ( ! members.length ) {
+                    this.membersEmptyState.style.display = "block";
+                } else {
+                    this.membersEmptyState.style.display = "none";
+                }
+
                 for ( let member of members ) {
                     this.addMember( member );
                 }
@@ -340,6 +350,8 @@ export class ManageTeams extends ViewComponent {
                     () => {
                         member.parentNode.removeChild( member );
                         this.snackbar.show( SnackBarType.SUCCESS, `Removed member <strong>${ member.innerText }</strong>` );
+
+                        if ( ! this.memberContainer.children.length ) this.membersEmptyState.style.display = "block";
                     },
                     (err: string) => console.error( err )
                 );
@@ -404,8 +416,9 @@ export class ManageTeams extends ViewComponent {
             addMembersModel,
             (response: any) => {
 
-                console.log( response );
                 const { members } = response;
+
+                if ( members.length ) this.membersEmptyState.style.display = "none";
 
                 for ( let member of members ) {
                     this.addMember( member );

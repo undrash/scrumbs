@@ -240,6 +240,10 @@
         .manage-teams-settings-member-list-body {
             height: 85%;
 
+            .member-search-empty {
+                margin-top: 35px;
+            }
+
             .team-members-list-container {
                 height: calc( 100vh - 540px );
 
