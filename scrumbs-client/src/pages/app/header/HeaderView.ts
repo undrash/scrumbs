@@ -1,6 +1,7 @@
 
 
 import {AuthenticationNotifications} from "../authentication/AuthenticationNotifications";
+import {AccountNotifications} from "../account-settings/AccountNotifications";
 import {SystemConstants} from "../../../core/SystemConstants";
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {INotification} from "../../../core/INotification";
@@ -91,6 +92,8 @@ export class HeaderView extends View {
 
         notifications.push( ViewNotifications.SWITCH_HEADER_STATE );
 
+        notifications.push( AccountNotifications.ACCOUNT_UPDATED );
+
         return notifications;
     }
 
@@ -127,6 +130,10 @@ export class HeaderView extends View {
 
                 ( this.header as HeaderComponent ).setActiveMenuItem( notification.name );
 
+                break;
+
+            case AccountNotifications.ACCOUNT_UPDATED :
+                ( this.header as HeaderComponent ).populate();
                 break;
 
             default :

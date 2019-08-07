@@ -136,8 +136,6 @@ export class ManageTeamsView extends View {
 
             case ManageTeamSignals.EXIT :
 
-                console.log( "IS FOREGROUND ACTIVE", this.isForegroundActive );
-
                 if ( ! this.isForegroundActive ) this.sendNotification( ViewNotifications.SWITCH_TO_SCRUM_VIEW );
 
                 break;

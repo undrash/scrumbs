@@ -1,5 +1,5 @@
 
-
+import {AccountNotifications} from "../account-settings/AccountNotifications";
 import {SystemConstants} from "../../../core/SystemConstants";
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
@@ -88,6 +88,7 @@ export class ScrumView extends View {
         let notifications = super.listNotificationInterests();
 
         notifications.push( ScrumNotifications.EDIT_NOTE );
+        notifications.push( AccountNotifications.ACCOUNT_UPDATED );
 
         return notifications;
     }
@@ -102,6 +103,11 @@ export class ScrumView extends View {
             case ScrumNotifications.EDIT_NOTE :
 
                 ( this.notes as ScrumNotes ).initNoteEditing( notification.data );
+
+                break;
+
+            case AccountNotifications.ACCOUNT_UPDATED :
+                ( this.welcomeScreen as ScrumWelcomeScreen ).populate();
 
                 break;
 

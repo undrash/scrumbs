@@ -5,6 +5,7 @@ import {ICreateInquiryModel} from "./models/interfaces/ICreateInquiryModel";
 import {ICreateMemberModel} from "./models/interfaces/ICreateMemberModel";
 import {ICreateNoteModel} from "./models/interfaces/ICreateNoteModel";
 import {ICreateTeamModel} from "./models/interfaces/ICreateTeamModel";
+import {IUpdateUserModel} from "./models/interfaces/IUpdateUserModel";
 import {IUpdateTeamModel} from "./models/interfaces/IUpdateTeamModel";
 import {IEditMemberModel} from "./models/interfaces/IEditMemberModel";
 import {IEditNoteModel} from "./models/interfaces/IEditNoteModel";
@@ -16,7 +17,7 @@ import {UserVO} from "./UserVO";
 
 
 
-declare const DATA_SOURCE: any;
+declare let DATA_SOURCE: any;
 
 
 
@@ -38,6 +39,7 @@ export class ConnectionProxy extends Proxy {
         if ( ConnectionProxy.token || typeof DATA_SOURCE === "undefined" ) return;
 
         const data      = DATA_SOURCE;
+        DATA_SOURCE     = undefined;
         const dataSrc   = document.getElementById( "data-source" );
 
         if ( dataSrc ) dataSrc.parentNode.removeChild( dataSrc );
@@ -50,10 +52,9 @@ export class ConnectionProxy extends Proxy {
             onboardingGuidesDisplayed
         ));
 
-        console.log( "EXTERNAL ACCESS: ", data );
-
         ConnectionProxy.EXTERNAL_AUTH = true;
     }
+
 
 
     public login(data: ILoginModel, success: Function, failure: Function): void {
@@ -478,6 +479,32 @@ export class ConnectionProxy extends Proxy {
         this.httpRequest(
             HTTPMethods.POST,
             `/api/v1/users/onboarding/${ guideId }`,
+            null,
+            success,
+            failure
+        );
+    }
+
+
+
+    public updateUser(data: IUpdateUserModel, success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.PUT,
+            "/api/v1/users",
+            data,
+            success,
+            failure
+        );
+    }
+
+
+
+    public deleteUser(success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.DELETE,
+            "/api/v1/users",
             null,
             success,
             failure

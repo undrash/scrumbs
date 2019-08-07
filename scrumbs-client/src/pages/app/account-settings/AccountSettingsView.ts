@@ -1,18 +1,20 @@
 
-
-
 import {SystemConstants} from "../../../core/SystemConstants";
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
+import {AccountNotifications} from "./AccountNotifications";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {INotification} from "../../../core/INotification";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
+import {ViewNotifications} from "../ViewNotifications";
 import {AccountSettings} from "./AccountSettings";
+import {AccountSignals} from "./AccountSignals";
 import {ISignal} from "../../../core/ISignal";
 import {View} from "../../../core/View";
 
 
 // CSS
 import "../../../style/style-sheets/account-settings-view.scss";
+
 
 
 // HTML
@@ -29,7 +31,7 @@ export class AccountSettingsView extends View {
 
     private accountSettings: AccountSettings;
 
-
+    private isForegroundActive: boolean;
 
     constructor() {
         super( "AccountSettingsView" );
@@ -91,6 +93,29 @@ export class AccountSettingsView extends View {
 
         switch ( signal.name ) {
 
+            case AccountSignals.ACCOUNT_UPDATED :
+
+                this.sendNotification( AccountNotifications.ACCOUNT_UPDATED );
+
+                break;
+
+            case AccountSignals.EXIT :
+
+                if ( ! this.isForegroundActive ) this.sendNotification( ViewNotifications.SWITCH_TO_PREVIOUS_VIEW );
+
+                break;
+
+            case AccountSignals.FOREGROUND_ACTIVE :
+
+                this.isForegroundActive = true;
+
+                break;
+
+            case AccountSignals.FOREGROUND_INACTIVE :
+
+                this.isForegroundActive = false;
+
+                break;
 
             default:
                 break;

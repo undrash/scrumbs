@@ -31,7 +31,7 @@ export class Proxy extends CoreEntity implements IProxy {
 
 
 
-    protected static setVO(vo: IProxyVO): void {
+    public static setVO(vo: IProxyVO): void {
         Proxy.VO = vo;
     }
 

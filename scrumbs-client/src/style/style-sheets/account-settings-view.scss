@@ -20,7 +20,6 @@
     padding: 50px 30px 0;
     margin: auto;
     height: calc(100vh - 200px);
-    overflow: scroll;
 
     .input-group {
 
@@ -47,12 +46,16 @@
 
   }
 
+}
+
+
+#account-settings-change-email-modal, #account-settings-change-password-modal {
+
   .modal-bg {
     max-width: 660px;
-    margin: 60px auto 0;
     overflow: auto;
     padding: 35px 40px 80px;
-
+    margin: 200px auto 0;
 
     .modal-title {
       text-align: left;
@@ -96,32 +99,18 @@
       }
     }
 
+    .error-message { opacity:  0; }
+
   }
-
-  #account-settings-change-email-modal {
-    //display: block;
-    display: none;
-  }
-
-  #account-settings-change-email-modal-email-input-error-msg {
-    opacity: 1;
-  }
-
-
-  #account-settings-change-password-modal {
-    display: block;
-    //display: none;
-
-    .modal-title {
-      margin-bottom: 80px;
-    }
-  }
-
-  #account-settings-change-email-modal-password-input-error-msg {
-    opacity: 1;
-  }
-
-
 
 }
+
+
+#account-settings-change-password-modal {
+
+  .modal-title {
+    margin-bottom: 80px;
+  }
+}
+
 

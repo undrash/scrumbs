@@ -127,10 +127,9 @@ UserSchema.pre("save", function(next) {
 
         } else if( result && result._id.toString() !== self._id.toString() ) {
 
-            console.warn( "result", result );
-            self.invalidate( "email", "email must be unique" );
+            self.invalidate( "email", "The email address provided already has an account." );
 
-            next( new Error( "email must be unique" ) );
+            next( new Error( "The email address provided already has an account." ) );
         } else {
             next();
         }

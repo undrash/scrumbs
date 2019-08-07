@@ -288,12 +288,14 @@ export class HeaderComponent extends ViewComponent {
     public populate(): void {
         const userData = this.connection.getVO();
 
+        console.log( userData );
+
         const names = userData.name.split( " " );
 
         let monogram = "";
 
-        for ( let name of names ) {
-            monogram += name[0];
+        for ( let i = 0; i < 3; i++ ) {
+            if ( names[ i ] && names[ i ][ 0 ] ) monogram += names[ i ][ 0 ];
         }
 
         this.avatar.innerText           = monogram;

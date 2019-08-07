@@ -70,9 +70,11 @@ export class ScrumWelcomeScreen extends ViewComponent {
 
 
 
-    private populate(): void {
+    public populate(): void {
 
         const userData = this.connection.getVO();
+
+        console.log( userData );
 
         this.title.innerText = `Welcome ${ userData.name }`;
 
@@ -80,8 +82,8 @@ export class ScrumWelcomeScreen extends ViewComponent {
 
         let monogram = "";
 
-        for ( let name of names ) {
-            monogram += name[0];
+        for ( let i = 0; i < 3; i++ ) {
+            if ( names[ i ] && names[ i ][ 0 ] ) monogram += names[ i ][ 0 ];
         }
 
         this.profileImage.innerText = monogram;
