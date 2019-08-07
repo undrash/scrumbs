@@ -44,33 +44,35 @@ export class AuthenticationLogin extends ViewComponent {
 
     private passwordInputTypeToggle: HTMLSpanElement;
 
+    private loginError: HTMLElement;
+    private loginErrorLink: HTMLElement;
+
 
 
     constructor(view: View, container: HTMLElement) {
         super( view, container, "AuthenticationLogin" );
 
-        console.info( "Login view component initialized." );
+        this.container.innerHTML            = template;
 
-        this.container.innerHTML = template;
+        this.title                          = document.getElementById( "authentication-login-title" ) as HTMLHeadingElement;
+        this.subTitle                       = document.getElementById( "authentication-login-subtitle" ) as HTMLHeadingElement;
 
-        this.title                  = document.getElementById( "authentication-login-title" ) as HTMLHeadingElement;
-        this.subTitle               = document.getElementById( "authentication-login-subtitle" ) as HTMLHeadingElement;
+        this.emailInputLabel                = document.getElementById( "authentication-login-email-input-label" ) as HTMLLabelElement;
+        this.emailInput                     = document.getElementById( "authentication-login-email-input" ) as HTMLInputElement;
+        this.emailInputError                = document.getElementById( "authentication-login-email-input-error" ) as HTMLSpanElement;
 
-        this.emailInputLabel        = document.getElementById( "authentication-login-email-input-label" ) as HTMLLabelElement;
-        this.emailInput             = document.getElementById( "authentication-login-email-input" ) as HTMLInputElement;
-        this.emailInputError        = document.getElementById( "authentication-login-email-input-error" ) as HTMLSpanElement;
+        this.passwordInputLabel             = document.getElementById( "authentication-login-password-input-label" ) as HTMLLabelElement;
+        this.passwordInput                  = document.getElementById( "authentication-login-password-input" ) as HTMLInputElement;
+        this.passwordInputError             = document.getElementById( "authentication-login-password-input-error" ) as HTMLSpanElement;
 
-        this.passwordInputLabel     = document.getElementById( "authentication-login-password-input-label" ) as HTMLLabelElement;
-        this.passwordInput          = document.getElementById( "authentication-login-password-input" ) as HTMLInputElement;
-        this.passwordInputError     = document.getElementById( "authentication-login-password-input-error" ) as HTMLSpanElement;
+        this.rememberMe                     = document.getElementById( "remember-me" ) as HTMLInputElement;
+        this.forgotPassBtn                  = document.getElementById( "authentication-login-forgot-password" ) as HTMLParagraphElement;
+        this.loginBtn                       = document.getElementById( "authentication-login-btn" ) as HTMLButtonElement;
 
-        this.rememberMe             = document.getElementById( "remember-me" ) as HTMLInputElement;
-        this.forgotPassBtn          = document.getElementById( "authentication-login-forgot-password" ) as HTMLParagraphElement;
-        this.loginBtn               = document.getElementById( "authentication-login-btn" ) as HTMLButtonElement;
+        this.passwordInputTypeToggle        = document.getElementById( "authentication-login-password-toggle-button" ) as HTMLSpanElement;
 
-        this.passwordInputTypeToggle               = document.getElementById( "authentication-login-password-toggle-button" ) as HTMLSpanElement;
-
-
+        this.loginError                     = document.getElementById( "authentication-log-in-error-container" );
+        this.loginErrorLink                 = document.getElementById( "authentication-log-in-error-link" );
 
         this.emailInputListener                 = this.emailInputListener.bind( this );
         this.passwordInputListener              = this.passwordInputListener.bind( this );
@@ -90,6 +92,7 @@ export class AuthenticationLogin extends ViewComponent {
         this.forgotPassBtn.addEventListener( "click", this.forgotPassBtnListener );
         this.loginBtn.addEventListener( "click", this.loginBtnListener );
         this.passwordInputTypeToggle.addEventListener( "click", this.passwordInputTypeToggleListener );
+        this.loginErrorLink.addEventListener( "click", this.forgotPassBtnListener );
     }
 
 
@@ -100,29 +103,30 @@ export class AuthenticationLogin extends ViewComponent {
         this.forgotPassBtn.removeEventListener( "click", this.forgotPassBtnListener );
         this.loginBtn.removeEventListener( "click", this.loginBtnListener );
         this.passwordInputTypeToggle.removeEventListener( "click", this.passwordInputTypeToggleListener );
+        this.loginErrorLink.removeEventListener( "click", this.forgotPassBtnListener );
     }
 
 
 
-    private emailInputListener(e: any) {
+    private emailInputListener() {
         this.emailInputError.style.display = "none";
     }
 
 
 
-    private passwordInputListener(e: any) {
+    private passwordInputListener() {
         this.passwordInputError.style.display = "none";
     }
 
 
 
-    private forgotPassBtnListener(e: any) {
+    private forgotPassBtnListener() {
         this.exitScene( ViewExitTypes.SWITCH_COMPONENT, AuthenticationSignals.SWITCH_LOGIN_TO_FORGOT_PASSWORD );
     }
 
 
 
-    private loginBtnListener(e: any) {
+    private loginBtnListener() {
         if ( ! this.validateInputs() ) return;
 
         const email     = this.emailInput.value;
@@ -134,15 +138,23 @@ export class AuthenticationLogin extends ViewComponent {
         this.connection.login(
             loginModel,
             () => this.sendSignal( AuthenticationSignals.LOGIN ),
-            (err: string) => console.error( err )
-        )
+            (err: string) => this.loginError.style.display = "block"
+        );
 
     }
 
 
 
-    private passwordInputTypeToggleListener(e: any) {
+    private passwordInputTypeToggleListener() {
         this.passwordInput.type === "text" ? this.passwordInput.type = "password" : this.passwordInput.type = "text";
+    }
+
+
+
+    public resetComponent(): void {
+        this.emailInput.value           = '';
+        this.passwordInput.value        = '';
+        this.loginError.style.display   = "none";
     }
 
 
@@ -196,6 +208,8 @@ export class AuthenticationLogin extends ViewComponent {
 
                     if ( signal ) this.sendSignal( signal );
 
+                    this.resetComponent();
+
                 }});
 
                 break;
@@ -206,6 +220,8 @@ export class AuthenticationLogin extends ViewComponent {
                 TweenLite.to( this.container, 0.4, { paddingTop: 130, delay: 0.3 } );
                 TweenLite.to( this.container, 0.4, { opacity: 0, ease: Power1.easeOut, onComplete: () => {
                     this.container.style.display = "none";
+
+                    this.resetComponent();
                 }});
 
                 break;

@@ -62,15 +62,31 @@ export class Proxy extends CoreEntity implements IProxy {
 
         xhr.onload = () => {
 
-            let response = JSON.parse( xhr.responseText );
+            let response: any;
+
+            try {
+                response = JSON.parse( xhr.responseText );
+            } catch (err) {}
+
 
             if ( xhr.status == 200 || response.success ) {
+
+                /** Passport sends status 200 even on failed login. */
+                if ( response &&
+                    ! response.success &&
+                    response.message === "Invalid credentials."
+                ) {
+                    if ( failure ) failure ( response );
+                    return;
+                }
 
                 if ( success ) success( response );
 
             } else {
 
-                if ( failure ) failure( response );
+                if ( failure && response ) failure( response );
+                if ( failure && ! response ) failure( xhr.responseText );
+
             }
         };
 

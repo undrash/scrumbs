@@ -317,13 +317,19 @@ class AuthenticationController {
                     .then(  async user => {
 
                         if ( ! user ) {
-                            return done( null, false, { message: "Invalid Credentials.\n" } );
+                            return done( null, false, { message: {
+                                success: false,
+                                message: "Invalid credentials."
+                            }});
                         }
 
                         const passwordsMatch = await user.comparePassword( password );
 
                         if ( ! passwordsMatch ) {
-                            return done( null, false, { message: "Invalid Credentials.\n" } );
+                            return done( null, false, { message: {
+                                success: false,
+                                message: "Invalid credentials."
+                            }});
                         }
 
 
