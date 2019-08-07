@@ -15,7 +15,7 @@ import {Flows} from "./Flows";
 // CSS
 import "../../../style/style-sheets/onboarding.scss"
 
-
+const template = require( "../../../templates/onboarding.html" );
 
 
 export class Onboarding {
@@ -32,6 +32,11 @@ export class Onboarding {
     private timeout: any;
 
     constructor() {
+
+        const container = document.createElement( "div" );
+        container.innerHTML = template;
+
+        document.body.appendChild( container );
 
         this.testing = false;
 

@@ -320,3 +320,79 @@
     bottom: -5px;
   }
 }
+
+
+
+
+//------------------------- MANAGE TEAMS --------------------------------------------------------------
+
+
+#onboarding-manage-teams-tip-edit-team-name {
+  left: 500px;
+  top: 200px;
+
+  &::after {
+    left: 25px;
+    top: -5px;
+  }
+}
+
+
+//---------------------------------------------------------------------------------------
+
+#onboarding-manage-teams-tip-add-members {
+  left: 800px;
+  top: 50px;
+
+  &::after {
+    left: unset;
+    right: -5px;
+  }
+}
+
+
+//---------------------------------------------------------------------------------------
+
+#onboarding-manage-teams-tip-add-new-team {
+  bottom: 50px;
+  right: 100px;
+
+  &::after {
+    left: unset;
+    right: -5px;
+    bottom: 25px;
+    top: unset;
+  }
+
+  .guide-secondary-btn {
+    float: right;
+    margin-right: 10px;
+  }
+
+  .guide-primary-btn {
+    float: right;
+  }
+}
+
+
+//---------------------------------------------------------------------------------------
+
+#onboarding-manage-teams-tip-delete-team {
+  right: 50px;
+  top: 600px;
+
+  &::after {
+    left: unset;
+    right: -5px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
