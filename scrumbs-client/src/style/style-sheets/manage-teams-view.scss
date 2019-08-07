@@ -543,13 +543,14 @@
         margin: auto;
     }
 
+    .member-search-empty {
+        display: block;
+        margin-top: 35px;
+    }
+
     .members-list-container {
         margin-top: 30px;
         height: 31vh;
-
-        .member-search-empty {
-            display: block;
-        }
 
         .check-box {
             position: absolute;
