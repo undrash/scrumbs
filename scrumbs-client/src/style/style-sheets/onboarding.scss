@@ -346,10 +346,6 @@
 
 
 #onboarding-manage-teams-tip-edit-team-name {
-  left: 500px;
-  top: 200px;
-
-  display: none;
 
   &::after {
     left: 25px;
@@ -361,10 +357,6 @@
 //---------------------------------------------------------------------------------------
 
 #onboarding-manage-teams-tip-add-members {
-  left: 800px;
-  top: 50px;
-
-  display: none;
 
   &::after {
     left: unset;
@@ -376,16 +368,13 @@
 //---------------------------------------------------------------------------------------
 
 #onboarding-manage-teams-tip-add-new-team {
-  bottom: 50px;
-  right: 100px;
-
-  display: none;
 
   &::after {
     left: unset;
     right: -5px;
     bottom: 25px;
     top: unset;
+    //top: 167px;
   }
 
   .guide-secondary-btn {
@@ -402,10 +391,6 @@
 //---------------------------------------------------------------------------------------
 
 #onboarding-manage-teams-tip-delete-team {
-  right: 50px;
-  top: 600px;
-
-  display: none;
 
   &::after {
     left: unset;

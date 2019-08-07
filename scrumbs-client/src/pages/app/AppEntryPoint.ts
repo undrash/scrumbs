@@ -127,6 +127,8 @@ export class AppViewManager extends ViewManager {
 
                 this.switchView( ManageTeamsView, null );
 
+                this.onboarding.initFlow( Flows.MANAGE_TEAMS );
+
                 break;
 
             case ViewNotifications.SWITCH_TO_CREATE_TEAM_VIEW :

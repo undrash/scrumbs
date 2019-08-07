@@ -2,9 +2,13 @@
 import {TipImpedimentCheckbox} from "./guides/TipImpedimentCheckbox";
 import {TipImpedimentShortcut} from "./guides/TipImpedimentShortcut";
 import {ConnectionProxy} from "../../../connection/ConnectionProxy";
+import {TipAddMembersToTeam} from "./guides/TipAddMembersToTeam";
 import {TipEditMemberName} from "./guides/TipEditMemberName";
 import {TipMemberOptions} from "./guides/TipMemberOptions";
+import {TipEditTeamName} from "./guides/TipEditTeamName";
 import {OnboardingSignals} from "./OnboardingSignals";
+import {TipCreateTeam} from "./guides/TipCreateTeam";
+import {TipDeleteTeam} from "./guides/TipDeleteTeam";
 import {ModalWelcome} from "./guides/ModalWelcome";
 import {TipNewMember} from "./guides/TipNewMember";
 import {ISignal} from "../../../core/ISignal";
@@ -15,7 +19,6 @@ import {Flows} from "./Flows";
 // CSS
 import "../../../style/style-sheets/onboarding.scss"
 
-const template = require( "../../../templates/onboarding.html" );
 
 
 export class Onboarding {
@@ -33,12 +36,7 @@ export class Onboarding {
 
     constructor() {
 
-        const container = document.createElement( "div" );
-        container.innerHTML = template;
-
-        document.body.appendChild( container );
-
-        this.testing = false;
+        this.testing = true;
 
         this.connection = new ConnectionProxy( "Onboarding" );
 
@@ -56,6 +54,12 @@ export class Onboarding {
             [ Flows.IMPEDIMENTS_FEATURE ] : [
                 { id: Guides.TIP_IMPEDIMENT_CHECKBOX, ctor: TipImpedimentCheckbox },
                 { id: Guides.TIP_IMPEDIMENT_SHORTCUT, ctor: TipImpedimentShortcut }
+            ],
+            [ Flows.MANAGE_TEAMS ] : [
+                { id: Guides.TIP_EDIT_TEAM_NAME, ctor: TipEditTeamName },
+                { id: Guides.TIP_ADD_MEMBERS_TO_TEAM, ctor: TipAddMembersToTeam },
+                { id: Guides.TIP_CREATE_TEAM, ctor: TipCreateTeam },
+                { id: Guides.TIP_DELETE_TEAM, ctor: TipDeleteTeam }
             ]
         };
 
