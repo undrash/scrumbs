@@ -200,6 +200,23 @@
     top: 87px;
   }
 
+  &.small {
+    padding: 15px;
+    text-align: center;
+    max-width: 175px;
+
+    .guide-description {
+      font-size: 14px;
+      font-weight: 200;
+    }
+
+    &::after {
+      left: 47%;
+      top: -5px;
+    }
+  }
+
+
   &.image {
     width: 356px;
 
@@ -224,6 +241,7 @@
     }
 
   }
+
 
 }
 

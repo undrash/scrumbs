@@ -121,12 +121,6 @@
 
         .manage-teams-settings-header {
             overflow: hidden;
-
-            p {
-                font-size: 16px;
-                font-weight: bold;
-                display: inline-block;
-            }
         }
 
         .scrum-master-list-container {
@@ -163,8 +157,10 @@
                 }
             }
 
+
             .invite-scrum-master-btn {
                 display: inline-block;
+                position: absolute;
                 height: 45px;
                 width: 45px;
                 border: 2px solid #ECECF2;
@@ -177,7 +173,18 @@
 
                 &:hover {
                     border: 2px solid $accent-color;
+
+                    #manage-team-invite-scrum-master-btn-tooltip {
+                        opacity: 1;
+                    }
                 }
+            }
+
+            #manage-team-invite-scrum-master-btn-tooltip {
+                top: 55px;
+                left: -70px;
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out;
             }
         }
 
