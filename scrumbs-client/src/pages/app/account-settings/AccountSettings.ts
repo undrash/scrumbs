@@ -140,7 +140,7 @@ export class AccountSettings extends ViewComponent {
             ModalTypes.DELETE,
             "Yes, Delete Account",
             "Cancel, Keep My Account",
-            "WARNING! Deleting Account!",
+            "WARNING!",
             [
                 `Are you sure you want to delete the account associated with the <strong>${ email }</strong> email address?`,
                 "<br><strong>All your data will be permanently deleted, and the operation cannot be undone.</strong>"
