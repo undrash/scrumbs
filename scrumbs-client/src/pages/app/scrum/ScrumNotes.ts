@@ -54,6 +54,8 @@ export class ScrumNotes extends ViewComponent {
 
     private emptyState: HTMLDivElement;
 
+    private lastBatchItem: HTMLElement;
+
 
     /** Load more feature related properties */
     private noteBatchIndex: number;
@@ -62,6 +64,9 @@ export class ScrumNotes extends ViewComponent {
     private editMode: boolean;
     private editingNote: Note;
 
+    private scrollStop: boolean;
+
+    private scrollTimeout: any;
 
     constructor(view: View, container: HTMLElement) {
         super( view, container, "ScrumNotes" );
@@ -306,22 +311,32 @@ export class ScrumNotes extends ViewComponent {
 
     private loadMoreNotes(): void {
 
-        if ( this.notesContainer.scrollTop !== 0 ) return;
+        if ( this.notesContainer.scrollTop !== 0 || this.scrollStop ) return;
 
-        this.connection.getNotesOfMember(
-            this.memberId,
-            this.memberTeamId,
-            this.noteBatchIndex,
-            15,
-            (response: any) => {
+        clearTimeout( this.scrollTimeout );
 
-                const { notes } = response;
+        if ( this.notesContainer.children.length ) {
+            this.lastBatchItem = this.notesContainer.children[ 0 ] as HTMLElement;
+        }
 
-                if ( notes.length ) this.populate( response.notes, true );
+        this.scrollTimeout = setTimeout( () => {
 
-            },
-            (err: any) => console.error( err )
-        );
+            this.connection.getNotesOfMember(
+                this.memberId,
+                this.memberTeamId,
+                this.noteBatchIndex,
+                15,
+                (response: any) => {
+
+                    const { notes } = response;
+
+                    if ( notes.length ) this.populate( response.notes, true );
+
+                },
+                (err: any) => console.error( err )
+            );
+
+        }, 250 );
 
     }
 
@@ -340,8 +355,6 @@ export class ScrumNotes extends ViewComponent {
         this.memberName.innerText       = name;
 
         this.resetNotesContainer();
-
-        this.sendSignal( ScrumSignals.SWITCH_WELCOME_SCREEN_TO_NOTES );
 
         this.connection.getNotesOfMember(
             id,
@@ -364,8 +377,13 @@ export class ScrumNotes extends ViewComponent {
 
     
     private resetNotesContainer(): void {
+
+        this.scrollStop                 = true;
         this.notesContainer.innerHTML   = "";
         this.noteBatchIndex             = 0;
+
+        setTimeout( () => this.scrollStop = false, 100 );
+
     }
 
 
@@ -542,7 +560,8 @@ export class ScrumNotes extends ViewComponent {
         if ( this.noteBatchIndex <= 1 ) {
             this.notesContainer.scrollTo( 0, this.notesContainer.scrollHeight );
         } else {
-            this.notesContainer.scrollTo( 0, this.notesContainer.scrollHeight / 25 );
+
+            if ( this.lastBatchItem ) this.lastBatchItem.scrollIntoView();
         }
     }
 
