@@ -36,7 +36,7 @@ export class Onboarding {
 
     constructor() {
 
-        this.testing = true;
+        this.testing = false;
 
         this.connection = new ConnectionProxy( "Onboarding" );
 
