@@ -72,6 +72,18 @@
     cursor: pointer;
 }
 
+.coming-soon-dark {
+    color: $accent-color;
+    border: 1px solid $accent-color;
+    border-radius: 25px;
+    font-size: 10px;
+    left: 60px;
+    top: 30px;
+    padding: 0 3px;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
 
 /** ==================================== Body ==================================== */
 
