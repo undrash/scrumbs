@@ -116,6 +116,8 @@ export class ManageTeamsView extends View {
 
             case ManageTeamSignals.SWITCH_TO_MEMBERS :
 
+                this.sendNotification( ViewNotifications.CLEAR_ONBOARDING );
+
                 this.teams.exitScene( ViewExitTypes.SWITCH_COMPONENT );
                 this.members.enterScene( ViewExitTypes.SWITCH_COMPONENT );
 

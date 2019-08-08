@@ -80,6 +80,7 @@ export class AppViewManager extends ViewManager {
 
         notifications.push( ViewNotifications.INIT_ONBOARDING_MEMBER_EDIT_FLOW );
         notifications.push( ViewNotifications.INIT_ONBOARDING_IMPEDIMENT_FEATURE_FLOW );
+        notifications.push( ViewNotifications.CLEAR_ONBOARDING );
 
         return notifications;
     }
@@ -158,6 +159,12 @@ export class AppViewManager extends ViewManager {
             case ViewNotifications.INIT_ONBOARDING_IMPEDIMENT_FEATURE_FLOW :
 
                 this.onboarding.initFlow( Flows.IMPEDIMENTS_FEATURE );
+
+                break;
+
+            case ViewNotifications.CLEAR_ONBOARDING :
+
+                this.onboarding.clearGuides();
 
                 break;
 
