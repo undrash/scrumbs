@@ -21,19 +21,17 @@
   
   <br>
   
-  <img width="420px"
-      src="https://www.scrumbs.app/public/images/right-ui.svg">
-      
-  <br>
+  
+  ![Screen](scrumbs-website/public/images/right-ui.svg)
   
   <h1>License</h1>
   
-  <p>Copyright (c) Planeeet. All rights reserved.</p>
+  <p>Copyright (c) boardme. All rights reserved.</p>
   
   
-  <a href="http://planeeet.com/">
+  <a href="https://www.boardme.app/">
     <img width="100px"
-      src="http://www.planeeet.com/wp-content/themes/planeeet/frontend/img/logo.svg">
+      src="https://www.boardme.app/public/img/boardme-blue.svg">
   </a>
 
 

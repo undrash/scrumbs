@@ -6,9 +6,9 @@ import {ViewExitTypes} from "../../../core/ViewExitTypes";
 import {View} from "../../../core/View";
 
 
-import TweenLite = gsap.TweenLite;
-import Power0 = gsap.Power0;
-import Back = gsap.Back;
+declare const TweenLite: any;
+declare const Power0: any;
+declare const Back: any;
 
 
 
@@ -17,7 +17,7 @@ import "../../../style/style-sheets/impediments-unsolved.scss";
 
 
 // HTML
-const template = require( "../templates/impediments/component/impediments-unsolved.html" );
+const template = require( "../../../templates/impediments-unsolved.html" );
 
 
 
@@ -31,7 +31,7 @@ export class ImpedimentsUnsolved extends ViewComponent {
 
 
     constructor(view: View, container: HTMLElement) {
-        super( view, container );
+        super( view, container, "ImpedimentsUnsolved" );
 
         this.container.innerHTML = template;
 
@@ -54,11 +54,38 @@ export class ImpedimentsUnsolved extends ViewComponent {
 
 
 
-    private populate(): void {
+    public populateFiltered(memberId: string): void {
+
+        this.container.innerHTML = null;
+
+
+        this.connection.getUnsolvedImpedimentsOfMember(
+            memberId,
+            (response: any) => {
+                const { impediments } = response;
+
+                if ( ! impediments.length ) this.sendSignal( ImpedimentSignals.IMPEDIMENTS_UNSOLVED_EMPTY );
+
+                for ( let impediment of impediments ) {
+                    this.addImpediment( impediment );
+                }
+            },
+            (err: string) => console.error( err )
+        );
+
+    }
+
+
+
+    public populate(): void {
+
+        this.container.innerHTML = '';
 
         this.connection.getUnsolvedImpediments(
             (response: any) => {
                 const { impediments } = response;
+
+                if ( ! impediments.length ) this.sendSignal( ImpedimentSignals.IMPEDIMENTS_UNSOLVED_EMPTY );
 
                 for ( let impediment of impediments ) {
                     this.addImpediment( impediment );
@@ -71,55 +98,54 @@ export class ImpedimentsUnsolved extends ViewComponent {
 
 
     public addImpediment(impedimentData: any): void {
+
+
+        const impediment        = document.createElement( "li" );
+        impediment.className    = "impediments-unsolved-member-impediment pointer";
+        impediment.id           = impedimentData._id;
+        impediment.innerText    = impedimentData.content;
+
+        const checkbox          = document.createElement( "span" );
+        checkbox.className      = "impediments-unsolved-member-impediment-checkbox";
+
+        impediment.appendChild( checkbox );
+
+
         /** Check if member is already rendered, if so - we append */
-        let memberContainer = document.getElementById( `unsolved-${impedimentData.member._id}` );
+        let memberContainer = document.getElementById( `unsolved-${ impedimentData.member ? impedimentData.member._id : "user-impediments" }` );
 
         if ( memberContainer ) {
-            let impediment          = document.createElement( "li" );
-            impediment.className    = "impediments-unsolved-member-impediment pointer";
-            impediment.id           = impedimentData._id;
-            impediment.innerText    = impedimentData.content;
-
-            let checkbox            = document.createElement( "span" );
-            checkbox.className      = "impediments-unsolved-member-impediment-checkbox";
-
-            impediment.appendChild( checkbox );
 
             memberContainer.lastElementChild.appendChild( impediment );
-
-            this.addListenerToImpediment( impediment );
 
         } else {
             /** If the member has no container on the page, we create it now */
             memberContainer                 = document.createElement( "li" );
-            memberContainer.id              = `unsolved-${impedimentData.member._id}`;
+            memberContainer.id              = `unsolved-${ impedimentData.member ? impedimentData.member._id : "user-impediments" }`;
             memberContainer.className       = "impediments-unsolved-member-container";
 
             let memberName                  = document.createElement( "h3" );
-            memberName.innerText            = impedimentData.member.name;
+            memberName.innerText            = impedimentData.member ? impedimentData.member.name : "Your Impediments";
             memberName.className            = "impediments-unsolved-member-name bold";
 
             let impedimentsContainer        = document.createElement( "ul" );
             impedimentsContainer.className  = "impediments-unsolved-member-impediments";
 
-            let impediment                  = document.createElement( "li" );
-            impediment.className            = "impediments-unsolved-member-impediment pointer";
-            impediment.innerText            = impedimentData.content;
-            impediment.id                   = impedimentData._id;
-
-            let checkbox                    = document.createElement( "span" );
-            checkbox.className              = "impediments-unsolved-member-impediment-checkbox";
-
-            impediment.appendChild( checkbox );
             impedimentsContainer.appendChild( impediment );
 
             memberContainer.appendChild( memberName );
             memberContainer.appendChild( impedimentsContainer );
 
-            this.container.appendChild( memberContainer );
 
-            this.addListenerToImpediment( impediment );
+            if ( impedimentData.member ) {
+                this.container.appendChild( memberContainer );
+            } else {
+                this.container.insertBefore( memberContainer, this.container.firstElementChild );
+            }
         }
+
+
+        this.addListenerToImpediment( impediment );
     }
 
 
@@ -152,8 +178,36 @@ export class ImpedimentsUnsolved extends ViewComponent {
                     this.sendSignal( ImpedimentSignals.IMPEDIMENT_SOLVED, note );
                 },
                 (err: string) => console.error( err )
-            )
+            );
         });
+    }
+
+
+
+    public solveAll(): void {
+        const impediments = document.getElementsByClassName( "impediments-unsolved-member-impediment" );
+
+        let ids = [];
+
+        for ( let i = 0; i < impediments.length; i++ ) {
+            ids.push( impediments[ i ].id );
+        }
+
+        this.container.innerHTML = '';
+
+        for ( let impedimentId of ids ) {
+
+            this.connection.solveImpediment(
+                impedimentId,
+                (response: any) => {
+                    console.log( response );
+
+                    const { note } = response;
+                    this.sendSignal( ImpedimentSignals.IMPEDIMENT_SOLVED, note );
+                },
+                (err: string) => console.error( err )
+            );
+        }
     }
 
 

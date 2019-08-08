@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="21px" height="25px" viewBox="0 0 21 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/notification</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Scrum" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Scrumbs-User-Dropdown" transform="translate(-1291.000000, -23.000000)" fill="#242E4C" fill-rule="nonzero">
+            <g id="Navbar">
+                <g id="icon/notification">
+                    <g transform="translate(1291.000000, 23.000000)">
+                        <path d="M10.5,25 C11.8588235,25 12.9705882,23.875 12.9705882,22.5 L8.02941176,22.5 C8.02941176,23.875 9.14117647,25 10.5,25 Z M18.5294118,17.5 L18.5294118,10.625 C18.5294118,6.75 15.9352941,3.625 12.3529412,2.75 L12.3529412,1.875 C12.3529412,0.875 11.4882353,0 10.5,0 C9.51176471,0 8.64705882,0.875 8.64705882,1.875 L8.64705882,2.75 C5.06470588,3.625 2.47058824,6.75 2.47058824,10.625 L2.47058824,17.5 L0,20 L0,21.25 L21,21.25 L21,20 L18.5294118,17.5 Z M16.0588235,18.75 L4.94117647,18.75 L4.94117647,10.625 C4.94117647,7.5 7.41176471,5 10.5,5 C13.5882353,5 16.0588235,7.5 16.0588235,10.625 L16.0588235,18.75 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

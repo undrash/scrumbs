@@ -1,9 +1,9 @@
 
 
+import RequireAuthentication from "../middlewares/RequireAuthentication";
 import { Router, Request, Response, NextFunction } from "express";
 import Member from "../models/Member";
 import Note from "../models/Note";
-
 
 
 
@@ -20,19 +20,21 @@ class MemberController {
 
 
     public routes() {
-        this.router.get( '/', this.getMembers );
-        this.router.post( '/', this.createMember );
-        this.router.get( "/:team", this.getMembersOfTeam );
-        this.router.put( "/add", this.addMemberToTeam );
-        this.router.put( "/remove", this.removeMemberFromTeam );
-        this.router.put( "/edit", this.editMember );
-        this.router.delete( "/:id", this.deleteMember );
+        this.router.get( '/', RequireAuthentication, this.getMembers );
+        this.router.get( "/uncategorized", RequireAuthentication, this.getUncategorizedMembers );
+        this.router.get( "/search/:string", RequireAuthentication, this.searchMembers );
+        this.router.post( '/', RequireAuthentication, this.createMember );
+        this.router.get( "/:team", RequireAuthentication, this.getMembersOfTeam );
+        this.router.put( "/add", RequireAuthentication, this.addMemberToTeam );
+        this.router.put( "/remove", RequireAuthentication, this.removeMemberFromTeam );
+        this.router.put( "/edit", RequireAuthentication, this.editMember );
+        this.router.delete( "/:id", RequireAuthentication, this.deleteMember );
     }
 
 
 
     public getMembers(req: Request, res: Response, next: NextFunction) {
-        const userId = req.app.get( "user" )._id;
+        const userId = ( req as any ).user._id;
 
         Member.find( { owner: userId } )
             .populate( "teams", "name isDefault _id" )
@@ -42,17 +44,35 @@ class MemberController {
 
 
 
+    public getUncategorizedMembers(req: Request, res: Response, next: NextFunction) {
+        const userId = ( req as any ).user._id;
+
+        Member.find( { owner: userId, teams: [] } )
+            .populate( "teams", "name isDefault _id" )
+            .then( members => res.status( 200 ).json( { success: true, members } ) )
+            .catch( next );
+    }
+
+
+
+    public searchMembers(req: Request, res: Response, next: NextFunction) {
+        const userId = ( req as any ).user._id;
+        const string = req.params.string || "";
+
+        Member.find( { owner: userId, name: { $regex: string, $options: 'i' } } )
+            .populate( "teams", "name isDefault _id" )
+            .then( members => res.status( 200 ).json( { success: true, members } ) )
+            .catch( next );
+    }
+
+
+
     public createMember(req: Request, res: Response, next: NextFunction) {
-        const userId            = req.app.get( "user" )._id;
+        const userId            = ( req as any ).user._id;
         const { name, team }    = req.body;
 
         if ( ! name ) {
             res.status( 422 ).json( { success: false, message: "Name property is required at member creation." } );
-            return;
-        }
-
-        if ( ! team ) {
-            res.status( 422 ).json( { success: false, message: "Team property is required at member creation." } );
             return;
         }
 
@@ -61,7 +81,7 @@ class MemberController {
             owner: userId
         });
 
-        member.teams.push( team );
+        if ( team ) member.teams.push( team );
 
         member.save()
             .then( member => res.status( 200 ).json( { success: true, member } ) )
@@ -71,10 +91,11 @@ class MemberController {
 
 
     public getMembersOfTeam(req: Request, res: Response, next: NextFunction) {
-        const userId = req.app.get( "user" )._id;
+        const userId = ( req as any ).user._id;
         const teamId = req.params.team;
 
         Member.find( { owner: userId, teams: teamId } )
+            .populate( "teams", "name isDefault _id" )
             .then( members => res.status( 200 ).json( { success: true, members } ) )
             .catch( next );
     }
@@ -103,7 +124,7 @@ class MemberController {
 
 
 
-    public removeMemberFromTeam(req: Request, res: Response, next: NextFunction) {
+    public removeMemberFromTeam = async (req: Request, res: Response, next: NextFunction) => {
         const { member, team } = req.body;
 
         if ( ! member ) {
@@ -116,12 +137,15 @@ class MemberController {
             return;
         }
 
+        await Note.deleteMany( { member, team } )
+            .catch( next );
+
         Member.findByIdAndUpdate( member,
             { $pull: { teams: team } },
             { "new": true } )
             .then( member => res.status( 200 ).json( { success: true, member } ) )
             .catch( next );
-    }
+    };
 
 
 

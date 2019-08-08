@@ -1,8 +1,10 @@
 
 import { Router, Request, Response, NextFunction } from "express";
 
+import RequireAuthentication from "../middlewares/RequireAuthentication";
 import Member from "../models/Member";
 import Team from "../models/Team";
+import Note from "../models/Note";
 
 
 
@@ -21,15 +23,17 @@ class TeamController {
 
 
     public routes() {
-        this.router.get( '/', this.getTeams );
-        this.router.post( '/', this.createTeam );
-        this.router.put( '/', this.updateTeam );
+        this.router.get( '/', RequireAuthentication, this.getTeams );
+        this.router.put( "/members/add", RequireAuthentication, this.addMembers );
+        this.router.post( '/', RequireAuthentication, this.createTeam );
+        this.router.put( '/', RequireAuthentication, this.updateTeam );
+        this.router.delete( "/:id", RequireAuthentication, this.deleteTeam );
     }
 
 
 
     public getTeams(req: Request, res: Response, next: NextFunction) {
-        const userId = req.app.get( "user" )._id;
+        const userId = ( req as any ).user._id;
 
         Team.find( { owner: userId } )
             .then( teams => {
@@ -40,8 +44,27 @@ class TeamController {
 
 
 
+    public addMembers = async (req: Request, res: Response, next: NextFunction) => {
+        const { id, members } = req.body;
+
+        await Member.updateMany({ _id: { $in: members } },
+            {  $addToSet: { teams: id } }
+            )
+            .catch( next );
+
+        Member.find({ _id: { $in: members } } )
+            .then( members => res.status( 200 ).json({
+                success: true,
+                message: "Members successfully added to the team",
+                members
+            }))
+            .catch( next );
+    };
+
+
+
     public createTeam = async (req: Request, res: Response, next: NextFunction) => {
-        const userId = req.app.get( "user" )._id;
+        const userId = ( req as any ).user._id;
 
         const { name, members } = req.body;
 
@@ -57,9 +80,9 @@ class TeamController {
 
         await team.save();
 
-        Member.update(
+        Member.updateMany(
             { _id: { $in: members } },
-            {  $push: { teams: team._id } },
+            {  $addToSet: { teams: team._id } },
             { multi: true }
         )
             .then( members => res.status( 200 ).json( { success: true, team, members } ) )
@@ -89,12 +112,12 @@ class TeamController {
 
 
             await Promise.all([
-                Member.update(
+                Member.updateMany(
                     { _id: { $in: addedMembers } },
-                    {  $push: { teams: id } },
+                    {  $addToSet: { teams: id } },
                     { multi: true } ),
 
-                Member.update(
+                Member.updateMany(
                     { _id: { $in: removedMembers } },
                     {  $pull: { teams: id } },
                     { multi: true } )
@@ -105,6 +128,31 @@ class TeamController {
 
         Member.find( { _id: { $in: addedMembers } } )
             .then( added => res.status( 200 ).json( { success: true, team, members: { added, removed: removedMembers } } ) )
+            .catch( next );
+    };
+
+
+
+    public deleteTeam = async (req: Request, res: Response, next: NextFunction) => {
+        const id = req.params.id;
+
+        await Member.updateMany(
+            { teams: id },
+            { $pull: { teams: id } },
+            { multi: true }
+        )
+            .catch( next );
+
+
+        await Note.deleteMany( { team: id } )
+            .catch( next );
+
+
+        Team.findByIdAndDelete( id )
+            .then( () => res.status( 200 ).json( {
+                success: true,
+                message: "Team deleted with all related members, notes, and impediments."
+            }))
             .catch( next );
     };
 

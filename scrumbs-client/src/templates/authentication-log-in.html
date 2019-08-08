@@ -1,0 +1,87 @@
+
+<div id="authentication-log-in-error-container" class="auth-error-container">
+
+    <p>
+       <span class="bold">Incorrect email or password.</span><br>
+       Try entering your credentials again, or <span id="authentication-log-in-error-link" class="error-link">reset your password</span>.
+    </p>
+
+</div>
+
+
+
+<h1 id="authentication-login-title" class="authentication-title">Log in to your account</h1>
+
+<h2 id="authentication-login-subtitle" class="authentication-description">Enter your email and password here and you'll be on your way</h2>
+
+<div class="input-wrapper">
+
+    <div class="input-group">
+
+        <label id="authentication-login-email-input-label" class="input-label" for="authentication-login-email-input">Email</label>
+
+        <div class="input-container input-type-text">
+
+            <input id="authentication-login-email-input" type="text" class="input input-email" placeholder="Enter your email address" spellcheck="false">
+
+            <span class="input-icon"></span>
+
+        </div>
+
+        <span id="authentication-login-email-input-error" class="input-error">Please provide a valid email address.</span>
+
+    </div>
+    <!-- email -->
+
+    <div class="input-group">
+
+            <label id="authentication-login-password-input-label" class="input-label" for="authentication-login-password-input">Password</label>
+
+            <div class="input-container input-type-password">
+
+                <input id="authentication-login-password-input" type="password" class="input input-password" placeholder="5+ characters" spellcheck="false">
+
+                <span class="input-icon"></span>
+
+                <span id="authentication-login-password-toggle-button" class="password-toggle-button pointer"></span>
+
+            </div>
+
+            <span id="authentication-login-password-input-error" class="input-error">Please provide a password.</span>
+
+    </div>
+    <!-- password -->
+
+</div>
+
+
+<div class="authentication-footer">
+
+    <div class="checkbox-wrapper">
+
+        <div class="checkbox-group">
+            <input id="remember-me" type="checkbox">
+            <label for="remember-me" class="noselect pointer">Remember Me</label>
+        </div>
+        
+        <p id="authentication-login-forgot-password" class="accent pointer noselect">Forgot Password?</p>
+
+    </div>
+
+    <button id="authentication-login-btn" class="primary-button">Log In</button>
+
+    <div class="social-media-auth-wrapper">
+
+        <p>Or log in with:</p>
+
+        <div class="social-media-auth-container">
+
+            <a href="/api/v1/authentication/oauth/google" class="button-google"></a>
+            <a href="/api/v1/authentication/oauth/twitter" class="button-twitter"></a>
+            <a href="/api/v1/authentication/oauth/linkedin" class="button-linkedin"></a>
+
+        </div>
+
+    </div>
+
+</div>

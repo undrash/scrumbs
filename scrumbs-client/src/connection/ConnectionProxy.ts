@@ -1,26 +1,58 @@
 
+import {IAddMembersToTeamModel} from "./models/interfaces/IAddMembersToTeamModel";
 import {IAddRemoveMemberModel} from "./models/interfaces/IAddRemoveMemberModel";
+import {ICreateInquiryModel} from "./models/interfaces/ICreateInquiryModel";
 import {ICreateMemberModel} from "./models/interfaces/ICreateMemberModel";
 import {ICreateNoteModel} from "./models/interfaces/ICreateNoteModel";
 import {ICreateTeamModel} from "./models/interfaces/ICreateTeamModel";
+import {IUpdateUserModel} from "./models/interfaces/IUpdateUserModel";
 import {IUpdateTeamModel} from "./models/interfaces/IUpdateTeamModel";
 import {IEditMemberModel} from "./models/interfaces/IEditMemberModel";
+import {IEditNoteModel} from "./models/interfaces/IEditNoteModel";
+import {ISignUpModel} from "./models/interfaces/ISignUpModel";
 import {ILoginModel} from "./models/interfaces/ILoginModel";
+import {HTTPMethods} from "../core/HTTPMethods";
 import {Proxy} from "../core/Proxy";
 import {UserVO} from "./UserVO";
 
 
-declare const SERVICE_URL: string;
 
+declare let DATA_SOURCE: any;
 
 
 
 
 
 export class ConnectionProxy extends Proxy {
+    public static EXTERNAL_AUTH: boolean = false;
 
     constructor(proxyName: string) {
-        super( proxyName, SERVICE_URL );
+        let address = `${ location.protocol }//${ location.hostname }${ location.port ? ':' + location.port: '' }`;
+        super( proxyName, address );
+        this.initialize();
+    }
+
+
+
+    private initialize(): void {
+
+        if ( ConnectionProxy.token || typeof DATA_SOURCE === "undefined" ) return;
+
+        const data      = DATA_SOURCE;
+        DATA_SOURCE     = undefined;
+        const dataSrc   = document.getElementById( "data-source" );
+
+        if ( dataSrc ) dataSrc.parentNode.removeChild( dataSrc );
+
+        const {  name, email, onboardingGuidesDisplayed } = data.userData;
+
+        ConnectionProxy.setVO( new UserVO(
+            name,
+            email,
+            onboardingGuidesDisplayed
+        ));
+
+        ConnectionProxy.EXTERNAL_AUTH = true;
     }
 
 
@@ -28,18 +60,19 @@ export class ConnectionProxy extends Proxy {
     public login(data: ILoginModel, success: Function, failure: Function): void {
 
         this.httpRequest(
-            "POST",
+            HTTPMethods.POST,
             "/api/v1/authentication/login",
             data,
             (response: any ) => {
 
-                this.setToken( response.tokenData );
+                // this.setToken( response.tokenData );
 
-                const {  name, email } = response.userData;
+                const {  name, email, onboardingGuidesDisplayed } = response.userData;
 
                 ConnectionProxy.setVO( new UserVO(
                     name,
-                    email
+                    email,
+                    onboardingGuidesDisplayed
                 ));
 
                 success( response );
@@ -50,21 +83,22 @@ export class ConnectionProxy extends Proxy {
 
 
 
-    public signUp(data: ILoginModel, success: Function, failure: Function): void {
+    public signUp(data: ISignUpModel, success: Function, failure: Function): void {
 
         this.httpRequest(
-            "POST",
+            HTTPMethods.POST,
             "/api/v1/authentication/sign-up",
             data,
             (response: any) => {
 
-                this.setToken( response.tokenData );
+                // this.setToken( response.tokenData );
 
-                const {  name, email } = response.userData;
+                const {  name, email, onboardingGuidesDisplayed } = response.userData;
 
                 ConnectionProxy.setVO( new UserVO(
                     name,
-                    email
+                    email,
+                    onboardingGuidesDisplayed
                 ));
 
                 success( response );
@@ -78,7 +112,7 @@ export class ConnectionProxy extends Proxy {
     public getTeams(success: Function, failure: Function): void {
 
         this.httpRequest(
-            "GET",
+            HTTPMethods.GET,
             "/api/v1/teams",
             null,
             success,
@@ -91,7 +125,7 @@ export class ConnectionProxy extends Proxy {
     public createTeam(data: ICreateTeamModel, success: Function, failure: Function): void {
 
         this.httpRequest(
-            "POST",
+            HTTPMethods.POST,
             "/api/v1/teams",
             data,
             success,
@@ -104,9 +138,35 @@ export class ConnectionProxy extends Proxy {
     public updateTeam(data: IUpdateTeamModel, success: Function, failure: Function): void {
 
         this.httpRequest(
-            "PUT",
+            HTTPMethods.PUT,
             "/api/v1/teams",
             data,
+            success,
+            failure
+        );
+    }
+
+
+
+    public addMembersToTeam(data: IAddMembersToTeamModel, success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.PUT,
+            "/api/v1/teams/members/add",
+            data,
+            success,
+            failure
+        );
+    }
+
+
+
+    public deleteTeam(teamId: string, success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.DELETE,
+            `/api/v1/teams/${ teamId }`,
+            null,
             success,
             failure
         );
@@ -117,8 +177,34 @@ export class ConnectionProxy extends Proxy {
     public getMembers(success: Function, failure: Function): void {
 
         this.httpRequest(
-            "GET",
+            HTTPMethods.GET,
             "/api/v1/members",
+            null,
+            success,
+            failure
+        );
+    }
+
+
+
+    public getUncategorizedMembers(success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.GET,
+            "/api/v1/members/uncategorized",
+            null,
+            success,
+            failure
+        );
+    }
+
+
+
+    public searchMembers(string: string,success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.GET,
+            `/api/v1/members/search/${ string }`,
             null,
             success,
             failure
@@ -130,7 +216,7 @@ export class ConnectionProxy extends Proxy {
     public createMember(data: ICreateMemberModel, success: Function, failure: Function): void {
 
         this.httpRequest(
-            "POST",
+            HTTPMethods.POST,
             "/api/v1/members",
             data,
             success,
@@ -143,7 +229,7 @@ export class ConnectionProxy extends Proxy {
     public editMember(data: IEditMemberModel, success: Function, failure: Function): void {
 
         this.httpRequest(
-            "PUT",
+            HTTPMethods.PUT,
             "/api/v1/members/edit",
             data,
             success,
@@ -156,7 +242,7 @@ export class ConnectionProxy extends Proxy {
     public deleteMember(memberId: string, success: Function, failure: Function): void {
 
         this.httpRequest(
-            "DELETE",
+            HTTPMethods.DELETE,
             `/api/v1/members/${ memberId }`,
             null,
             success,
@@ -169,7 +255,7 @@ export class ConnectionProxy extends Proxy {
     public getMembersOfTeam(teamId: string, success: Function, failure: Function): void {
 
         this.httpRequest(
-            "GET",
+            HTTPMethods.GET,
             `/api/v1/members/${ teamId }`,
             null,
             success,
@@ -182,7 +268,7 @@ export class ConnectionProxy extends Proxy {
     public addMemberToTeam(data: IAddRemoveMemberModel, success: Function, failure: Function): void {
 
         this.httpRequest(
-            "PUT",
+            HTTPMethods.PUT,
             "api/v1/members/add",
             data,
             success,
@@ -195,8 +281,8 @@ export class ConnectionProxy extends Proxy {
     public removeMemberFromTeam(data: IAddRemoveMemberModel, success: Function, failure: Function): void {
 
         this.httpRequest(
-            "PUT",
-            "api/v1/members/remove",
+            HTTPMethods.PUT,
+            "/api/v1/members/remove",
             data,
             success,
             failure
@@ -208,7 +294,7 @@ export class ConnectionProxy extends Proxy {
     public getNotesOfMember(memberId: string, teamId: string, batch: number = 0, limit: number = 15, success: Function, failure: Function): void {
 
         this.httpRequest(
-            "GET",
+            HTTPMethods.GET,
             `/api/v1/notes/member/${ memberId }&${ teamId }&${ batch }&${ limit }`,
             null,
             success,
@@ -221,7 +307,7 @@ export class ConnectionProxy extends Proxy {
     public deleteNotesOfMember(memberId: string, teamId: string, success: Function, failure: Function): void {
 
         this.httpRequest(
-            "DELETE",
+            HTTPMethods.DELETE,
             `/api/v1/notes/member/${ memberId }&${ teamId }`,
             null,
             success,
@@ -233,15 +319,52 @@ export class ConnectionProxy extends Proxy {
 
     public createNote(data: ICreateNoteModel, success: Function, failure: Function): void {
 
-        console.log( data );
-
         this.httpRequest(
-            "POST",
+            HTTPMethods.POST,
             "/api/v1/notes/",
             data,
             success,
             failure
-        )
+        );
+    }
+
+
+
+    public editNote(data: IEditNoteModel, success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.PUT,
+            "/api/v1/notes/",
+            data,
+            success,
+            failure
+        );
+    }
+
+
+
+    public convertNote(id: string, isImpediment: boolean, success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.PUT,
+            "/api/v1/notes/convert",
+            { id, isImpediment },
+            success,
+            failure
+        );
+    }
+
+
+
+    public deleteNote(id: string, success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.DELETE,
+            `/api/v1/notes/${ id }`,
+            null,
+                success,
+                failure
+        );
     }
 
 
@@ -249,7 +372,7 @@ export class ConnectionProxy extends Proxy {
     public getSolvedImpediments(success: Function, failure: Function): void {
 
         this.httpRequest(
-            "GET",
+            HTTPMethods.GET,
             "/api/v1/notes/solved",
             null,
                 success,
@@ -259,11 +382,50 @@ export class ConnectionProxy extends Proxy {
 
 
 
+    public getSolvedImpedimentsOfMember(memberId: string, success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.GET,
+            `/api/v1/notes/solved/${ memberId }`,
+            null,
+            success,
+            failure
+        );
+    }
+
+
+
     public getUnsolvedImpediments(success: Function, failure: Function): void {
 
         this.httpRequest(
-            "GET",
+            HTTPMethods.GET,
             "/api/v1/notes/unsolved",
+            null,
+            success,
+            failure
+        );
+    }
+
+
+
+    public getUnsolvedImpedimentsOfMember(memberId: string, success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.GET,
+            `/api/v1/notes/unsolved/${ memberId }`,
+            null,
+            success,
+            failure
+        );
+    }
+
+
+
+    public clearSolvedImpediments(success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.PUT,
+            "/api/v1/notes/clear",
             null,
             success,
             failure
@@ -275,7 +437,7 @@ export class ConnectionProxy extends Proxy {
     public solveImpediment(impedimentId: string, success: Function, failure: Function): void {
 
         this.httpRequest(
-            "PUT",
+            HTTPMethods.PUT,
             `/api/v1/notes/solve/${ impedimentId }`,
             null,
             success,
@@ -288,8 +450,61 @@ export class ConnectionProxy extends Proxy {
     public unsolveImpediment(impedimentId: string, success: Function, failure: Function): void {
 
         this.httpRequest(
-            "PUT",
+            HTTPMethods.PUT,
             `/api/v1/notes/unsolve/${ impedimentId }`,
+            null,
+            success,
+            failure
+        );
+    }
+
+
+
+    public createInquiry(data: ICreateInquiryModel, success: Function, failure: Function): void {
+
+
+        this.httpRequest(
+            HTTPMethods.POST,
+            "/api/v1/inquiries",
+            data,
+            success,
+            failure
+        );
+    }
+
+
+
+    public onboardingGuideDisplayed(guideId: number, success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.POST,
+            `/api/v1/users/onboarding/${ guideId }`,
+            null,
+            success,
+            failure
+        );
+    }
+
+
+
+    public updateUser(data: IUpdateUserModel, success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.PUT,
+            "/api/v1/users",
+            data,
+            success,
+            failure
+        );
+    }
+
+
+
+    public deleteUser(success: Function, failure: Function): void {
+
+        this.httpRequest(
+            HTTPMethods.DELETE,
+            "/api/v1/users",
             null,
             success,
             failure

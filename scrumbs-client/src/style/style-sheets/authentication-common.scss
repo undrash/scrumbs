@@ -120,6 +120,28 @@
 
     }
 
+    .auth-error-container {
+        width: 460px;
+        padding: 10px 0;
+        border: 1px solid rgba(208,2,58,0.14);
+        background-color: rgba(208,2,49,0.02);
+        border-radius: 5px;
+        color: #D00262;
+        text-align: center;
+        margin-bottom: 50px;
+        margin-left: -45px;
+        display: none;
+
+        p {
+            line-height: 21px;
+        }
+
+        .error-link {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+
 
 
     @media screen and ( max-width: 480px ) {

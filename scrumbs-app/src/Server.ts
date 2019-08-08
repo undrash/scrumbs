@@ -1,10 +1,13 @@
 
 import * as dotenv from "dotenv"
 
+import * as cookieParser from "cookie-parser";
+import * as session from "express-session";
 import * as compression from "compression";
 import * as bodyParser from "body-parser";
 import * as hbs from "express-handlebars";
 import * as mongoose from "mongoose";
+import * as passport from "passport";
 import * as express from "express";
 import * as helmet from "helmet";
 import * as logger from "morgan";
@@ -14,6 +17,7 @@ import { Application, NextFunction, Request, Response } from "express";
 
 import InvitationController from "./controllers/InvitationController";
 import Authentication from "./controllers/AuthenticationController";
+import InquiryController from "./controllers/InquiryController";
 import MemberController from "./controllers/MemberController";
 import NoteController from "./controllers/NoteController";
 import PageController from "./controllers/PageController";
@@ -21,6 +25,11 @@ import TeamController from "./controllers/TeamController";
 import UserController from "./controllers/UserController";
 import Database from "./configs/DatabaseConfig";
 import DataHelper from "./helpers/DataHelper";
+
+import * as connectMongo from "connect-mongo";
+const MongoStore = connectMongo( session );
+
+import initTestUser from "./services/initTestUser";
 
 dotenv.config();
 
@@ -60,39 +69,24 @@ class Server {
         this.app.use( helmet() );
         this.app.use( cors() );
 
+        this.app.use( cookieParser() );
+
+        this.app.use( session({
+            name: "user_sid",
+            secret: process.env.JWT_SECRET || "scrumbs",
+            resave: false,
+            saveUninitialized: false,
+            store: new MongoStore({
+                mongooseConnection: mongoose.connection
+            })
+        }));
+
+
         this.app.use( Authentication.initialize() );
+        this.app.use( passport.session() );
 
 
-        this.app.all( process.env.API_BASE + "*", (req: Request, res: Response, next: NextFunction) => {
-
-            //TODO: Remove @ release
-
-            if ( req.path.includes( process.env.API_BASE + "data/populate" ) ) return next();
-            if ( req.path.includes( process.env.API_BASE + "data/drop" ) ) return next();
-
-
-            if ( req.path.includes( process.env.API_BASE + "authentication/" ) ) return next();
-
-
-            return Authentication.authenticate( (err: any, user: any, info: any) => {
-
-                if ( err ) { return next( err ); }
-
-                if ( ! user ) {
-                    if ( info.name === "TokenExpiredError" ) {
-                        return res.status( 401 ).json( { message: "Your token has expired. Please generate a new one!" } );
-                    } else {
-                        return res.status( 401 ).json( { message: info.message } );
-                    }
-                }
-
-                this.app.set( "user", user );
-
-                return next();
-
-            })(req, res, next);
-        });
-
+        initTestUser();
     }
 
 
@@ -110,6 +104,7 @@ class Server {
         this.app.use( process.env.API_BASE + "users", UserController );
         this.app.use( process.env.API_BASE + "teams", TeamController );
 
+        this.app.use( process.env.API_BASE + "inquiries", InquiryController );
 
         this.app.use( process.env.API_BASE + "data", DataHelper );
     }

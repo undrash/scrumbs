@@ -1,44 +1,94 @@
 
+@import "mixins";
+@import "color-variables";
+
 
 #scrum-welcome-screen {
   height: 100%;
-  width: 100%;
 
-  #scrum-welcome-screen-profile {
-    height: 200px;
-    width: 200px;
+  .scrum-welcome-screen-content {
+    width: 365px;
+    @include center();
+  }
+
+  .scrum-welcome-screen-profile-image,
+  .scrum-welcome-screen-title,
+  .scrum-welcome-screen-description,
+  .scrum-welcome-impediment-contaier { text-align: center; }
+
+  .scrum-welcome-screen-profile-image {
+    width: 150px;
+    height: 150px;
+    line-height: 140px;
+    margin: 0 auto 30px;
     border-radius: 50%;
-    background-color: #5f78b8;
-    font-size: 50px;
-    line-height: 200px;
-    text-align: center;
+    border: 6px solid rgba(36, 46, 76, .1);
+    font-size: 48px;
+    color: $text-tertiary-color;
+    text-transform: uppercase;
     font-weight: bold;
-    margin: 150px auto auto;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    overflow: hidden;
   }
 
-  h2 {
-    text-align: center;
-    font-size: 25px;
+  .scrum-welcome-screen-title {
+    margin-bottom: 10px;
+    font-size: 20px;
     font-weight: bold;
-    margin: 25px auto;
   }
 
-  #scrum-welcome-screen-info-container {
-    width: 50%;
-    margin: auto;
+  .scrum-welcome-screen-description {
+    max-width: 275px;
+    margin: 0 auto;
+    line-height: 22px;
+  }
+
+  .scrum-welcome-impediment-contaier {
+    margin-top: 40px;
+
+    .scrum-welcome-impediment-divider {
+      position: relative;
+      margin-bottom: 20px;
+
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 90%;
+        height: 1px;
+        @include center( "vertical" );
+        @include center( "horizontal" );
+        background-color: $denary-color;
+      }
+
+      .scrum-welcome-impediment-icon {
+        display: block;
+        width: 55px;
+        height: 55px;
+        margin: 0 auto;
+        border-radius: 50%;
+        border: 3px solid $denary-color;
+        background: $tertiary-color url( "../img/icons/icon-impediment.svg" ) center / 28px 14px no-repeat;
+        position: relative;
+        z-index: 1;
+      }
+
+    }
 
     p {
-      text-align: center;
-      font-size: 15px;
+      font-size: 16px;
+      font-weight: bold;
     }
 
     button {
-      display: block;
-      width: 200px;
-      height: 70px;
-      background-color: #3f8eff;
-      color: white;
-      margin: 25px auto;
+      width: 215px;
+      margin-top: 25px;
+      font-weight: bold;
+      font-size: 14px;
     }
+
   }
+
 }

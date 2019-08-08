@@ -1,0 +1,212 @@
+
+@import "mixins";
+@import "color-variables";
+
+
+#inquiry-overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba( 255, 255, 255, 0.75 );
+  opacity: 0;
+
+  #inquiry-modal {
+    display: inline-block;
+    margin-top: 150px;
+    @include center( "horizontal" );
+    background-color: $tertiary-color;
+    border-radius: 5px;
+    box-shadow: 0 10px 50px 0 rgba( 11, 40, 127, 0.15 );
+    text-align: center;
+    position: relative;
+    padding: 40px 0;
+    opacity: 0;
+
+    h2 {
+      margin-bottom: 50px;
+      font-size: 20px;
+      text-align: center;
+    }
+
+
+    .primary-button {
+      min-width: 140px;
+      font-size: 14px;
+    }
+
+
+    .input-error {
+      font-size: 12px;
+      color: #D00262;
+      display: none;
+      //display: block;
+      text-align: left;
+    }
+
+    #inquiry-modal-close-btn {
+      top: 18px;
+      right: 20px;
+    }
+
+
+
+    #inquiry-submit-container {
+      //display: none;
+      margin: 0 160px;
+
+      #inquiry-select-error {
+        position: absolute;
+        margin-top: 40px;
+      }
+
+      .input-label {
+        text-align: left;
+      }
+
+      .input {
+        padding-left: 20px;
+      }
+
+      .textarea-container {
+        height: 100px;
+        background-color: #FFFFFF;
+        box-shadow: inset 0 0 0 1px #E1E0E9;
+        border-radius: 5px;
+        margin-bottom: 4px;
+        position: relative;
+
+        textarea {
+          padding-top: 20px;
+        }
+
+        textarea::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+      #inquiry-submit-btn {
+        margin-top: 30px;
+      }
+
+      .inquiry-select-group {
+        margin-bottom: 30px;
+        height: 50px;
+        line-height: 50px;
+        position: relative;
+
+        .inquiry-select-label {
+          text-align: left;
+          display: inline-block;
+          float: left;
+        }
+
+        .inquiry-select-dropdown-head {
+          cursor: pointer;
+          height: 100%;
+          width: 200px;
+          background-color: #FFFFFF;
+          box-shadow: inset 0 0 0 1px #E1E0E9;
+          border-radius: 5px;
+          margin-bottom: 4px;
+          position: relative;
+          float: right;
+          text-align: left;
+          padding-left: 20px;
+
+          #inquiry-dropdown-btn {
+            width: 13px;
+            height: 8px;
+            @include center( "vertical" );
+            right: 15px;
+            background: url( "../img/icons/icon-dropdown-accent.svg" ) no-repeat center / contain;
+          }
+
+        }
+
+        .inquiry-select-dropdown-body {
+          display: none;
+          cursor: pointer;
+          position: absolute;
+          top: 55px;
+          right: 0;
+          border-radius: 3px;
+          background-color: #FFFFFF;
+          box-shadow: 0 5px 20px 0 #E1E0E9;
+          font-size: 16px;
+          color: #242E4C;
+          white-space: nowrap;
+          width: 200px;
+          z-index: 1;
+          text-align: left;
+
+          li {
+            line-height: 50px;
+            padding: 0 20px;
+
+            &:hover {
+              background-color: #f5f5f8;
+            }
+          }
+        }
+      }
+
+
+
+    }
+
+
+    #inquiry-success-container {
+      display: none;
+      font-size: 16px;
+      margin: 0 100px;
+
+      h2 {
+        margin: 20px 0 30px 0;
+      }
+
+      p {
+        max-width: 350px;
+        margin: auto;
+      }
+
+      .success-message-container {
+        margin: 20px auto;
+        padding: 20px;
+        width: 100%;
+        border-radius: 5px;
+        background-color: #f5f5f8;
+
+        a {
+          color: #7E8AFE
+        }
+      }
+    }
+
+    #inquiry-failed-container {
+      display: none;
+      width: 350px;
+      font-size: 16px;
+      margin: 0 100px;
+
+      h2 {
+        margin: 20px 0 30px 0;
+      }
+
+      p {
+        max-width: 350px;
+        margin: auto;
+      }
+
+      .failure-message-container {
+        margin: 30px auto;
+        padding: 20px;
+        width: 100%;
+        border-radius: 5px;
+        background-color: #f5f5f8;
+      }
+
+    }
+  }
+}

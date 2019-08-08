@@ -13,6 +13,7 @@ import * as express from "express";
 import * as cors from "cors";
 
 import { Request, Response, NextFunction } from "express";
+import InquiryController from "./controllers/InquiryController";
 
 const publicPath = __dirname.substr( 0, __dirname.indexOf( "build" ) ) + "public";
 
@@ -68,7 +69,8 @@ class Server {
     public routes() {
 
         this.app.use( '/', PageController );
-        this.app.use( '/subscriptions', SubscriptionController );
+        this.app.use( "/subscriptions", SubscriptionController );
+        this.app.use( "/contact", InquiryController );
 
     }
 

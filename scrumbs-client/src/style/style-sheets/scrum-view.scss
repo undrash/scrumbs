@@ -16,12 +16,14 @@
 	#scrum-welcome-screen-container {
 		width: calc( 100% - 250px );
 		height: 100%;
-		float: right;
-		//display: none;
+		position: absolute;
+		background-color: white;
+		top: 0;
+		right: 0;
+		z-index: 1;
 	}
 
 	#scrum-notes-container {
-		//display: none;
 		width: calc( 100% - 250px );
 		height: 100%;
 		float: right;

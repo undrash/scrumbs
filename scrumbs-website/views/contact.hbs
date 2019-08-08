@@ -1,0 +1,143 @@
+
+<div id="navbar">
+
+    <a id="scrumbs-logo" href="/">
+        <img class="navbar-logo" src="../public/images/scrumbs-logo-colored.svg">
+    </a>
+
+    <div id="downloads-btn">
+
+        <a class="navbar-button-style" href="downloads">Downloads</a>
+
+    </div>
+
+
+    <div id="authentication-container">
+
+        <div id="sign-in-btn">
+
+            <a class="navbar-button-style">Sign-In</a>
+
+        </div>
+
+        <a id="get-started-btn-navbar" class="primary-button" href="subscribe">Get Alpha Access</a>
+
+    </div>
+
+
+    <div id="navbar-menu-btn">
+
+        <img class="hamburger-icon" src="../public/images/menu-icon.svg">
+
+    </div>
+
+</div>
+
+
+<section id="contact-container" class="contact-container">
+
+   <div class="contact-body">
+
+       <p class="secondary-title">Drop us a line</p>
+
+       <p class="secondary-text">We are here for you! How can we help?</p>
+
+       <div id="contact-form" class="contact-form">
+
+           <div class="input-container">
+
+               <label for="contact-name">Name</label>
+
+               <input type="text" id="contact-name" class="input-basic" name="Name" placeholder="Enter your name" required>
+
+               <p id="contact-name-input-error" class="input-error-message">Please enter your name.</p>
+
+           </div>
+
+           <div class="input-container">
+
+               <label for ="contact-email">Email</label>
+
+               <input type="text" id="contact-email" class="input-basic" name="Email" placeholder="Enter your email address" required>
+
+               <p id="contact-email-input-error" class="input-error-message">Please enter a valid email address.</p>
+
+           </div>
+
+           <div class="input-container">
+
+               <label for ="contact-message">Message</label>
+
+               <textarea type="text" id="contact-message" class="input-textarea" name="Message" placeholder="Type your message here" required></textarea>
+
+               <p id="contact-message-input-error" class="input-error-message">Please enter the message you want to send.</p>
+
+           </div>
+
+
+           <input type="button" id="send-message-btn" class="primary-button full-width-primary-button subscribe-form-button" value="Send">
+
+
+       </div>
+
+   </div>
+
+</section>
+
+
+
+<section id="email-sent-feedback-success">
+
+    <div class="email-sent-feedback-success">
+
+        <div class="main-title subscription-title">Thank you for contacting us!</div>
+        <div class="secondary-text">Your message has been received! Thanks for getting in touch, we will get back to you in the shortest time possible.</div>
+
+        <a id="email-sent-home-button" class="primary-button go-home-button" href="/">Back to Home Page</a>
+
+    </div>
+
+
+</section>
+
+<section id="email-sent-feedback-error">
+
+    <div class="email-sent-feedback-error">
+
+        <div class="main-title subscription-title">Oups! Something went wrong...</div>
+        <div class="secondary-text">We encountered an internal error while trying to send your message. Please try again later!</div>
+
+        <a id="email-not-sent-contact-button" class="primary-button go-home-button" href="/contact">Try again</a>
+
+    </div>
+
+</section>
+
+
+<div id="footer">
+
+    <div class="bottom-footer">
+
+        <ul class="footer-navigation">
+            <li class="footer-menu-item"><a href="terms">Privacy & Terms</a></li>
+            <li class="footer-menu-item"><a href="contact">Contact</a></li>
+        </ul>
+
+        <div class="source-company">
+            <div class="source-label">Powered by</div>
+            <a href="https://www.boardme.app" target="_blank"><img class="boardme-logo" src="../public/images/boardme-blue.svg"></a>
+        </div>
+
+        <div class="social-media-buttons-container">
+
+            <a class="social-btn linked-in-btn" href="https://www.linkedin.com/company/scrumbs" target="_blank"></a>
+            <a class="social-btn twitter-btn" href="https://twitter.com/scrumbsapp" target="_blank"></a>
+            <a class="social-btn facebook-btn" href="https://www.facebook.com/scrumbsapp" target="_blank"></a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="../public/js/contact.js"></script>

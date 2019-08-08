@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="52px" height="52px" viewBox="0 0 52 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>impediments</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Onboarding" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Scrum-Welcome-Pop-Up" transform="translate(-551.000000, -451.000000)">
+            <g id="Group-12" transform="translate(454.000000, 198.000000)">
+                <g id="Group-11" transform="translate(98.000000, 189.000000)">
+                    <g id="Group-4" transform="translate(0.000000, 65.000000)">
+                        <g id="impediments">
+                            <circle id="Oval-Copy" stroke="#354577" stroke-width="1.5625" fill="#2D3A5F" fill-rule="nonzero" cx="25" cy="25" r="25"></circle>
+                            <g id="icon/impediment" transform="translate(11.718750, 17.968750)">
+                                <g id="blocker-icon">
+                                    <path d="M3.72869318,0 L23.6150568,0 C25.6743572,-3.78287343e-16 27.34375,1.6693928 27.34375,3.72869318 L27.34375,9.94318182 C27.34375,12.0024822 25.6743572,13.671875 23.6150568,13.671875 L3.72869318,13.671875 C1.6693928,13.671875 2.52191562e-16,12.0024822 0,9.94318182 L0,3.72869318 C-2.52191562e-16,1.6693928 1.6693928,3.78287343e-16 3.72869318,0 Z" id="Path" fill="#FF5357"></path>
+                                    <polygon id="Path" fill="#F5F5F8" points="13.671875 0 8.53116091 13.671875 2.48579545 13.671875 7.62610128 0"></polygon>
+                                    <polygon id="Path" fill="#F5F5F8" points="24.8579545 0 19.7176487 13.671875 13.671875 13.671875 18.8125891 0"></polygon>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

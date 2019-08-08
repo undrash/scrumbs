@@ -6,9 +6,9 @@ import {ViewExitTypes} from "../../../core/ViewExitTypes";
 import {View} from "../../../core/View";
 
 
-import TweenLite = gsap.TweenLite;
-import Power0 = gsap.Power0;
-import Back = gsap.Back;
+declare const TweenLite: any;
+declare const Power0: any;
+declare const Back: any;
 
 
 
@@ -17,7 +17,7 @@ import "../../../style/style-sheets/impediments-solved.scss";
 
 
 // HTML
-const template = require( "../templates/impediments/component/impediments-solved.html" );
+const template = require( "../../../templates/impediments-solved.html" );
 
 
 
@@ -26,17 +26,18 @@ const template = require( "../templates/impediments/component/impediments-solved
 
 export class ImpedimentsSolved extends ViewComponent {
 
+    private header: HTMLElement;
     private toggleVisibilityBtn: HTMLButtonElement;
     private solvedImpedimentsContainer: HTMLUListElement;
 
 
 
     constructor(view: View, container: HTMLElement) {
-        super( view, container );
+        super( view, container, "ImpedimentsSolved" );
 
         this.container.innerHTML = template;
 
-
+        this.header                         = document.getElementById( "impediments-solved-header" );
         this.toggleVisibilityBtn            = document.getElementById( "impediments-solved-toggle-button" ) as HTMLButtonElement;
         this.solvedImpedimentsContainer     = document.getElementById( "impediments-solved-body" ) as HTMLUListElement;
 
@@ -60,18 +61,55 @@ export class ImpedimentsSolved extends ViewComponent {
 
 
     private toggleVisibilityBtnListener(e: any): void {
-        this.solvedImpedimentsContainer.style.display = this.solvedImpedimentsContainer.style.display === "none" ? "block" : "none";
+        this.solvedImpedimentsContainer.style.display = this.solvedImpedimentsContainer.style.display === "block" ? "none" : "block";
 
         this.toggleVisibilityBtn.innerText = this.toggleVisibilityBtn.innerText === "Hide Completed" ? "Show Completed" : "Hide Completed";
     }
 
 
 
-    private populate(): void {
+    public populateFiltered(memberId: string): void {
+
+        this.solvedImpedimentsContainer.innerHTML = '';
+
+
+        this.connection.getSolvedImpedimentsOfMember(
+            memberId,
+            (response: any) => {
+                const { impediments } = response;
+
+                if ( impediments.length ) {
+                    this.header.style.display = "block";
+                } else {
+                    this.header.style.display = "none";
+                    this.sendSignal( ImpedimentSignals.IMPEDIMENTS_SOLVED_EMPTY );
+                }
+
+                for ( let impediment of impediments ) {
+                    this.addImpediment( impediment );
+                }
+            },
+            (err: string) => console.error( err )
+        );
+
+    }
+
+
+
+    public populate(): void {
+
+        this.solvedImpedimentsContainer.innerHTML = '';
 
         this.connection.getSolvedImpediments(
             (response: any) => {
                 const { impediments } = response;
+
+                if ( impediments.length ) {
+                    this.header.style.display = "block";
+                } else {
+                    this.header.style.display = "none";
+                    this.sendSignal( ImpedimentSignals.IMPEDIMENTS_SOLVED_EMPTY );
+                }
 
                 for ( let impediment of impediments ) {
                     this.addImpediment( impediment );
@@ -84,54 +122,55 @@ export class ImpedimentsSolved extends ViewComponent {
 
 
     public addImpediment(impedimentData: any): void {
+
+        if ( ! this.solvedImpedimentsContainer.children.length ) this.header.style.display = "block";
+
+
+        const impediment        = document.createElement( "li" );
+        impediment.className    = "impediments-solved-member-impediment pointer active";
+        impediment.id           = impedimentData._id;
+        impediment.innerText    = impedimentData.content;
+
+        const checkbox          = document.createElement( "span" );
+        checkbox.className      = "impediments-solved-member-impediment-checkbox";
+
+        impediment.appendChild( checkbox );
+
         /** Check if member is already rendered, if so - we append */
-        let memberContainer = document.getElementById( `solved-${impedimentData.member._id}` );
+        let memberContainer = document.getElementById( `solved-${ impedimentData.member ? impedimentData.member._id : "user-impediments" }` );
 
         if ( memberContainer ) {
-            let impediment          = document.createElement( "li" );
-            impediment.className    = "impediments-solved-member-impediment pointer active";
-            impediment.id           = impedimentData._id;
-            impediment.innerText    = impedimentData.content;
-
-            let checkbox            = document.createElement( "span" );
-            checkbox.className      = "impediments-solved-member-impediment-checkbox";
-
-            impediment.appendChild( checkbox );
 
             memberContainer.lastElementChild.appendChild( impediment );
 
-            this.addListenerToImpediment( impediment );
         } else {
             /** If the member has no container on the page, we create it now */
             memberContainer                 = document.createElement( "li" );
-            memberContainer.id              = `solved-${impedimentData.member._id}`;
+            memberContainer.id              = `solved-${ impedimentData.member ? impedimentData.member._id : "user-impediments" }`;
             memberContainer.className       = "impediments-solved-member-container";
 
             let memberName                  = document.createElement( "h3" );
-            memberName.innerText            = impedimentData.member.name;
+            memberName.innerText            = impedimentData.member ? impedimentData.member.name : "Your Impediments";
             memberName.className            = "impediments-solved-member-name bold";
 
             let impedimentsContainer        = document.createElement( "ul" );
             impedimentsContainer.className  = "impediments-solved-member-impediments";
 
-            let impediment                  = document.createElement( "li" );
-            impediment.className            = "impediments-solved-member-impediment pointer active";
-            impediment.innerText            = impedimentData.content;
-            impediment.id                   = impedimentData._id;
-
-            let checkbox                    = document.createElement( "span" );
-            checkbox.className              = "impediments-solved-member-impediment-checkbox";
-
-            impediment.appendChild( checkbox );
             impedimentsContainer.appendChild( impediment );
 
             memberContainer.appendChild( memberName );
             memberContainer.appendChild( impedimentsContainer );
 
-            this.solvedImpedimentsContainer.appendChild( memberContainer );
 
-            this.addListenerToImpediment( impediment );
+            if ( impedimentData.member ) {
+                this.solvedImpedimentsContainer.appendChild( memberContainer );
+            } else {
+                this.solvedImpedimentsContainer.insertBefore( memberContainer, this.solvedImpedimentsContainer.firstElementChild );
+            }
         }
+
+
+        this.addListenerToImpediment( impediment );
     }
 
 
@@ -153,6 +192,11 @@ export class ImpedimentsSolved extends ViewComponent {
                 } else {
                     impediment.parentNode.removeChild( impediment )
                 }
+
+                /** Hide the header if there are no solved impediments left */
+                if ( ! this.solvedImpedimentsContainer.children.length ) {
+                    this.header.style.display = "none";
+                }
             }, 300 );
 
             this.connection.unsolveImpediment(
@@ -166,6 +210,24 @@ export class ImpedimentsSolved extends ViewComponent {
                 (err: string) => console.error( err )
             )
         });
+    }
+
+
+
+    public clearImpediments(): void {
+
+        this.connection.clearSolvedImpediments(
+            (response: any) => {
+                console.log( response );
+
+                this.solvedImpedimentsContainer.style.display   = "none";
+                this.header.style.display                       = "none";
+                this.toggleVisibilityBtn.innerText              = "Show Completed";
+
+                this.solvedImpedimentsContainer.innerHTML       = '';
+            },
+            (err: Error) => console.error( err )
+        );
     }
 
 

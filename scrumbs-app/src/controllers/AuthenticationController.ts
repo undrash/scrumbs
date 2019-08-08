@@ -1,18 +1,19 @@
 
 import { Router, Request, Response, NextFunction } from "express";
 
-import { Strategy, ExtractJwt } from "passport-jwt";
-
 import * as nodemailer from "nodemailer";
 import * as passport from "passport";
-import * as jwt from "jwt-simple";
 import * as moment from "moment";
 import * as crypto from "crypto";
 import * as async from "async";
 
-import { IUser } from "../models/interfaces/IUser";
 import User from "../models/User";
 import Team from "../models/Team";
+
+const GoogleStrategy    = require("passport-google-oauth20").Strategy;
+const TwitterStrategy   = require("passport-twitter").Strategy;
+const LinkedInStrategy  = require("@sokratis/passport-linkedin-oauth2").Strategy;
+const LocalStrategy     = require("passport-local").Strategy;
 
 
 
@@ -23,100 +24,125 @@ class AuthenticationController {
 
     constructor() {
         this.router = Router();
+
+        this.OAuthCallback  = this.OAuthCallback.bind( this );
+
         this.routes();
+    }
+
+
+
+    public initialize() {
+        passport.use( "login", this.getLoginStrategy() );
+        passport.use( "signup", this.getSignUpStrategy() );
+        passport.use( "google", this.getGoogleStrategy() );
+        passport.use( "twitter", this.getTwitterStrategy() );
+        passport.use( "linkedin", this.getLinkedInStrategy() );
+
+        passport.serializeUser( (user: any, done) => {
+            done( null, user._id );
+        });
+
+        passport.deserializeUser( (id, done) => {
+            User.findById( id )
+                .then( res => done( null, res as any ) )
+                .catch( err => done( err, false ) );
+        });
+
+
+        return passport.initialize();
     }
 
 
 
     public routes() {
         this.router.post( "/login", this.login );
+        this.router.get( "/log-out", this.logOut );
+
         this.router.post( "/sign-up", this.signUp );
+
         this.router.post( "/forgot", this.forgotPassword );
+
         this.router.get( "/reset/:token", this.getResetPassword );
         this.router.post( "/reset/:token", this.postResetPassword );
+
+        this.router.get( "/oauth/google", this.googleAuth );
+        this.router.get( "/google/callback", passport.authenticate("google", { failureRedirect: "/" }), this.OAuthCallback );
+
+        this.router.get( "/oauth/twitter", this.twitterAuth );
+        this.router.get( "/twitter/callback", passport.authenticate("twitter", { failureRedirect: "/" } ), this.OAuthCallback );
+
+        this.router.get( "/oauth/linkedin", this.linkedinAuth );
+        this.router.get( "/linkedin/callback", passport.authenticate( "linkedin", { failureRedirect: "/" } ), this.OAuthCallback );
+
+
     }
 
 
 
-    public initialize() {
-        passport.use("jwt", this.getStrategy() );
-        return passport.initialize();
-    }
+    private login = async (req: Request, res: Response, next: NextFunction) => {
 
+        passport.authenticate( "login", (err, user, info) => {
+            if ( info )     return res.send( info.message );
+            if ( err )      return next( err );
+            if ( ! user )   return res.redirect( '/' );
 
+            ( req as any ).login(user, (err: any) => {
+                if ( err ) return next( err );
 
-    public authenticate = (callback: any) => passport.authenticate("jwt", { session: false, failWithError: true }, callback );
-
-
-
-    private login = async (req: Request, res: Response) => {
-
-        try {
-            let user = await User.findOne({ "email": req.body.email } ).exec();
-
-            console.log( user );
-
-            if ( user === null ) throw "User not found";
-
-            let success = await user.comparePassword( req.body.password );
-
-            console.log( "success: " + success );
-
-            if ( success === false ) throw "";
-
-            res.status( 200 ).json({
-                success: true,
-                userData: {
-                    user: user._id,
-                    email: user.email,
-                    name: user.name
-                },
-                tokenData: this.genToken( user )
+                res.status( 200 ).json({
+                    success: true,
+                    userData: {
+                        user: user._id,
+                        email: user.email,
+                        name: user.name,
+                        onboardingGuidesDisplayed: user.onboardingGuidesDisplayed
+                    }
+                });
             });
+        })( req, res, next );
 
-        } catch (err) {
-            res.status( 401 ).json( { success: false, message: "Invalid credentials", errors: err } );
-        }
     };
 
 
 
-    private signUp = async (req: Request, res: Response, next: NextFunction) => {
+    public logOut(req: Request, res: Response) {
 
-        const { name, email, password } = req.body;
+        const cookie = req.cookies;
 
-        if ( ! name || ! email || ! password ) {
-            res.status( 400 ).json( { success: false, message: "Missing parameters at sign up." } );
-            return;
+        for ( let prop in cookie ) {
+            if ( ! cookie.hasOwnProperty( prop ) ) continue;
+
+            res.cookie( prop, '', { expires: new Date( 0 ) } );
         }
 
-        const user = new User({
-            name,
-            email,
-            password
-        });
-
-        const defaultTeam = new Team({
-            name: "Scrum Team",
-            owner: user,
-            isDefault: true
-        });
+        res.redirect( '/' );
+    }
 
 
-        Promise.all([
-            user.save(),
-            defaultTeam.save()
-        ])
-            .then( () => res.status( 200 ).json({
-                success: true,
-                userData: {
-                    user: user._id,
-                    email: user.email,
-                    name: user.name },
-                tokenData: this.genToken( user )
-            }))
-            .catch( next );
+    private signUp = async (req: Request, res: Response, next: NextFunction) => {
 
+
+        passport.authenticate( "signup", (err, user, info) => {
+
+            if ( info )     return res.send( info.message );
+            if ( err )      return next( err );
+            if ( ! user )   throw new Error( "No user found on sign-up. Please contact your system administrator." );
+
+            ( req as any ).login(user, (err: any) => {
+                if ( err ) return next( err );
+
+                res.status( 200 ).json({
+                            success: true,
+                            userData: {
+                                user: user._id,
+                                email: user.email,
+                                name: user.name,
+                                onboardingGuidesDisplayed: user.onboardingGuidesDisplayed
+                            }
+                        });
+            });
+        })( req, res, next );
     };
 
 
@@ -131,9 +157,6 @@ class AuthenticationController {
                 crypto.randomBytes(20, (err, buf) => {
 
                     const token = buf.toString( "hex" );
-
-                    console.log( "token: " + token );
-
 
                     done( err, token );
                 });
@@ -176,7 +199,7 @@ class AuthenticationController {
                 const mailOptions = {
                     to: user.email,
                     subject: "Scrumbs - password reset",
-                    text: `Hi ${ user.firstName },\n\nWe received a request to reset your password for your Scrumbs account: ${ user.email }.\n\nPlease use the link below to reset your password \n\n${ req.headers.host }${ process.env.API_BASE }authentication/reset/${ token }\n\nThanks for using Scrumbs.`
+                    text: `Hi ${ user.firstName },\n\nWe received a request to reset your password for your Scrumbs account: ${ user.email }.\n\nPlease use the link below to reset your password \n\n ${ req.protocol }://${ req.headers.host }${ req.headers.host }${ process.env.API_BASE }authentication/reset/${ token }\n\nThanks for using Scrumbs.`
                 };
 
 
@@ -247,49 +270,291 @@ class AuthenticationController {
 
 
 
-    private genToken(user: IUser): Object {
-
-        let expires = moment().utc().add({ days: 7 }).unix();
-
-        let token = jwt.encode({
-
-            exp: expires,
-            email: user.email
-
-        }, process.env.JWT_SECRET! );
-
-        return {
-            token: "JWT " + token,
-            expires: moment.unix(expires).format()
-        };
-
+    public googleAuth(req: Request, res: Response, next: NextFunction) {
+        passport.authenticate( "google", { scope: [ "profile", "email" ] } )( req, res, next );
     }
 
 
 
-    private getStrategy(): Strategy {
+    public twitterAuth(req: Request, res: Response, next: NextFunction) {
+        passport.authenticate( "twitter" )( req, res, next );
+    }
 
-        const params = {
-            secretOrKey: process.env.JWT_SECRET,
-            jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt"),
-            passReqToCallback: true
-        };
 
-        return new Strategy(params, (req: any, payload: any, done: any) => {
-            User.findOne({ "email": payload.email }, (err, user) => {
 
-                if ( err ) {
-                    return done(err);
-                }
+    public linkedinAuth(req: Request, res: Response, next: NextFunction) {
+        passport.authenticate( "linkedin" )( req, res, next );
+    }
 
-                if ( user === null ) {
-                    return done( null, false, { message: "The user in the token was not found" } );
-                }
 
-                return done( null, { _id: user._id, email: user.email } );
-            });
+
+    public OAuthCallback(req: Request, res: Response, next: NextFunction) {
+        const user = ( req as any ).user;
+
+        req.app.locals.specialContext = JSON.stringify({
+            userData: {
+                user: user._id,
+                email: user.email,
+                name: user.name,
+                onboardingGuidesDisplayed: user.onboardingGuidesDisplayed
+            }
         });
 
+        res.redirect( '/' );
+    }
+
+
+
+    private getLoginStrategy(): any {
+        return new LocalStrategy(
+            {
+                usernameField: "email",
+                passReqToCallback : true
+            },
+            (req: Request, email: string, password: string, done: Function) => {
+
+                User.findOne( { email } )
+                    .then(  async user => {
+
+                        if ( ! user ) {
+                            return done( null, false, { message: {
+                                success: false,
+                                message: "Invalid credentials."
+                            }});
+                        }
+
+                        const passwordsMatch = await user.comparePassword( password );
+
+                        if ( ! passwordsMatch ) {
+                            return done( null, false, { message: {
+                                success: false,
+                                message: "Invalid credentials."
+                            }});
+                        }
+
+
+                        if ( req.session ) {
+
+                            if ( req.body.remember ) {
+                                req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // 30 days
+                            } else {
+                                req.session.cookie.expires = false;
+                            }
+
+                        }
+
+                        return done( null, user );
+                    })
+                    .catch( err => done( err ) );
+            }
+        );
+    }
+
+
+
+    private getSignUpStrategy(): any {
+        return new LocalStrategy(
+            {
+                usernameField: "email",
+                passReqToCallback : true
+
+            },
+            (req: Request, email: string, password: string, done: Function) => {
+
+                User.findOne( { email } )
+                    .then(  async existingUser => {
+
+                        if ( existingUser ) {
+                            return done( null, false, { message: "That email address is already registered.\n" } );
+                        }
+
+                        const { name } = req.body;
+
+                        const user = new User({
+                            name,
+                            email,
+                            password
+                        });
+
+                        const defaultTeam = new Team({
+                            name: "Scrum Team",
+                            owner: user,
+                            isDefault: true
+                        });
+
+                        Promise.all([
+                            user.save(),
+                            defaultTeam.save()
+                        ])
+                            .then( () => done( null, user ) )
+                            .catch( (err: Error) => done( err ) );
+                    })
+                    .catch( err => done( err ) );
+            }
+        );
+    }
+
+
+
+    private getGoogleStrategy(): any {
+        return new GoogleStrategy({
+            clientID: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_SECRET,
+            callbackURL: process.env.APP_DOMAIN + "/api/v1/authentication/google/callback"
+        }, async (accessToken: string, refreshToken: string, profile: any, done: Function) => {
+
+            const firstName     = profile.name.givenName;
+            const lastName      = profile.name.familyName;
+            const profileImage  = profile.photos.length ? profile.photos[0].value : "";
+            const email         = profile.emails[0].value;
+            const confirmed     = profile.emails[0].verified;
+            const googleId      = profile.id;
+
+            let user = await User.findOne({ googleId } );
+
+            if ( ! user ) {
+                user = await User.findOne({ email } );
+            }
+
+            if ( ! user ) {
+
+                user = new User({
+                    name: `${ firstName } ${ lastName }`,
+                    email,
+                    profileImage,
+                    confirmed,
+                    googleId
+                });
+
+                const defaultTeam = new Team({
+                    name: "Scrum Team",
+                    owner: user,
+                    isDefault: true
+                });
+
+
+                await user.save();
+                await defaultTeam.save();
+            } else {
+                user.googleId = googleId;
+
+                await user.save();
+            }
+
+            return done( null, user );
+        });
+    }
+
+
+
+    private getTwitterStrategy(): any {
+        return new TwitterStrategy({
+            consumerKey: process.env.TWITTER_KEY,
+            consumerSecret: process.env.TWITTER_SECRET,
+            userProfileURL: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
+            callbackURL: process.env.APP_DOMAIN + "/api/v1/authentication/twitter/callback",
+            profileFields: [
+                "id",
+                "first-name",
+                "last-name",
+                "email-address"
+            ]
+        }, async (token: string, tokenSecret: string, profile: any, done: Function) => {
+
+            const names = profile._json.name.split( ' ' );
+
+            const firstName     = names[0];
+            const lastName      = names[1];
+            const profileImage  = profile._json.profile_image_url;
+            const email         = profile.emails[0].value;
+            const twitterId     = profile.id;
+
+            let user = await User.findOne({ twitterId } );
+
+            if ( ! user ) {
+                user = await User.findOne({ email } );
+            }
+
+            if ( ! user ) {
+                user = new User({
+                    name: `${ firstName + ( lastName ? lastName : '' ) }`,
+                    email: email,
+                    confirmed: true,
+                    profileImage,
+                    twitterId
+                });
+
+                const defaultTeam = new Team({
+                    name: "Scrum Team",
+                    owner: user,
+                    isDefault: true
+                });
+
+
+                await user.save();
+                await defaultTeam.save();
+            } else {
+                user.twitterId = twitterId;
+
+                await user.save();
+            }
+
+            return done( null, user );
+        });
+    }
+
+
+
+    private getLinkedInStrategy(): any {
+        return new LinkedInStrategy({
+            clientID: process.env.LINKEDIN_KEY,
+            clientSecret: process.env.LINKEDIN_SECRET,
+            callbackURL: process.env.APP_DOMAIN + "/api/v1/authentication/linkedin/callback",
+            scope: ["r_emailaddress", "r_liteprofile"],
+            state: true
+        }, async (accessToken: string, refreshToken: string, profile: any, done: Function) => {
+
+            const firstName     = profile.name.givenName;
+            const lastName      = profile.name.familyName;
+            const profileImage  = profile.photos.length ? profile.photos[0].value : "";
+            const email         = profile.emails[0].value;
+            const confirmed     = true;
+            const linkedInId    = profile.id;
+
+
+            let user = await User.findOne({ linkedInId } );
+
+            if ( ! user ) {
+                user = await User.findOne({ email } );
+            }
+
+            if ( ! user ) {
+
+                user = new User({
+                    name: `${ firstName } ${ lastName }`,
+                    email,
+                    profileImage,
+                    confirmed,
+                    linkedInId
+                });
+
+                const defaultTeam = new Team({
+                    name: "Scrum Team",
+                    owner: user,
+                    isDefault: true
+                });
+
+
+                await user.save();
+                await defaultTeam.save();
+            } else {
+                user.linkedInId = linkedInId;
+
+                await user.save();
+            }
+
+            return done( null, user );
+        });
     }
 
 }

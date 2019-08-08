@@ -41,17 +41,23 @@
 		.scrum-create-team-btn {
 			width: 28px;
 			height: 28px;
-			@include center( "vertical" );
 			right: 18px;
+			position: absolute;
+			top: 28px;
 			border-radius: 3px;
 			background: $tertiary-color url("../img/icons/icon-add-accent.svg") no-repeat center / 12px;
+			transition: transform 0.3s ease-in-out;
+
+			&:hover {
+				transform: scale(1.2);
+			}
 		}
 
 	}
 
 	.scrum-team-container {
 
-		height: calc( 100% - 140px );
+		height: calc( 100% - 145px );
 		overflow-y: auto;
 		overflow-x: hidden;
 		color: $tertiary-color;
@@ -69,16 +75,25 @@
 	
 				.scrum-team-name {
 					height: 100%;
-					margin-left: 17px;
 					line-height: 45px;
-					padding-left: 15px;
+					padding-left: 35px;
 					position: relative;
+					background-color: rgba(139, 182, 255, 0);
+					transition: background-color 0.3s ease-in-out;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					overflow: hidden;
+					padding-right: 50px;
+
+					&:hover {
+						background-color: #5b7dec47;
+					}
 
 					&::before {
 						content: "";
 						position: absolute;
 						display: block;
-						left: 0;
+						left: 17px;
 						top: 20px;
 						width: 10px;
 						height: 6px;
@@ -93,10 +108,16 @@
 					position: absolute;
 					width: 28px;
 					height: 28px;
-					@include center( "vertical" );
+					top: 10px;
 					right: 18px;
 					border-radius: 3px;
 					background: $accent-color url("../img/icons/icon-add.svg") no-repeat center / 12px;
+					transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+
+					&:hover {
+						transform: scale(1.2);
+						background-color: #5B7DEC;
+					}
 				}
 	
 			}
@@ -107,6 +128,8 @@
 				.scrum-team-member {
 					line-height: 42px;
 					padding-left: 20px;
+					background-color: rgba(139, 182, 255, 0);
+					transition: background-color 0.3s ease-in-out;
 
 					&:not( .active ):hover { background-color: $highlight-color; }
 
@@ -117,8 +140,6 @@
 					}
 				}
 
-
-
 			}
 
 			&.active {
@@ -128,11 +149,7 @@
 				.scrum-team-members { display: block; }
 
 			}
-
 		}
-
-		
-		
 	}
 
 	.scrum-teams-footer {
@@ -142,8 +159,13 @@
 		bottom: 5px;
 		width: 100%;
 		height: 60px;
-		
+		background-color: rgba(91, 125, 236, 0);
 		border-top: 1px solid $accent-color;
+		transition: background-color 0.3s ease-in-out;
+
+		&:hover {
+			background-color: #5b7dec47;
+		}
 
 		.scrum-team-settings-btn {
 			display: block;

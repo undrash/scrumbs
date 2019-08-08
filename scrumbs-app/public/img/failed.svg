@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="72px" height="72px" viewBox="0 0 72 72" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>2CE99121-61AF-4F51-B70B-45695A0B69D3</title>
+    <desc>Created with sketchtool.</desc>
+    <g id="Bug/Feature" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Report-bug/feature-failed" transform="translate(-684.000000, -180.000000)">
+            <g id="Group-3" transform="translate(438.000000, 140.000000)">
+                <g id="failed" transform="translate(246.000000, 40.000000)">
+                    <circle id="Oval" fill="#F5F5F8" fill-rule="nonzero" opacity="0.354785156" cx="36" cy="36" r="36"></circle>
+                    <circle id="Oval" stroke="#F5F5F8" stroke-width="2" fill="#FFFFFF" fill-rule="nonzero" cx="36" cy="36" r="25"></circle>
+                    <path d="M44.2147395,41.4233627 L39.7914549,37 L44.2147395,32.5766373 C45.2617535,31.5296049 45.2617535,29.832148 44.2147395,28.7852743 C43.1677255,27.7382419 41.4702986,27.7382419 40.4234435,28.7852743 L36.0001588,33.208637 L31.5768742,28.7852743 C30.5298602,27.7382419 28.8324333,27.7382419 27.7855781,28.7852743 C26.738723,29.8323068 26.7385642,31.5297637 27.7855781,32.5766373 L32.2088628,37 L27.7852605,41.4233627 C26.7382465,42.4703951 26.7382465,44.167852 27.7852605,45.2147257 C28.8322745,46.2617581 30.5297014,46.2617581 31.5765565,45.2147257 L35.9998412,40.791363 L40.4231258,45.2147257 C41.4701398,46.2617581 43.1675667,46.2617581 44.2144219,45.2147257 C45.2617535,44.167852 45.2617535,42.4702363 44.2147395,41.4233627 Z" id="Path" fill="#FE6D4D"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

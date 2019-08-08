@@ -1,0 +1,74 @@
+
+@import "color-variables";
+@import "mixins";
+
+
+#snackbar-container {
+  @include center( "horizontal" );
+  width: 410px;
+  max-width: calc( 100vw - 15px );
+  overflow: hidden;
+  top: 20px;
+  z-index: 1000;
+
+
+  .snackbar {
+    width: 100%;
+    height: 40px;
+    margin: 25px 0 2px;
+    background-color: $text-secondary-color;
+    border-radius: 5px;
+    position: relative;
+    opacity: 0;
+
+    .snackbar-icon {
+      height: 24px;
+      width: 24px;
+      opacity: 1;
+      border-radius: 50%;
+      margin: 7px;
+      display: inline-block;
+      position: absolute;
+    }
+
+    .snackbar-message {
+      color: #D7D9E0;
+      line-height: 40px;
+      margin: auto;
+      width: 337px;
+      text-align: left;
+    }
+
+    .snackbar-close {
+      height: 15px;
+      width: 15px;
+      position: absolute;
+      right: 15px;
+      top: 13px;
+      cursor: pointer;
+      background: url("../img/icons/icon-close-simple.svg") no-repeat center / 10px ;
+    }
+
+    &.error {
+
+    }
+
+    &.warning {
+      background:  url("../img/icons/info-icon.svg") no-repeat center left 10px $text-secondary-color;
+      padding-left: 15px;
+    }
+
+    &.info {
+
+    }
+
+    &.success {
+
+      .snackbar-icon {
+        background: #4D556E url("../img/icons/checkmark-green.svg") no-repeat center / 12px;
+      }
+    }
+
+  }
+
+}

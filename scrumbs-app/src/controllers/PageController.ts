@@ -1,6 +1,6 @@
 
 
-import { Router, Request, Response, NextFunction } from "express";
+import { Router, Request, Response } from "express";
 
 
 
@@ -25,6 +25,30 @@ class PageController {
 
 
     public index(req: Request, res: Response) {
+
+        const auth = req.app.locals.specialContext;
+
+        req.app.locals.specialContext = null;
+
+        if ( auth ) {
+            return res.render( "index", { title: "Scrumbs | Application", auth } );
+        }
+
+
+        const user = ( req as any ).user;
+
+
+        if ( user ) {
+            return res.render( "index", { title: "Scrumbs | Application", auth: JSON.stringify({
+                userData: {
+                    user: user._id,
+                    email: user.email,
+                    name: user.name,
+                    onboardingGuidesDisplayed: user.onboardingGuidesDisplayed
+                }
+            })});
+        }
+
         res.render( "index", { title: "Scrumbs | Application" } );
     }
 

@@ -1,27 +1,27 @@
 
-
-import {ScrumWelcomeScreen} from "./ScrumWelcomeScreen";
+import {AccountNotifications} from "../account-settings/AccountNotifications";
 import {SystemConstants} from "../../../core/SystemConstants";
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
 import {INotification} from "../../../core/INotification";
-import {ScrumManageTeams} from "./ScrumManageTeams";
 import {ViewComponent} from "../../../core/ViewComponent";
-import {ScrumCreateTeam} from "./ScrumCreateTeam";
+import {ScrumWelcomeScreen} from "./ScrumWelcomeScreen";
+import {ScrumNotifications} from "./ScrumNotifications";
+import {ViewNotifications} from "../ViewNotifications";
+import {ISignal} from "../../../core/ISignal";
+import {ScrumSignals} from "./ScrumSignals";
 import {ScrumTeams} from "./ScrumTeams";
 import {ScrumNotes} from "./ScrumNotes";
-import {ISignal} from "../../../core/ISignal";
 import {View} from "../../../core/View";
 
 
 // CSS
 import "../../../style/style-sheets/scrum-view.scss";
-import {ScrumSignals} from "./ScrumSignals";
 
 
 
 // HTML
-const authenticationViewTemplate = require( "../templates/scrum/view/scrum-view.html" );
+const authenticationViewTemplate = require( "../../../templates/scrum-view.html" );
 
 
 
@@ -32,14 +32,10 @@ export class ScrumView extends View {
     private teams: ViewComponent;
     private notes: ViewComponent;
     private welcomeScreen: ViewComponent;
-    private createTeam: ViewComponent;
-    private manageTeams: ViewComponent;
 
     private teamsContainer: HTMLElement;
     private notesContainer: HTMLElement;
     private welcomeScreenContainer: HTMLElement;
-    private createTeamContainer: HTMLElement;
-    private mangeTeamsContainer: HTMLElement;
 
 
 
@@ -58,14 +54,10 @@ export class ScrumView extends View {
         this.teamsContainer             = document.getElementById( "scrum-teams-container" );
         this.notesContainer             = document.getElementById( "scrum-notes-container" );
         this.welcomeScreenContainer     = document.getElementById( "scrum-welcome-screen-container" );
-        this.createTeamContainer        = document.getElementById( "scrum-create-team-container" );
-        this.mangeTeamsContainer        = document.getElementById( "scrum-manage-teams-container" );
 
         this.teams                      = new ScrumTeams( this, this.teamsContainer );
         this.notes                      = new ScrumNotes( this, this.notesContainer );
         this.welcomeScreen              = new ScrumWelcomeScreen( this, this.welcomeScreenContainer );
-        this.createTeam                 = new ScrumCreateTeam( this, this.createTeamContainer );
-        this.manageTeams                = new ScrumManageTeams( this, this.mangeTeamsContainer );
 
 
 
@@ -88,8 +80,6 @@ export class ScrumView extends View {
         this.teams.exitScene( exitType );
         this.notes.exitScene( exitType );
         this.welcomeScreen.exitScene( exitType );
-        this.createTeam.exitScene( exitType );
-        this.manageTeams.exitScene( exitType );
     }
 
 
@@ -97,6 +87,8 @@ export class ScrumView extends View {
     public listNotificationInterests(): string[] {
         let notifications = super.listNotificationInterests();
 
+        notifications.push( ScrumNotifications.EDIT_NOTE );
+        notifications.push( AccountNotifications.ACCOUNT_UPDATED );
 
         return notifications;
     }
@@ -108,6 +100,16 @@ export class ScrumView extends View {
 
         switch ( notification.name ) {
 
+            case ScrumNotifications.EDIT_NOTE :
+
+                ( this.notes as ScrumNotes ).initNoteEditing( notification.data );
+
+                break;
+
+            case AccountNotifications.ACCOUNT_UPDATED :
+                ( this.welcomeScreen as ScrumWelcomeScreen ).populate();
+
+                break;
 
             default :
                 break;
@@ -124,13 +126,13 @@ export class ScrumView extends View {
 
             case ScrumSignals.CREATE_TEAM :
 
-                this.createTeam.enterScene( ViewEnterTypes.REVEAL_COMPONENT );
+                this.sendNotification( ViewNotifications.SWITCH_TO_CREATE_TEAM_VIEW );
 
                 break;
 
             case ScrumSignals.TEAM_SETTINGS :
-
-                this.manageTeams.enterScene( ViewEnterTypes.REVEAL_COMPONENT );
+                
+                this.sendNotification( ViewNotifications.SWITCH_TO_MANAGE_TEAMS_VIEW );
 
                 break;
 
@@ -142,8 +144,16 @@ export class ScrumView extends View {
 
             case ScrumSignals.LOAD_MEMBER_NOTES :
 
+                ( this.welcomeScreen as ScrumWelcomeScreen ).exitScene( ViewExitTypes.SWITCH_COMPONENT );
+
+                ( this.notes as ScrumNotes ).enterScene( ViewEnterTypes.REVEAL_COMPONENT );
+
                 ( this.notes as ScrumNotes ).loadMemberNotes( signal.data );
 
+                break;
+
+            case ScrumSignals.MEMBER_NOTES_LOADED :
+                this.sendNotification( ViewNotifications.INIT_ONBOARDING_MEMBER_EDIT_FLOW );
                 break;
 
             case ScrumSignals.TEAM_UPDATED :
@@ -172,6 +182,31 @@ export class ScrumView extends View {
                 const { memberId, name } = signal.data;
 
                 ( this.teams as ScrumTeams ).updateMember( memberId, name );
+
+                break;
+
+            case ScrumSignals.MEMBER_DELETED :
+
+                ( this.teams as ScrumTeams ).deleteMember();
+
+                break;
+
+            case ScrumSignals.SWITCH_TO_IMPEDIMENTS_VIEW :
+
+                this.sendNotification( ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW );
+
+                break;
+
+            case ScrumSignals.FIRST_NOTE_CREATED :
+
+                this.sendNotification( ViewNotifications.INIT_ONBOARDING_IMPEDIMENT_FEATURE_FLOW );
+
+                break;
+
+            case ScrumSignals.SWITCH_TO_WELCOME_SCREEN :
+
+                this.notes.exitScene( ViewExitTypes.HIDE_COMPONENT );
+                this.welcomeScreen.enterScene( ViewEnterTypes.REVEAL_COMPONENT );
 
                 break;
 

@@ -483,10 +483,11 @@ transition: all .2s ease-in-out;
     opacity: 1;
 }
 
-.planeeet-logo {
+.boardme-logo {
     position: absolute;
-    top: 48px;
-    left: 100px;
+    top: 50px;
+    left: 90px;
+    width: 100px;
 }
 
 .social-btn {
@@ -713,7 +714,7 @@ transition: all .2s ease-in-out;
     font-size: 14px;
 }
 
-#unsubscribed-container .planeeet-logo {
+#unsubscribed-container .boardme-logo {
     position: initial;
     margin-bottom: -10px;
 }
@@ -971,15 +972,6 @@ transition: all .2s ease-in-out;
 
 
 
-
-/*@media only screen and (max-width: 1386px) {*/
-    /*#above-the-fold {*/
-        /*!*max-width: 1366px;*!*/
-        /*padding-left: 60px;*/
-    /*}*/
-/*}*/
-
-
 @media only screen and (min-width: 1366px) {
 
     #above-the-fold {
@@ -1025,6 +1017,112 @@ transition: all .2s ease-in-out;
 
 }
 
+
+/*Contact page*/
+
+.contact-container {
+    background: url("../images/downloads-bubble.svg") no-repeat center;
+    padding: 50px 30px 100px;
+    /*display: none;*/
+}
+
+.contact-body {
+    max-width: 910px;
+    border-radius: 5px;
+    box-shadow: 0 2px 15px 0 rgba(221,220,234,0.7);
+    background-color: #ffffff;
+    margin: auto;
+    padding: 50px 30px 100px;
+
+}
+
+.contact-body .input-container {
+    margin-bottom: 15px;
+}
+
+.contact-body .primary-text {
+    text-align: center;
+}
+
+.contact-form {
+    max-width: 335px;
+    margin: 35px auto 0;
+}
+
+.input-basic {
+    height: 50px;
+    border: 1px solid #e1e0e9;
+    border-radius: 5px;
+    padding: 0 15px;
+    box-sizing: border-box;
+    font-size: 16px;
+    color: #242246;
+    width: 100%;
+    transition: border 0.3s ease-in-out;
+}
+
+.input-basic:hover, .input-basic:focus, .input-textarea:hover, .input-textarea:focus {
+    border: 1px solid #6E7BFF;
+}
+
+.input-textarea {
+    height: 175px;
+    border: 1px solid #e1e0e9;
+    border-radius: 5px;
+    padding: 15px 15px;
+    box-sizing: border-box;
+    font-size: 16px;
+    color: #242246;
+    width: 100%;
+    transition: border 0.3s ease-in-out;
+    max-width: 335px;
+}
+
+.input-error-message {
+    opacity: 0;
+}
+
+#contact-name-input-error, #contact-email-input-error, #contact-message-input-error {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+
+/*Email sent feedback*/
+
+#email-sent-feedback-success {
+    height: calc(100vh - 230px);
+    padding: 0 30px;
+    display: none;
+}
+
+.email-sent-feedback-success {
+    max-width: 645px;
+    margin: auto;
+    text-align: center;
+    padding-top: 10vh;
+
+}
+
+#email-sent-feedback-error {
+    height: calc(100vh - 230px);
+    padding: 0 30px;
+    display: none;
+}
+
+.email-sent-feedback-error {
+    max-width: 645px;
+    margin: auto;
+    text-align: center;
+    padding-top: 10vh;
+
+
+}
+
+
+
+
+
 @media only screen and (max-width: 1130px) {
 
     .download-btn {
@@ -1054,7 +1152,6 @@ transition: all .2s ease-in-out;
     }
 
     .cover-image {
-        /*transform: translateY(0);*/
         transform: translateY(-45px);
     }
 
@@ -1119,9 +1216,9 @@ transition: all .2s ease-in-out;
         right: 0;
     }
 
-    .planeeet-logo {
+    .boardme-logo {
         position: initial;
-        margin: -10px;
+        margin: -7px;
     }
 
     .subscribe-for-alpha {
@@ -1297,6 +1394,14 @@ transition: all .2s ease-in-out;
 
     .top-image, .bottom-image {
         display: initial;
+    }
+
+    .contact-container {
+        padding: 50px 30px 50px;
+    }
+
+    .contact-body {
+        padding: 50px 30px 50px;
     }
 
 }
@@ -1499,6 +1604,22 @@ transition: all .2s ease-in-out;
 
     #error-footer .secondary-text{
         padding: 10px;
+    }
+
+    .contact-container {
+        padding: 50px 15px 50px;
+    }
+
+    .contact-body {
+        padding: 50px 15px 50px;
+    }
+
+    .contact-form {
+        max-width: 100%;
+    }
+
+    .input-textarea {
+        max-width: 100%;
     }
 
 }

@@ -6,7 +6,9 @@ import {ViewExitTypes} from "../../../core/ViewExitTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {View} from "../../../core/View";
 
-import TweenLite = gsap.TweenLite;
+declare const TweenLite: any;
+declare const Power0: any;
+declare const Back: any;
 
 
 // CSS
@@ -14,7 +16,7 @@ import "../../../style/style-sheets/authentication-forgot-password.scss";
 
 
 // HTML
-const template = require( "../templates/authentication/component/authentication-forgot-password.html" );
+const template = require( "../../../templates/authentication-forgot-password.html" );
 
 
 
@@ -37,7 +39,7 @@ export class AuthenticationForgotPassword extends ViewComponent {
 
 
     constructor(view: View, container: HTMLElement) {
-        super( view, container );
+        super( view, container, "AuthenticationForgotPassword" );
 
         console.info( "Login view component initialized." );
 

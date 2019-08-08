@@ -1,5 +1,5 @@
 
-
+import {CreateMemberModel} from "../../../connection/models/CreateMemberModel";
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
@@ -7,20 +7,19 @@ import {ScrumSignals} from "./ScrumSignals";
 import {View} from "../../../core/View";
 
 
-import TweenLite = gsap.TweenLite;
-import Power0 = gsap.Power0;
-import Back = gsap.Back;
+declare const TweenLite: any;
+declare const Power0: any;
+declare const Back: any;
 
 
 declare const SimpleBar: any;
 
 // CSS
 import "../../../style/style-sheets/scrum-teams.scss";
-import {CreateMemberModel} from "../../../connection/models/CreateMemberModel";
 
 
 // HTML
-const template = require( "../templates/scrum/component/scrum-teams.html" );
+const template = require( "../../../templates/scrum-teams.html" );
 
 
 
@@ -37,8 +36,9 @@ export class ScrumTeams extends ViewComponent {
     private teamsContainer: HTMLDivElement;
 
 
+
     constructor(view: View, container: HTMLElement) {
-        super( view, container );
+        super( view, container, "ScrumTeams" );
 
         this.container.innerHTML = template;
 
@@ -114,22 +114,65 @@ export class ScrumTeams extends ViewComponent {
 
                 this.populateTeams( teams );
 
-                let defaultTeamId: string;
 
-                for ( let team of teams ) {
-                    if ( team.isDefault === true ) {
-                        defaultTeamId = team._id;
-                        break;
+                /** Check memory */
+
+                const { selectedMember } = this.getMemory();
+
+                console.log( "Selected member: ", selectedMember );
+                console.log( teams );
+
+
+                /** If we have recollection of a selected member */
+                if ( selectedMember ) {
+
+                    /** If the team still exists */
+                    if ( teams.map( (t: any) => t._id ).indexOf( selectedMember.team ) !== -1 ) {
+
+                        this.connection.getMembersOfTeam(
+                            selectedMember.team,
+                            (response: any) => {
+
+                                /** If the member still exists */
+                                if ( response.members.map( (m: any) => m._id ).indexOf( selectedMember.id ) !== -1 ) {
+                                    this.populateMembers( selectedMember.team, response.members );
+                                    this.sendSignal( ScrumSignals.LOAD_MEMBER_NOTES, selectedMember );
+                                    this.applySelectionToMember( `${ selectedMember.team }@${ selectedMember.id }` );
+                                } else {
+                                    //TODO if member was deleted? Default to welcome screen?
+                                    this.sendSignal( ScrumSignals.SWITCH_TO_WELCOME_SCREEN );
+                                }
+
+                            },
+                            (err: any) => console.error( err )
+                        );
+                    } else {
+
+                        //TODO if team was deleted? Default to welcome screen?
+                        this.sendSignal( ScrumSignals.SWITCH_TO_WELCOME_SCREEN );
                     }
+
+                } else {
+                /** If we don't have memory data, we load the default team */
+
+                    let defaultTeamId: string;
+
+                    for ( let team of teams ) {
+                        if ( team.isDefault === true ) {
+                            defaultTeamId = team._id;
+                            break;
+                        }
+                    }
+
+                    if ( ! defaultTeamId ) return;
+
+                    this.connection.getMembersOfTeam(
+                        defaultTeamId,
+                        (response: any) => this.populateMembers( defaultTeamId, response.members ),
+                        (err: any) => console.error( err )
+                    );
+
                 }
-
-                if ( ! defaultTeamId ) return;
-
-                this.connection.getMembersOfTeam(
-                    defaultTeamId,
-                    (response: any) => this.populateMembers( defaultTeamId, response.members ),
-                    (err: any) => console.error( err )
-                );
 
             },
             (err: string) => console.error( err )
@@ -158,6 +201,7 @@ export class ScrumTeams extends ViewComponent {
         header.className            = "scrum-team-header pointer";
 
         let title                   = document.createElement( "h2" );
+        title.id                    = `${ teamData._id }@name`;
         title.className             = "scrum-team-name bold noselect";
         title.innerHTML             = teamData.name;
 
@@ -214,15 +258,43 @@ export class ScrumTeams extends ViewComponent {
                         team: teamId,
                         name: member.innerText
                     }
-            )
+            );
+
+            this.updateMemory( { selectedMember: {
+                id: memberData._id,
+                team: teamId,
+                name: member.innerText
+            }});
         });
 
         const membersContainer = document.getElementById( teamId );
 
         if ( ! prepend ) {
             membersContainer.appendChild( member );
+
         } else {
+
+            /** If the user has just been created, we select it automatically */
+
             membersContainer.insertBefore( member, membersContainer.firstChild );
+
+            this.applySelectionToMember( member.id );
+
+            this.sendSignal(
+                ScrumSignals.LOAD_MEMBER_NOTES,
+                {
+                    id: memberData._id,
+                    team: teamId,
+                    name: member.innerText
+                }
+            );
+
+            this.updateMemory( { selectedMember: {
+                id: memberData._id,
+                team: teamId,
+                name: member.innerText
+            }});
+
         }
     }
 
@@ -241,6 +313,59 @@ export class ScrumTeams extends ViewComponent {
 
         for ( let i = 0; i < memberElements.length; i++ ) {
             memberElements[i].innerText = name;
+        }
+    }
+
+
+
+    public deleteMember() {
+        const members = document.getElementsByClassName( "scrum-team-member" );
+
+        for ( let i = 0; i < members.length; i++ ) {
+
+            if ( members[i].classList.contains( "active" ) ) {
+
+                let sibling: Element;
+
+                if ( members[i].previousElementSibling ) {
+
+                    sibling = members[i].previousElementSibling;
+
+                } else if ( members[i].nextElementSibling ) {
+
+                    sibling = members[i].nextElementSibling;
+                }
+
+
+                members[i].parentNode.removeChild( members[i] );
+
+
+                if ( ! sibling ) return;
+
+
+                sibling.classList.add( "active" );
+
+
+                const id    = sibling.id.split( '@' )[1];
+                const team  = sibling.id.split( '@' )[0];
+                const name  = sibling.innerHTML;
+
+
+                this.sendSignal( ScrumSignals.LOAD_MEMBER_NOTES, {
+                    id,
+                    team,
+                    name
+                });
+
+                this.updateMemory( { selectedMember: {
+                    id,
+                    team,
+                    name
+                }});
+
+                break;
+
+            }
         }
     }
 
@@ -275,7 +400,7 @@ export class ScrumTeams extends ViewComponent {
 
             },
             (err: string) => console.error( err )
-        )
+        );
     }
 
 

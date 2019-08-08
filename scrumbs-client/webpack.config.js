@@ -39,11 +39,6 @@ module.exports = {
         { "pixi.js": "PIXI" },
         { "TweenL": "TweenLite" },
         { "jquery": "jQuery" }
-    ],
-    plugins: [
-        new webpack.DefinePlugin({
-            "SERVICE_URL": JSON.stringify("http://localhost:3000")
-        })
     ]
 
 };

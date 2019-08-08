@@ -4,11 +4,34 @@ pipeline {
 
     environment {
         DOCKER_PASS = credentials('andrei_dockerhub_pw')
+
         JWT_SECRET = credentials('scrumbs_jwt_secret')
         ADMIN_SECRET = credentials('scrumbs_admin_secret')
         ADMIN_EMAIL_ADDRESS = credentials('scrumbs_admin_email')
         SUPPORT_EMAIL_ADDRESS = credentials('scrumbs_support_email')
         SUPPORT_EMAIL_PW = credentials('scrumbs_support_pw')
+        MAILCHIMP_KEY = credentials('mailchimp_key')
+
+		CONSUMER_KEY = credentials('scrumbs_git_twitter_consumer_key')
+		CONSUMER_SECRET = credentials('scrumbs_git_twitter_consumer_secret')
+		ACCESS_TOKEN = credentials('scrumbs_git_twitter_access_token')
+		ACCESS_SECRET = credentials('scrumbs_git_twitter_access_secret')
+
+        TRELLO_API_KEY = credentials('trello_api_key')
+        TRELLO_SECRET = credentials('trello_secret')
+        TRELLO_TOKEN = credentials('trello_token')
+        TRELLO_BUGS_LIST_ID = credentials('trello_bugs_list_id')
+        TRELLO_FEATURES_LIST_ID = credentials('trello_features_list_id')
+
+        GOOGLE_SECRET = credentials('scrumbs_google_secret')
+        GOOGLE_CLIENT_ID = credentials('scrumbs_google_client_id')
+
+        TWITTER_SECRET = credentials('scrumbs_twitter_secret')
+        TWITTER_KEY = credentials('scrumbs_twitter_key')
+
+        LINKEDIN_SECRET = credentials('scrumbs_linkedin_secret')
+        LINKEDIN_KEY = credentials('scrumbs_linkedin_key')
+
 		HOST_NAME = 'scrumbs'
 		HOST_ADDRESS = '165.227.168.111'
     }
@@ -35,13 +58,33 @@ pipeline {
 
         stage('Configure Environment Variables') {
             steps {
-                sh './jenkins/configure/configure.sh $JWT_SECRET $ADMIN_SECRET $ADMIN_EMAIL_ADDRESS $SUPPORT_EMAIL_ADDRESS $SUPPORT_EMAIL_PW'
+                sh 'sed -i -e \'s/\\r\$//\' jenkins/configure/configure.sh'
+                sh 'chmod +x jenkins/configure/configure.sh'
+                sh './jenkins/configure/configure.sh $JWT_SECRET \
+                                                     $ADMIN_SECRET \
+                                                     $ADMIN_EMAIL_ADDRESS \
+                                                     $SUPPORT_EMAIL_ADDRESS \
+                                                     $SUPPORT_EMAIL_PW \
+                                                     \"$MAILCHIMP_KEY\" \
+                                                     $TRELLO_API_KEY \
+                                                     $TRELLO_SECRET \
+                                                     $TRELLO_TOKEN \
+                                                     $TRELLO_BUGS_LIST_ID \
+                                                     $TRELLO_FEATURES_LIST_ID \
+                                                     $GOOGLE_SECRET \
+                                                     $GOOGLE_CLIENT_ID \
+                                                     $TWITTER_SECRET \
+                                                     $TWITTER_KEY \
+                                                     $LINKEDIN_SECRET \
+                                                     $LINKEDIN_KEY'
             }
 
         }
 
         stage('Build Docker Images') {
             steps {
+                sh 'sed -i -e \'s/\\r\$//\' jenkins/build/build.sh'
+                sh 'chmod +x jenkins/build/build.sh'
                 sh './jenkins/build/build.sh'
             }
 
@@ -49,6 +92,8 @@ pipeline {
 
         stage('Push Docker Images') {
             steps {
+                sh 'sed -i -e \'s/\\r\$//\' jenkins/push/push.sh'
+                sh 'chmod +x jenkins/push/push.sh'
                 sh './jenkins/push/push.sh $DOCKER_PASS'
             }
         }
@@ -58,6 +103,14 @@ pipeline {
                 script {
                     method_remote_deploy()
                 }
+            }
+        }
+
+        stage('Tweet Update') {
+            steps {
+                sh 'sed -i -e \'s/\\r\$//\' jenkins/tweet/tweet.sh'
+                sh 'chmod +x jenkins/tweet/tweet.sh'
+                sh './jenkins/tweet/tweet.sh $CONSUMER_KEY $CONSUMER_SECRET $ACCESS_TOKEN $ACCESS_SECRET'
             }
         }
     }

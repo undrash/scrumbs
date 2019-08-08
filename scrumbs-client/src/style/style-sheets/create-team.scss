@@ -1,0 +1,184 @@
+
+@import "mixins";
+@import "color-variables";
+
+
+/** ============================= CREATE TEAM COMPONENT ============================= */
+
+#create-team-container {
+
+  background-color: $tertiary-color;
+  height: 100%;
+  padding-top: 40px;
+  position: relative;
+  border-radius: 5px 5px 0 0;
+
+  #create-team-exit-button {
+    right: 25px;
+    top: 25px;
+  }
+
+  .create-team-inner-container {
+    width: 565px;
+    height: 100%;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 24px;
+    float: left;
+    line-height: 50px;
+  }
+
+  #create-team-save-button {
+    width: 152px;
+    float: right;
+  }
+
+  .create-team-body {
+    height: 100%;
+    margin-top: 40px;
+  }
+
+  .input-error {
+    font-size: 14px;
+    color: #D00262;
+    display: none;
+    margin: 10px 0;
+  }
+
+  #create-team-name-input {
+
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 3px;
+    box-shadow: inset 0 0 0 2px $quinary-color;
+    font-size: 24px;
+    padding: 0 16px;
+    line-height: 70px;
+    transition: all 0.3s ease-in-out;
+
+    &:focus { box-shadow: inset 0 0 0 2px $accent-color; }
+
+    &:hover { box-shadow: inset 0 0 0 2px $accent-color; }
+
+  }
+
+  .create-team-member-list-search {
+    height: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    position: relative;
+  }
+
+  #create-team-member-search-clear {
+    position: absolute;
+    right: 5px;
+    width: 13px;
+    top: 7px;
+    cursor: pointer;
+    display: none;
+  }
+
+  .search-member-input {
+    border-bottom: 1px solid #ECECF2;
+    width: 100%;
+    box-sizing: border-box;
+    padding-bottom: 15px;
+    font-size: 16px;
+    background: url("../img/icons/search-icon.svg") no-repeat left bottom 13px;
+    -webkit-background-size: 23px;
+    background-size: 23px;
+    padding-left: 35px;
+    transition: border 0.3s ease-out;
+
+    &:focus {
+      border-bottom: $accent-color 1px solid;
+    }
+
+    &:hover {
+      border-bottom: $accent-color 1px solid;
+    }
+  }
+
+
+  .create-team-member-list-body {
+
+    height: 100%;
+
+    ul {
+      height: calc( 100% - 325px );
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      .simplebar-track {
+        right: 0;
+      }
+    }
+
+    li {
+
+      line-height: 50px;
+      padding-left: 20px;
+      border-radius: 3px;
+      box-shadow: inset 0 0 0 1px $quinary-color;
+      color: $text-tertiary-color;
+      font-size: 16px;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.3s ease-in-out;
+
+      &:not( :last-child ) { margin-bottom: 5px; }
+
+      span {
+        display: block;
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        box-shadow: inset 0 0 0 2px $quinary-color;
+        @include center( "vertical" );
+        right: 15px;
+
+        &::after {
+          content: "";
+          display: none;
+          width: 100%;
+          height: 100%;
+          background: url("../img/icons/icon-checked.svg") no-repeat center / contain;
+        }
+
+      }
+
+      &.active {
+
+        color: $text-primary-color;
+
+        span::after { display: block; }
+
+      }
+
+      &:hover {
+        color: $text-primary-color;
+      }
+
+    }
+
+    span {
+      color: #7d7c89
+    }
+
+
+
+  }
+
+}
+
+@media screen and ( max-width: 930px ) {
+
+  #create-team-save-button {
+    margin-right: 13%;
+  }
+
+}

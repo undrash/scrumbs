@@ -6,9 +6,10 @@ import {ViewComponent} from "../../../core/ViewComponent";
 import {View} from "../../../core/View";
 
 
-import TweenLite = gsap.TweenLite;
-import Power1 = gsap.Power1;
-import Back = gsap.Back;
+declare const TweenLite: any;
+declare const Power0: any;
+declare const Power1: any;
+declare const Back: any;
 
 
 // CSS
@@ -19,7 +20,7 @@ import {AuthenticationSignals} from "./AuthenticationSignals";
 
 
 // HTML
-const template = require( "../templates/authentication/component/authentication-sign-up.html" );
+const template = require( "../../../templates/authentication-sign-up.html" );
 
 
 
@@ -49,7 +50,7 @@ export class AuthenticationSignUp extends ViewComponent {
 
 
     constructor(view: View, container: HTMLElement) {
-        super( view, container );
+        super( view, container, "AuthenticationSignUp" );
 
         this.container.innerHTML = template;
 

@@ -1,0 +1,409 @@
+@import "color-variables";
+
+.modal-title {
+  font-size: 24px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.guide-description {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: normal;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+
+//buttons -----------------------------------------------------------
+
+.guide-primary-btn {
+  color: #FFFFFF;
+  font-size: 16px;
+  background-color: $secondary-color;
+  border-radius: 5px;
+  padding: 15px 20px;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+
+  &:hover {
+    background-color: $accent-color;
+  }
+
+  &.small {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+
+}
+
+.guide-secondary-btn {
+  color: #FFFFFF;
+  font-size: 16px;
+  border: 1px solid $secondary-color;
+  border-radius: 5px;
+  padding: 15px 20px;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+
+  &:hover {
+    background-color: $accent-color;
+  }
+
+  &.small {
+    padding: 9px 14px;
+    font-size: 14px;
+  }
+
+}
+
+.skip-link-btn {
+  font-size: 14px;
+  color: $secondary-color;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+  display: inline-block;
+  margin-top: 10px;
+
+  &:hover {
+    color: $accent-color;
+  }
+}
+
+.onboarding-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  opacity: 0.3;
+  background: url("../../style/img/onboarding/guide-close-icon.png") no-repeat center;
+  width: 25px;
+  height: 25px;
+  transition: opacity 0.3s ease-in-out;
+  cursor: pointer;
+
+  &.guide {
+    top: 15px;
+    right: 15px;
+  }
+
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+
+//---------------------------------------------------------------------------------------
+
+.onboarding-modal-overlay {
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(36,46,76,0.4);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+}
+
+.onboarding-modal-welcome {
+  width: 530px;
+  height: auto;
+  background-color: #242E4C;
+  border-radius: 5px;
+  box-shadow: 0 14px 27px -7px rgba(43,62,119,0.38);
+  color: #FFFFFF;
+  position: relative;
+  margin: 200px auto 0;
+  z-index: 10;
+  padding: 45px 20px;
+
+  .modal-title {
+    margin-bottom: 15px;
+  }
+
+  .guide-description {
+    width: 330px;
+    margin: 0 auto 50px;
+    display: block;
+    text-align: center;
+  }
+
+  .guide-primary-btn {
+    margin: 45px auto 0;
+    display: table;
+  }
+
+}
+
+.modal-features-list {
+  font-size: 14px;
+  padding-left: 60px;
+  height: 52px;
+  padding-top: 15px;
+  margin-left: 80px;
+
+  &.notes {
+    background: url("../../style/img/onboarding/notes.svg") no-repeat left center;
+  }
+
+  &.impediments {
+    background: url("../../style/img/onboarding/impediments.svg") no-repeat left center;
+    margin: 15px 0 15px 80px;
+  }
+
+  &.reports {
+    background: url("../../style/img/onboarding/reports.svg") no-repeat left center;
+    padding-top: 8px;
+    position: relative;
+
+    &::after {
+      content: "COMING SOON";
+      position: absolute;
+      color: $accent-color;
+      border: 1px solid $accent-color;
+      border-radius: 25px;
+      font-size: 10px;
+      left: 60px;
+      top: 30px;
+      padding: 0 3px;
+    }
+
+  }
+
+}
+
+
+//guides base -----------------------------------------------------------
+
+.onboarding-tooltip {
+  //display: none;
+  background-color: #242E4C;
+  border-radius: 5px;
+  box-shadow: 0 14px 27px -7px rgba(43,62,119,0.38);
+  color: #FFFFFF;
+  padding: 40px 25px 25px;
+  width: 335px;
+  height: auto;
+  z-index: 10;
+  position: absolute;
+
+  &::after {
+    content: "";
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    position: absolute;
+    transform: rotate( 45deg );
+    background-color: #242E4C;
+    left: -5px;
+    top: 87px;
+  }
+
+  &.small {
+    padding: 15px;
+    text-align: center;
+    max-width: 175px;
+
+    .guide-description {
+      font-size: 14px;
+      font-weight: 200;
+    }
+
+    &::after {
+      left: 47%;
+      top: -5px;
+    }
+  }
+
+
+  &.image {
+    width: 356px;
+
+    img {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 15px;
+      width: 66px
+    }
+
+    .guide-description {
+      width: 210px;
+    }
+
+    .guide-primary-btn {
+      float: right;
+    }
+
+    .guide-secondary-btn {
+      float: right;
+      margin-right: 10px;
+    }
+
+  }
+
+
+}
+
+.guide-content-wrapper {
+  margin-bottom: 30px;
+}
+
+
+//---------------------------------------------------------------------------------------
+
+#onboarding-tip-new-member {
+  left: 30%;
+  top: 5%;
+  opacity: 0;
+
+  .guide-add-icon {
+    margin: 0 5px;
+  }
+
+  .guide-primary-btn {
+    float: right;
+    margin-top: 20px;
+  }
+
+}
+
+
+//---------------------------------------------------------------------------------------
+
+#onboarding-tip-edit-member-name {
+  z-index: 10;
+  left: 30%;
+  top: 5%;
+  opacity: 0;
+}
+
+
+//---------------------------------------------------------------------------------------
+
+#onboarding-tip-member-options {
+  right: 15%;
+  opacity: 0;
+
+  &::after {
+    content: "";
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    position: absolute;
+    transform: rotate( 45deg );
+    background-color: #242E4C;
+    right: -5px;
+    left: unset;
+    top: 87px;
+  }
+}
+
+
+//---------------------------------------------------------------------------------------
+
+#onboarding-tip-impediment-checkbox {
+  opacity: 0;
+
+  &::after {
+    content: "";
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    position: absolute;
+    transform: rotate( 45deg );
+    background-color: #242E4C;
+    left: 50%;
+    top: unset;
+    bottom: -5px;
+  }
+}
+
+
+//---------------------------------------------------------------------------------------
+
+#onboarding-tip-impediment-shortcut {
+  opacity: 0;
+
+  &::after {
+    content: "";
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    position: absolute;
+    transform: rotate( 45deg );
+    background-color: #242E4C;
+    left: 50%;
+    top: unset;
+    bottom: -5px;
+  }
+}
+
+
+
+
+//------------------------- MANAGE TEAMS --------------------------------------------------------------
+
+
+#onboarding-manage-teams-tip-edit-team-name {
+
+  &::after {
+    left: 25px;
+    top: -5px;
+  }
+}
+
+
+//---------------------------------------------------------------------------------------
+
+#onboarding-manage-teams-tip-add-members {
+
+  &::after {
+    left: unset;
+    right: -5px;
+  }
+}
+
+
+//---------------------------------------------------------------------------------------
+
+#onboarding-manage-teams-tip-add-new-team {
+
+  &::after {
+    left: unset;
+    right: -5px;
+    bottom: 25px;
+    top: unset;
+    //top: 167px;
+  }
+
+  .guide-secondary-btn {
+    float: right;
+    margin-right: 10px;
+  }
+
+  .guide-primary-btn {
+    float: right;
+  }
+}
+
+
+//---------------------------------------------------------------------------------------
+
+#onboarding-manage-teams-tip-delete-team {
+
+  &::after {
+    left: unset;
+    right: -5px;
+  }
+}
+
+
+
+
+
+
+
+
+
+

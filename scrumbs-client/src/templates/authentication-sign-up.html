@@ -1,0 +1,90 @@
+
+<h1 id="authentication-sign-up-title" class="authentication-title">Create your account</h1>
+
+<h2 id="authentication-sign-up-subtitle" class="authentication-description">Enter your accout details below and you'll be on your way</h2>
+
+<div class="input-wrapper">
+
+        <div class="input-group input-type-text">
+
+            <label id="authentication-sign-up-name-label" class="input-label" for="authentication-sign-up-name-input">Name</label>
+
+            <div class="input-container input-text">
+
+                <input id="authentication-sign-up-name-input" type="text" class="input input-user" placeholder="Enter your full name" spellcheck="false">
+
+                <span class="input-icon"></span>
+
+            </div>
+
+            <span id="authentication-sign-up-name-input-error" class="input-error">Please enter your name in the field above.</span>
+
+        </div>
+        <!-- name -->
+
+        <div class="input-group input-type-text">
+
+                <label id="authentication-sign-up-email-label" class="input-label" for="authentication-sign-up-email-input">Email</label>
+
+                <div class="input-container">
+
+                    <input id="authentication-sign-up-email-input" type="text" class="input input-email" placeholder="Enter your email address" spellcheck="false">
+
+                    <span class="input-icon"></span>
+
+                </div>
+
+                <span id="authentication-sign-up-email-input-error" class="input-error">Please provide a valid email address.</span>
+
+        </div>
+        <!-- email -->
+
+        <div class="input-group">
+
+                <label id="authentication-sign-up-email-input-label" class="input-label" for="authentication-sign-up-password-input">Password</label>
+
+                <div class="input-container input-type-password">
+
+                    <input id="authentication-sign-up-password-input" type="password" class="input input-password" placeholder="5+ characters" spellcheck="false">
+
+                    <span class="input-icon"></span>
+
+                    <span id="authentication-sign-up-password-toggle-button" class="password-toggle-button pointer"></span>
+
+                </div>
+
+                <span id="authentication-sign-up-password-input-error" class="input-error">Please provide a password of at least 5 characters.</span>
+
+        </div>
+        <!-- password -->
+
+</div>
+
+<div class="authentication-footer">
+
+        <div class="checkbox-wrapper">
+    
+            <div class="checkbox-group">
+                <input id="agree-terms" type="checkbox">
+                <label for="agree-terms" class="noselect pointer">I agree to Scrumbs' <a href="#" class="accent underline">Terms of Service</a></label>
+            </div>
+    
+        </div>
+
+        <button id="authentication-sign-up-btn" class="primary-button">Sign Up</button>
+
+        <div class="social-media-auth-wrapper">
+
+                <p>Or sign up with:</p>
+        
+                <div class="social-media-auth-container">
+
+                    <a href="/api/v1/authentication/oauth/google" class="button-google"></a>
+                    <a href="/api/v1/authentication/oauth/twitter" class="button-twitter"></a>
+                    <a href="/api/v1/authentication/oauth/linkedin" class="button-linkedin"></a>
+
+                </div>
+        
+        </div>
+    
+</div>

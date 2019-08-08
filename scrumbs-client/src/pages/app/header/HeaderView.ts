@@ -1,26 +1,28 @@
 
 
 import {AuthenticationNotifications} from "../authentication/AuthenticationNotifications";
-import {HeaderNotifications} from "./HeaderNotifications";
+import {AccountNotifications} from "../account-settings/AccountNotifications";
 import {SystemConstants} from "../../../core/SystemConstants";
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {INotification} from "../../../core/INotification";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
+import {HeaderNotifications} from "./HeaderNotifications";
+import {ViewNotifications} from "../ViewNotifications";
 import {HeaderComponent} from "./HeaderComponent";
 import {HeaderConstants} from "./HeaderConstants";
 import {HeaderSignals} from "./HeaderSignals";
 import {ISignal} from "../../../core/ISignal";
 import {View} from "../../../core/View";
+import {Inquiry} from "./Inquiry";
 
 
 // CSS
 import "../../../style/style-sheets/header-view.scss";
 
 
-
 // HTML
-const headerViewTemplate = require( "../templates/header/view/header-view.html" );
+const headerViewTemplate = require( "../../../templates/header-view.html" );
 
 
 
@@ -29,9 +31,10 @@ const headerViewTemplate = require( "../templates/header/view/header-view.html" 
 
 export class HeaderView extends View {
     private header: ViewComponent;
+    private inquiry: Inquiry;
 
     private headerContainer: HTMLElement;
-
+    private inquiryContainer: HTMLElement;
 
 
 
@@ -46,9 +49,11 @@ export class HeaderView extends View {
 
         this.container.innerHTML = headerViewTemplate;
 
-        this.headerContainer = document.getElementById( "header-component-container" );
+        this.headerContainer    = document.getElementById( "header-component-container" );
+        this.inquiryContainer   = document.getElementById( "header-inquiry-container" );
 
-        this.header = new HeaderComponent( this, this.headerContainer );
+        this.header             = new HeaderComponent( this, this.headerContainer );
+        this.inquiry            = new Inquiry( this, this.inquiryContainer );
 
         this.enterScene();
     }
@@ -67,6 +72,7 @@ export class HeaderView extends View {
         this.exitCallback = callback;
 
         this.header.exitScene( exitType );
+        this.inquiry.exitScene( exitType );
     }
 
 
@@ -76,8 +82,17 @@ export class HeaderView extends View {
 
         notifications.push( AuthenticationNotifications.LOGIN );
         notifications.push( AuthenticationNotifications.SIGN_UP );
+
         notifications.push( AuthenticationNotifications.EXIT_HEADER );
         notifications.push( AuthenticationNotifications.ENTER_HEADER );
+
+        notifications.push( ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW );
+        notifications.push( ViewNotifications.SWITCH_TO_SCRUM_VIEW );
+        notifications.push( ViewNotifications.SWITCH_TO_REPORTS_VIEW );
+
+        notifications.push( ViewNotifications.SWITCH_HEADER_STATE );
+
+        notifications.push( AccountNotifications.ACCOUNT_UPDATED );
 
         return notifications;
     }
@@ -90,6 +105,7 @@ export class HeaderView extends View {
 
             case AuthenticationNotifications.LOGIN :
             case AuthenticationNotifications.SIGN_UP :
+            case ViewNotifications.SWITCH_HEADER_STATE :
 
                 ( this.header as HeaderComponent ).switchState( HeaderConstants.HEADER_APP_STATE );
 
@@ -105,6 +121,19 @@ export class HeaderView extends View {
 
                 this.header.enterScene( ViewEnterTypes.REVEAL_COMPONENT );
 
+                break;
+
+
+            case ViewNotifications.SWITCH_TO_SCRUM_VIEW :
+            case ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW :
+            case ViewNotifications.SWITCH_TO_REPORTS_VIEW :
+
+                ( this.header as HeaderComponent ).setActiveMenuItem( notification.name );
+
+                break;
+
+            case AccountNotifications.ACCOUNT_UPDATED :
+                ( this.header as HeaderComponent ).populate();
                 break;
 
             default :
@@ -134,13 +163,31 @@ export class HeaderView extends View {
 
             case HeaderSignals.SWITCH_TO_SCRUM_VIEW :
 
-                this.sendNotification( HeaderNotifications.SWITCH_TO_SCRUM_VIEW );
+                this.sendNotification( ViewNotifications.SWITCH_TO_SCRUM_VIEW );
 
                 break;
 
             case HeaderSignals.SWITCH_TO_IMPEDIMENTS_VIEW :
 
-                this.sendNotification( HeaderNotifications.SWITCH_TO_IMPEDIMENTS_VIEW );
+                this.sendNotification( ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW );
+
+                break;
+
+            case HeaderSignals.SWITCH_TO_REPORTS_VIEW :
+
+                this.sendNotification( ViewNotifications.SWITCH_TO_REPORTS_VIEW );
+
+                break;
+
+            case HeaderSignals.SWITCH_TO_ACCOUNT_SETTINGS_VIEW :
+
+                this.sendNotification( ViewNotifications.SWITCH_TO_ACCOUNT_SETTINGS_VIEW );
+
+                break;
+
+            case HeaderSignals.DISPLAY_INQUIRY :
+
+                this.inquiry.enterScene( ViewEnterTypes.REVEAL_COMPONENT );
 
                 break;
 

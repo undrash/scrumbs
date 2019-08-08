@@ -3,22 +3,21 @@
 import {ViewEnterTypes} from "../../../core/ViewEnterTypes";
 import {ViewComponent} from "../../../core/ViewComponent";
 import {ViewExitTypes} from "../../../core/ViewExitTypes";
+import {ScrumSignals} from "./ScrumSignals";
 import {View} from "../../../core/View";
 
-
-import TweenLite = gsap.TweenLite;
-import Power0 = gsap.Power0;
-import Back = gsap.Back;
+declare const TweenLite: any;
+declare const Power0: any;
+declare const Back: any;
 
 
 
 // CSS
 import "../../../style/style-sheets/scrum-welcome-screen.scss";
-import {ScrumSignals} from "./ScrumSignals";
 
 
 // HTML
-const template = require( "../templates/scrum/component/scrum-welcome-screen.html" );
+const template = require( "../../../templates/scrum-welcome-screen.html" );
 
 
 
@@ -26,18 +25,27 @@ const template = require( "../templates/scrum/component/scrum-welcome-screen.htm
 
 
 export class ScrumWelcomeScreen extends ViewComponent {
-    private tempClick: HTMLElement;
 
-
+    private profileImage: HTMLElement;
+    private title: HTMLElement;
+    private impedimentsBtn: HTMLElement;
 
 
     constructor(view: View, container: HTMLElement) {
-        super( view, container );
+        super( view, container, "ScrumWelcomeScreen" );
+
+
+        /** Check in memory if the welcome screen has been hidden */
+        if ( this.getMemory().hidden ) this.container.style.display = "none";
 
         this.container.innerHTML = template;
 
-        this.tempClick = document.getElementById( "scrum-welcome-screen-profile" );
+        this.profileImage       = document.getElementById( "scrum-welcome-screen-profile-image" );
+        this.title              = document.getElementById( "scrum-welcome-screen-title" );
+        this.impedimentsBtn     = document.getElementById( "scrum-welcome-screen-impediments-btn" );
 
+
+        this.impedimentsListener = this.impedimentsListener.bind( this );
 
         this.enterScene();
     }
@@ -45,13 +53,40 @@ export class ScrumWelcomeScreen extends ViewComponent {
 
 
     private registerEventListeners(): void {
-        this.tempClick.addEventListener( "click", () => this.exitScene( ViewExitTypes.SWITCH_COMPONENT, ScrumSignals.SWITCH_WELCOME_SCREEN_TO_NOTES ) );
+        this.impedimentsBtn.addEventListener( "click", this.impedimentsListener );
     }
 
 
 
     private unregisterEventListeners(): void {
+        this.impedimentsBtn.removeEventListener( "click", this.impedimentsListener );
+    }
 
+
+
+    private impedimentsListener(): void {
+        this.sendSignal( ScrumSignals.SWITCH_TO_IMPEDIMENTS_VIEW );
+    }
+
+
+
+    public populate(): void {
+
+        const userData = this.connection.getVO();
+
+        console.log( userData );
+
+        this.title.innerText = `Welcome ${ userData.name }`;
+
+        const names = userData.name.split( " " );
+
+        let monogram = "";
+
+        for ( let i = 0; i < 3; i++ ) {
+            if ( names[ i ] && names[ i ][ 0 ] ) monogram += names[ i ][ 0 ];
+        }
+
+        this.profileImage.innerText = monogram;
     }
 
 
@@ -59,7 +94,16 @@ export class ScrumWelcomeScreen extends ViewComponent {
     public enterScene(enterType?: string): void {
         console.info( "Enter being called in scrum welcome screen view component" );
 
+        this.populate();
+
         switch ( enterType ) {
+
+            case ViewEnterTypes.REVEAL_COMPONENT :
+
+                this.container.style.display = "block";
+                this.saveToMemory( { hidden: false } );
+
+                break;
 
             default :
                 this.registerEventListeners();
@@ -79,6 +123,8 @@ export class ScrumWelcomeScreen extends ViewComponent {
                 this.container.style.display = "none";
 
                 if ( signal ) this.sendSignal( signal );
+
+                this.saveToMemory( { hidden: true } );
 
                 break;
 

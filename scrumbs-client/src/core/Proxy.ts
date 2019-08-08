@@ -31,7 +31,7 @@ export class Proxy extends CoreEntity implements IProxy {
 
 
 
-    protected static setVO(vo: IProxyVO): void {
+    public static setVO(vo: IProxyVO): void {
         Proxy.VO = vo;
     }
 
@@ -62,15 +62,31 @@ export class Proxy extends CoreEntity implements IProxy {
 
         xhr.onload = () => {
 
-            let response = JSON.parse( xhr.responseText );
+            let response: any;
 
-            if ( response.success ) {
+            try {
+                response = JSON.parse( xhr.responseText );
+            } catch (err) {}
+
+
+            if ( xhr.status == 200 || response.success ) {
+
+                /** Passport sends status 200 even on failed login. */
+                if ( response &&
+                    ! response.success &&
+                    response.message === "Invalid credentials."
+                ) {
+                    if ( failure ) failure ( response );
+                    return;
+                }
 
                 if ( success ) success( response );
 
             } else {
 
-                if ( failure ) failure( response.message );
+                if ( failure && response ) failure( response );
+                if ( failure && ! response ) failure( xhr.responseText );
+
             }
         };
 

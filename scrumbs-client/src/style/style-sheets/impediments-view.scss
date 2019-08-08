@@ -45,6 +45,7 @@
             border-radius: 50%;
             background-color: $tertiary-color;
             box-shadow: inset 0 0 0 2px $denary-color;
+            transition: box-shadow 0.3s ease-in-out;
 
             &::after {
                 content: "";
@@ -52,6 +53,10 @@
                 width: 100%;
                 height: 100%;
                 background: url("../img/icons/icon-checked.svg") no-repeat center / contain;
+            }
+
+            &:hover {
+                box-shadow: inset 0 0 0 2px #c5c5d6;
             }
         }
 
@@ -107,13 +112,16 @@
 
         button {
             display: block;
-            height: 27px;
+            //height: 27px;
+            height: 40px;
             line-height: 25px;
             padding-left: 10px;
             padding-right: 26px;
             border-radius: 3px;
             background-color: transparent;
             position: relative;
+            transition: background-color 0.3s ease-in-out;
+
 
             &::after {
                 content: "";
@@ -121,40 +129,56 @@
                 position: absolute;
                 width: 10px;
                 height: 6px;
-                top: 12px;
+                top: 17px;
                 right: 10px;
                 background: url("../img/icons/icon-dropdown-accent.svg") no-repeat center / contain;
             }
 
+            &:hover {
+                background-color: $denary-color;
+            }
+
         }
+
+
 
         #impediments-filter-dropdown {
             width: 275px;
-            max-height: 355px;
+            //max-height: 355px;
             @include center( "horizontal" );
-            top: 40px;
+            top: 45px;
+            right: -139px;
             padding: 15px 20px 0;
             background-color: $tertiary-color;
             border-radius: 3px;
             box-shadow: 0 5px 25px 0 $quinary-color;
             display: none;
+            // Blurry text bug fix
+            transform: translateX(calc(-50% - .5px));
+            left: unset;
 
-            &::before {
-                content: "";
-                position: absolute;
-                display: block;
-                width: 20px;
-                height: 20px;
-                top: -7px;
-                left: calc( 50% - 10px );
-                transform: rotate( 45deg );
-                background-color: $tertiary-color;
+            .simplebar-track {
+                right: 0;
+            }
+
+            .all-impediments-btn {
+                line-height: 42px;
+                border-radius: 3px;
+                padding: 0 20px 0 40px;
+                background: url("../img/icons/multiple-members.svg") no-repeat center left 15px;
+                cursor: pointer;
+                margin-top: 10px;
+                transition: background 0.3s ease-in-out;
+
+                &:hover { background-color: $nonary-color; }
+
             }
 
             .impediments-filter-dropdown-header {
                 border-bottom: 1px solid $denary-color;
                 padding: 10px 15px 10px 45px;
                 position: relative;
+                transition: border-bottom-color 0.3s ease-in-out;
 
                 &::before {
                     content: "";
@@ -162,7 +186,11 @@
                     height: 20px;
                     @include center( "vertical" );
                     left: 15px;
-                    background: url("../img/icons/icon-user.svg") no-repeat center / contain;
+                    background: url("../img/icons/search-icon.svg") no-repeat center left / contain;
+                }
+
+                &:hover {
+                    border-bottom: 1px solid $accent-color;
                 }
 
                 input {
@@ -173,15 +201,30 @@
 
             }
 
+            .your-impediments-btn {
+                line-height: 42px;
+                border-radius: 3px;
+                padding: 0 20px 0 40px;
+                background: url("../img/icons/icon-member.svg") no-repeat center left 18px;
+                background-size: 11px;
+                transition: background 0.3s ease-in-out;
+                cursor: pointer;
+
+                &:hover { background-color: $nonary-color; }
+            }
+
             ul {
-                margin: 10px 0;
+                margin: 0 0 10px 0;
                 max-height: 250px;
-                overflow-y: auto;
+                max-width: 235px;
 
                 li {
                     line-height: 42px;
                     border-radius: 3px;
-                    padding: 0 20px;
+                    padding: 0 20px 0 40px;
+                    background: url("../img/icons/icon-member.svg") no-repeat center left 18px;
+                    background-size: 11px;
+                    transition: background 0.3s ease-in-out;
 
                     &:hover { background-color: $nonary-color; }
                 }
@@ -208,29 +251,89 @@
 
 
     #impediments-header-options-button {
+        //width: 40px;
+        //height: 27px;
         width: 40px;
-        height: 27px;
+        height: 40px;
         @include center( "vertical" );
         right: 20px;
         border-radius: 3px;
         background: url("../img/icons/icon-options.svg") no-repeat center / 20px 5px;
+        transition: background-color 0.3s ease-in-out;
 
         &.active { background-color: $denary-color; }
+
+        &:hover {
+            background-color: $denary-color;
+        }
 
     }
 
 }
 
+#impediments-header-options-button {
+    .options-list-bg {
+        display: none;
+        top: 45px;
+    }
+}
 
 
 
+/** Impediments Container */
+
+#impediments-container {
+    width: 100%;
+    margin: 0 auto;
+    overflow-y: auto;
+    height: calc( 100vh - 235px );
+    padding: 0 20px;
+
+    .simplebar-track { right: 0; }
+
+    .simplebar-horizontal { display: none; }
+}
+
+.add-object-button {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+}
+
+.impediment-empty-container {
+    display: none;
+    margin-top: 25px;
+    text-align: center;
+
+    .empty-impediment-img {
+        margin-bottom: 30px;
+    }
+
+    .bold {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .add-impediment-icon {
+        margin: 0 5px;
+    }
+
+    p {
+        width: 350px;
+        margin: auto;
+        line-height: 22px;
+
+        .bold {
+            font-size: 14px;
+        }
+    }
+}
 
 /** Impediments Unsolved */
 
 #impediments-unsolved-container {
 
-    width: 850px;
-    margin: 0 auto;
+    //padding: 0 20px;
 
     .impediments-unsolved-member-container {
         margin-top: 15px;
@@ -238,8 +341,13 @@
         .impediments-unsolved-member-impediment {
             opacity: 1;
             border: 1px solid $denary-color;
+            transition: border 0.3s ease-in-out;
 
-            &.active { opacity: 0; } 
+            &.active { opacity: 0; }
+
+            &:hover {
+                border: 1px solid #B2B5C0;
+            }
 
         }
 
@@ -253,12 +361,10 @@
 /** Impediments Solved */
 
 #impediments-solved-container {
-    
-    width: 850px;
-    margin: 15px auto 0;
+    margin-top: 15px;
 
     .impediments-solved-header {
-
+        display: none;
         height: 51px;
         position: relative;
 
@@ -287,7 +393,9 @@
 
     }
 
+
     #impediments-solved-body {
+        display: none;
 
         .impediments-solved-member-container {
             margin-top: 15px;
@@ -305,6 +413,5 @@
     }
 
 }
-
 
 

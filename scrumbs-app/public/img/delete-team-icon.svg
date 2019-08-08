@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="66px" height="66px" viewBox="0 0 66 66" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>delete-team-icon</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Onboarding" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Scrum---Manage-teams-Delete-team" transform="translate(-731.000000, -155.000000)">
+            <g id="Group-3-Copy" transform="translate(707.000000, 118.000000)">
+                <g id="delete-team-icon" transform="translate(25.000000, 38.000000)">
+                    <circle id="Oval" stroke="#354577" stroke-width="2" fill="#2D3A5F" fill-rule="nonzero" cx="32" cy="32" r="32"></circle>
+                    <g id="Group-10" transform="translate(12.000000, 23.000000)">
+                        <polygon id="Path" fill="#C879FF" points="34.9212919 17.9143333 8.0063756 17.9143333 0 8.95716667 8.0063756 0 34.9212919 0"></polygon>
+                        <path d="M22.2292446,9.00726539 L24.542593,6.69055555 C25.152469,6.07979337 25.152469,5.06883382 24.542593,4.45807164 C23.932717,3.84730945 22.9232243,3.84730945 22.3133484,4.45807164 L20,6.77478148 L17.6866516,4.45807164 C17.0767757,3.84730945 16.067283,3.84730945 15.457407,4.45807164 C14.847531,5.06883382 14.847531,6.07979337 15.457407,6.69055555 L17.7707554,9.00726539 L15.457407,11.3239752 C14.847531,11.9347374 14.847531,12.945697 15.457407,13.5564591 C16.1093348,14.2093343 17.1608794,14.0829954 17.6866516,13.5564591 L20,11.2397493 L22.3133484,13.5564591 C22.9232243,14.1672213 24.0588726,14.0619389 24.542593,13.5564591 C25.152469,12.945697 25.152469,11.9347374 24.542593,11.3239752 L22.2292446,9.00726539 Z" id="Path" fill="#242E4C"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

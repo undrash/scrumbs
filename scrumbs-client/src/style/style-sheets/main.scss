@@ -1,8 +1,8 @@
 
-@import "mixins";
 @import "style-resets";
 @import "color-variables";
 @import "style-fonts";
+@import "mixins";
 
 
 /** ==================================== Miscellaneous ==================================== */
@@ -24,6 +24,11 @@
 
 .underline, a.underline { text-decoration: underline; }
 
+.error-message {
+    font-size: 14px;
+    color: $senary-color;
+}
+
 .noselect {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -34,8 +39,50 @@
   }
 
 
+.profile-avatar {
+    display: block;
+    width: 45px;
+    height: 45px;
+    border: 2px solid rgba(36, 46, 76, .1);
+    border-radius: 50%;
+    line-height: 40px;
+    text-align: center;
+    color: #9B9AA9;
+    text-transform: uppercase;
+    font-weight: bold;
+    overflow: hidden;
+    font-size: 16px;
+}
 
 
+.empty-state-title, .main-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.empty-state-description, .basic-description {
+    font-size: 16px;
+}
+
+
+.link {
+    font-size: 14px;
+    text-decoration: underline;
+    color: $secondary-color;
+    cursor: pointer;
+}
+
+.coming-soon-dark {
+    color: $accent-color;
+    border: 1px solid $accent-color;
+    border-radius: 25px;
+    font-size: 10px;
+    left: 60px;
+    top: 30px;
+    padding: 0 3px;
+    text-transform: uppercase;
+    display: inline-block;
+}
 
 
 /** ==================================== Body ==================================== */
@@ -212,6 +259,75 @@ input, textarea {
 
 }
 
+.find-members-search-input-container {
+    position: relative;
+
+    .find-members-search-input {
+        border-bottom: 1px solid $denary-color;
+        padding: 10px 35px;
+        background: url("../../style/img/icons/search-icon.svg") no-repeat left center;
+        font-size: 16px;
+        transition: border-bottom-color 0.3s ease-in-out;
+        background-size: 23px;
+
+        &:hover {
+            border-bottom: 1px solid $accent-color;
+        }
+
+        &:focus {
+            border-bottom: 1px solid $accent-color;
+
+        }
+    }
+
+    .clear-search {
+        position: absolute;
+        right: 5px;
+        width: 13px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+
+}
+
+
+
+
+.bold-input {
+    display: block;
+    width: 100%;
+    border-radius: 3px;
+    border: 2px solid $nonary-color;
+    font-weight: bold;
+    font-size: 24px;
+    padding: 0 16px;
+    line-height: 70px;
+    transition: border 0.3s ease-in-out;
+
+    &:hover, &:focus {
+        border: 2px solid $accent-color;
+    }
+}
+
+.basic-input {
+    height: 50px;
+    width: 100%;
+    border: 1px solid $denary-color;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    padding: 0 15px;
+    transition: border 0.3s ease-in-out;
+
+    &.disabled {
+        opacity: 0.5;
+    }
+
+    &:hover, &:focus {
+        border: 1px solid $accent-color;
+    }
+}
+
 
 
 
@@ -281,6 +397,27 @@ input, textarea {
 
     }
 
+
+}
+
+
+.checked-box {
+    background: url("../../style/img/icons/icon-checked.svg");
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+}
+
+.check-box {
+    background: url("../../style/img/icons/icon-unchecked.svg");
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+
+    &.checked {
+        background: url("../../style/img/icons/icon-checked.svg");
+
+    }
 }
 
 
@@ -305,6 +442,7 @@ input, textarea {
     background: -webkit-linear-gradient( left, $primary-color 0%, $secondary-color 100% );
     background: linear-gradient( to right,     $primary-color 0%, $secondary-color 100% );
     transition: all 0.2s ease-in-out;
+    cursor: pointer;
 
 
     &:hover {
@@ -319,6 +457,48 @@ input, textarea {
 }
 
 
+.secondary-button {
+    display: inline-block;
+    border-radius: 5px;
+    border: 1px solid $denary-color;
+    color: $text-tertiary-color;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 13px;
+    height: 49px;
+    line-height: 49px;
+    background: transparent;
+    transition: color 0.3s ease-in-out, border 0.3s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+        color: $text-primary-color;
+        border: 1px solid $text-primary-color;
+
+    }
+}
+
+.tertiary-button {
+    display: inline-block;
+    border-radius: 5px;
+    border: 1px solid $denary-color;
+    color: $accent-color;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 13px;
+    height: 49px;
+    line-height: 49px;
+    background: transparent;
+    transition: border 0.3s ease-in-out;
+    cursor: pointer;
+
+
+    &:hover {
+        border: 1px solid $accent-color;
+    }
+}
+
+
 .add-button {
 
     position: relative;
@@ -328,7 +508,7 @@ input, textarea {
     border-radius: 3px;
     transition: border 0.2s linear;
 
-    &:hover { border: 1px solid $quinary-color; }
+    &:hover { border: 1px solid $accent-color; }
 
     p {
       @include center();
@@ -346,8 +526,35 @@ input, textarea {
         @include center( "vertical" );
       }
     }
-
   }
+
+
+.add-object-button {
+    height: 60px;
+    width: 60px;
+    background: linear-gradient(90deg, #62B2FF 0%, #6E7BFF 100%);
+    box-shadow: 0 4px 11px 0 rgba(99,144,246,0.3);
+    border-radius: 45px;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+
+    &::after {
+        content: "";
+        background: url("../../style/img/icons/icon-add.svg") no-repeat center;
+        background-size: 20px;
+        position: absolute;
+        width: 20px;
+        top: 10px;
+        transform: translateY(50%);
+        left: 20px;
+        height: 20px;
+    }
+
+    &:hover {
+        transform: scale( 1.05 );
+        box-shadow: 0 12px 8px -9px lighten( $secondary-color, 17% );
+    }
+}
 
 
 .exit-overlay-button {
@@ -355,6 +562,7 @@ input, textarea {
     position: absolute;
     width: 35px;
     height: 45px;
+    cursor: pointer;
 
     &::after {
       content: "";
@@ -365,7 +573,122 @@ input, textarea {
       height: 35px;
       background: url( "../img/icons/icon-close.svg" ) no-repeat center / contain;
     }
+}
 
+
+.filter-btn {
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 10px;
+    padding-right: 26px;
+    border-radius: 3px;
+    background-color: transparent;
+    position: relative;
+    transition: background-color 0.3s ease-in-out;
+    cursor: pointer;
+
+    &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 10px;
+        height: 6px;
+        top: 17px;
+        right: 10px;
+        background: url("../../style/img/icons/icon-dropdown-accent.svg") no-repeat center/contain;
+    }
+
+    &:hover {
+        background-color: #ececf2;
+    }
+
+}
+
+.options-btn {
+    width: 40px;
+    height: 40px;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    border-radius: 3px;
+    background: url("../../style/img/icons/icon-options.svg") no-repeat center/20px 5px;
+    transition: background-color 0.3s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #ececf2;
+    }
+}
+
+
+
+/** ==================================== Dropdowns ==================================== */
+
+.options-list-bg {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    box-shadow: 0 5px 20px 0 #E1E0E9;
+    font-size: 16px;
+    color: #242E4C;
+    white-space: nowrap;
+}
+
+.options-list-btn {
+    line-height: 45px;
+    padding: 0 20px 0 50px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+
+    &:hover {
+        background-color: #f5f5f8;
+    }
+
+    &.settings {
+        background-image: url("../../style/img/icons/settings-icon.svg");
+        background-position: 21px center;
+    }
+
+    &.edit {
+        background-image: url("../../style/img/icons/icon-edit.svg");
+        background-position: 21px center;
+    }
+
+    &.delete {
+        background-image: url("../../style/img/icons/icon-delete.svg");
+        background-position: 21px center;
+    }
+
+    &.log-out {
+        background-image: url("../../style/img/icons/logout-icon.svg");
+        background-position: 21px center;
+    }
+
+    &.export-impediments {
+        background-image: url("../../style/img/icons/icon-impediment-grey.svg");
+        background-position: 21px center;
+    }
+
+    &.solve-impediments {
+        background-image: url("../../style/img/icons/checkbox-checked-grey.svg");
+        background-position: 21px center;
+    }
+}
+
+
+/** ==================================== Empty State ==================================== */
+
+
+.empty-state-label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 
@@ -382,6 +705,88 @@ input, textarea {
 
 
 
+/** ==================================== Lists ==================================== */
+
+
+.team-members-list-item {
+    padding: 15px 15px 15px 40px;
+    border-radius: 3px;
+    background: url("../../style/img/icons/icon-member.svg") no-repeat left 15px top 18px;
+    border: 1px solid $denary-color;
+    color: $text-primary-color;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+    background-size: 16px;
+    margin-bottom: 5px;
+    transition: border-color 0.3s ease-in-out;
+
+    &:not( :last-child ) { margin-bottom: 5px; }
+
+    .remove-member-btn {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    &:hover {
+        border: 1px solid $text-primary-color;
+    }
+
+    &.active {
+        border: 1px solid $text-primary-color;
+    }
+}
+
+/** ==================================== Empty state ==================================== */
+
+
+//NO MEMBER FOUND
+
+.member-search-empty {
+    text-align: center;
+    display: none;
+
+    img {
+        margin-bottom: 15px;
+    }
+
+    p {
+        max-width: 250px;
+        margin: 0 auto 15px;
+    }
+}
 
 
 
+/** ==================================== Header ==================================== */
+
+.header-container {
+    position: relative;
+    height: 80px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ececf2;
+    z-index: 1;
+    padding: 0 25px;
+}
+
+/** ==================================== Modal ==================================== */
+
+.modal-overlay {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.75);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 555;
+}
+
+.modal-bg {
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    box-shadow: 0 10px 50px 0 rgba(11, 40, 127, 0.15);
+    padding: 35px 40px;
+    position: relative;
+}
