@@ -101,7 +101,7 @@ export class AccountSettingsView extends View {
 
             case AccountSignals.EXIT :
 
-                if ( ! this.isForegroundActive ) this.sendNotification( ViewNotifications.SWITCH_TO_PREVIOUS_VIEW );
+                if ( ! this.isForegroundActive ) this.sendNotification( ViewNotifications.SWITCH_TO_SCRUM_VIEW );
 
                 break;
 
