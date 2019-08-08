@@ -448,7 +448,7 @@ export class ScrumNotes extends ViewComponent {
                 }
 
                 /** Add the note */
-                this.addNote( note );
+                this.addNote( note, false, true );
 
             },
             (err: string) => console.error( err )
@@ -553,15 +553,18 @@ export class ScrumNotes extends ViewComponent {
 
 
 
-    public addNote(noteData: any, prepend?: boolean): void {
+    public addNote(noteData: any, prepend?: boolean, created?: boolean): any {
 
         new Note( this.notesContainer, noteData, prepend );
+
+        if ( created ) return this.notesContainer.scrollTop = this.notesContainer.scrollHeight;
 
         if ( this.noteBatchIndex <= 1 ) {
             this.notesContainer.scrollTo( 0, this.notesContainer.scrollHeight );
         } else {
 
-            if ( this.lastBatchItem ) this.lastBatchItem.scrollIntoView();
+            if ( this.lastBatchItem ) this.notesContainer.scrollTop = this.lastBatchItem.offsetTop;
+
         }
     }
 
