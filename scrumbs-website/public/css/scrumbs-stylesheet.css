@@ -12,7 +12,7 @@ ul{list-style:none}.hide-page-overflow{overflow:hidden;position:relative;height:
 .secondary-text-disabled{font-size:14px;line-height:28px;color:#9b9aa9}.link{color:#7985ff;text-decoration:underline}
 .subscribe-navbar-logo{width:160px;margin:25px 0 30px 30px}#scrumbs-logo{width:160px;margin:25px 0 30px 30px;float:left;display:inline-block}
 .navbar-logo{width:160px}#downloads-btn{display:inline-block}#sign-in-btn{display:inline-block}
-#authentication-container{width:380px;height:110px;display:inline-block;float:right}
+#authentication-container{width:310px;height:110px;display:inline-block;float:right}
 #get-started-btn-navbar{float:right;margin-right:33px;margin-top:28px;color:#fff}
 .hamburger-icon{position:absolute;top:43px;right:30px;display:none;width:25px}#above-the-fold{margin:auto;height:auto;padding-top:135px;padding-left:60px;overflow:auto;width:100%;box-sizing:border-box;color:#636185}
 #get-started-btn-above-the-fold{margin-top:30px;margin-left:5px}.left-container{width:50%;height:auto;display:inline-block;float:left;box-sizing:border-box}
