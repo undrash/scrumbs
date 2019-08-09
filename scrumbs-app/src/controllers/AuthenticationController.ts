@@ -6,6 +6,9 @@ import * as passport from "passport";
 import * as moment from "moment";
 import * as crypto from "crypto";
 import * as async from "async";
+import * as path from "path";
+import axios from "axios";
+
 
 import User from "../models/User";
 import Team from "../models/Team";
@@ -382,6 +385,13 @@ class AuthenticationController {
                             isDefault: true
                         });
 
+                        /** Subscribe the user to our mailing list */
+                        try {
+                            await this.subscribe( user.name, user.email );
+                        } catch (e) {
+                            console.error( e );
+                        }
+
                         Promise.all([
                             user.save(),
                             defaultTeam.save()
@@ -435,6 +445,14 @@ class AuthenticationController {
 
                 await user.save();
                 await defaultTeam.save();
+
+                /** Subscribe the user to our mailing list */
+                try {
+                    await this.subscribe( user.name, user.email );
+                } catch (e) {
+                    console.error( e );
+                }
+
             } else {
                 user.googleId = googleId;
 
@@ -493,6 +511,14 @@ class AuthenticationController {
 
                 await user.save();
                 await defaultTeam.save();
+
+                /** Subscribe the user to our mailing list */
+                try {
+                    await this.subscribe( user.name, user.email );
+                } catch (e) {
+                    console.error( e );
+                }
+
             } else {
                 user.twitterId = twitterId;
 
@@ -547,6 +573,14 @@ class AuthenticationController {
 
                 await user.save();
                 await defaultTeam.save();
+
+                /** Subscribe the user to our mailing list */
+                try {
+                    await this.subscribe( user.name, user.email );
+                } catch (e) {
+                    console.error( e );
+                }
+
             } else {
                 user.linkedInId = linkedInId;
 
@@ -556,6 +590,84 @@ class AuthenticationController {
             return done( null, user );
         });
     }
+
+
+
+    public subscribe = async (name: string, email: string) => {
+
+        let md5email = crypto.createHash( "md5" ).update( email ).digest( "hex" );
+
+        let response;
+
+        try {
+            response = await axios.get(
+                `https://us20.api.mailchimp.com/3.0/lists/79a95bcc09/members/${ md5email }`,
+                {
+                    headers: {
+                        Authorization: process.env.MAILCHIMP_KEY
+                    }
+                }
+            );
+
+
+            if ( response.data.status === "subscribed" ) return
+
+        } catch (e) {
+            /** 404 means email is not subscribed yet. => WE PROCEED. */
+        }
+
+        /** If the user exists but is unsubscribed. */
+
+        if ( response && response.data.status === "unsubscribed" ) {
+
+            try {
+                await axios.patch(
+                    `https://us20.api.mailchimp.com/3.0/lists/79a95bcc09/members/${ md5email }`,
+                    {
+                        status: "subscribed"
+                    },
+                    {
+                        headers: {
+                            Authorization: process.env.MAILCHIMP_KEY
+                        }
+                    }
+                );
+
+            } catch (e) {
+                return console.error( e );
+            }
+
+        } else {
+
+            /** If the user doesn't exist */
+
+            try {
+                await axios.post(
+                    "https://us20.api.mailchimp.com/3.0/lists/79a95bcc09",
+                    {
+                        members: [
+                            {
+                                email_address: email,
+                                status: "subscribed",
+                                merge_fields: {
+                                    NAME: name
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        headers: {
+                            Authorization: process.env.MAILCHIMP_KEY
+                        }
+                    }
+                );
+            } catch (e) {
+                return console.error( e );
+            }
+
+        }
+
+    };
 
 }
 
