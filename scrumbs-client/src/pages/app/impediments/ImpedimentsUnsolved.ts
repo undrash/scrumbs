@@ -56,7 +56,7 @@ export class ImpedimentsUnsolved extends ViewComponent {
 
     public populateFiltered(memberId: string): void {
 
-        this.container.innerHTML = null;
+        this.container.innerHTML = '';
 
 
         this.connection.getUnsolvedImpedimentsOfMember(

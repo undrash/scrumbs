@@ -560,7 +560,7 @@ export class ScrumNotes extends ViewComponent {
         if ( created ) return this.notesContainer.scrollTop = this.notesContainer.scrollHeight;
 
         if ( this.noteBatchIndex <= 1 ) {
-            this.notesContainer.scrollTo( 0, this.notesContainer.scrollHeight );
+            this.notesContainer.scrollTop = this.notesContainer.scrollHeight;
         } else {
 
             if ( this.lastBatchItem ) this.notesContainer.scrollTop = this.lastBatchItem.offsetTop;
