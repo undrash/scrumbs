@@ -51,9 +51,29 @@ class Server {
 
     public config() {
 
-
         mongoose.set( "useCreateIndex", true );
-        mongoose.connect( Database.URI || process.env.DATABASE_URI as string, { useNewUrlParser: true } );
+
+        const mongoURL = Database.URI || process.env.DATABASE_URI as string;
+
+        const mongoOPTIONS = {
+            useNewUrlParser: true,
+            autoReconnect: true,
+            reconnectTries: Number.MAX_VALUE,
+            bufferMaxEntries: 0
+        };
+
+        const connectWithRetry = function() {
+
+            return mongoose.connect( mongoURL, mongoOPTIONS, (err) => {
+                if ( err ) {
+                    console.error( "Failed to connect to mongo on startup - retrying in 5 sec", err );
+                    setTimeout( connectWithRetry, 5000 );
+                }
+            });
+
+        };
+
+        connectWithRetry();
 
 
         this.app.engine( "hbs", hbs( { extname: "hbs", defaultLayout: "layout", layoutsDir: __dirname + "/../views/layouts" } ) );
