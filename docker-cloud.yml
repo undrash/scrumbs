@@ -37,6 +37,7 @@ services:
       - TWITTER_KEY=<TWITTER_KEY>
       - LINKEDIN_SECRET=<LINKEDIN_SECRET>
       - LINKEDIN_KEY=<LINKEDIN_KEY>
+      - MAILCHIMP_KEY=<MAILCHIMP_KEY>
 
   website:
     image: gasparandr/scrumbs-website
