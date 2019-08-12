@@ -217,6 +217,7 @@
             line-height: 70px;
             transition: border 0.2s linear;
             margin-bottom: 25px;
+            height: 74px;
 
             &:focus, &:hover { border: 2px solid $accent-color; }
         }

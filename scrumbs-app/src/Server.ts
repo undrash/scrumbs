@@ -87,6 +87,7 @@ class Server {
         this.app.use( logger( "dev" ) );
         this.app.use( compression() );
         this.app.use( helmet() );
+        this.app.use( helmet.noCache() );
         this.app.use( cors() );
 
         this.app.use( cookieParser() );
