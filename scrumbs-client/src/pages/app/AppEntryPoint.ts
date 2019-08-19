@@ -26,6 +26,9 @@ import "../../style/style-sheets/screensize-not-supported.scss";
 const screenNotSupportedTemplate = require("../../templates/screensize-not-supported.html" );
 
 
+declare const boardme: any;
+
+
 
 export class AppViewManager extends ViewManager {
     private headerView: View;
@@ -52,6 +55,8 @@ export class AppViewManager extends ViewManager {
             this.sendNotification( ViewNotifications.SWITCH_HEADER_STATE );
 
             this.onboarding.initFlow( Flows.WELCOME );
+
+            boardme.run( "boardme:welcome" );
         } else {
             this.initView( AuthenticationView );
         }
@@ -103,6 +108,8 @@ export class AppViewManager extends ViewManager {
 
                 this.onboarding.initFlow( Flows.WELCOME );
 
+                boardme.run( "boardme:welcome" );
+
                 break;
 
             case ViewNotifications.SWITCH_TO_IMPEDIMENTS_VIEW :
@@ -130,6 +137,8 @@ export class AppViewManager extends ViewManager {
 
                 this.onboarding.initFlow( Flows.MANAGE_TEAMS );
 
+                boardme.run( "boardme:mange-teams" );
+
                 break;
 
             case ViewNotifications.SWITCH_TO_CREATE_TEAM_VIEW :
@@ -154,11 +163,16 @@ export class AppViewManager extends ViewManager {
 
                 this.onboarding.initFlow( Flows.MEMBER_EDIT );
 
+                boardme.run( "boardme:member-edit" );
+
                 break;
 
             case ViewNotifications.INIT_ONBOARDING_IMPEDIMENT_FEATURE_FLOW :
 
                 this.onboarding.initFlow( Flows.IMPEDIMENTS_FEATURE );
+
+
+                boardme.run( "boardme:impediment-feature" );
 
                 break;
 

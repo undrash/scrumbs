@@ -32,15 +32,19 @@ export class Onboarding {
 
     private testing: boolean;
 
+    private disabled: boolean;
+
     private timeout: any;
 
     constructor() {
 
-        this.testing = false;
+        this.testing        = false;
 
-        this.connection = new ConnectionProxy( "Onboarding" );
+        this.disabled       = true;
 
-        this.displayed = [];
+        this.connection     = new ConnectionProxy( "Onboarding" );
+
+        this.displayed      = [];
 
         this.flows = {
             [ Flows.WELCOME ] : [
@@ -70,6 +74,8 @@ export class Onboarding {
 
 
     public initFlow(flow: Flows): any {
+
+        if ( this.disabled ) return;
 
         this.clearGuides();
 
