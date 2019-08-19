@@ -129,15 +129,12 @@ export class Inquiry extends ViewComponent {
         const key = e.which || e.keyCode;
 
         if ( key === 27 ) this.dismiss(); // ESCAPE
-
-        if ( key === 13 ) this.submit(); // ENTER
     }
 
 
 
     private submit(): void {
         console.log( "submit clicked" );
-        // this.exitScene( ViewExitTypes.HIDE_COMPONENT );
 
 
         if ( ! this.validateInputs() ) return;
