@@ -85,8 +85,9 @@
                 height: 100%;
                 border-radius: 5px;
                 transition: all 0.2s linear;
+                border: 1px solid transparent;
 
-                &:hover { box-shadow: 0 0 0 1px $quinary-color; }
+                &:hover { border: 1px solid $quinary-color; }
 
                 &::after {
                     content: "";

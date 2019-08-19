@@ -12,6 +12,7 @@ declare const Power0: any;
 declare const Power1: any;
 declare const Back: any;
 
+declare const SimpleBar: any;
 
 // CSS
 import "../../../style/style-sheets/authentication-log-in.scss";
@@ -73,6 +74,8 @@ export class AuthenticationLogin extends ViewComponent {
 
         this.loginError                     = document.getElementById( "authentication-log-in-error-container" );
         this.loginErrorLink                 = document.getElementById( "authentication-log-in-error-link" );
+
+        new SimpleBar( this.container );
 
         this.emailInputListener                 = this.emailInputListener.bind( this );
         this.passwordInputListener              = this.passwordInputListener.bind( this );
@@ -162,7 +165,6 @@ export class AuthenticationLogin extends ViewComponent {
     public enterScene(enterType?: string): void {
         console.info( "Enter being called in authentication login view component" );
 
-
         switch ( enterType ) {
 
             case ViewEnterTypes.SWITCH_COMPONENT :
@@ -196,7 +198,7 @@ export class AuthenticationLogin extends ViewComponent {
     public exitScene( exitType: string, signal?: string ): void {
         console.info( "Exit being called in authentication login view component" );
 
-
+        this.container.style.overflow = "hidden";
 
         switch ( exitType ) {
 
@@ -204,7 +206,9 @@ export class AuthenticationLogin extends ViewComponent {
 
                 TweenLite.to( this.container, 0.4, { paddingTop: 130 } );
                 TweenLite.to( this.container, 0.4, { opacity: 0, ease: Power1.easeOut, onComplete: () => {
+
                     this.container.style.display = "none";
+                    this.container.style.overflow   = '';
 
                     if ( signal ) this.sendSignal( signal );
 
@@ -219,7 +223,9 @@ export class AuthenticationLogin extends ViewComponent {
 
                 TweenLite.to( this.container, 0.4, { paddingTop: 130, delay: 0.3 } );
                 TweenLite.to( this.container, 0.4, { opacity: 0, ease: Power1.easeOut, onComplete: () => {
+
                     this.container.style.display = "none";
+                    this.container.style.overflow   = '';
 
                     this.resetComponent();
                 }});
