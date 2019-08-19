@@ -11,6 +11,8 @@ declare const Power0: any;
 declare const Power1: any;
 declare const Back: any;
 
+declare const SimpleBar: any;
+
 
 // CSS
 import "../../../style/style-sheets/authentication-sign-up.scss";
@@ -72,6 +74,10 @@ export class AuthenticationSignUp extends ViewComponent {
         this.signUpBtn                  = document.getElementById( "authentication-sign-up-btn" ) as HTMLButtonElement;
 
         this.passwordInputTypeToggle    = document.getElementById( "authentication-sign-up-password-toggle-button" ) as HTMLSpanElement;
+
+
+        new SimpleBar( this.container );
+
 
         this.nameInputListener                  = this.nameInputListener.bind( this );
         this.emailInputListener                 = this.emailInputListener.bind( this );
@@ -171,13 +177,17 @@ export class AuthenticationSignUp extends ViewComponent {
     public exitScene(exitType: string, signal?: string): void {
         console.info( "Exit being called in authentication sign up view component" );
 
+        this.container.style.overflow = "hidden";
+
         if ( exitType === ViewExitTypes.SWITCH_COMPONENT ) {
 
             TweenLite.to( this.container, 0.4, { paddingTop: 130 } );
 
             TweenLite.to( this.container, 0.4, { opacity: 0, ease: Power1.easeOut, onComplete: () => {
-                this.container.style.display = "none";
+                this.container.style.display    = "none";
+                this.container.style.overflow   = '';
                 if ( signal ) this.sendSignal( signal );
+
             }});
 
         } else {

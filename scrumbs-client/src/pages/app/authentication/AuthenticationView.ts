@@ -27,7 +27,6 @@ const authenticationViewTemplate = require( "../../../templates/authentication-v
 
 
 
-
 export class AuthenticationView extends View {
     private authenticationLogin: ViewComponent;
     private authenticationSignUp: ViewComponent;
