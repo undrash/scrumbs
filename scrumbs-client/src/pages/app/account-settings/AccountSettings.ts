@@ -175,10 +175,11 @@ export class AccountSettings extends ViewComponent {
             this.connection.updateUser(
                 data,
                 (response: any) => {
-                    const {  name, email, onboardingGuidesDisplayed } = response;
+                    const { user, name, email, onboardingGuidesDisplayed } = response;
 
                     ConnectionProxy.setVO(
                         new UserVO(
+                            user,
                             name,
                             email,
                             onboardingGuidesDisplayed

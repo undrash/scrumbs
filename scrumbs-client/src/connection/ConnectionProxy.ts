@@ -44,9 +44,10 @@ export class ConnectionProxy extends Proxy {
 
         if ( dataSrc ) dataSrc.parentNode.removeChild( dataSrc );
 
-        const {  name, email, onboardingGuidesDisplayed } = data.userData;
+        const {  user, name, email, onboardingGuidesDisplayed } = data.userData;
 
         ConnectionProxy.setVO( new UserVO(
+            user,
             name,
             email,
             onboardingGuidesDisplayed
@@ -67,9 +68,10 @@ export class ConnectionProxy extends Proxy {
 
                 // this.setToken( response.tokenData );
 
-                const {  name, email, onboardingGuidesDisplayed } = response.userData;
+                const { user, name, email, onboardingGuidesDisplayed } = response.userData;
 
                 ConnectionProxy.setVO( new UserVO(
+                    user,
                     name,
                     email,
                     onboardingGuidesDisplayed
@@ -93,9 +95,10 @@ export class ConnectionProxy extends Proxy {
 
                 // this.setToken( response.tokenData );
 
-                const {  name, email, onboardingGuidesDisplayed } = response.userData;
+                const { user, name, email, onboardingGuidesDisplayed } = response.userData;
 
                 ConnectionProxy.setVO( new UserVO(
+                    user,
                     name,
                     email,
                     onboardingGuidesDisplayed

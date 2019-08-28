@@ -51,6 +51,7 @@ export class AppViewManager extends ViewManager {
         this.headerView = new HeaderView();
 
         if ( ConnectionProxy.EXTERNAL_AUTH ) {
+            boardme.user( this.connection.getVO().id );
             this.initView( ScrumView );
             this.sendNotification( ViewNotifications.SWITCH_HEADER_STATE );
 
@@ -99,6 +100,8 @@ export class AppViewManager extends ViewManager {
             case AuthenticationNotifications.LOGIN :
             case AuthenticationNotifications.SIGN_UP :
             case ViewNotifications.SWITCH_TO_SCRUM_VIEW :
+
+                boardme.user( this.connection.getVO().id );
 
                 this.onboarding.setGuidesDisplayed(
                     this.connection.getVO().onboardingGuidesDisplayed
@@ -177,6 +180,8 @@ export class AppViewManager extends ViewManager {
                 break;
 
             case ViewNotifications.CLEAR_ONBOARDING :
+
+                boardme.clear();
 
                 this.onboarding.clearGuides();
 
