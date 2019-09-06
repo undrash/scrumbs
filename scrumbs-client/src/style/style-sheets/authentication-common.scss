@@ -85,9 +85,8 @@
                 height: 100%;
                 border-radius: 5px;
                 transition: all 0.2s linear;
-                border: 1px solid transparent;
 
-                &:hover { border: 1px solid $quinary-color; }
+                &:hover { box-shadow: 0 0 0 1px $quinary-color; }
 
                 &::after {
                     content: "";
@@ -150,5 +149,81 @@
         .primary-button { width: 100%; }
 
     }
+
+    @media screen and (max-height: 900px) {
+
+        #authentication-view-container  {
+
+            .social-media-auth-wrapper p {
+                margin: 15px 0;
+            }
+        }
+
+        #authentication-sign-up-btn, #authentication-login-btn {
+            width: 100%;
+        }
+
+        #authentication-login-subtitle, #authentication-sign-up-subtitle {
+            max-width: 100%;
+        }
+
+        #authentication-log-in-container, #authentication-sign-up-container, #authentication-forgot-password-container {
+            width: 90%;
+            margin: auto;
+            text-align: center;
+            padding-top: 30px;
+
+            .input-group {
+                position: relative;
+                width: 40%;
+                display: inline-block;
+                vertical-align: top;
+
+                .input-label {
+                    text-align: left;
+                }
+
+                .input-error {
+                    text-align: left;
+                }
+            }
+
+            .auth-error-container {
+                margin: 0 auto 10px;
+            }
+        }
+
+        #authentication-sign-up-container {
+            width: 100%;
+            padding-top: 30px;
+
+            .input-group {
+                width: 30%;
+            }
+
+            .authentication-footer {
+                width: 91%;
+            }
+        }
+
+        #authentication-forgot-password-container {
+            .input-group {
+                width: 100%;
+            }
+        }
+
+        .authentication-footer {
+            width: 80%;
+            margin: auto;
+            text-align: left;
+
+
+            .checkbox-wrapper {
+                margin: 0 0 25px;
+            }
+        }
+
+    }
+
 
 }
