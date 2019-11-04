@@ -15,7 +15,7 @@ services:
       - /docker-volumes/etc/letsencrypt/live/scrumbs.app/fullchain.pem:/etc/letsencrypt/live/scrumbs.app/fullchain.pem
       - /docker-volumes/etc/letsencrypt/live/scrumbs.app/privkey.pem:/etc/letsencrypt/live/scrumbs.app/privkey.pem
       #for certbot challenges
-      - /docker-volumes/data/letsencrypt:/data/letsencrypt
+      - /docker-volumes/letsencrypt-site:/usr/share/nginx/html
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
   app:
