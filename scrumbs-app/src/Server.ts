@@ -76,7 +76,7 @@ class Server {
         connectWithRetry();
 
 
-        this.app.engine( "hbs", hbs( { extname: "hbs", defaultLayout: "layout", layoutsDir: __dirname + "/../views/layouts" } ) );
+        this.app.engine( "hbs", hbs( { extname: "hbs", defaultLayout: "layout", layoutsDir: __dirname + "/../views/layouts" } ) as any );
         this.app.set( "view engine", "hbs" );
 
         this.app.use( "*/public", express.static( publicPath ) );
