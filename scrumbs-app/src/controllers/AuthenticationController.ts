@@ -387,7 +387,7 @@ class AuthenticationController {
 
                         /** Subscribe the user to our mailing list */
                         try {
-                            await this.subscribe( user.name, user.email );
+                            // await this.subscribe( user.name, user.email );
                         } catch (e) {
                             console.error( e );
                         }
@@ -448,7 +448,7 @@ class AuthenticationController {
 
                 /** Subscribe the user to our mailing list */
                 try {
-                    await this.subscribe( user.name, user.email );
+                    // await this.subscribe( user.name, user.email );
                 } catch (e) {
                     console.error( e );
                 }
@@ -514,7 +514,7 @@ class AuthenticationController {
 
                 /** Subscribe the user to our mailing list */
                 try {
-                    await this.subscribe( user.name, user.email );
+                    // await this.subscribe( user.name, user.email );
                 } catch (e) {
                     console.error( e );
                 }
@@ -576,7 +576,7 @@ class AuthenticationController {
 
                 /** Subscribe the user to our mailing list */
                 try {
-                    await this.subscribe( user.name, user.email );
+                    // await this.subscribe( user.name, user.email );
                 } catch (e) {
                     console.error( e );
                 }
